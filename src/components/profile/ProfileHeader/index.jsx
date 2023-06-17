@@ -8,7 +8,19 @@ const user = {
 };
 
 export default function ProfileHeader() {
-  return <section className={styles.profileHeader}>
-    Hallo
-  </section>;
+  return (
+    <section className={styles.profileHeader}>
+      <section>
+        <img
+          src={user.profile_background_picture}
+          alt="profile_background_picture"
+        />
+        <button>Создать фото обложки с аватаром</button>
+        <button>Редактировать фото обложки</button>
+      </section>
+      <section>
+        <img src={user.profile_picture} alt="profile_picture" />
+      </section>
+    </section>
+  );
 }
