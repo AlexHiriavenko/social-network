@@ -1,2 +1,2 @@
 # social-network
-Social-network project. React App with backend (server and database)
+Social-network project. React App with frondend and backend.
