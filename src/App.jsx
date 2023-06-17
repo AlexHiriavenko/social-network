@@ -1,5 +1,11 @@
+import { Profile } from "./pages";
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <Profile />
+    </>
+  );
 }
 
 export default App;
