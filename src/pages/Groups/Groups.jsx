@@ -1,5 +1,7 @@
 function Groups() {
-    return <>Groups Page</>;
+    return <>
+        <h2 className="tempTitle">Groups Page Content</h2>
+    </>;
 }
 
 export default Groups;
