@@ -1,7 +1,9 @@
-import { Container } from "@mui/material";
+import { Avatar, AvatarGroup } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
 import styles from "./profile-header.module.scss";
+import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
+
 const user = {
   full_name: "Julian Read",
   profile_picture:
@@ -21,13 +23,17 @@ export default function ProfileHeader() {
             className={styles.profile__background_picture}
           />
           <div className={styles.profileBgBtnWrap}>
+            {/* <button className={styles.profile__bg_btn}>
+              <PermMediaIcon fontSize="small" />
+              <p className={styles.profile__btnText}>
+                Создать фото обложки с аватаром
+              </p>
+            </button> */}
             <button className={styles.profile__bg_btn}>
-              <PermMediaIcon />
-              Создать фото обложки с аватаром
-            </button>
-            <button className={styles.profile__bg_btn}>
-              <CameraAltIcon />
-              Редактировать фото обложки
+              <CameraAltIcon fontSize="small" />
+              <p className={styles.profile__btnText}>
+                Редактировать фото обложки
+              </p>
             </button>
           </div>
         </section>
@@ -44,13 +50,31 @@ export default function ProfileHeader() {
               <CameraAltIcon color="dark" />
             </button>
           </div>
-          <div>
-            <p>{user.full_name}</p>
-            <a href="#">Друзья: </a>
+          <div className={styles.profile__user_info}>
+            <p className={styles.profile__user_name}>{user.full_name}</p>
+            <a href="#" className={styles.profile__user_friends}>
+              Друзья: {54}
+            </a>
+            <AvatarGroup max={6} className={styles.profile_avatar_group}>
+              <Avatar alt="Remy Sharp" src="#" />
+              <Avatar alt="Travis Howard" src="#" />
+              <Avatar alt="Cindy Baker" src="#" />
+              <Avatar alt="Agnes Walker" src="#" />
+              <Avatar alt="Cindy Baker" src="#" />
+              <Avatar alt="Agnes Walker" src="#" />
+              <Avatar alt="Trevor Henderson" src="#" />
+            </AvatarGroup>
           </div>
-          <div>
-            <button>Дополнить историю</button>
-            <button>Редактировать профиль</button>
+          <div className={styles.profile_buttons}>
+            <button
+              className={`${styles.profile__edit_btn} ${styles.profile__bg_btn}`}
+            >
+              <ModeEditOutlineIcon sx={{ color: "#050505" }} />
+              Редактировать профиль
+            </button>
+            <button className={`${styles.profile__show_btn} ${styles.profile__show_btn_active} `}>
+              <span className={styles.profile__show_line}></span>
+            </button>
           </div>
         </section>
       </div>
