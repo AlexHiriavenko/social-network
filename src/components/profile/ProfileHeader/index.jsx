@@ -37,7 +37,7 @@ export default function ProfileHeader() {
             </button>
           </div>
         </section>
-        <section className={styles.profile__user__info}>
+        <section className={styles.profile__user_info_section}>
           <div className={styles.profile__picture}>
             <img
               src={user.profile_picture}
@@ -55,7 +55,7 @@ export default function ProfileHeader() {
             <a href="#" className={styles.profile__user_friends}>
               Друзья: {54}
             </a>
-            <AvatarGroup max={6} className={styles.profile_avatar_group}>
+            <AvatarGroup max={6} className={styles.profile__avatar_group}>
               <Avatar alt="Remy Sharp" src="#" />
               <Avatar alt="Travis Howard" src="#" />
               <Avatar alt="Cindy Baker" src="#" />
