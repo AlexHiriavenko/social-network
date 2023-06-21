@@ -4,11 +4,14 @@ import App from "./App.jsx";
 import "./index.scss";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "./thema.js";
+import { BrowserRouter } from "react-router-dom";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(
+  <BrowserRouter>
     <ThemeProvider theme={theme}>
       <App />
     </ThemeProvider>
-  </React.StrictMode>
+  </BrowserRouter>
 );
