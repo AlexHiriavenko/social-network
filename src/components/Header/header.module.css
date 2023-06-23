@@ -1,10 +1,9 @@
 .navList {
-    background-color: black;
     display: flex;
     justify-content: space-around;
     padding: 10px;
 }
 
 .navItemLink {
-    color: white;
+    color: green;
 }

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { NavLink, Link } from "react-router-dom";
 import s from "../header.module.css";
+import { SvgHome } from "../SVG/svg";
 
 export default function HeaderTabs() {
     return (
@@ -8,7 +9,7 @@ export default function HeaderTabs() {
             <ul className={s.navList}>
                 <li>
                     <NavLink to="/" className={s.navItemLink}>
-                        Home
+                        <SvgHome />
                     </NavLink>
                 </li>
                 <li>

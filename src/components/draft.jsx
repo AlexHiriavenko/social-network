@@ -17,11 +17,12 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Menu as MenuIcon } from "@mui/icons-material";
-import { SvgFacebook } from "./SVG/svg";
+import SvgFacebook from "./SVG/FaceBook";
 import HeaderTabs from "./Tabs/Tabs";
 
 const Search = styled("div")(({ theme }) => ({
     position: "relative",
+    // borderRadius: theme.shape.borderRadius,
     backgroundColor: "#F0F2F5",
     borderBottomLeftRadius: "50px",
     borderBottomRightRadius: "50px",
@@ -42,6 +43,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -51,6 +53,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create("width"),
         width: "100%",
+        // [theme.breakpoints.up("sm")]: {
+        //     width: "12ch",
+        //     "&:focus": {
+        //         width: "20ch",
+        //     },
+        // },
     },
 }));
 
@@ -80,30 +88,42 @@ function Header() {
         <AppBar position="static" color="inherit">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
+                    {/* <AdbIcon
+                        sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+                    /> */}
                     <NavLink to="/">
                         <SvgFacebook />
                     </NavLink>
-                    <Search>
-                        <SearchIconWrapper sx={{ width: { xs: "100%" } }}>
+                    <Search sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
+                        <SearchIconWrapper>
                             <SearchIcon
-                                style={{
-                                    color: "rgb(101, 103, 107)",
-                                    minWidth: "24px",
-                                }}
+                                style={{ color: "rgb(101, 103, 107)" }}
                             />
                         </SearchIconWrapper>
                         <StyledInputBase
-                            // sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-                            sx={{
-                                width: { xs: "30px", md: "240px" },
-                                borderRadius: { xs: "50%" },
-                                mr: 1,
-                            }}
                             placeholder="Search…"
                             inputProps={{ "aria-label": "search" }}
                         />
                     </Search>
                     <HeaderTabs />
+                    {/* <Typography
+                        variant="h6"
+                        noWrap
+                        component="a"
+                        href="/"
+                        sx={{
+                            mr: 2,
+                            display: { xs: "none", md: "flex" },
+                            fontFamily: "monospace",
+                            fontWeight: 700,
+                            letterSpacing: ".3rem",
+                            color: "inherit",
+                            textDecoration: "none",
+                        }}
+                    >
+                        LOGO
+                    </Typography> */}
+
                     <Box
                         sx={{
                             flexGrow: 1,
@@ -120,12 +140,79 @@ function Header() {
                         >
                             <MenuIcon />
                         </IconButton>
+                        {/* <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorElNav}
+                            anchorOrigin={{
+                                vertical: "bottom",
+                                horizontal: "left",
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: "top",
+                                horizontal: "left",
+                            }}
+                            open={Boolean(anchorElNav)}
+                            onClose={handleCloseNavMenu}
+                            sx={{
+                                display: { xs: "block", md: "none" },
+                            }}
+                        >
+                            {pages.map((page) => (
+                                <MenuItem
+                                    key={page}
+                                    onClick={handleCloseNavMenu}
+                                >
+                                    <Typography textAlign="center">
+                                        {page}
+                                    </Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu> */}
                     </Box>
+                    {/* <AdbIcon
+                        sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+                    /> */}
+                    {/* <Typography
+                        variant="h5"
+                        noWrap
+                        component="a"
+                        href=""
+                        sx={{
+                            mr: 2,
+                            display: { xs: "flex", md: "none" },
+                            flexGrow: 1,
+                            fontFamily: "monospace",
+                            fontWeight: 700,
+                            letterSpacing: ".3rem",
+                            color: "inherit",
+                            textDecoration: "none",
+                        }}
+                    >
+                        LOGO
+                    </Typography> */}
+                    {/* <Box
+                        sx={{
+                            flexGrow: 1,
+                            display: { xs: "none", md: "flex" },
+                        }}
+                    >
+                        {pages.map((page) => (
+                            <Button
+                                key={page}
+                                onClick={handleCloseNavMenu}
+                                sx={{ my: 2, color: "white", display: "block" }}
+                            >
+                                {page}
+                            </Button>
+                        ))}
+                    </Box> */}
+
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton
                                 onClick={handleOpenUserMenu}
-                                // sx={{ p: 0 }}
+                                sx={{ p: 0 }}
                             >
                                 <Avatar
                                     alt="Remy Sharp"
@@ -149,16 +236,26 @@ function Header() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            <MenuItem onClick={handleCloseUserMenu}>
+                            {/* {settings.map((setting) => ( */}
+                            <MenuItem
+                                // key={setting}
+                                onClick={handleCloseUserMenu}
+                            >
                                 <Typography textAlign="center">
-                                    item1
+                                    {/* {setting} */}
+                                    asdasd
                                 </Typography>
                             </MenuItem>
-                            <MenuItem onClick={handleCloseUserMenu}>
+                            <MenuItem
+                                // key={setting}
+                                onClick={handleCloseUserMenu}
+                            >
                                 <Typography textAlign="center">
-                                    item2
+                                    {/* {setting} */}
+                                    12312312
                                 </Typography>
                             </MenuItem>
+                            {/* ))} */}
                         </Menu>
                     </Box>
                 </Toolbar>
