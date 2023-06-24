@@ -1,0 +1,65 @@
+.profile_posts__block {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px 16px;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.profile_posts__block_title {
+  color: #050505;
+  font-size: 20px;
+}
+.profile_posts__block_subtitle {
+  width: 100%;
+  color: #65676b;
+}
+.profile_posts__block_link {
+  color: #1876f2;
+}
+
+.profile_posts__block_list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: space-between;
+  margin-top: 16px;
+  width: 100%;
+  gap: 4px;
+}
+.friends_list {
+  gap: 11px;
+}
+.profile_posts__photo {
+  object-fit: cover;
+  cursor: pointer;
+  transition-duration: 500ms;
+  &:hover{
+    transform: scale(0.98);
+  }
+}
+
+.profile_posts__friend {
+  cursor: pointer;
+  transition-duration: 500ms;
+  &:hover{
+    transform: scale(0.98);
+  }
+}
+
+.profile_posts__friend_image {
+  object-fit: cover;
+  
+  border-radius: 10px;
+  width: 100%;
+  max-width: 204px;
+}
+
+.profile_posts__friend_name {
+  color: #050505;
+  font-size: 13px;
+  font-weight: 600;
+}

@@ -1,8 +1,21 @@
-import { Profile } from "./pages";
 import React, { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import PrivateRoute from "./utils/router/PrivateRoute";
-import { Home, Watch, Marketplace, Groups, LogIn, NotFound } from "./pages/";
+import {
+  Home,
+  Watch,
+  Marketplace,
+  Groups,
+  LogIn,
+  NotFound,
+  Profile,
+  ProfilePosts,
+  ProfileAbout,
+  Overview,
+  Employment,
+  Places,
+  Contacts,
+} from "./pages/";
 import Header from "./components/Header/Header";
 
 function App() {
@@ -23,6 +36,18 @@ function App() {
           <Route path="/watch" element={<Watch />} />
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/groups" element={<Groups />} />
+          <Route path="/profile" element={<Profile />}>
+            <Route path="/profile/" element={<ProfilePosts />} />
+            <Route path="/profile/about" element={<ProfileAbout />}>
+              <Route path="/profile/about/" element={<Overview />} />
+              <Route
+                path="/profile/about/employment"
+                element={<Employment />}
+              />
+              <Route path="/profile/about/places" element={<Places />} />
+              <Route path="/profile/about/contacts" element={<Contacts />} />
+            </Route>
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Route>
         <Route

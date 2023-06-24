@@ -26,6 +26,11 @@ function Header() {
                             Groups Page
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink to="/profile" className={s.navItemLink}>
+                            Profile
+                        </NavLink>
+                    </li>
                 </ul>
             </nav>
         </header>
