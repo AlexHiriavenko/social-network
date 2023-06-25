@@ -96,9 +96,7 @@ function Header() {
                     </NavLink>
                     <Search sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
                         <SearchIconWrapper>
-                            <SearchIcon
-                                style={{ color: "rgb(101, 103, 107)" }}
-                            />
+                            <SearchIcon style={{ color: "rgb(101, 103, 107)" }} />
                         </SearchIconWrapper>
                         <StyledInputBase
                             placeholder="Search…"
@@ -210,10 +208,7 @@ function Header() {
 
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
-                            <IconButton
-                                onClick={handleOpenUserMenu}
-                                sx={{ p: 0 }}
-                            >
+                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar
                                     alt="Remy Sharp"
                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuSWkkjE4xNHNDS8YGjdMR_j4CziOv0YT9lEfDXY_K&s"
@@ -264,3 +259,16 @@ function Header() {
     );
 }
 export default Header;
+
+{
+    /* <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleOpenNavMenu}
+                            color="inherit"
+                        >
+                            <MenuIcon />
+                        </IconButton> */
+}

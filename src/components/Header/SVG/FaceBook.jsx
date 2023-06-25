@@ -10,13 +10,7 @@ function SvgFacebook() {
             width="40"
         >
             <defs>
-                <linearGradient
-                    id="r1g"
-                    x1="50%"
-                    x2="50%"
-                    y1="97.0782153%"
-                    y2="0%"
-                >
+                <linearGradient id="r1g" x1="50%" x2="50%" y1="97.0782153%" y2="0%">
                     <stop offset="0%" stopColor="#0062E0" />
                     <stop offset="100%" stopColor="#19AFFF" />
                 </linearGradient>

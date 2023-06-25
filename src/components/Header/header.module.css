@@ -1,9 +1,19 @@
-.navList {
+.navHeader {
+    width: 40%;
     display: flex;
-    justify-content: space-around;
-    padding: 10px;
+    justify-content: center;
+    @media (max-width: 700px) {
+        display: none;
+    }
+}
+
+.navListItem {
+    width: 25%;
+    text-align: center;
 }
 
 .navItemLink {
-    color: green;
+    width: 25%;
+    text-align: center;
+    color: rgb(101, 103, 107);
 }
