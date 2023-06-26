@@ -65,3 +65,12 @@
     background-color: #dedede;
   }
 }
+
+.profile_posts__intro_wrap{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;
+  column-gap: 5px;
+  justify-content: flex-end;
+}

@@ -20,6 +20,9 @@
   margin-right: auto;
   display: flex;
   flex-wrap: wrap;
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 }
 .profile_about__title {
   color: #050505;

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./profileIntro.module.scss";
+import EditFormButton from "../ProfileAbout/EditFormButton";
 
 export default function IntroBio({ bio }) {
   const [isEdit, setInputStatus] = useState(false);
@@ -16,21 +17,16 @@ export default function IntroBio({ bio }) {
           </button>
         </>
       ) : (
-        <>
+        <div className={styles.profile_posts__intro_wrap}>
           <textarea
             maxlength="100"
             type="text"
             placeholder="Describe who are you"
             className={styles.profile_posts__intro_bio_textarea}
           />
-          <button
-            className={styles.profile_posts__intro_bio_btn}
-            onClick={editBio}
-          >
-            Cancel
-          </button>
-          <button className={styles.profile_posts__intro_bio_btn}>Save</button>
-        </>
+          <EditFormButton text={"Cancel"} clickAction={editBio}/>
+          <EditFormButton text={"Save"} />
+        </div>
       )}
     </li>
   );

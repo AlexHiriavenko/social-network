@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./profile-navigation.module.scss";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Link, useLocation } from "react-router-dom";
-
+ {/* TODO:  navigation hover selected */}
 export default function ProfileNavigation() {
   const [listStatus, setListStatus] = useState(false);
   const location = useLocation();
