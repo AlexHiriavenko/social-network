@@ -10,7 +10,6 @@ function App() {
     const dispatch = useDispatch();
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
     const navigate = useNavigate();
-    console.log(isLoggedIn);
 
     const handleLogIn = () => {
         dispatch(logIn());
@@ -34,9 +33,7 @@ function App() {
                 </Route>
                 <Route
                     path="/login"
-                    element={
-                        <LogIn isLoggedIn={isLoggedIn} onClick={handleLogIn} />
-                    }
+                    element={<LogIn isLoggedIn={isLoggedIn} onClick={handleLogIn} />}
                 />
             </Routes>
             {isLoggedIn && (

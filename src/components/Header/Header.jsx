@@ -8,7 +8,7 @@ import HeaderLogo from "./HeaderLogo/HeaderLogo";
 function Header() {
     return (
         <AppBar position="sticky" color="inherit">
-            <Container maxWidth="xl">
+            <Container maxWidth="xl" sx={{ pl: { xs: 1, sm: 2 }, pr: { xs: 1, sm: 2 } }}>
                 <Toolbar sx={{ display: "flex", justifyContent: "space-between" }} disableGutters>
                     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                         <HeaderLogo />

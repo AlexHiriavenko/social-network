@@ -5,9 +5,6 @@ const Search = styled("div")(({ theme }) => ({
     position: "relative",
     backgroundColor: "#F0F2F5",
     borderRadius: "50px",
-    // borderBottomRightRadius: "50px",
-    // borderTopLeftRadius: "50px",
-    // borderTopRightRadius: "50px",
     marginLeft: theme.spacing(1),
 }));
 
