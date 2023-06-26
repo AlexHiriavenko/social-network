@@ -1,5 +1,14 @@
 import React from "react";
-import { Box, IconButton, Typography, Menu, Avatar, Tooltip, MenuItem, Badge } from "@mui/material";
+import {
+    Box,
+    IconButton,
+    Typography,
+    Menu,
+    Avatar,
+    Tooltip,
+    MenuItem,
+    Badge,
+} from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ForumIcon from "@mui/icons-material/Forum";
 import AppsIcon from "@mui/icons-material/Apps";
@@ -8,7 +17,8 @@ import { default as AddOption } from "@mui/icons-material/Add";
 function HeaderOptions() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const [anchorElNotifications, setAnchorElNotifications] = React.useState(null);
+    const [anchorElNotifications, setAnchorElNotifications] =
+        React.useState(null);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(document.getElementById("test")); // Устанавливаем anchorEl равным <div className="test"></div>
