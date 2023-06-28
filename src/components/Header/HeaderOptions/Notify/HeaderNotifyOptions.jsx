@@ -1,18 +1,9 @@
 import React from "react";
-import {
-    IconButton,
-    Typography,
-    Menu,
-    Avatar,
-    Tooltip,
-    MenuItem,
-    Badge,
-} from "@mui/material";
+import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem, Badge } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
 function HeaderNotifyOptions() {
-    const [anchorElNotifications, setAnchorElNotifications] =
-        React.useState(null);
+    const [anchorElNotifications, setAnchorElNotifications] = React.useState(null);
 
     const handleOpenMenu = (setAnchor) => () => {
         setAnchor(document.querySelector(".anchor-menu"));
@@ -35,7 +26,6 @@ function HeaderNotifyOptions() {
             </Tooltip>
             <Menu
                 sx={{ mt: "45px" }}
-                id="menu-appbar-notifications"
                 anchorEl={anchorElNotifications}
                 anchorOrigin={{
                     vertical: "top",
@@ -48,6 +38,11 @@ function HeaderNotifyOptions() {
                 }}
                 open={Boolean(anchorElNotifications)}
                 onClose={handleCloseMenu(setAnchorElNotifications)}
+                slotProps={{
+                    paper: {
+                        className: "header__drop-menu",
+                    },
+                }}
             >
                 <MenuItem onClick={handleCloseMenu(setAnchorElNotifications)}>
                     <Typography textAlign="center">Notification 1</Typography>

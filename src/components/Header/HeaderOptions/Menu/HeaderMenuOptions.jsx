@@ -1,13 +1,6 @@
 import AppsIcon from "@mui/icons-material/Apps";
 import React from "react";
-import {
-    IconButton,
-    Typography,
-    Menu,
-    Avatar,
-    Tooltip,
-    MenuItem,
-} from "@mui/material";
+import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem } from "@mui/material";
 
 function HeaderMenuOptions() {
     const [anchorElMenu, setAnchorElMenu] = React.useState(null);
@@ -40,7 +33,6 @@ function HeaderMenuOptions() {
             </Tooltip>
             <Menu
                 sx={{ mt: "45px" }}
-                id="menu-appbar"
                 anchorEl={anchorElMenu}
                 anchorOrigin={{
                     vertical: "top",
@@ -53,6 +45,11 @@ function HeaderMenuOptions() {
                 }}
                 open={Boolean(anchorElMenu)}
                 onClose={handleCloseMenu(setAnchorElMenu)}
+                slotProps={{
+                    paper: {
+                        className: "header__drop-menu",
+                    },
+                }}
             >
                 <MenuItem onClick={handleCloseMenu(setAnchorElMenu)}>
                     <Typography textAlign="center">menu 1</Typography>

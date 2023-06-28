@@ -1,23 +1,16 @@
 import React from "react";
-import {
-    IconButton,
-    Typography,
-    Menu,
-    Avatar,
-    Tooltip,
-    MenuItem,
-} from "@mui/material";
+import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem } from "@mui/material";
 import { default as AddOption } from "@mui/icons-material/Add";
 
 function HeaderCreateOptions() {
     const [anchorElCreate, setAnchorElCreate] = React.useState(null);
 
-    const handleOpenMenu = (setAnchor) => () => {
-        setAnchor(document.querySelector(".anchor-menu"));
+    const handleOpenMenu = () => {
+        setAnchorElCreate(document.querySelector(".anchor-menu"));
     };
 
-    const handleCloseMenu = (setAnchor) => () => {
-        setAnchor(null);
+    const handleCloseMenu = () => {
+        setAnchorElCreate(null);
     };
 
     return (
@@ -32,15 +25,15 @@ function HeaderCreateOptions() {
                     },
                 }}
             >
-                <IconButton onClick={handleOpenMenu(setAnchorElCreate)}>
+                <IconButton onClick={handleOpenMenu}>
                     <Avatar sx={{ bgcolor: "#F0F2F5" }}>
                         <AddOption style={{ color: "black" }} />
                     </Avatar>
                 </IconButton>
             </Tooltip>
             <Menu
+                autoFocus={false}
                 sx={{ mt: "45px" }}
-                id="menu-appbar"
                 anchorEl={anchorElCreate}
                 anchorOrigin={{
                     vertical: "top",
@@ -52,27 +45,21 @@ function HeaderCreateOptions() {
                     horizontal: "right",
                 }}
                 open={Boolean(anchorElCreate)}
-                onClose={handleCloseMenu(setAnchorElCreate)}
+                onClose={handleCloseMenu}
                 slotProps={{
                     paper: {
                         className: "header__drop-menu",
                     },
                 }}
             >
-                <MenuItem onClick={handleCloseMenu(setAnchorElCreate)}>
-                    <Typography textAlign="center">
-                        create something 1
-                    </Typography>
+                <MenuItem onClick={handleCloseMenu}>
+                    <Typography textAlign="center">create something 1</Typography>
                 </MenuItem>
-                <MenuItem onClick={handleCloseMenu(setAnchorElCreate)}>
-                    <Typography textAlign="center">
-                        create something 2
-                    </Typography>
+                <MenuItem onClick={handleCloseMenu}>
+                    <Typography textAlign="center">create something 2</Typography>
                 </MenuItem>
-                <MenuItem onClick={handleCloseMenu(setAnchorElCreate)}>
-                    <Typography textAlign="center">
-                        create something 3
-                    </Typography>
+                <MenuItem onClick={handleCloseMenu}>
+                    <Typography textAlign="center">create something 3</Typography>
                 </MenuItem>
             </Menu>
         </>

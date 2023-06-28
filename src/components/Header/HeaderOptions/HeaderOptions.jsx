@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box } from "@mui/material";
-import HeaderUserOtions from "./HeaderOptions/HeaderUserOtions";
-import HeaderNotifyOptions from "./HeaderOptions/HeaderNotifyOptions";
-import HeaderMessageOptions from "./HeaderOptions/HeaderMessageOptions";
-import HeaderCreateOptions from "./HeaderOptions/HeaderCreateOptions";
-import HeaderMenuOptions from "./HeaderOptions/HeaderMenuOptions";
+import HeaderUserOtions from "./User/HeaderUserOtions";
+import HeaderNotifyOptions from "./Notify/HeaderNotifyOptions";
+import HeaderMessageOptions from "./Messenger/HeaderMessageOptions";
+import HeaderCreateOptions from "./Create/HeaderCreateOptions";
+import HeaderMenuOptions from "./Menu/HeaderMenuOptions";
 
 function HeaderOptions() {
     return (
@@ -14,6 +14,7 @@ function HeaderOptions() {
             <HeaderMessageOptions />
             <HeaderNotifyOptions />
             <HeaderUserOtions />
+            <div className="test"></div>
         </Box>
     );
 }

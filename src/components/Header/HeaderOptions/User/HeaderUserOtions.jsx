@@ -1,14 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../../../redux/login.slice/login.slice";
-import {
-    IconButton,
-    Typography,
-    Menu,
-    Avatar,
-    Tooltip,
-    MenuItem,
-} from "@mui/material";
+import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem } from "@mui/material";
 
 function HeaderUserOtions() {
     const dispatch = useDispatch();
@@ -27,11 +20,7 @@ function HeaderUserOtions() {
     };
     return (
         <>
-            <Tooltip
-                title="Account"
-                sx={{ p: { xs: "4px", sm: 1 } }}
-                className="anchor-menu"
-            >
+            <Tooltip title="Account" sx={{ p: { xs: "4px", sm: 1 } }} className="anchor-menu">
                 <IconButton onClick={handleOpenMenu(setAnchorElUser)}>
                     <Avatar
                         alt="Remy Sharp"
@@ -54,6 +43,11 @@ function HeaderUserOtions() {
                 }}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseMenu(setAnchorElUser)}
+                slotProps={{
+                    paper: {
+                        className: "header__drop-menu",
+                    },
+                }}
             >
                 <MenuItem onClick={handleCloseMenu(setAnchorElUser)}>
                     <Typography textAlign="center">item1</Typography>
