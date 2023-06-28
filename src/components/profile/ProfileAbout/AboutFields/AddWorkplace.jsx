@@ -13,10 +13,8 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { UserAboutInfo } from "../AboutInfo/UserAboutInfo";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import ChangenInfoButton from "../AboutInfo/ChangeInfoButton";
-import { info } from "sass";
 
 const mockInfo = {
   company: "Dan IT",
@@ -48,11 +46,11 @@ const WorkplaceSchema = Yup.object().shape({
   workNow: Yup.boolean(),
 });
 
-// TODO: 
-//  - add state mock info
-
 export default function AddWorkplace() {
+  // States
+  const [info, setInfo] = useState({});
   const [isEdit, setInputStatus] = useState(false);
+  // Form
   const formRef = useRef(null);
   const formik = useFormik({
     initialValues: {
@@ -67,27 +65,68 @@ export default function AddWorkplace() {
     validationSchema: WorkplaceSchema,
     onSubmit: (values) => {
       if (values.timeFrom > values.timeTo) return;
-      console.log(values);
+      setInfo(values);
+      edit();
     },
   });
+  // Functions
   function edit() {
     setInputStatus(!isEdit);
   }
+
+  function removeInfo() {
+    setInfo(null);
+    formik.setValues({
+      company: "",
+      position: "",
+      city: "",
+      description: "",
+      workNow: true,
+      timeFrom: "",
+      timeTo: "",
+    });
+  }
+  // useEffects
   useEffect(() => {
-    console.log();
-  }, [formik]);
+    setInfo(mockInfo);
+  }, []);
+
+  useEffect(() => {
+    if (!info) return;
+    formik.setValues({
+      company: info.company,
+      position: info.position,
+      city: info.city,
+      description: info.description,
+      workNow: info.workNow,
+      timeFrom: info.timeFrom,
+      timeTo: info.timeTo,
+    });
+  }, [info]);
+
   if (!isEdit) {
     return (
       <li>
-        {!mockInfo ? (
+        {!info ? (
           <AddInfoAbout text={"Add a workplace"} clickAction={edit} />
         ) : (
           <div className={styles.about__info_block}>
             <BusinessCenterIcon
               sx={{ color: "#808080", width: "36px", height: "36px" }}
             />
-            <UserAboutInfo {...mockInfo} /> 
-            <ChangenInfoButton infoName={"workplace"} edit={edit}/>
+            <div style={{ width: "100%" }}>
+              <p className={styles.about_info__text}>
+                {info.position} at {info.company}
+              </p>
+              <p className={styles.about_info__text}>
+                {info.timeFrom} to {info.workNow ? "present" : info.timeTo}
+              </p>
+            </div>
+            <ChangenInfoButton
+              infoName={"workplace"}
+              edit={edit}
+              remove={removeInfo}
+            />
           </div>
         )}
       </li>
@@ -150,7 +189,7 @@ export default function AddWorkplace() {
               <Checkbox
                 defaultChecked
                 onChange={formik.handleChange}
-                value={formik.values.workNow}
+                checked={formik.values.workNow}
                 name="workNow"
               />
             }
