@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PrivateRoute from "./utils/router/PrivateRoute";
 import { Home, Watch, Marketplace, Groups, LogIn, NotFound } from "./pages/";
 import Header from "./components/Header/Header";
-import { logIn, logOut } from "./redux/login.slice/login.slice"; // Указать правильный путь к loginSlice
+import { logIn } from "./redux/login.slice/login.slice";
 
 function App() {
     const dispatch = useDispatch();
@@ -14,10 +14,6 @@ function App() {
     const handleLogIn = () => {
         dispatch(logIn());
         navigate("/");
-    };
-
-    const handleLogOut = () => {
-        dispatch(logOut());
     };
 
     return (
@@ -33,14 +29,11 @@ function App() {
                 </Route>
                 <Route
                     path="/login"
-                    element={<LogIn isLoggedIn={isLoggedIn} onClick={handleLogIn} />}
+                    element={
+                        <LogIn isLoggedIn={isLoggedIn} onClick={handleLogIn} />
+                    }
                 />
             </Routes>
-            {isLoggedIn && (
-                <button onClick={handleLogOut} className="tempBtn">
-                    LogOut
-                </button>
-            )}
         </>
     );
 }

@@ -1,14 +1,31 @@
 import React from "react";
-import { Box, IconButton, Typography, Menu, Avatar, Tooltip, MenuItem, Badge } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../../../redux/login.slice/login.slice";
+import {
+    Box,
+    IconButton,
+    Typography,
+    Menu,
+    Avatar,
+    Tooltip,
+    MenuItem,
+    Badge,
+} from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ForumIcon from "@mui/icons-material/Forum";
 import AppsIcon from "@mui/icons-material/Apps";
 import { default as AddOption } from "@mui/icons-material/Add";
 
 function HeaderOptions() {
+    const dispatch = useDispatch();
+    const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+    const handleLogOut = (event) => {
+        dispatch(logOut());
+    };
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const [anchorElNotifications, setAnchorElNotifications] = React.useState(null);
+    const [anchorElNotifications, setAnchorElNotifications] =
+        React.useState(null);
 
     const handleOpenMenu = (setAnchor) => () => {
         setAnchor(document.querySelector(".anchor-menu"));
@@ -70,7 +87,11 @@ function HeaderOptions() {
                     </Badge>
                 </IconButton>
             </Tooltip>
-            <Tooltip title="Account" sx={{ p: { xs: "4px", sm: 1 } }} className="anchor-menu">
+            <Tooltip
+                title="Account"
+                sx={{ p: { xs: "4px", sm: 1 } }}
+                className="anchor-menu"
+            >
                 <IconButton onClick={handleOpenMenu(setAnchorElUser)}>
                     <Avatar
                         alt="Remy Sharp"
@@ -122,6 +143,9 @@ function HeaderOptions() {
                 </MenuItem>
                 <MenuItem onClick={handleCloseMenu(setAnchorElUser)}>
                     <Typography textAlign="center">item2</Typography>
+                </MenuItem>
+                <MenuItem onClick={handleLogOut}>
+                    <Typography textAlign="center">LogOut</Typography>
                 </MenuItem>
             </Menu>
         </Box>
