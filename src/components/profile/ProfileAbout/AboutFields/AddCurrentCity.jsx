@@ -5,21 +5,21 @@ import EditFormButton from "../EditFormButton";
 import { TextField } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import RoomIcon from '@mui/icons-material/Room';
+import HomeIcon from '@mui/icons-material/Home';
 import ChangenInfoButton from "../AboutInfo/ChangeInfoButton";
 
 const mockInfo = {
-  hometown: "Dnipro"
+  currentCity: "Cologne"
 };
 
-const HometownSchema = Yup.object().shape({
-    hometown: Yup.string()
+const CurrentCitySchema = Yup.object().shape({
+    currentCity: Yup.string()
     .min(2, "Must be a valid name")
     .max(25, "Must be a valid name")
     .required("City is required"),
 });
 
-export default function Hometown() {
+export default function AddCurrentCity() {
   // States
   const [info, setInfo] = useState({});
   const [isEdit, setInputStatus] = useState(false);
@@ -28,9 +28,9 @@ export default function Hometown() {
   const formRef = useRef(null);
   const formik = useFormik({
     initialValues: {
-        hometown: "",
+        currentCity: "",
     },
-    validationSchema: HometownSchema,
+    validationSchema: CurrentCitySchema,
     onSubmit: (values) => {
       setInfo(values);
       edit();
@@ -45,7 +45,7 @@ export default function Hometown() {
   function removeInfo() {
     setInfo(null);
     formik.setValues({
-        hometown: "",
+        currentCity: "",
     });
   }
   // useEffects
@@ -56,7 +56,7 @@ export default function Hometown() {
   useEffect(() => {
     if (!info) return;
     formik.setValues({
-        hometown: info.hometown,
+        currentCity: info.currentCity,
     });
   }, [info]);
 
@@ -64,20 +64,20 @@ export default function Hometown() {
     return (
       <li>
         {!info ? (
-          <AddInfoAbout text={"Add hometown"} clickAction={edit} />
+          <AddInfoAbout text={"Add current city"} clickAction={edit} />
         ) : (
           <div className={styles.about__info_block}>
-            <RoomIcon
+            <HomeIcon
               sx={{ color: "#808080", width: "36px", height: "36px" }}
             />
             <div style={{ width: "100%" }}>
               <p className={styles.about_info__text}>
-                From <span style={{ fontWeight: 600 }}>{info.hometown}</span>
+                Live in <span style={{ fontWeight: 600 }}>{info.currentCity}</span>
               </p>
               
             </div>
             <ChangenInfoButton
-              infoName={"hometown"}
+              infoName={"current city"}
               edit={edit}
               remove={removeInfo}
             />
@@ -96,11 +96,11 @@ export default function Hometown() {
           <TextField
             fullWidth
             id="outlined-basic"
-            name="hometown"
-            label="Hometown"
+            name="currentCity"
+            label="Current city"
             variant="outlined"
             onChange={formik.handleChange}
-            value={formik.values.hometown}
+            value={formik.values.currentCity}
           />
           <span className={styles.about__form_separator}></span>
           <EditFormButton text={"Cancel"} clickAction={edit} type={"reset"} />

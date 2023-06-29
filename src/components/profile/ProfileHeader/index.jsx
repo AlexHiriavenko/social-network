@@ -1,6 +1,5 @@
 import { Avatar, AvatarGroup } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import PermMediaIcon from "@mui/icons-material/PermMedia";
 import styles from "./profile-header.module.scss";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 
@@ -23,12 +22,6 @@ export default function ProfileHeader() {
             className={styles.profile__background_picture}
           />
           <div className={styles.profileBgBtnWrap}>
-            {/* <button className={styles.profile__bg_btn}>
-              <PermMediaIcon fontSize="small" />
-              <p className={styles.profile__btnText}>
-                Создать фото обложки с аватаром
-              </p>
-            </button> */}
             <button className={styles.profile__bg_btn}>
               <CameraAltIcon fontSize="small" />
               <p className={styles.profile__btnText}>

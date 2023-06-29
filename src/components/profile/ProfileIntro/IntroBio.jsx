@@ -24,7 +24,7 @@ export default function IntroBio({ bio }) {
             placeholder="Describe who are you"
             className={styles.profile_posts__intro_bio_textarea}
           />
-          <EditFormButton text={"Cancel"} clickAction={editBio}/>
+          <EditFormButton text={"Cancel"} clickAction={editBio} type={"reset"}/>
           <EditFormButton text={"Save"} />
         </div>
       )}

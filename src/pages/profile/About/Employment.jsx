@@ -5,9 +5,9 @@ import styles from "./profileAbout.module.scss";
 export default function Employment() {
   return (
     <>
-      <p >Work</p>
+      <p className={styles.profile_about__info_title}>Work</p>
       <AddWorkplace />
-      <p>High school</p>
+      <p className={styles.profile_about__info_title}>High school</p>
       <AddHighschool />
     </>
   );
