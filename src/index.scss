@@ -1,5 +1,4 @@
 @import "./styles/normalize.scss";
-
 @font-face {
   font-family: "Segoe UI Regular";
   font-style: normal;
@@ -31,4 +30,6 @@
 html {
   font-family: "Segoe UI", Arial, sans-serif;
 }
+@import "./styles/variables.scss";
 @import "./App.scss";
+@import "./components/Header/header.scss";
