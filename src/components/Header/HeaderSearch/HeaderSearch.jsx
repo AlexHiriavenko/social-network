@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import SearchIcon from "@mui/icons-material/Search";
-import Drawer from "@mui/material/Drawer";
-import { Search, SearchIconWrapper, StyledInputBase } from "./searhStyles";
-import { paperClasses } from "@mui/material";
+import { Drawer, List, Divider, Box } from "@mui/material/";
+import Search from "./Search";
 
 function HeaderSearch() {
     const [state, setState] = useState(false);
@@ -17,29 +15,20 @@ function HeaderSearch() {
 
     const list = (
         <div style={{ backgroundColor: "green", opacity: 1 }}>
-            ASFLKASDFASASFDSADKF
+            <Search></Search>
         </div>
     );
 
     return (
-        <Search>
-            <SearchIconWrapper sx={{ width: { xs: "100%" } }}>
-                <SearchIcon
-                    style={{
-                        color: "rgb(101, 103, 107)",
-                        minWidth: "24px",
-                    }}
-                />
-            </SearchIconWrapper>
-            <StyledInputBase
+        <>
+            <Search
                 onClick={toggleDrawer(true)}
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
+                inputClass="header__input"
+                searchIconWrapClass="header__search-icon-wrap"
             />
             <Drawer
                 classes={{
                     modal: "custom-drawer-paper",
-                    paper: "test",
                 }}
                 anchor="left"
                 open={state}
@@ -57,122 +46,17 @@ function HeaderSearch() {
                     },
                 }}
             >
-                {list}
+                {" "}
+                <Box sx={{ width: "320px" }}>
+                    <List>
+                        {" "}
+                        <Search inputClass="test"></Search>
+                        <Divider sx={{ mt: "12px" }}></Divider>
+                    </List>
+                </Box>
             </Drawer>
-        </Search>
+        </>
     );
 }
 
 export default HeaderSearch;
-
-// import React, { useState } from "react";
-// import SearchIcon from "@mui/icons-material/Search";
-// import Drawer from "@mui/material/Drawer";
-// import { Search, SearchIconWrapper, StyledInputBase } from "./searhStyles";
-
-// function HeaderSearch() {
-//     const [state, setState] = useState(false);
-
-//     const toggleDrawer = (open) => (event) => {
-//         setState(prev);
-//     };
-
-//     const handleBackdropClick = () => {
-//         setState(false);
-//     };
-
-//     const list = <div>ASFLKASDFASASFDSADKF</div>;
-
-//     return (
-//         <Search>
-//             <SearchIconWrapper sx={{ width: { xs: "100%" } }}>
-//                 <SearchIcon
-//                     style={{
-//                         color: "rgb(101, 103, 107)",
-//                         minWidth: "24px",
-//                     }}
-//                 />
-//             </SearchIconWrapper>
-//             <StyledInputBase
-//                 onClick={toggleDrawer}
-//                 placeholder="Search…"
-//                 inputProps={{ "aria-label": "search" }}
-//             />
-//             <Drawer
-//                 anchor="left"
-//                 open={state}
-//                 onClose={toggleDrawer}
-//                 classes={{ modal: "custom-drawer-paper" }}
-//                 hideBackdrop={true}
-//                 ModalProps={{
-//                     hideBackdrop: true,
-//                     onBackdropClick: handleBackdropClick,
-//                 }}
-//             >
-//                 {list}
-//             </Drawer>
-//         </Search>
-//     );
-// }
-
-// export default HeaderSearch;
-
-// import React, { useState, useRef, useEffect } from "react";
-// import SearchIcon from "@mui/icons-material/Search";
-// import Drawer from "@mui/material/Drawer";
-// import { Search, SearchIconWrapper, StyledInputBase } from "./searhStyles";
-
-// function HeaderSearch() {
-//     const [state, setState] = useState(false);
-//     const drawerRef = useRef(null);
-
-//     const toggleDrawer = () => {
-//         setState(!state);
-//     };
-
-//     const handleBackdropClick = (event) => {
-//         if (drawerRef.current && !drawerRef.current.contains(event.target)) {
-//             setState(false);
-//         }
-//     };
-
-//     useEffect(() => {
-//         document.addEventListener("mousedown", handleBackdropClick);
-//         return () => {
-//             document.removeEventListener("mousedown", handleBackdropClick);
-//         };
-//     }, []);
-
-//     const list = <div>ASFLKASDFASASFDSADKF</div>;
-
-//     return (
-//         <Search>
-//             <SearchIconWrapper sx={{ width: { xs: "100%" } }}>
-//                 <SearchIcon
-//                     style={{
-//                         color: "rgb(101, 103, 107)",
-//                         minWidth: "24px",
-//                     }}
-//                 />
-//             </SearchIconWrapper>
-//             <StyledInputBase
-//                 onClick={toggleDrawer}
-//                 placeholder="Search…"
-//                 inputProps={{ "aria-label": "search" }}
-//             />
-//             <Drawer
-//                 anchor="left"
-//                 open={state}
-//                 onClose={toggleDrawer}
-//                 classes={{ paper: "custom-drawer-paper" }}
-//                 ModalProps={{
-//                     hideBackdrop: true,
-//                 }}
-//             >
-//                 <div ref={drawerRef}>{list}</div>
-//             </Drawer>
-//         </Search>
-//     );
-// }
-
-// export default HeaderSearch;

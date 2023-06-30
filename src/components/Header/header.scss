@@ -46,19 +46,23 @@
     max-width: 90%;
 }
 
-.custom-drawer-paper{
+.custom-backdrop {
+    opacity: 0 !important;
+}
 
+.header__input {
+    @media (max-width: 1200px) {
+    width: 44px;
+    }
+}
+
+.header__search-icon-wrap {
+    @media (max-width: 1200px) {
+    justify-content: center !important;
+    border-radius: 50%;
+    }
 }
 
 .test {
-    background-color: blue;
-}
-
-.custom-backdrop {
-    background-color: blue;
-    // transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    opacity: 0 !important;
-    // transition: opacity 0;
-    border: 1px solid red;
-
+    height: 44px;
 }
