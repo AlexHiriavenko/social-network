@@ -15,6 +15,8 @@ import {
   Employment,
   Places,
   Contacts,
+  ProfileFriends,
+  ProfilePhotos,
 } from "./pages/";
 import Header from "./components/Header/Header";
 
@@ -47,6 +49,8 @@ function App() {
               <Route path="/profile/about/places" element={<Places />} />
               <Route path="/profile/about/contacts" element={<Contacts />} />
             </Route>
+            <Route path="/profile/friends" element={<ProfileFriends />} />
+            <Route path="/profile/photos" element={<ProfilePhotos />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Route>

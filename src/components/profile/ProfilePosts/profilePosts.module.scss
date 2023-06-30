@@ -3,6 +3,7 @@
   border-radius: 12px;
   padding: 20px 16px;
   max-width: 680px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   display: flex;
@@ -37,7 +38,7 @@
   object-fit: cover;
   cursor: pointer;
   transition-duration: 500ms;
-  &:hover{
+  &:hover {
     transform: scale(0.98);
   }
 }
@@ -45,14 +46,14 @@
 .profile_posts__friend {
   cursor: pointer;
   transition-duration: 500ms;
-  &:hover{
+  &:hover {
     transform: scale(0.98);
   }
 }
 
 .profile_posts__friend_image {
   object-fit: cover;
-  
+
   border-radius: 10px;
   width: 100%;
   max-width: 204px;

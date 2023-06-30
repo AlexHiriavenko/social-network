@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import styles from "./profileAbout.module.scss";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import FriendsList from "../../../components/Profile/ProfileFriends/FriendsList";
 
 export default function ProfileAbout() {
   const location = useLocation();
@@ -56,6 +57,7 @@ export default function ProfileAbout() {
             <Outlet />
           </div>
         </div>
+        <FriendsList />
       </div>
     </section>
   );

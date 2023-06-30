@@ -1,6 +1,8 @@
 import Profile from "./Profile/Profile";
 import ProfilePosts from "./Profile/Posts/ProfilePosts";
 import ProfileAbout from "./Profile/About/ProfileAbout";
+import ProfileFriends from "./Profile/Friends/ProfileFriends";
+import ProfilePhotos from "./Profile/Photos/ProfilePhotos";
 import Home from "./Home/Home";
 import Watch from "./Watch/Watch";
 import Marketplace from "./Marketplace/Marketplace";
@@ -21,6 +23,8 @@ export {
   Profile,
   ProfilePosts,
   ProfileAbout,
+  ProfileFriends,
+  ProfilePhotos,
   Overview,
   Employment,
   Places,
