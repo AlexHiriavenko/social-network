@@ -1,4 +1,35 @@
 @import "./styles/normalize.scss";
+@font-face {
+  font-family: "Segoe UI Regular";
+  font-style: normal;
+  font-weight: normal;
+  src: url("./fonts/Segoe UI.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Segoe UI Italic";
+  font-style: normal;
+  font-weight: normal;
+  src: url("./fonts/Segoe UI Italic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Segoe UI Bold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("./fonts/Segoe UI Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Segoe UI Bold Italic";
+  font-style: normal;
+  font-weight: normal;
+  src: url("./fonts/Segoe UI Bold Italic.woff") format("woff");
+}
+
+html {
+  font-family: "Segoe UI", Arial, sans-serif;
+}
 @import "./styles/variables.scss";
 @import "./App.scss";
-@import "./components/Header/header.scss"
+@import "./components/Header/header.scss";
