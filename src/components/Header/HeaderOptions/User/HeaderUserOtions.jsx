@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../../../redux/login.slice/login.slice";
 import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function HeaderUserOtions() {
     const dispatch = useDispatch();
@@ -49,14 +50,20 @@ function HeaderUserOtions() {
                     },
                 }}
             >
+                <Typography textAlign="center" width="100%">
+                    <Link to={"/profile"} style={{ display: "flex", width: "100%" }}>
+                        Profile
+                    </Link>
+                </Typography>
                 <MenuItem onClick={handleCloseMenu(setAnchorElUser)}>
-                    <Typography textAlign="center">item1</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseMenu(setAnchorElUser)}>
-                    <Typography textAlign="center">item2</Typography>
+                    <Typography textAlign="center" width="100%">
+                        item2
+                    </Typography>
                 </MenuItem>
                 <MenuItem onClick={handleLogOut}>
-                    <Typography textAlign="center">LogOut</Typography>
+                    <Typography textAlign="center" width="100%">
+                        LogOut
+                    </Typography>
                 </MenuItem>
             </Menu>
         </>
