@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Drawer, List, Divider, Box } from "@mui/material/";
+import { Drawer, List, Divider, Box, ListItem, Button } from "@mui/material/";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Search from "./Search";
 
 function HeaderSearch() {
@@ -27,15 +28,13 @@ function HeaderSearch() {
                 searchIconWrapClass="header__search-icon-wrap"
             />
             <Drawer
-                classes={{
-                    modal: "custom-drawer-paper",
-                }}
                 anchor="left"
                 open={state}
                 onClose={toggleDrawer(false)}
                 slotProps={{
                     backdrop: {
-                        className: "custom-backdrop",
+                        style: { opacity: 0 },
+                        className: "header__search-drawer",
                         onClick: handleBackdropClick,
                     },
                 }}
@@ -49,8 +48,20 @@ function HeaderSearch() {
                 {" "}
                 <Box sx={{ width: "320px" }}>
                     <List>
-                        {" "}
-                        <Search inputClass="test"></Search>
+                        <ListItem sx={{ p: 0 }}>
+                            <Button
+                                onClick={handleBackdropClick}
+                                sx={{ minWidth: "44px", minHeight: "44px", borderRadius: "50%" }}
+                            >
+                                <ArrowBackIcon
+                                    style={{
+                                        color: "rgb(101, 103, 107)",
+                                        minWidth: "24px",
+                                    }}
+                                />
+                            </Button>
+                            <Search inputClass="header__drawer-searh-input"></Search>
+                        </ListItem>
                         <Divider sx={{ mt: "12px" }}></Divider>
                     </List>
                 </Box>

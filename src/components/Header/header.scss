@@ -46,9 +46,9 @@
     max-width: 90%;
 }
 
-.custom-backdrop {
-    opacity: 0 !important;
-}
+// .header__search-drawer {
+
+// }
 
 .header__input {
     @media (max-width: 1200px) {
@@ -63,6 +63,6 @@
     }
 }
 
-.test {
+.header__drawer-searh-input {
     height: 44px;
 }
