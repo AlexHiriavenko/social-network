@@ -8,10 +8,7 @@ function Search(props) {
 
     return (
         <SearchDiv sx={{ display: "flex", alignContent: "center" }}>
-            <SearchIconWrapper
-                className={searchIconWrapClass}
-                sx={{ width: { xs: "100%" } }}
-            >
+            <SearchIconWrapper className={searchIconWrapClass} sx={{ width: { xs: "100%" } }}>
                 <SearchIcon
                     style={{
                         color: "rgb(101, 103, 107)",

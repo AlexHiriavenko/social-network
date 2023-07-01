@@ -51,9 +51,13 @@
 // }
 
 .header__input {
-    @media (max-width: 1200px) {
+  @media (max-width: 1200px) {
     width: 44px;
-    }
+  }
+}
+
+.header__drawer-searh-input {
+    height: 44px;
 }
 
 .header__search-icon-wrap {
@@ -61,8 +65,4 @@
     justify-content: center !important;
     border-radius: 50%;
     }
-}
-
-.header__drawer-searh-input {
-    height: 44px;
 }

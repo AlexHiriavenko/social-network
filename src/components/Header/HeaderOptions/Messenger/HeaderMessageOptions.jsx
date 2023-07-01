@@ -6,7 +6,7 @@ function HeaderMessageOptions() {
     const [anchorElMessenger, setAnchorElMessenger] = React.useState(null);
 
     const handleOpenMenu = () => {
-        setAnchorElMessenger(document.querySelector(".test"));
+        setAnchorElMessenger(document.querySelector(".anchor-menu"));
     };
 
     const handleCloseMenu = () => {

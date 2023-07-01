@@ -14,7 +14,6 @@ function HeaderOptions() {
             <HeaderMessageOptions />
             <HeaderNotifyOptions />
             <HeaderUserOtions />
-            <div className="test"></div>
         </Box>
     );
 }

@@ -15,10 +15,6 @@ const SearchIconWrapper = styled("div")(({ theme, className }) => ({
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
-    // [theme.breakpoints.down("lg")]: {
-    //     justifyContent: "center",
-    //     borderRadius: "50%",
-    // },
     ...className,
 }));
 
@@ -38,9 +34,6 @@ const StyledInputBase = styled(InputBase)(({ theme, className }) => ({
     "&:focus-within": {
         // width: "100%",
     },
-    // [theme.breakpoints.down("lg")]: {
-    //     width: "44px",
-    // },
     ...className,
 }));
 
