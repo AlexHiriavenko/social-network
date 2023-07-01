@@ -50,11 +50,13 @@ function HeaderUserOtions() {
                     },
                 }}
             >
-                <Typography textAlign="center" width="100%">
-                    <Link to={"/profile"} style={{ display: "flex", width: "100%" }}>
-                        Profile
-                    </Link>
-                </Typography>
+                <MenuItem onClick={handleCloseMenu(setAnchorElUser)}>
+                    <Typography textAlign="center" width="100%">
+                        <Link to={"/profile"} style={{ display: "flex", width: "100%" }}>
+                            Profile
+                        </Link>
+                    </Typography>
+                </MenuItem>
                 <MenuItem onClick={handleCloseMenu(setAnchorElUser)}>
                     <Typography textAlign="center" width="100%">
                         item2
