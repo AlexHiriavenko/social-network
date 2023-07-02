@@ -38,6 +38,10 @@ function HeaderUserOtions() {
                     vertical: "top",
                     horizontal: "right",
                 }}
+                transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                }}
                 // keepMounted
                 open={Boolean(anchorUserMenu)}
                 onClose={toggleMenu}

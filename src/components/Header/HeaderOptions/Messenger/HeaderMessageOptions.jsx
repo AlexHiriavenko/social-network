@@ -30,6 +30,10 @@ function HeaderMessageOptions() {
                     vertical: "top",
                     horizontal: "right",
                 }}
+                transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                }}
                 // keepMounted
                 open={Boolean(anchorMessageMenu)}
                 onClose={toggleMenu}

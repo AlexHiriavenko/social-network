@@ -30,6 +30,10 @@ function HeaderNotifyOptions() {
                     vertical: "top",
                     horizontal: "right",
                 }}
+                transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                }}
                 // keepMounted
                 open={Boolean(anchorNotifyMenu)}
                 onClose={toggleMenu}

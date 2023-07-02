@@ -35,6 +35,10 @@ function HeaderMenuOptions() {
                     vertical: "top",
                     horizontal: "right",
                 }}
+                transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                }}
                 // keepMounted
                 open={Boolean(anchorElMenu)}
                 onClose={toggleMenu}
