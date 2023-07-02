@@ -30,7 +30,7 @@
         &::after {
             content: "";
             position: absolute;
-            top: 116%;
+            top: 118%;
             left: 50%;
             width: 100%;    
             transform: translate(-50%, 0);
@@ -41,28 +41,26 @@
     }
 }
 
-.header__drop-menu {
+.header__options-drop-menu {
     width: 360px;
     max-width: 90%;
 }
 
-// .header__search-drawer {
-
-// }
-
 .header__input {
+    height: 44px;
   @media (max-width: 1200px) {
-    width: 44px;
+    width: 40px;
+    height: 40px;
   }
 }
 
 .header__drawer-searh-input {
-    height: 44px;
+    height: 40px;
 }
 
 .header__search-icon-wrap {
     @media (max-width: 1200px) {
-    justify-content: center !important;
+    justify-content: center;
     border-radius: 50%;
     }
 }

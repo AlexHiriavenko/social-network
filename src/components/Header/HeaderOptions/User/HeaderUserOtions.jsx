@@ -9,21 +9,22 @@ function HeaderUserOtions() {
     const handleLogOut = (event) => {
         dispatch(logOut());
     };
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
-    React.useState(null);
 
-    const handleOpenMenu = (setAnchor) => () => {
-        setAnchor(document.querySelector(".anchor-menu"));
-    };
+    const [anchorUserMenu, setAnchorUserMenu] = React.useState(null);
+    const toggleMenu = () =>
+        anchorUserMenu
+            ? setAnchorUserMenu(null)
+            : setAnchorUserMenu(document.querySelector(".anchor-menu"));
 
-    const handleCloseMenu = (setAnchor) => () => {
-        setAnchor(null);
-    };
     return (
         <>
             <Tooltip title="Account" sx={{ p: { xs: "4px", sm: 1 } }} className="anchor-menu">
-                <IconButton onClick={handleOpenMenu(setAnchorElUser)}>
+                <IconButton
+                    onClick={toggleMenu}
+                    sx={({ pt: 1, pb: 1 }, { pl: { xs: 0.5, sm: 1 }, pr: { xs: 0.5, sm: 1 } })}
+                >
                     <Avatar
+                        sx={{ minWidth: "40px", minHeight: "40px" }}
                         alt="Remy Sharp"
                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuSWkkjE4xNHNDS8YGjdMR_j4CziOv0YT9lEfDXY_K&s"
                     />
@@ -32,32 +33,28 @@ function HeaderUserOtions() {
             <Menu
                 sx={{ mt: "45px" }}
                 id="menu-appbar"
-                anchorEl={anchorElUser}
+                anchorEl={anchorUserMenu}
                 anchorOrigin={{
                     vertical: "top",
                     horizontal: "right",
                 }}
-                keepMounted
-                transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseMenu(setAnchorElUser)}
+                // keepMounted
+                open={Boolean(anchorUserMenu)}
+                onClose={toggleMenu}
                 slotProps={{
                     paper: {
-                        className: "header__drop-menu",
+                        className: "header__options-drop-menu",
                     },
                 }}
             >
-                <MenuItem onClick={handleCloseMenu(setAnchorElUser)}>
+                <MenuItem onClick={toggleMenu}>
                     <Typography textAlign="center" width="100%">
                         <Link to={"/profile"} style={{ display: "flex", width: "100%" }}>
                             Profile
                         </Link>
                     </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleCloseMenu(setAnchorElUser)}>
+                <MenuItem onClick={toggleMenu}>
                     <Typography textAlign="center" width="100%">
                         item2
                     </Typography>

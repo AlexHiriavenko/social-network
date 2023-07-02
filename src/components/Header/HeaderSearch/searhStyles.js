@@ -26,13 +26,6 @@ const StyledInputBase = styled(InputBase)(({ theme, className }) => ({
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create("width"),
         width: "100%",
-        "&:focus": {
-            outline: "1px solid inherit",
-        },
-    },
-    // Дополнительные стили для состояния focus
-    "&:focus-within": {
-        // width: "100%",
     },
     ...className,
 }));

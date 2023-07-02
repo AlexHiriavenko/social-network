@@ -3,20 +3,17 @@ import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem } from "@mui/ma
 import { default as AddOption } from "@mui/icons-material/Add";
 
 function HeaderCreateOptions() {
-    const [anchorElCreate, setAnchorElCreate] = React.useState(null);
+    const [anchorCreateMenu, setAnchorCreateMenu] = React.useState(null);
 
-    const handleOpenMenu = () => {
-        setAnchorElCreate(document.querySelector(".anchor-menu"));
-    };
-
-    const handleCloseMenu = () => {
-        setAnchorElCreate(null);
-    };
+    const toggleMenu = () =>
+        anchorCreateMenu
+            ? setAnchorCreateMenu(null)
+            : setAnchorCreateMenu(document.querySelector(".anchor-menu"));
 
     return (
         <>
             <Tooltip
-                title="Messenger"
+                title="Create"
                 sx={{
                     p: { xs: "4px", sm: 1 },
                     display: {
@@ -25,8 +22,17 @@ function HeaderCreateOptions() {
                     },
                 }}
             >
-                <IconButton onClick={handleOpenMenu}>
-                    <Avatar sx={{ bgcolor: "#F0F2F5" }}>
+                <IconButton
+                    onClick={toggleMenu}
+                    sx={
+                        ({ pt: 1, pb: 1 },
+                        {
+                            pl: { xs: 0.5, sm: 1 },
+                            pr: { xs: 0.5, sm: 1 },
+                        })
+                    }
+                >
+                    <Avatar sx={{ bgcolor: "#F0F2F5", minWidth: "40px", minHeight: "40px" }}>
                         <AddOption style={{ color: "black" }} />
                     </Avatar>
                 </IconButton>
@@ -34,31 +40,27 @@ function HeaderCreateOptions() {
             <Menu
                 autoFocus={false}
                 sx={{ mt: "45px" }}
-                anchorEl={anchorElCreate}
+                anchorEl={anchorCreateMenu}
                 anchorOrigin={{
                     vertical: "top",
                     horizontal: "right",
                 }}
-                keepMounted
-                transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                }}
-                open={Boolean(anchorElCreate)}
-                onClose={handleCloseMenu}
+                // keepMounted
+                open={Boolean(anchorCreateMenu)}
+                onClose={toggleMenu}
                 slotProps={{
                     paper: {
-                        className: "header__drop-menu",
+                        className: "header__options-drop-menu",
                     },
                 }}
             >
-                <MenuItem onClick={handleCloseMenu}>
+                <MenuItem onClick={toggleMenu}>
                     <Typography textAlign="center">create something 1</Typography>
                 </MenuItem>
-                <MenuItem onClick={handleCloseMenu}>
+                <MenuItem onClick={toggleMenu}>
                     <Typography textAlign="center">create something 2</Typography>
                 </MenuItem>
-                <MenuItem onClick={handleCloseMenu}>
+                <MenuItem onClick={toggleMenu}>
                     <Typography textAlign="center">create something 3</Typography>
                 </MenuItem>
             </Menu>

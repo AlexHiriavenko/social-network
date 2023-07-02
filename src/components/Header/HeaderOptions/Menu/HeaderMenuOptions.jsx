@@ -5,13 +5,10 @@ import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem } from "@mui/ma
 function HeaderMenuOptions() {
     const [anchorElMenu, setAnchorElMenu] = React.useState(null);
 
-    const handleOpenMenu = (setAnchor) => () => {
-        setAnchor(document.querySelector(".anchor-menu"));
-    };
-
-    const handleCloseMenu = (setAnchor) => () => {
-        setAnchor(null);
-    };
+    const toggleMenu = () =>
+        anchorElMenu
+            ? setAnchorElMenu(null)
+            : setAnchorElMenu(document.querySelector(".anchor-menu"));
 
     return (
         <>
@@ -25,8 +22,8 @@ function HeaderMenuOptions() {
                     p: { xs: "4px", sm: 1 },
                 }}
             >
-                <IconButton onClick={handleOpenMenu(setAnchorElMenu)}>
-                    <Avatar sx={{ bgcolor: "#F0F2F5" }}>
+                <IconButton onClick={toggleMenu}>
+                    <Avatar sx={{ bgcolor: "#F0F2F5", minWidth: "40px", minHeight: "40px" }}>
                         <AppsIcon style={{ color: "black" }} />
                     </Avatar>
                 </IconButton>
@@ -38,26 +35,22 @@ function HeaderMenuOptions() {
                     vertical: "top",
                     horizontal: "right",
                 }}
-                keepMounted
-                transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                }}
+                // keepMounted
                 open={Boolean(anchorElMenu)}
-                onClose={handleCloseMenu(setAnchorElMenu)}
+                onClose={toggleMenu}
                 slotProps={{
                     paper: {
-                        className: "header__drop-menu",
+                        className: "header__options-drop-menu",
                     },
                 }}
             >
-                <MenuItem onClick={handleCloseMenu(setAnchorElMenu)}>
+                <MenuItem onClick={toggleMenu}>
                     <Typography textAlign="center">menu 1</Typography>
                 </MenuItem>
-                <MenuItem onClick={handleCloseMenu(setAnchorElMenu)}>
+                <MenuItem onClick={toggleMenu}>
                     <Typography textAlign="center">menu 2</Typography>
                 </MenuItem>
-                <MenuItem onClick={handleCloseMenu(setAnchorElMenu)}>
+                <MenuItem onClick={toggleMenu}>
                     <Typography textAlign="center">menu 3</Typography>
                 </MenuItem>
             </Menu>
