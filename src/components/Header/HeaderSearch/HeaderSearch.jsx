@@ -1,8 +1,9 @@
-import { Drawer, List, Divider, Box, ListItem, Button } from "@mui/material/";
+import { Drawer, List, Divider, Box, ListItem, Button, Typography, Avatar } from "@mui/material/";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Search from "./Search";
 import { toggleVisible } from "../../../redux/searchDrawer.slice/headerSearch.slice";
 import { useSelector, useDispatch } from "react-redux";
+import ListRecentSearches from "./ListRecentSearches";
 
 function HeaderSearch() {
     const dispatch = useDispatch();
@@ -15,6 +16,7 @@ function HeaderSearch() {
     return (
         <>
             <Search
+                inputId="header-search"
                 onClick={toggleDrawer}
                 inputClass="header__input"
                 searchIconWrapClass="header__search-icon-wrap"
@@ -56,9 +58,26 @@ function HeaderSearch() {
                                 }}
                             />
                         </Button>
-                        <Search inputClass="header__drawer-searh-input"></Search>
+                        <Search
+                            inputClass="header__drawer-searh-input"
+                            inputId="header-drawer-search"
+                        ></Search>
                     </Box>
-                    <Divider sx={{ mt: "4px" }}></Divider>
+                    <Divider sx={{ mt: "4px" }} />
+                    <Box>
+                        <Typography
+                            sx={{
+                                flexGrow: 1,
+                                p: 2,
+                                fontFamily: "Segoe UI Bold",
+                            }}
+                            component="h3"
+                            variant="h6"
+                        >
+                            Recent searches
+                        </Typography>
+                        <ListRecentSearches onClick={toggleDrawer} />
+                    </Box>
                 </Box>
             </Drawer>
         </>

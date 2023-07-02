@@ -3,11 +3,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import { SearchDiv, SearchIconWrapper, StyledInputBase } from "./searhStyles";
 
 function Search(props) {
-    const { onClick, inputClass, searchIconWrapClass, ref } = props;
+    const { onClick, inputClass, searchIconWrapClass, inputId } = props;
     const isDrawerOpen = useSelector((state) => state.searchDrawer.isVisible);
 
     return (
-        <SearchDiv sx={{ display: "flex", alignContent: "center" }}>
+        <SearchDiv sx={{ display: "flex", alignContent: "center" }} className="search">
             {
                 <SearchIconWrapper className={searchIconWrapClass} sx={{ width: { xs: "100%" } }}>
                     <SearchIcon
@@ -19,6 +19,7 @@ function Search(props) {
                 </SearchIconWrapper>
             }
             <StyledInputBase
+                id={inputId}
                 readOnly={isDrawerOpen ? false : true}
                 autoFocus={isDrawerOpen ? true : false}
                 className={inputClass}

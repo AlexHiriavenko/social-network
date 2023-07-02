@@ -25,7 +25,7 @@ function HeaderUserOtions() {
                 >
                     <Avatar
                         sx={{ minWidth: "40px", minHeight: "40px" }}
-                        alt="Remy Sharp"
+                        alt="user icon"
                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuSWkkjE4xNHNDS8YGjdMR_j4CziOv0YT9lEfDXY_K&s"
                     />
                 </IconButton>
