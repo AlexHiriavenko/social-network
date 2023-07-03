@@ -1,5 +1,12 @@
 import React from "react";
-import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem } from "@mui/material";
+import {
+    IconButton,
+    Typography,
+    Menu,
+    Avatar,
+    Tooltip,
+    MenuItem,
+} from "@mui/material";
 import { default as AddOption } from "@mui/icons-material/Add";
 
 function HeaderCreateOptions() {
@@ -15,24 +22,21 @@ function HeaderCreateOptions() {
             <Tooltip
                 title="Create"
                 sx={{
-                    p: { xs: "4px", sm: 1 },
                     display: {
                         lg: "none",
                         xs: "flex",
                     },
+                    p: { xs: "4px", sm: 1 },
                 }}
             >
-                <IconButton
-                    onClick={toggleMenu}
-                    sx={
-                        ({ pt: 1, pb: 1 },
-                        {
-                            pl: { xs: 0.5, sm: 1 },
-                            pr: { xs: 0.5, sm: 1 },
-                        })
-                    }
-                >
-                    <Avatar sx={{ bgcolor: "#F0F2F5", minWidth: "40px", minHeight: "40px" }}>
+                <IconButton onClick={toggleMenu}>
+                    <Avatar
+                        sx={{
+                            bgcolor: "#F0F2F5",
+                            minWidth: "40px",
+                            minHeight: "40px",
+                        }}
+                    >
                         <AddOption style={{ color: "black" }} />
                     </Avatar>
                 </IconButton>
@@ -59,13 +63,19 @@ function HeaderCreateOptions() {
                 }}
             >
                 <MenuItem onClick={toggleMenu}>
-                    <Typography textAlign="center">create something 1</Typography>
+                    <Typography textAlign="center">
+                        create something 1
+                    </Typography>
                 </MenuItem>
                 <MenuItem onClick={toggleMenu}>
-                    <Typography textAlign="center">create something 2</Typography>
+                    <Typography textAlign="center">
+                        create something 2
+                    </Typography>
                 </MenuItem>
                 <MenuItem onClick={toggleMenu}>
-                    <Typography textAlign="center">create something 3</Typography>
+                    <Typography textAlign="center">
+                        create something 3
+                    </Typography>
                 </MenuItem>
             </Menu>
         </>
