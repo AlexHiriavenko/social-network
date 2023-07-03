@@ -95,3 +95,33 @@
         background-color: $main-hover-color;
     }   
 }
+
+.header__menu-item-link {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    width: 100%;
+    font-family: "Segoe UI Regular", Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    &:visited {
+        color: inherit;
+    }
+}
+
+.header__menu-item {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.header__menu-item-text {
+    font-family: "Segoe UI Regular", Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+
+.header__menu-item-icon {
+    box-sizing: content-box;
+    padding: 8px;
+    border-radius: 50%;
+    background-color: rgb(230, 230, 230);
+}

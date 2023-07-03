@@ -1,9 +1,18 @@
-import { Drawer, List, Divider, Box, ListItem, Button, Typography, Avatar } from "@mui/material/";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import Search from "./Search";
-import { toggleVisible } from "../../../redux/searchDrawer.slice/headerSearch.slice";
 import { useSelector, useDispatch } from "react-redux";
-import ListRecentSearches from "./ListRecentSearches";
+import {
+    Drawer,
+    List,
+    Divider,
+    Box,
+    ListItem,
+    Button,
+    Typography,
+    Avatar,
+} from "@mui/material/";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Search from "./SeacrhComponents/Search";
+import ListRecentSearches from "./SeacrhComponents/ListRecentSearches";
+import { toggleVisible } from "../../../redux/searchDrawer.slice/headerSearch.slice";
 
 function HeaderSearch() {
     const dispatch = useDispatch();
