@@ -1,12 +1,5 @@
 import React from "react";
-import {
-    IconButton,
-    Typography,
-    Menu,
-    Avatar,
-    Tooltip,
-    MenuItem,
-} from "@mui/material";
+import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem } from "@mui/material";
 import { default as AddOption } from "@mui/icons-material/Add";
 
 function HeaderCreateOptions() {
@@ -19,16 +12,7 @@ function HeaderCreateOptions() {
 
     return (
         <>
-            <Tooltip
-                title="Create"
-                sx={{
-                    display: {
-                        lg: "none",
-                        xs: "flex",
-                    },
-                    p: { xs: "4px", sm: 1 },
-                }}
-            >
+            <Tooltip title="Create" sx={{ p: { xs: "4px", sm: 1 } }}>
                 <IconButton onClick={toggleMenu}>
                     <Avatar
                         sx={{
@@ -63,19 +47,13 @@ function HeaderCreateOptions() {
                 }}
             >
                 <MenuItem onClick={toggleMenu}>
-                    <Typography textAlign="center">
-                        create something 1
-                    </Typography>
+                    <Typography textAlign="center">create something 1</Typography>
                 </MenuItem>
                 <MenuItem onClick={toggleMenu}>
-                    <Typography textAlign="center">
-                        create something 2
-                    </Typography>
+                    <Typography textAlign="center">create something 2</Typography>
                 </MenuItem>
                 <MenuItem onClick={toggleMenu}>
-                    <Typography textAlign="center">
-                        create something 3
-                    </Typography>
+                    <Typography textAlign="center">create something 3</Typography>
                 </MenuItem>
             </Menu>
         </>
