@@ -1,18 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import {
-    Drawer,
-    List,
-    Divider,
-    Box,
-    ListItem,
-    Button,
-    Typography,
-    Avatar,
-} from "@mui/material/";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Drawer, Divider, Box, Button, Typography } from "@mui/material/";
 import Search from "./SeacrhComponents/Search";
 import ListRecentSearches from "./SeacrhComponents/ListRecentSearches";
 import { toggleVisible } from "../../../redux/searchDrawer.slice/headerSearch.slice";
+import BtnArrowBack from "../../Buttons/BtnArrowBack";
 
 function HeaderSearch() {
     const dispatch = useDispatch();
@@ -49,28 +40,11 @@ function HeaderSearch() {
             >
                 <Box sx={{ width: "320px" }}>
                     <Box sx={{ display: "flex", p: 1 }}>
-                        <Button
-                            onClick={toggleDrawer}
-                            sx={{
-                                minWidth: "44px",
-                                minHeight: "44px",
-                                borderRadius: "50%",
-                                "&:hover": {
-                                    backgroundColor: "#F0F2F5",
-                                },
-                            }}
-                        >
-                            <ArrowBackIcon
-                                style={{
-                                    color: "rgb(101, 103, 107)",
-                                    minWidth: "24px",
-                                }}
-                            />
-                        </Button>
+                        <BtnArrowBack onClick={toggleDrawer} />
                         <Search
                             inputClass="header__drawer-searh-input"
                             inputId="header-drawer-search"
-                        ></Search>
+                        />
                     </Box>
                     <Divider sx={{ mt: "4px" }} />
                     <Box>

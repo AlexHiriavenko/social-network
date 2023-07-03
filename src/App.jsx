@@ -36,7 +36,6 @@ function App() {
     return (
         <>
             {isLoggedIn && <Header />}
-            {/* <Header /> */}
             <Routes>
                 <Route element={<PrivateRoute auth={isLoggedIn} />}>
                     <Route path="/" element={<Home />} />
