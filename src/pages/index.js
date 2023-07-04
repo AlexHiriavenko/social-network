@@ -13,20 +13,22 @@ import Overview from "./Profile/About/Overview";
 import Employment from "./Profile/About/Employment";
 import Places from "./Profile/About/Places";
 import Contacts from "./Profile/About/Contacts";
+import UserPage from "./UserPage/UserPage";
 export {
-  Home,
-  Watch,
-  Marketplace,
-  Groups,
-  LogIn,
-  NotFound,
-  Profile,
-  ProfilePosts,
-  ProfileAbout,
-  ProfileFriends,
-  ProfilePhotos,
-  Overview,
-  Employment,
-  Places,
-  Contacts,
+    Home,
+    Watch,
+    Marketplace,
+    Groups,
+    LogIn,
+    NotFound,
+    Profile,
+    ProfilePosts,
+    ProfileAbout,
+    ProfileFriends,
+    ProfilePhotos,
+    Overview,
+    Employment,
+    Places,
+    Contacts,
+    UserPage,
 };

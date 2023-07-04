@@ -31,5 +31,6 @@ html {
   font-family: "Segoe UI", Arial, sans-serif;
 }
 @import "./styles/variables.scss";
+@import "./styles/mixins.scss";
 @import "./App.scss";
 @import "./components/Header/header.scss";
