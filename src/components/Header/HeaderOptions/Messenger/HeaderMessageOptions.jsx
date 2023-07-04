@@ -109,7 +109,7 @@ function HeaderMessageOptions() {
                                 <Typography fontSize={15} fontWeight={600}>
                                     {user.userName}
                                 </Typography>
-                                <Typography fontSize={14}>
+                                <Typography fontSize={14} noWrap>
                                     {user.message}
                                 </Typography>
                             </Box>
