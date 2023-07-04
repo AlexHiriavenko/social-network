@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Typography, Menu, Avatar, MenuItem } from "@mui/material";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import NightsStayIcon from "@mui/icons-material/NightsStay";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 function UserMenu(props) {
     const { anchor, toggleMenu, toggleDisplayModeMenu, logOut } = props;
@@ -34,7 +35,7 @@ function UserMenu(props) {
                         alt="user icon"
                         src="https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg"
                     />
-                    <Typography className="header__menu-item-text">My Profile</Typography>
+                    <Typography fontWeight={700}>My Profile</Typography>
                 </Link>
             </MenuItem>
             <MenuItem
@@ -43,11 +44,18 @@ function UserMenu(props) {
                 sx={{ mt: "10px" }}
             >
                 <NightsStayIcon className="header__menu-item-icon" />
-                <Typography className="header__menu-item-text">Display Mode</Typography>
+                <Typography fontWeight={700}>Display Mode</Typography>
+                <ArrowForwardIosIcon
+                    sx={{ ml: "auto", color: "rgb(101, 103, 107)" }}
+                />
             </MenuItem>
-            <MenuItem onClick={logOut} className="header__menu-item" sx={{ mt: "10px" }}>
+            <MenuItem
+                onClick={logOut}
+                className="header__menu-item"
+                sx={{ mt: "10px" }}
+            >
                 <ExitToAppIcon className="header__menu-item-icon" />
-                <Typography className="header__menu-item-text">Log Out</Typography>
+                <Typography fontWeight={700}>Log Out</Typography>
             </MenuItem>
         </Menu>
     );

@@ -101,8 +101,6 @@
     gap: 16px;
     align-items: center;
     width: 100%;
-    font-family: "Segoe UI Regular", Arial, Helvetica, sans-serif;
-    font-weight: 600;
     &:visited {
         color: inherit;
     }
@@ -114,11 +112,6 @@
     align-items: center;
 }
 
-.header__menu-item-text {
-    font-family: "Segoe UI Regular", Arial, Helvetica, sans-serif;
-    font-weight: 600;
-}
-
 .header__menu-item-icon {
     box-sizing: content-box;
     padding: 8px;
@@ -126,6 +119,7 @@
     background-color: rgb(230, 230, 230);
 }
 
-button {
-color: rgb(174, 173, 173)
+.header__notify-btn {
+    border-radius: 15px;
+    background-color: rgb(230, 228, 228);
 }

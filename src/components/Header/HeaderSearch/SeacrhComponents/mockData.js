@@ -5,6 +5,7 @@ export const mockInfo = [
         userName: "Garry Potter",
         mutualFriends: 3,
         userID: 13241,
+        message: "Hello bro, what's up ?",
     },
     {
         userPhoto:
@@ -12,11 +13,13 @@ export const mockInfo = [
         userName: "Hermione Granger",
         mutualFriends: 2,
         userID: 13242,
+        message: "Will you marry me?",
     },
     {
         userPhoto:
             "https://upload.wikimedia.org/wikipedia/en/thumb/5/5e/Ron_Weasley_poster.jpg/220px-Ron_Weasley_poster.jpg",
         userName: "Ron Weasley",
         userID: 13243,
+        message: "Hello bro, what's up ?",
     },
 ];

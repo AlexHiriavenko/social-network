@@ -1,5 +1,5 @@
 import BtnArrowBack from "../../../Buttons/BtnArrowBack";
-import { Menu, Switch, FormControlLabel, Box } from "@mui/material";
+import { Menu, Switch, FormControlLabel, Box, Typography } from "@mui/material";
 
 function DarkModeMenu(props) {
     const mockDarkMode = false;
@@ -31,9 +31,12 @@ function DarkModeMenu(props) {
                     name="darke mode"
                     value="dark mode"
                     control={
-                        <Switch defaultChecked={mockDarkMode ? true : false} color="primary" />
+                        <Switch
+                            defaultChecked={mockDarkMode ? true : false}
+                            color="primary"
+                        />
                     }
-                    label="Dark Mode"
+                    label={<Typography fontWeight={600}>Dark Mode</Typography>}
                     labelPlacement="start"
                 />
             </Box>

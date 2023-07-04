@@ -1,6 +1,15 @@
 import React from "react";
-import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem } from "@mui/material";
+import {
+    IconButton,
+    Typography,
+    Menu,
+    Avatar,
+    Tooltip,
+    MenuItem,
+} from "@mui/material";
 import { default as AddOption } from "@mui/icons-material/Add";
+import PostAddIcon from "@mui/icons-material/PostAdd";
+import GroupsIcon from "@mui/icons-material/Groups";
 
 function HeaderCreateOptions() {
     const [anchorCreateMenu, setAnchorCreateMenu] = React.useState(null);
@@ -46,14 +55,25 @@ function HeaderCreateOptions() {
                     },
                 }}
             >
-                <MenuItem onClick={toggleMenu}>
-                    <Typography textAlign="center">create something 1</Typography>
+                <Typography
+                    variant="h5"
+                    component={"h4"}
+                    p={2}
+                    fontWeight={600}
+                >
+                    Create
+                </Typography>
+                <MenuItem onClick={toggleMenu} sx={{ gap: 2, mb: 1 }}>
+                    <IconButton sx={{ backgroundColor: "rgb(230, 228, 228)" }}>
+                        <PostAddIcon />
+                    </IconButton>
+                    <Typography fontWeight={600}>Post</Typography>
                 </MenuItem>
-                <MenuItem onClick={toggleMenu}>
-                    <Typography textAlign="center">create something 2</Typography>
-                </MenuItem>
-                <MenuItem onClick={toggleMenu}>
-                    <Typography textAlign="center">create something 3</Typography>
+                <MenuItem onClick={toggleMenu} sx={{ gap: 2, mb: 1 }}>
+                    <IconButton sx={{ backgroundColor: "rgb(230, 228, 228)" }}>
+                        <GroupsIcon />
+                    </IconButton>
+                    <Typography fontWeight={600}>Group</Typography>
                 </MenuItem>
             </Menu>
         </>
