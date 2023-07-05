@@ -19,7 +19,7 @@ export default function IntroBio({ bio }) {
       ) : (
         <div className={styles.profile_posts__intro_wrap}>
           <textarea
-            maxlength="100"
+            maxLength="100"
             type="text"
             placeholder="Describe who are you"
             className={styles.profile_posts__intro_bio_textarea}

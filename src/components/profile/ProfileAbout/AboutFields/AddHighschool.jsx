@@ -206,7 +206,6 @@ export default function AddHighschool() {
           <FormControlLabel
             control={
               <Checkbox
-                defaultChecked
                 onChange={formik.handleChange}
                 checked={formik.values.graduated}
                 name="graduated"
