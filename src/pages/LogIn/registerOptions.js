@@ -1,6 +1,6 @@
 const dayOfBirth = [];
 
-for (let i = 0; i <= 31; i++) {
+for (let i = 1; i <= 31; i++) {
   dayOfBirth.push(i.toString());
 }
 const yearOfBirth = [];
