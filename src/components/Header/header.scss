@@ -1,0 +1,125 @@
+.header__nav {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+        height: 100%;
+    @media (max-width: 700px) {
+        display: none;
+    }
+}
+
+.header__nav-link {
+    @include center-flex;
+    width: 25%;
+    text-align: center;
+    color: $main-content-color;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 10px;
+    &:hover {
+        background-color: $main-hover-color;
+    }
+    &--active {
+        @include center-flex;
+        width: 25%;
+        text-align: center;
+        color: $active-link-color;
+        position: relative;
+        padding-top: 0;
+        padding-bottom: 0;
+        &::after {
+            content: "";
+            position: absolute;
+            top: 118%;
+            left: 50%;
+            width: 100%;    
+            transform: translate(-50%, 0);
+            height: 2px;
+            background-color: $active-link-color;
+            border-color: $active-link-color;
+        }
+    }
+}
+
+.header__options-drop-menu {
+    width: 360px;
+    max-width: 90%;
+}
+
+.header__input {
+    height: 44px;
+  @media (max-width: 1200px) {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.header__drawer-searh-input {
+    height: 40px;
+}
+
+.header__search-icon-wrap {
+    @media (max-width: 1200px) {
+    justify-content: center;
+    border-radius: 50%;
+    }
+}
+
+.search__user-link {
+    display: flex;
+    position: relative;
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+}
+
+.search__user-remove {
+    max-width: 20px;
+    max-height: 20px;
+    box-sizing: content-box;
+    position: absolute;
+    top:50%;
+    right: 5%;
+    transform:translate(0, -50%);
+    padding: 7px;
+    border-radius: 50%;
+
+    cursor: pointer;
+    &:hover {
+        background-color: rgb(230, 230, 230);
+    }
+}
+
+.search__list-item{
+    &:hover {
+        background-color: $main-hover-color;
+    }   
+}
+
+.header__menu-item-link {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    width: 100%;
+    &:visited {
+        color: inherit;
+    }
+}
+
+.header__menu-item {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.header__menu-item-icon {
+    box-sizing: content-box;
+    padding: 8px;
+    border-radius: 50%;
+    background-color: rgb(230, 230, 230);
+}
+
+.header__notify-btn {
+    border-radius: 15px;
+    background-color: rgb(230, 228, 228);
+}

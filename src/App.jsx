@@ -1,13 +1,31 @@
-import { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import PrivateRoute from "./utils/router/PrivateRoute";
-import { Home, Watch, Marketplace, Groups, LogIn, NotFound } from "./pages/";
+import {
+  Home,
+  Watch,
+  Marketplace,
+  Groups,
+  LogIn,
+  NotFound,
+  Profile,
+  ProfilePosts,
+  ProfileAbout,
+  Overview,
+  Employment,
+  Places,
+  Contacts,
+  ProfileFriends,
+  ProfilePhotos,
+  UserPage,
+} from "./pages/";
 import Header from "./components/Header/Header";
+import { logIn } from "./redux/login.slice/login.slice";
+import { useState } from "react";
 
 function App() {
   const [mockAuth, setMockAuth] = useState(false);
   const navigate = useNavigate();
-
   const logIn = () => {
     setMockAuth(true);
     navigate("/");
@@ -35,5 +53,4 @@ function App() {
     </>
   );
 }
-
 export default App;

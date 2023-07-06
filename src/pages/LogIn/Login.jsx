@@ -11,7 +11,10 @@ import { useFormik } from "formik";
 import loginValidation from "./loginValidation";
 import RegisterModal from "./RegisterModal";
 import ForgotForm from "./ForgotForm";
-function LogIn() {
+import { useDispatch } from "react-redux";
+import { logIn } from "../../redux/login.slice/login.slice";
+export default function LogIn() {
+  const dispatch = useDispatch();
   const [registerModal, setRegisterModal] = useState(false);
   const handleRegisterModal = () => {
     setRegisterModal(!registerModal);
@@ -23,6 +26,7 @@ function LogIn() {
     },
     validationSchema: loginValidation,
     onSubmit: () => {
+      dispatch(logIn());
       return console.log({
         email: loginForm.values.email,
         password: loginForm.values.password,
@@ -130,5 +134,3 @@ function LogIn() {
     </>
   );
 }
-
-export default LogIn;
