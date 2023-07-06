@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Box,
   Button,
   FormControl,
@@ -12,9 +13,9 @@ import {
   TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
-import registerValidation from "./registerValidation";
+import registerValidation from "./Validation/registerValidation";
 import { Link } from "react-router-dom";
-
+import { dayOfBirth, yearOfBirth, mounthOfBirst } from "./registerOptions";
 export default function RegisterModal(props) {
   const registerForm = useFormik({
     initialValues: {
@@ -92,7 +93,6 @@ export default function RegisterModal(props) {
             label="Новый пароль"
             id="password"
             required
-            error={!!registerForm.errors.password}
             name="password"
             value={registerForm.values.password}
             onChange={registerForm.handleChange}
@@ -101,62 +101,51 @@ export default function RegisterModal(props) {
             fullWidth
           />
           <FormControl>
-            <InputLabel htmlFor="day">День</InputLabel>
-            <Select
+            <Autocomplete
+              disablePortal
               id="day"
               required
-              error={!!registerForm.errors.day}
+              onBlur={registerForm.handleBlur}
               name="day"
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               value={registerForm.values.day}
-              onChange={registerForm.handleChange}
-              fullWidth>
-              {Array.from({ length: 31 }, (_, index) => (
-                <MenuItem key={index} value={index + 1}>
-                  {index + 1}
-                </MenuItem>
-              ))}
-            </Select>
+              onChange={(event, newValue) => {
+                registerForm.setFieldValue("day", newValue);
+              }}
+              options={dayOfBirth}
+              renderInput={(params) => <TextField {...params} label="День" />}
+            />
           </FormControl>
           <FormControl>
-            <InputLabel htmlFor="mounth">Месяц</InputLabel>
-            <Select
+            <Autocomplete
+              disablePortal
               id="mounth"
               required
-              error={!!registerForm.errors.mounth}
+              onBlur={registerForm.handleBlur}
               name="mounth"
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               value={registerForm.values.mounth}
-              onChange={registerForm.handleChange}
-              fullWidth>
-              <MenuItem value={"янв"}>янв</MenuItem>
-              <MenuItem value={"фев"}>фев</MenuItem>
-              <MenuItem value={"март"}>март</MenuItem>
-              <MenuItem value={"апр"}>апр</MenuItem>
-              <MenuItem value={"мая"}>мая</MenuItem>
-              <MenuItem value={"июн"}>июн</MenuItem>
-              <MenuItem value={"июл"}>июл</MenuItem>
-              <MenuItem value={"авг"}>авг</MenuItem>
-              <MenuItem value={"сент"}>сент</MenuItem>
-              <MenuItem value={"окт"}>окт</MenuItem>
-              <MenuItem value={"нояб"}>нояб</MenuItem>
-              <MenuItem value={"дек"}>дек</MenuItem>
-            </Select>
+              onChange={(event, newValue) => {
+                registerForm.setFieldValue("mounth", newValue);
+              }}
+              options={mounthOfBirst}
+              renderInput={(params) => <TextField {...params} label="Месяц" />}
+            />
           </FormControl>
           <FormControl>
-            <InputLabel htmlFor="year">Год</InputLabel>
-            <Select
+            <Autocomplete
+              disablePortal
               id="year"
               required
-              error={!!registerForm.errors.year}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               name="year"
               value={registerForm.values.year}
-              onChange={registerForm.handleChange}
-              fullWidth>
-              {Array.from({ length: 100 }, (_, index) => (
-                <MenuItem key={index} value={index + 1922}>
-                  {index + 1922}
-                </MenuItem>
-              ))}
-            </Select>
+              onChange={(event, newValue) => {
+                registerForm.setFieldValue("year", newValue);
+              }}
+              options={yearOfBirth}
+              renderInput={(params) => <TextField {...params} label="Год" />}
+            />
           </FormControl>
           <FormControl>
             <RadioGroup

@@ -8,7 +8,7 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 import { useFormik } from "formik";
-import loginValidation from "./loginValidation";
+import loginValidation from "./Validation/loginValidation";
 import RegisterModal from "./RegisterModal";
 import ForgotForm from "./ForgotForm";
 import { useDispatch } from "react-redux";
@@ -120,7 +120,7 @@ export default function LogIn() {
               </p>
               <Button
                 onClick={handleRegisterModal}
-                className="create-btn"
+                className="create--btn"
                 variant="contained"
                 color="success">
                 Создать новый аккаунт

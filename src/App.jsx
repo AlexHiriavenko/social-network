@@ -20,7 +20,6 @@ import {
   UserPage,
 } from "./pages/";
 import Header from "./components/Header/Header";
-import { logIn } from "./redux/login.slice/login.slice";
 import { useState } from "react";
 
 function App() {

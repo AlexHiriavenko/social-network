@@ -1,6 +1,5 @@
 import { Box, Button, Modal, TextField } from "@mui/material";
-import modalStyle from "./modalStyle";
-import forgotValidation from "./forgotValidation";
+import forgotValidation from "./Validation/forgotValidation";
 import { useFormik } from "formik";
 
 export default function ForgotForm(props) {

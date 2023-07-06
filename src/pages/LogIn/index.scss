@@ -86,6 +86,9 @@
 }
 .create--btn {
   background-color: #36a420;
+  @media (max-width: 700px) {
+    font-size: 15px;
+  }
 }
 .invalid-inputs-text {
   color: #f02849;
