@@ -30,13 +30,13 @@
     outline: none;
   }
 }
-.create_post__line{
-    display: block;
-    width: 100%;
-    height: 1px;
-    background-color: #ced0d4;
-    margin-top: 12px;
-    margin-bottom: 8px;
+.create_post__line {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #ced0d4;
+  margin-top: 12px;
+  margin-bottom: 8px;
 }
 .create_post__buttons {
   display: flex;
@@ -49,7 +49,168 @@
   width: 100%;
   padding: 5px;
   border-radius: 10px;
-  &:hover{
+  transition-duration: 300ms;
+  &:hover {
     background-color: #f0f2f5;
+  }
+}
+// Modal
+
+.create_post__modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: scroll;
+  background-color: #ffffff;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 12px;
+  position: relative;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+.create_post__modal_title {
+  color: #050505;
+  font-size: 20px;
+  text-align: center;
+  line-height: 150%;
+  margin-top: 2px;
+}
+
+.create_post__modal_user {
+  display: flex;
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 10px;
+}
+
+.create_post__modal_username {
+  color: #050505;
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 15px;
+}
+
+.create_post__modal_create_area {
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-top: 16px;
+}
+
+.create_post__modal_textarea {
+  width: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  font-size: 24px;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}
+.create_post__photos_btn {
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  transition-duration: 300ms;
+  &:hover {
+    background-color: #e7e7e7;
+  }
+}
+.create_post__modal_image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  width: 80%;
+}
+
+.create_post__addfiles {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #050505;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+.create_post__addfiles_text {
+  color: #050505;
+  font-size: 15px;
+  font-weight: 600;
+  margin-right: auto;
+  line-height: 56px;
+}
+
+.create_post__create_btn {
+  text-align: center;
+  font-weight: 600;
+  color: #b6b6b6;
+  background-color: #e4e6eb;
+  padding-left: 12px;
+  padding-right: 12px;
+  height: 36px;
+  border-radius: 5px;
+  transition-duration: 300ms;
+  width: 100%;
+  cursor: not-allowed;
+}
+
+.create_post__create_btn_active {
+  background-color: #1b74e4;
+  color: #fff;
+  cursor: pointer;
+  &:hover {
+    background-color: #156ad1;
+  }
+}
+// Close button
+
+.close_btn {
+  width: 36px;
+  height: 36px;
+  display: block;
+  background-color: #e4e6eb;
+  transition-duration: 300ms;
+  border-radius: 50%;
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: #d4d4d4;
+  }
+  &__line {
+    &::before {
+      content: "";
+      display: block;
+      background-color: #65676b;
+      width: 2px;
+      height: 25px;
+      border-radius: 1px;
+      transform: rotate(45deg);
+      position: relative;
+      top: 12px;
+    }
+    &::after {
+      content: "";
+      display: block;
+      background-color: #65676b;
+      width: 2px;
+      height: 25px;
+      border-radius: 1px;
+      transform: rotate(135deg);
+      position: relative;
+      bottom: 13px;
+    }
   }
 }
