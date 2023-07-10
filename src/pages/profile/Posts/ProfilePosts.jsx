@@ -4,6 +4,7 @@ import ProfilePostsPhotos from "../../../components/Profile/ProfilePosts/PostsPh
 import ProfilePostsFriends from "../../../components/Profile/ProfilePosts/PostsFriends";
 import { useEffect, useRef, useState } from "react";
 import CreatePost from "../../../components/Posts/CreatePost";
+import PostList from "../../../components/Posts/Post/PostList";
 
 export default function ProfilePosts() {
   const userInfoRef = useRef(null);
@@ -28,6 +29,7 @@ export default function ProfilePosts() {
           }}
         >
           <CreatePost />
+          <PostList />
         </section>
       </div>
     </section>
