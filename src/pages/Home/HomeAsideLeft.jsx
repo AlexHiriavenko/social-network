@@ -1,11 +1,17 @@
 import { List, ListItem, Avatar, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import GroupIcon from "@mui/icons-material/Group";
+import {
+    Group,
+    Store,
+    OndemandVideo,
+    Forum,
+    Diversity3,
+} from "@mui/icons-material";
 
 function HomeAsideLeft() {
     const userName = "Julian Read";
     return (
-        <aside className="sidebar-page">
+        <aside className="sidebar-page sidebar-left">
             <List sx={{ mt: 1 }}>
                 <ListItem className="search__list-item">
                     <Link className="header__menu-item-link" to={"/profile"}>
@@ -21,8 +27,12 @@ function HomeAsideLeft() {
                 </ListItem>
                 <ListItem className="search__list-item">
                     <Link className="header__menu-item-link" to={"#"}>
-                        <GroupIcon
-                            sx={{ minWidth: "40px", minHeight: "40px", fontSize: "40px" }}
+                        <Group
+                            sx={{
+                                minWidth: "40px",
+                                minHeight: "40px",
+                                fontSize: "40px",
+                            }}
                             alt="friends icon"
                             color="primary"
                         />
@@ -31,8 +41,72 @@ function HomeAsideLeft() {
                         </Typography>
                     </Link>
                 </ListItem>
-                <ListItem></ListItem>
-                <ListItem></ListItem>
+                <ListItem className="search__list-item">
+                    <Link
+                        className="header__menu-item-link"
+                        to={"/marketplace"}>
+                        <Store
+                            sx={{
+                                minWidth: "40px",
+                                minHeight: "40px",
+                                fontSize: "40px",
+                            }}
+                            alt="friends icon"
+                            color="primary"
+                        />
+                        <Typography fontSize={15} fontWeight={600}>
+                            Marketplace
+                        </Typography>
+                    </Link>
+                </ListItem>
+                <ListItem className="search__list-item">
+                    <Link className="header__menu-item-link" to={"/watch"}>
+                        <OndemandVideo
+                            sx={{
+                                minWidth: "40px",
+                                minHeight: "40px",
+                                fontSize: "40px",
+                            }}
+                            alt="friends icon"
+                            color="primary"
+                        />
+                        <Typography fontSize={15} fontWeight={600}>
+                            Watch
+                        </Typography>
+                    </Link>
+                </ListItem>
+                <ListItem className="search__list-item">
+                    <Link className="header__menu-item-link" to={"#"}>
+                        <Forum
+                            sx={{
+                                minWidth: "40px",
+                                minHeight: "40px",
+                                fontSize: "40px",
+                            }}
+                            alt="friends icon"
+                            color="primary"
+                        />
+                        <Typography fontSize={15} fontWeight={600}>
+                            Messenger
+                        </Typography>
+                    </Link>
+                </ListItem>
+                <ListItem className="search__list-item">
+                    <Link className="header__menu-item-link" to={"#"}>
+                        <Diversity3
+                            sx={{
+                                minWidth: "40px",
+                                minHeight: "40px",
+                                fontSize: "40px",
+                            }}
+                            alt="friends icon"
+                            color="primary"
+                        />
+                        <Typography fontSize={15} fontWeight={600}>
+                            Groups
+                        </Typography>
+                    </Link>
+                </ListItem>
             </List>
         </aside>
     );
