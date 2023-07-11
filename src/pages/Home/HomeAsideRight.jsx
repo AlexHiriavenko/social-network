@@ -1,4 +1,4 @@
-import { Typography, List, ListItem } from "@mui/material";
+import { Typography, List, ListItem, Divider } from "@mui/material";
 import ContactsList from "./ContactsList";
 
 function HomeAsideRight() {
@@ -13,20 +13,23 @@ function HomeAsideRight() {
                     color: "rgb(101, 103, 107)",
                     fontWeight: 600,
                     fontSize: "17px",
-                }}>
+                }}
+            >
                 Advertisement
             </Typography>
             <List>
                 <ListItem
                     sx={{
                         ":hover": {
-                            backgroundColor: "#F0F2F5",
+                            backgroundColor: "rgb(230, 230, 230)",
                         },
-                    }}>
+                    }}
+                >
                     <a
                         className="sidebar-home__advertisement-link"
                         href="https://dan-it.com.ua/uk/"
-                        target="_blank">
+                        target="_blank"
+                    >
                         <img
                             style={{
                                 paddingTop: "10px",
@@ -42,7 +45,8 @@ function HomeAsideRight() {
                                 fontSize: "15px",
                                 lineHeight: "1",
                                 m: 0,
-                            }}>
+                            }}
+                        >
                             Master modern IT-profession
                         </Typography>
                     </a>
@@ -50,9 +54,10 @@ function HomeAsideRight() {
                 <ListItem
                     sx={{
                         ":hover": {
-                            backgroundColor: "#F0F2F5",
+                            backgroundColor: "rgb(230, 230, 230)",
                         },
-                    }}>
+                    }}
+                >
                     <a className="sidebar-home__advertisement-link" href="#ad">
                         <img
                             style={{
@@ -68,12 +73,14 @@ function HomeAsideRight() {
                                 fontSize: "15px",
                                 lineHeight: "1",
                                 m: 0,
-                            }}>
+                            }}
+                        >
                             Here can be your advertising
                         </Typography>
                     </a>
                 </ListItem>
             </List>
+            <Divider />
             <Typography
                 component="h3"
                 sx={{
@@ -82,10 +89,11 @@ function HomeAsideRight() {
                     color: "rgb(101, 103, 107)",
                     fontWeight: 600,
                     fontSize: "17px",
-                }}>
+                }}
+            >
                 Contacts
             </Typography>
-            <ContactsList></ContactsList>
+            <ContactsList />
         </aside>
     );
 }

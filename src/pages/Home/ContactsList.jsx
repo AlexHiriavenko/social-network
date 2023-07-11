@@ -7,25 +7,21 @@ function ContactsList() {
 
     return (
         <List>
-            {!contactsList.length && (
-                <Typography sx={{ p: 2 }}>No search history yet</Typography>
-            )}
+            {!contactsList.length && <Typography sx={{ p: 2 }}>No search history yet</Typography>}
             {contactsList.map((friend) => (
                 <ListItem
                     key={friend.userID}
                     sx={{ gap: 1 }}
-                    className="search__list-item">
-                    <Link
-                        to={`./user-page/${friend.userID}`}
-                        className="search__user-link">
+                    className="search__list-item home__list-item"
+                >
+                    <Link to={`./user-page/${friend.userID}`} className="search__user-link">
                         <Avatar
                             className="search__user-avatar"
                             sx={{ minWidth: "40px", minHeight: "40px" }}
                             alt="user icon"
-                            src={friend.userPhoto}></Avatar>
-                        <Typography className="search__user-name">
-                            {friend.userName}
-                        </Typography>
+                            src={friend.userPhoto}
+                        ></Avatar>
+                        <Typography className="search__user-name">{friend.userName}</Typography>
                     </Link>
                 </ListItem>
             ))}

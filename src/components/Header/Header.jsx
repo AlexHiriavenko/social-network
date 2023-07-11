@@ -18,14 +18,8 @@ function Header() {
                 boxShadow: shadow,
             }}
         >
-            <Container
-                maxWidth="xl"
-                sx={{ pl: { xs: 1, sm: 2 }, pr: { xs: 1, sm: 2 } }}
-            >
-                <Toolbar
-                    sx={{ display: "flex", justifyContent: "space-between" }}
-                    disableGutters
-                >
+            <Container maxWidth="xl" sx={{ pl: { xs: 1, sm: 2 }, pr: { xs: 1, sm: 2 } }}>
+                <Toolbar sx={{ display: "flex", justifyContent: "space-between" }} disableGutters>
                     <Box
                         sx={{
                             display: "flex",

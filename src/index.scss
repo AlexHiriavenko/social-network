@@ -1,9 +1,11 @@
+@import "./styles/normalize.scss";
 @import "./styles/variables.scss";
 @import "./styles/mixins.scss";
 @import "./App.scss";
 @import "./components/Header/header.scss";
 @import "./pages/pagesStyles.scss";
-@import "./styles/normalize.scss";
+@import "./pages/Home/home.scss";
+
 
 @font-face {
     font-family: "Segoe UI Regular";
