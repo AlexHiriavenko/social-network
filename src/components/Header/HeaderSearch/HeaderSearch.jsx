@@ -36,9 +36,8 @@ function HeaderSearch() {
                     classes: {
                         root: "custom-backdrop",
                     },
-                }}
-            >
-                <Box sx={{ width: "320px" }}>
+                }}>
+                <Box sx={{ width: { xs: "320px", sm: "360px" } }}>
                     <Box sx={{ display: "flex", p: 1 }}>
                         <BtnArrowBack onClick={toggleDrawer} />
                         <Search
@@ -55,8 +54,7 @@ function HeaderSearch() {
                                 fontFamily: "Segoe UI Bold",
                             }}
                             component="h3"
-                            variant="h6"
-                        >
+                            variant="h6">
                             Recent searches
                         </Typography>
                         <ListRecentSearches onClick={toggleDrawer} />

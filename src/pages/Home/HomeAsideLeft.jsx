@@ -11,7 +11,7 @@ import {
 function HomeAsideLeft() {
     const userName = "Julian Read";
     return (
-        <aside className="sidebar-page sidebar-left">
+        <aside className="sidebar-home sidebar-home-left">
             <List sx={{ mt: 1 }}>
                 <ListItem className="search__list-item">
                     <Link className="header__menu-item-link" to={"/profile"}>
@@ -92,7 +92,7 @@ function HomeAsideLeft() {
                     </Link>
                 </ListItem>
                 <ListItem className="search__list-item">
-                    <Link className="header__menu-item-link" to={"#"}>
+                    <Link className="header__menu-item-link" to={"/groups"}>
                         <Diversity3
                             sx={{
                                 minWidth: "40px",
