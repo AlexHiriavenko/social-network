@@ -24,3 +24,24 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.video-list {
+    display: grid;
+    grid-template-columns: repeat(2, 240px);
+    gap: 16px;
+}
+
+.main-title {
+    color: $main-content-color;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+// #watch__wrap-lazy-load {
+//     max-height: 460px;
+//     max-width: 80%;
+//     overflow: "auto";
+//     margin-left: "auto";
+//     margin-right: "auto";
+// }
