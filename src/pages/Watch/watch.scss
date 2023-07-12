@@ -1,0 +1,26 @@
+.checkbox-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.watch__btn-all {
+    width: 80px;
+    background-color: $secondary-hover-color;
+    padding: 5px;
+    border-radius: 8px;
+}
+
+.watch__btn-submit {
+    width: 80px;
+    background-color: $secondary-hover-color;
+    padding: 5px;
+    border-radius: 8px;
+}
+
+.video-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

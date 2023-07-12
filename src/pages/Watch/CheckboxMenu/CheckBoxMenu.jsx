@@ -2,7 +2,7 @@ import { Formik, Field } from "formik";
 
 const CheckboxMenu = () => {
     const initialValues = {
-        options: ["sprots", "edu", "humor", "other"], // Здесь можно задать начальные значения флажков
+        options: ["sprots", "edu", "comedy", "other"], // Здесь можно задать начальные значения флажков
     };
 
     const handleSubmit = (values) => {
@@ -12,29 +12,27 @@ const CheckboxMenu = () => {
     return (
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
             {({ handleSubmit }) => (
-                <form onSubmit={handleSubmit}>
-                    <button>Select All</button>
+                <form onSubmit={handleSubmit} className="checkbox-form">
+                    <button className="watch__btn-all">Select All</button>
                     <label>
                         <Field type="checkbox" name="options" value="sprots" />
                         Sports
                     </label>
-                    <br />
                     <label>
-                        <Field type="checkbox" name="options" value="humor" />
-                        Humor
+                        <Field type="checkbox" name="options" value="comedy" />
+                        Comedy
                     </label>
-                    <br />
                     <label>
                         <Field type="checkbox" name="options" value="edu" />
                         Education
                     </label>
-                    <br />
                     <label>
                         <Field type="checkbox" name="options" value="other" />
                         Other
                     </label>
-                    <br />
-                    <button type="submit">Filter</button>
+                    <button type="submit" className="watch__btn-submit">
+                        Filter
+                    </button>
                 </form>
             )}
         </Formik>
