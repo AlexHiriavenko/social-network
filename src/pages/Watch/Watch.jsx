@@ -29,16 +29,9 @@ function Watch() {
                 <h2 className="main-title">
                     What would you like to watch today?
                 </h2>
-                <div
-                    id="test"
-                    style={{
-                        maxHeight: "460px",
-                        maxWidth: "690px",
-                        overflow: "auto",
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                    }}>
+                <div id="lazyWrapper">
                     <InfiniteScroll
+                        className="test"
                         dataLength={visibleItems}
                         next={handleLoadMore}
                         hasMore={hasMoreItems}
@@ -48,8 +41,11 @@ function Watch() {
                             </p>
                         }
                         endMessage={<p>No more videos to load.</p>}
-                        scrollableTarget="test">
-                        <LazyLoad height={200} once>
+                        scrollableTarget="lazyWrapper">
+                        <LazyLoad
+                            height={200}
+                            once
+                            className="lazyload-wrapper">
                             <List className="video-list">
                                 {mockVideoList
                                     .slice(0, visibleItems)
@@ -63,6 +59,8 @@ function Watch() {
                                             }}>
                                             <YouTubeVideo
                                                 videoURL={video.url}
+                                                w={video.width}
+                                                h={video.height}
                                             />
                                             <div style={{ height: "30px" }}>
                                                 {" "}
