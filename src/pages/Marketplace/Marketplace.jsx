@@ -7,7 +7,7 @@ function Marketplace() {
                 <p className="Dialog-message">Sidebar content</p>
             </Sidebar>
             <main className="main-page-content">
-                <h2 className="tempTitle">Marketplace Page Content</h2>
+                <h2 className="main-title">Marketplace Page Content</h2>
             </main>
         </div>
     );

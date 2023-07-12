@@ -7,7 +7,7 @@ function Groups() {
                 <p className="Dialog-message">Sidebar content</p>
             </Sidebar>
             <main className="main-page-content">
-                <h2 className="tempTitle">Groups Page Content</h2>
+                <h2 className="main-title">Groups Page Content</h2>
             </main>
         </div>
     );
