@@ -19,6 +19,10 @@
 .main-title {
     color: $main-content-color;
     margin-top: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     text-align: center;
+    @media (max-width: 500px) {
+    margin-bottom: 0;
+    font-size: 20px;
+    }
 }

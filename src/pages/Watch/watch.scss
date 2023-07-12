@@ -10,6 +10,8 @@
     background-color: $secondary-hover-color;
     padding: 5px;
     border-radius: 8px;
+    background-color:  #1976d2;
+    color: white;
 }
 
 .watch__btn-submit {
@@ -17,19 +19,21 @@
     background-color: $secondary-hover-color;
     padding: 5px;
     border-radius: 8px;
+    background-color:  #1976d2;
+    color: white;
+}
+
+.lazyload-wrapper {
+    display: flex;
+    justify-content: center;
+    max-width: 100%;
 }
 
 .video-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.video-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 540px;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: minmax(300px, 440px);
+    justify-items: center;
     margin-left: auto;
     margin-right: auto;
 }
@@ -40,11 +44,11 @@
     overflow-y: auto;
 }
 
-.lazyload-wrapper {
-    display: flex;
-    justify-content: center;
-}
-
 .test {
     overflow-x: hidden !important;
+}
+
+.iframe {
+    width: 280px;
+    height: 430px;
 }

@@ -1,13 +1,16 @@
 import React from "react";
 import { Formik, Field } from "formik";
 
-const CheckboxMenu = () => {
+const CheckboxMenu = (props) => {
+    const { onFilterCategories } = props;
+
     const initialValues = {
-        options: ["sprots", "edu", "comedy", "other"],
+        options: ["sports", "edu", "comedy", "other"],
     };
 
     const handleSubmit = (values) => {
-        console.log(values.options);
+        const checkedItems = values.options;
+        onFilterCategories(checkedItems);
     };
 
     const handleSelectAll = (formik) => {
@@ -24,11 +27,12 @@ const CheckboxMenu = () => {
                     <button
                         type="button"
                         className="watch__btn-all"
-                        onClick={() => handleSelectAll(formik)}>
+                        onClick={() => handleSelectAll(formik)}
+                    >
                         Select All
                     </button>
                     <label>
-                        <Field type="checkbox" name="options" value="sprots" />
+                        <Field type="checkbox" name="options" value="sports" />
                         Sports
                     </label>
                     <label>

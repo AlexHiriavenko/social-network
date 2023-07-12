@@ -92,7 +92,7 @@ export const mockVideoList = [
     },
     {
         url: "https://www.youtube.com/embed/pVSEU9RlzK8",
-        genre: "sports",
+        genre: "other",
         width: "344",
         height: "611",
         title: "Кращі психологи - це друзі!",
