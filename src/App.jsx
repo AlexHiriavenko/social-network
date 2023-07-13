@@ -1,6 +1,7 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PrivateRoute from "./utils/router/PrivateRoute";
+import Login from './pages/LogIn/Login'
 import {
   Home,
   Watch,
@@ -31,7 +32,7 @@ function App() {
   };
 
   return (
-    <>
+    <>  <Login/>
       {mockAuth && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
@@ -45,6 +46,7 @@ function App() {
         />
       </Routes>
       {mockAuth && (
+
         <button onClick={() => setMockAuth(false)} className="tempBtn">
           LogOut
         </button>

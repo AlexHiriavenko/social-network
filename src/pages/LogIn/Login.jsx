@@ -26,10 +26,15 @@ export default function LogIn() {
     },
     validationSchema: loginValidation,
     onSubmit: () => {
-      dispatch(logIn());
+
+     const  email = loginForm.values.email
+     const  password = loginForm.values.password
+
+      dispatch(logIn({email:loginForm.values.email,password:loginForm.values.password}));
+
       return console.log({
-        email: loginForm.values.email,
-        password: loginForm.values.password,
+        email:email ,
+        password: password,
       });
     },
   });

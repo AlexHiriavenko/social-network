@@ -1,24 +1,52 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
+import instance from "../../instance";
 
-const initialState = {
-    isLoggedIn: localStorage.getItem("isLoggedIn") === "true" ? true : false,
-};
+export const logIn = createAsyncThunk(
+    'Login/logIn',
+    async function({email,password}) {
+        const token   =  await instance.post('/api/auth/login',{email:email,password:password});
+        localStorage.setItem('token',JSON.stringify(token))
+        return token;
+    }
+)
 
-const loginSlice = createSlice({
-    name: "login",
-    initialState,
-    reducers: {
-        logIn: function (state, action) {
-            state.isLoggedIn = true;
-            localStorage.setItem("isLoggedIn", true);
+const LoginSlice = createSlice({
+        name: 'Login',
+        initialState: {
+            isLoading: true,
+            token: JSON.parse(localStorage.getItem("token")),
         },
-        logOut: function (state, action) {
-            state.isLoggedIn = false;
-            localStorage.setItem("isLoggedIn", false);
-        },
-    },
-});
+        reducers: {
+            login: (state, action) => {
+                state.value = action.payload
+            },
 
-export const { logIn, logOut } = loginSlice.actions;
+            logOut: (state, action) => {
+                state.value = action.payload
+                localStorage.removeItem('token')
+            },
+            extraReducers: {
+                [logIn.pending]: (state) => {
+                    state.isLoading = true;
+                },
+                [logIn.fulfilled]: (state, action) => {
+                    state.isLoading = false
+                    state.value = action.payload
+                },
+                [logIn.rejected]: (state) => {
+                }
+            }
 
-export default loginSlice.reducer;
+
+        }
+    }
+)
+
+
+
+
+export  const { login, logOut } = LoginSlice.actions;
+
+
+
+export default LoginSlice.reducer;
