@@ -32,9 +32,7 @@ export default function LogIn() {
      const  email = loginForm.values.email
      const  password = loginForm.values.password
       dispatch(logIn({email:loginForm.values.email,password:loginForm.values.password}));
-    //  const token   =  await axios.post('http://localhost:9000/api/auth/login',{email:email,password:password});
-     // localStorage.setItem('token',JSON.stringify(token))
-    //  console.log(token)
+
       return console.log({
         email:email ,
         password: password

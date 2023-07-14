@@ -11,7 +11,13 @@ export const logIn = createAsyncThunk(
         return token;
     }
 )
+export const register = createAsyncThunk(
+    'Login/register',
+    async function({emailOrPhone,password,name,surname,gender,mounth,day,year}) {
+         await axios.post('http://localhost:9000/api/auth/registration',{email:emailOrPhone,password:password,name:name,surname:surname,gender:gender,month:mounth,day:day,year:year});
 
+    }
+)
 const LoginSlice = createSlice({
         name: 'Login',
         initialState: {
