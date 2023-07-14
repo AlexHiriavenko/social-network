@@ -13,6 +13,8 @@ import RegisterModal from "./RegisterModal";
 import ForgotForm from "./ForgotForm";
 import { useDispatch } from "react-redux";
 import { logIn } from "../../redux/login.slice/login.slice";
+import instance from "../../instance.js";
+import axios from 'axios';
 export default function LogIn() {
   const dispatch = useDispatch();
   const [registerModal, setRegisterModal] = useState(false);
@@ -25,16 +27,17 @@ export default function LogIn() {
       password: "",
     },
     validationSchema: loginValidation,
-    onSubmit: () => {
+    onSubmit: async() => {
 
      const  email = loginForm.values.email
      const  password = loginForm.values.password
-
       dispatch(logIn({email:loginForm.values.email,password:loginForm.values.password}));
-
+    //  const token   =  await axios.post('http://localhost:9000/api/auth/login',{email:email,password:password});
+     // localStorage.setItem('token',JSON.stringify(token))
+    //  console.log(token)
       return console.log({
         email:email ,
-        password: password,
+        password: password
       });
     },
   });
