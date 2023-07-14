@@ -25,7 +25,7 @@ export default function ProfileHeader() {
             <button className={styles.profile__bg_btn}>
               <CameraAltIcon fontSize="small" />
               <p className={styles.profile__btnText}>
-                Редактировать фото обложки
+                Edit cover photo
               </p>
             </button>
           </div>
@@ -46,7 +46,7 @@ export default function ProfileHeader() {
           <div className={styles.profile__user_info}>
             <p className={styles.profile__user_name}>{user.full_name}</p>
             <a href="#" className={styles.profile__user_friends}>
-              Друзья: {54}
+              Friends: {54}
             </a>
             <AvatarGroup max={6} className={styles.profile__avatar_group}>
               <Avatar alt="Remy Sharp" src="#" />
@@ -63,7 +63,7 @@ export default function ProfileHeader() {
               className={`${styles.profile__edit_btn} ${styles.profile__bg_btn}`}
             >
               <ModeEditOutlineIcon sx={{ color: "#050505" }} />
-              Редактировать профиль
+              Edit profile
             </button>
             <button className={`${styles.profile__show_btn} ${styles.profile__show_btn_active} `}>
               <span className={styles.profile__show_line}></span>

@@ -28,19 +28,16 @@ function ListRecentSearches(props) {
                 <ListItem
                     key={friend.userID}
                     sx={{ gap: 1 }}
-                    className="search__list-item"
-                >
+                    className="search__list-item">
                     <Link
                         to={`./user-page/${friend.userID}`}
                         onClick={onClick}
-                        className="search__user-link"
-                    >
+                        className="search__user-link">
                         <Avatar
                             className="search__user-avatar"
                             sx={{ minWidth: "40px", minHeight: "40px" }}
                             alt="user icon"
-                            src={friend.userPhoto}
-                        ></Avatar>
+                            src={friend.userPhoto}></Avatar>
                         <Typography className="search__user-name">
                             {friend.userName}
                         </Typography>
@@ -49,7 +46,7 @@ function ListRecentSearches(props) {
                         id={friend.userID}
                         onClick={handleRemoveUser}
                         className="search__user-remove"
-                    ></CloseIcon>
+                    />
                 </ListItem>
             ))}
         </List>

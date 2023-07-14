@@ -37,18 +37,13 @@ export default function FriendsList() {
         newFriends.push(friend);
       }
     });
-    // if (newFriends.length === 0) {
-    //   setFiltredFriends(false);
-    // } else {
     setFiltredFriends(newFriends);
-    // }
   }
   useEffect(() => {
     if (mockInfo) {
       setFiltredFriends(mockInfo);
     }
   }, []);
-  // console.log(searchRef.current.value);
   return (
     <div className={styles.friends__block}>
       <h2 className={styles.friends__title}>Friends</h2>
