@@ -3,6 +3,9 @@ import styles from "./friends.module.scss";
 import { useEffect } from "react";
 import FriendItem from "./FriendItem";
 import SearchIcon from "@mui/icons-material/Search";
+import { ContentBlock } from "../StyledComponents/ContentBlock/StyledComponents";
+
+
 const mockInfo = [
   {
     userPhoto:
@@ -45,7 +48,7 @@ export default function FriendsList() {
     }
   }, []);
   return (
-    <div className={styles.friends__block}>
+    <ContentBlock>
       <h2 className={styles.friends__title}>Friends</h2>
       <div className={styles.friends__search}>
         <SearchIcon sx={{ color: "#767676" }} />
@@ -69,6 +72,6 @@ export default function FriendsList() {
             No results for: {searchRef.current && searchRef.current.value}
           </p>
         ))}
-    </div>
+    </ContentBlock>
   );
 }

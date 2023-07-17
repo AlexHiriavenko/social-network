@@ -15,7 +15,6 @@ export default function Post(props) {
     });
   }, [photosRef]);
   useEffect(() => {
-    console.log(photosRef.current.width);
     if (photosRef.current) setPhotoHeight(photosRef.current.width);
   }, []);
   return (

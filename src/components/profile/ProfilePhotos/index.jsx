@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./profilePhotos.module.scss";
+import { ContentBlock } from "../StyledComponents/ContentBlock/StyledComponents";
 const mockImg = [
   "https://www.ictputovanja.hr/data/public/slike-za-novosti/Island-kucica.jpg",
   "https://i.pinimg.com/564x/15/f0/e0/15f0e0372d1e04df5f325d00e5899069.jpg",
@@ -22,7 +23,7 @@ export default function Photos() {
     if (photosRef.current) setPhotoHeight(photosRef.current.width);
   }, []);
   return (
-    <div className={styles.profile_photos}>
+    <ContentBlock>
       <h2 className={styles.profile_photos__title}>Photos</h2>
       <label className={styles.profile_photos__btn}>
         <input type="file" />
@@ -43,6 +44,6 @@ export default function Photos() {
           );
         })}
       </div>
-    </div>
+    </ContentBlock>
   );
 }

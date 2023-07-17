@@ -13,14 +13,8 @@
 }
 
 .profile_about__block {
-  background-color: #fff;
-  border-radius: 12px;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 20px;
-  display: flex;
-  flex-wrap: wrap;
+  margin-bottom: 16px;
+  max-width: none;
   @media (max-width: 600px) {
     flex-direction: column;
   }

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import styles from "./profileAbout.module.scss";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import FriendsList from "../../../components/Profile/ProfileFriends/FriendsList";
+import { ContentBlock } from "../../../components/profile/StyledComponents/ContentBlock/StyledComponents";
 
 export default function ProfileAbout() {
   const location = useLocation();
@@ -20,7 +21,7 @@ export default function ProfileAbout() {
   return (
     <section className={styles.profile_about}>
       <div className={styles.profile_about__container}>
-        <div className={styles.profile_about__block}>
+        <ContentBlock className={styles.profile_about__block}>
           <nav className={styles.profile_about__nav} ref={navRef}>
             <h2 className={styles.profile_about__title}>About</h2>
             <Link
@@ -56,7 +57,7 @@ export default function ProfileAbout() {
           <div className={styles.profile_about__content}>
             <Outlet />
           </div>
-        </div>
+        </ContentBlock>
         <FriendsList />
       </div>
     </section>

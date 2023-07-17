@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "./profilePosts.module.scss";
 import { useEffect, useRef, useState } from "react";
+import { ContentBlock } from "../StyledComponents/ContentBlock/StyledComponents";
 const mockFriends = [
   {
     userPhoto:
@@ -29,7 +30,7 @@ export default function ProfilePostsFriends() {
     if (photosRef.current) setPhotoHeight(photosRef.current.width);
   }, []);
   return (
-    <section className={styles.profile_posts__block}>
+    <ContentBlock className={styles.profile_posts__block}>
       <h2 className={styles.profile_posts__block_title}>Friends</h2>
       <Link
         to={"/profile/friends"}
@@ -61,6 +62,6 @@ export default function ProfilePostsFriends() {
           );
         })}
       </ul>
-    </section>
+    </ContentBlock>
   );
 }

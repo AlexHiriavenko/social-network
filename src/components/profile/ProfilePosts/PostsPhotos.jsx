@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "./profilePosts.module.scss";
 import { useEffect, useRef, useState } from "react";
+import { ContentBlock } from "../StyledComponents/ContentBlock/StyledComponents";
 const mockImg = [
   "https://www.ictputovanja.hr/data/public/slike-za-novosti/Island-kucica.jpg",
   "https://i.pinimg.com/564x/15/f0/e0/15f0e0372d1e04df5f325d00e5899069.jpg",
@@ -23,7 +24,7 @@ export default function ProfilePostsPhotos() {
     if (photosRef.current) setPhotoHeight(photosRef.current.width);
   }, []);
   return (
-    <section className={styles.profile_posts__block}>
+    <ContentBlock className={styles.profile_posts__block}>
       <h2 className={styles.profile_posts__block_title}>Photos</h2>
       <Link to={"/profile/photos"} className={styles.profile_posts__block_link}>
         See all photos
@@ -43,6 +44,6 @@ export default function ProfilePostsPhotos() {
           );
         })}
       </div>
-    </section>
+    </ContentBlock>
   );
 }

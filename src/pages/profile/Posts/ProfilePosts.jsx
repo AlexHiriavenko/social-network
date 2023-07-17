@@ -11,7 +11,9 @@ export default function ProfilePosts() {
   const [userInfoHeight, setUserInfoHeight] = useState(0);
   useEffect(() => {
     setTimeout(() => {
-      setUserInfoHeight(userInfoRef.current.getBoundingClientRect().height);
+      if (userInfoRef.current !== null) {
+        setUserInfoHeight(userInfoRef.current.getBoundingClientRect().height);
+      }
     }, 500);
   }, [userInfoRef.current]);
   return (
