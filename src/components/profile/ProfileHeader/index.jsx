@@ -1,14 +1,10 @@
 import { Avatar, AvatarGroup, Box, Typography } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import styles from "./profile-header.module.scss";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import styled from "@emotion/styled";
-import {
-  ProfileContainer,
-  StyledProfileButton,
-} from "../StyledComponents/ContentBlock/StyledComponents";
-import { useDispatch, useSelector } from "react-redux";
-import { darkMode, lightMode } from "../../../redux/ThemeSlice/theme.slice";
+import { ProfileContainer } from "../StyledComponents/ContentBlock/StyledComponents";
+import ProfilePageButton from "../ProfilePageButton/ProfilePageButton";
+import { useState } from "react";
 
 const user = {
   full_name: "Julian Read",
@@ -18,131 +14,219 @@ const user = {
     "https://image.geo.de/30145342/t/Cs/v4/w1440/r0/-/nationalpark-saechsische-schweiz-mauritius-reya43-jpg--82748-.jpg",
 };
 
-export default function ProfileHeader() {
-  const themeMode = useSelector((state) => state.theme.mode);
-  const dispatch = useDispatch();
-
-  const StyledProfileHeader = styled(Box)(({ theme }) => ({
-    backgroundColor: (themeMode === "light"
-      ? theme.palette.light
-      : theme.palette.dark
-    ).backgroundSection,
-  }));
-  const StyledProfileShowMutualFriend = styled("button")(({ theme }) => ({
-    backgroundColor: (themeMode === "light"
-      ? theme.palette.light
-      : theme.palette.dark
-    ).buttonBackground,
-    "&:hover": {
-      backgroundColor: (themeMode === "light"
-        ? theme.palette.light
-        : theme.palette.dark
-      ).buttonBackgroundHover,
-    },
-  }));
-  const StyledProfileShowButtonLine = styled("span")(({ theme }) => ({
-    "&::before": {
-      backgroundColor: (themeMode === "light"
-        ? theme.palette.light
-        : theme.palette.dark
-      ).textColor,
-    },
-    "&::after": {
-      backgroundColor: (themeMode === "light"
-        ? theme.palette.light
-        : theme.palette.dark
-      ).textColor,
-    },
-  }));
-  const StyledProfileBackgroundButton = styled(StyledProfileButton)({
-    color: "#ffffff",
-    backgroundColor: "rgba(0, 0, 0, 0.53)",
-    "&:hover": {
-      backgroundColor: "rgba(0, 0, 0, 0.63)",
-    },
-  });
-  const StyledProfileUserPicture = styled("img")(({ theme }) => ({
-    objectFit: "cover",
-    borderRadius: "50%",
-    border: `5px solid ${
-      (themeMode === "light" ? theme.palette.light : theme.palette.dark)
-        .backgroundSection
-    }`,
-    cursor: "pointer",
-    "&:active": {
-      transform: "scale(0.95)",
-    },
-  }));
-  const StyledProfileUserPictureButton = styled("button")(({ theme }) => ({
-    position: "absolute",
-    bottom: "17px",
-    right: "2px",
-    width: "36px",
-    height: "36px",
-    borderRadius: "50%",
-    backgroundColor: (themeMode === "light"
-      ? theme.palette.light
-      : theme.palette.dark
-    ).buttonBackground,
-    display: "flex",
+const StyledProfileBackgroundWrapper = styled(Box)({
+  maxHeight: "450px",
+  overflow: "hidden",
+  borderBottomRightRadius: " 12px",
+  borderBottomLeftRadius: " 12px",
+  position: "relative",
+});
+const StyledProfileBackgroundWButtonsWrapper = styled(Box)({
+  position: "absolute",
+  right: "25px",
+  bottom: "15px",
+  maxWidth: "317px",
+});
+const StyledProfileBackgroundWButtonText = styled(Typography)({
+  "@media (max-width: 850px)": {
+    display: "none",
+  },
+});
+const StyledProfileHeader = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.backgroundColor.section,
+}));
+const StyledProfileShowMutualFriend = styled("button")(({ theme }) => ({
+  backgroundColor: theme.palette.buttonColor.background,
+  transitionDuration: "500ms",
+  height: "34px",
+  width: "48px",
+  borderRadius: "5px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  "&:hover": {
+    backgroundColor: theme.palette.buttonColor.backgroundHover,
+  },
+}));
+const StyledProfileShowButtonLine = styled("span")(({ theme }) => ({
+  "&::before": {
+    content: '""',
+    display: "block",
+    width: "10px",
+    height: "3px",
+    backgroundColor: theme.palette.textColor.main,
+    transform: "rotate(30deg)",
+    borderRadius: "1px",
+    position: "relative",
+    top: "1px",
+    right: "4px",
+  },
+  "&::after": {
+    content: '""',
+    display: "block",
+    width: "10px",
+    height: "3px",
+    backgroundColor: theme.palette.textColor.main,
+    transform: "rotate(-30deg)",
+    position: "relative",
+    borderRadius: "1px",
+    top: "-2px",
+    right: "-3px",
+  },
+}));
+const StyledProfileShowButtonLineOpen = styled("span")(({ theme }) => ({
+  "&::before": {
+    content: '""',
+    display: "block",
+    width: "10px",
+    height: "3px",
+    backgroundColor: theme.palette.textColor.main,
+    transform: "rotate(-30deg)",
+    borderRadius: "1px",
+    position: "relative",
+    top: "1px",
+    right: "4px",
+  },
+  "&::after": {
+    content: '""',
+    display: "block",
+    width: "10px",
+    height: "3px",
+    backgroundColor: theme.palette.textColor.main,
+    transform: "rotate(30deg)",
+    position: "relative",
+    borderRadius: "1px",
+    top: "-2px",
+    right: "-3px",
+  },
+}));
+const StyledProfileBackgroundButton = styled(ProfilePageButton)({
+  color: "#ffffff",
+  backgroundColor: "rgba(0, 0, 0, 0.53)",
+  "&:hover": {
+    backgroundColor: "rgba(0, 0, 0, 0.63)",
+  },
+});
+const StyledProfileUserInfoSection = styled(Box)({
+  display: "flex",
+  paddingLeft: "198px",
+  paddingRight: "16px",
+  position: "relative",
+  "@media (max-width: 850px)": {
+    flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
-    color: (themeMode === "light" ? theme.palette.light : theme.palette.dark)
-      .textColor,
-  }));
-  const StyledProfileUserName = styled("p")(({ theme }) => ({
-    color: (themeMode === "light" ? theme.palette.light : theme.palette.dark)
-      .textColor,
-    fontSize: "32px",
-    fontWeight: "900",
-  }));
-  const StyledProfileUserFriends = styled("a")(({ theme }) => ({
-    color: (themeMode === "light" ? theme.palette.light : theme.palette.dark)
-      .textColorAdditional,
-    fontSize: "15px",
-    fontWeight: "600",
-    marginBottom: "5px",
-  }));
+    paddingLeft: "16px",
+  },
+});
+const StyledProfileUserPictureWrapper = styled(Box)({
+  marginRight: "16px",
+  borderRadius: "50%",
+  position: "absolute",
+  minWidth: "168px",
+  left: "16px",
+  top: "-40px",
+  "@media (max-width: 850px)": {
+    left: "50%",
+    transform: "translateX(-84px)",
+    top: "-84px",
+  },
+});
+const StyledProfileUserInfo = styled(Box)({
+  marginRight: "auto",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  paddingTop: "18px",
+  paddingBottom: "15px",
+  "@media (max-width: 850px)": {
+    paddingTop: "84px",
+    marginRight: "0",
+    alignItems: "center",
+    rowGap: "10px",
+  },
+});
+const StyledProfileButtonsWrapper = styled(Box)({
+  display: "flex",
+  alignItems: "flex-end",
+  paddingBottom: "15px",
+  columnGap: "5px",
+});
+const StyledProfileUserPicture = styled("img")(({ theme }) => ({
+  objectFit: "cover",
+  borderRadius: "50%",
+  border: `5px solid ${theme.palette.backgroundColor.section}`,
+  cursor: "pointer",
+  "&:active": {
+    transform: "scale(0.95)",
+  },
+}));
+const StyledProfileUserPictureButton = styled("button")(({ theme }) => ({
+  position: "absolute",
+  bottom: "17px",
+  right: "2px",
+  width: "36px",
+  height: "36px",
+  borderRadius: "50%",
+  backgroundColor: theme.palette.buttonColor.background,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: theme.palette.textColor.main,
+}));
+const StyledProfileUserName = styled(Typography)(({ theme }) => ({
+  color: theme.palette.textColor.main,
+  fontSize: "32px",
+  fontWeight: "900",
+}));
+const StyledProfileUserFriends = styled(Typography)(({ theme }) => ({
+  color: theme.palette.textColor.secondary,
+  fontSize: "15px",
+  fontWeight: "600",
+  marginBottom: "5px",
+}));
 
+export default function ProfileHeader() {
+  const [mutualFriendsIsOpen, setMutualFriendsStatus] = useState(true);
   return (
     <StyledProfileHeader>
       <ProfileContainer>
-        <Box className={styles.profile__background_picture_wrapper}>
+        <StyledProfileBackgroundWrapper>
           <img
             src={user.profile_background_picture}
             alt="profile_background_picture"
-            className={styles.profile__background_picture}
           />
-          <Box className={styles.profileBgBtnWrap}>
-            <StyledProfileBackgroundButton className={styles.profile__bg_btn}>
-              <CameraAltIcon fontSize="small" />
-              <Typography className={styles.profile__btnText}>
-                Edit cover photo
-              </Typography>
-            </StyledProfileBackgroundButton>
-          </Box>
-        </Box>
-        <Box className={styles.profile__user_info_section}>
-          <Box className={styles.profile__picture}>
+          <StyledProfileBackgroundWButtonsWrapper>
+            <StyledProfileBackgroundButton
+              text={
+                <StyledProfileBackgroundWButtonText>
+                  Edit cover photo
+                </StyledProfileBackgroundWButtonText>
+              }
+              icon={<CameraAltIcon fontSize="small" />}
+            />
+          </StyledProfileBackgroundWButtonsWrapper>
+        </StyledProfileBackgroundWrapper>
+        <StyledProfileUserInfoSection>
+          <StyledProfileUserPictureWrapper>
             <StyledProfileUserPicture
               src={user.profile_picture}
               alt="profile_picture"
               width={168}
               height={168}
-              className={styles.profile__user_image}
             />
-            <StyledProfileUserPictureButton
-              className={styles.profile__change_user_picture}
-            >
+            <StyledProfileUserPictureButton>
               <CameraAltIcon />
             </StyledProfileUserPictureButton>
-          </Box>
-          <Box className={styles.profile__user_info}>
+          </StyledProfileUserPictureWrapper>
+          <StyledProfileUserInfo>
             <StyledProfileUserName>{user.full_name}</StyledProfileUserName>
             <StyledProfileUserFriends href="#">
               Friends: {54}
             </StyledProfileUserFriends>
-            <AvatarGroup max={6} className={styles.profile__avatar_group}>
+            <AvatarGroup
+              max={6}
+              sx={{ cursor: "pointer", justifyContent: "flex-end" }}
+            >
               <Avatar alt="Remy Sharp" src="#" />
               <Avatar alt="Travis Howard" src="#" />
               <Avatar alt="Cindy Baker" src="#" />
@@ -151,29 +235,24 @@ export default function ProfileHeader() {
               <Avatar alt="Agnes Walker" src="#" />
               <Avatar alt="Trevor Henderson" src="#" />
             </AvatarGroup>
-          </Box>
-          <div className={styles.profile_buttons}>
-            <StyledProfileButton className={styles.profile__bg_btn}>
-              <ModeEditOutlineIcon />
-              Edit profile
-            </StyledProfileButton>
+          </StyledProfileUserInfo>
+          <StyledProfileButtonsWrapper>
+            <ProfilePageButton
+              text={<Typography>Edit profile</Typography>}
+              icon={<ModeEditOutlineIcon />}
+            />
             <StyledProfileShowMutualFriend
-              className={`${styles.profile__show_btn} ${styles.profile__show_btn_active} `}
-              onClick={() => {
-                themeMode === "light"
-                  ? dispatch(darkMode())
-                  : dispatch(lightMode());
-              }}
+              onClick={() => setMutualFriendsStatus(!mutualFriendsIsOpen)}
             >
-              <StyledProfileShowButtonLine
-                className={styles.profile__show_line}
-                
-              ></StyledProfileShowButtonLine>
+              {mutualFriendsIsOpen ? (
+                <StyledProfileShowButtonLineOpen></StyledProfileShowButtonLineOpen>
+              ) : (
+                <StyledProfileShowButtonLine></StyledProfileShowButtonLine>
+              )}
             </StyledProfileShowMutualFriend>
-          </div>
-        </Box>
+          </StyledProfileButtonsWrapper>
+        </StyledProfileUserInfoSection>
       </ProfileContainer>
     </StyledProfileHeader>
   );
 }
-

@@ -2,14 +2,28 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./profile-navigation.module.scss";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Link, useLocation } from "react-router-dom";
+import { Box } from "@mui/material";
+import styled from "@emotion/styled";
+import { ProfileContainer } from "../StyledComponents/ContentBlock/StyledComponents";
+
+const StyledNavigationSection = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.backgroundColor.section,
+}));
+const StyledNavigationContainer = styled(ProfileContainer)(({ theme }) => ({
+  paddingTop: "3px",
+  position: "relative",
+  borderTop: `1px solid ${theme.palette.backgroundColor.pageSeparator}`,
+}));
 
 export default function ProfileNavigation() {
   const [listStatus, setListStatus] = useState(false);
   const location = useLocation();
   const navRef = useRef(null);
+
   function toggleList() {
     setListStatus(!listStatus);
   }
+
   useEffect(() => {
     const locationName = location.pathname.slice(8);
     const links = Array.prototype.slice.call(navRef.current.children);
@@ -21,9 +35,10 @@ export default function ProfileNavigation() {
     links.find((link) => link.dataset.active).removeAttribute("data-active");
     newRoute.setAttribute("data-active", true);
   }, [location]);
+
   return (
-    <section className={styles.profile__nav}>
-      <div className={styles.profile__nav_container}>
+    <StyledNavigationSection>
+      <StyledNavigationContainer>
         <nav
           ref={navRef}
           className={`${styles.profile__nav} ${
@@ -69,7 +84,7 @@ export default function ProfileNavigation() {
           More
           <ArrowDropDownIcon color="dark" />
         </button>
-      </div>
-    </section>
+      </StyledNavigationContainer>
+    </StyledNavigationSection>
   );
 }
