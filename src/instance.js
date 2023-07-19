@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import {readCookie} from "./readCookie.js";
 
 
 
@@ -12,12 +13,14 @@ const instance = axios.create({
 })
 
 instance.interceptors.request.use(config =>{
-    const token = JSON.parse(localStorage.getItem('token'))
-    console.log(token.accessToken)
-    if(token){
+    //const token = JSON.parse(localStorage.getItem('token'))
+   // console.log(token.accessToken)
+    let accessToken = readCookie('token')
+    if(accessToken){
         config.headers = {
             'Content-Type': 'application/json',
-            'AUTHORIZATION':`Bearer ${token.accessToken}`
+            //'AUTHORIZATION':`Bearer ${token.accessToken}`
+            'AUTHORIZATION':`Bearer ${accessToken}`
         }
 
     }

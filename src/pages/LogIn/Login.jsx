@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { logIn } from "../../redux/login.slice/login.slice";
 import instance from "../../instance.js";
 import axios from 'axios';
+import {readCookie} from "../../readCookie.js";
 export default function LogIn() {
   const dispatch = useDispatch();
   const [registerModal, setRegisterModal] = useState(false);
@@ -32,7 +33,7 @@ export default function LogIn() {
      const  email = loginForm.values.email
      const  password = loginForm.values.password
       dispatch(logIn({email:loginForm.values.email,password:loginForm.values.password}));
-
+     console.log(readCookie('token'))
       return console.log({
         email:email ,
         password: password
