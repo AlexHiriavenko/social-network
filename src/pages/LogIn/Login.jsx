@@ -6,7 +6,7 @@ import {
   TextField,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useFormik } from "formik";
 import loginValidation from "./Validation/loginValidation";
 import RegisterModal from "./RegisterModal";
@@ -17,6 +17,13 @@ import instance from "../../instance.js";
 import axios from 'axios';
 import {readCookie} from "../../readCookie.js";
 export default function LogIn() {
+  useEffect(()=>{
+   if(!readCookie('token')) {
+     document.cookie = `token=${null}`
+
+   }
+
+  },[])
   const dispatch = useDispatch();
   const [registerModal, setRegisterModal] = useState(false);
   const handleRegisterModal = () => {

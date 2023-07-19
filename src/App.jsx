@@ -25,11 +25,13 @@ import { logIn } from "./redux/login.slice/login.slice";
 
 function App() {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+  const token = useSelector(store => store.login.token)
+  //const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+  const isLoggedIn = token? true : false;
   const navigate = useNavigate();
 
   const handleLogIn = () => {
-    dispatch(logIn());
+ //   dispatch(logIn());
     navigate("/");
   };
 

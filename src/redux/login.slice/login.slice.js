@@ -1,5 +1,6 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
+import {readCookie} from "../../readCookie.js";
 
 export const logIn = createAsyncThunk(
     'Login/logIn',
@@ -21,7 +22,7 @@ const LoginSlice = createSlice({
         name: 'Login',
         initialState: {
             isLoading: true,
-            token: JSON.parse(localStorage.getItem("token")),
+            token: readCookie('token'),
         },
         reducers: {
             login: (state, action) => {
@@ -30,7 +31,7 @@ const LoginSlice = createSlice({
 
             logOut: (state, action) => {
                 state.token = action.payload
-                localStorage.removeItem('token')
+                document.cookie = `token=${null}`
             },
             extraReducers: {
                 [logIn.pending]: (state) => {
