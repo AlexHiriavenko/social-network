@@ -42,7 +42,7 @@ export default function LogIn() {
 
      const  email = loginForm.values.email
      const  password = loginForm.values.password
-      dispatch(logIn({email:loginForm.values.email,password:loginForm.values.password}));
+    await  dispatch(logIn({email:loginForm.values.email,password:loginForm.values.password}));
 let cookieToken = readCookie('token');
      console.log(typeof readCookie('token'))
      if(readCookie('token' ) != '0'){

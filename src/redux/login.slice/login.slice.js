@@ -8,7 +8,7 @@ export const logIn = createAsyncThunk(
         const token   =  await axios.post('http://localhost:9000/api/auth/login',{email:email,password:password});
         document.cookie = `token=${token.data.accessToken}`;
         let login = true
-        localStorage.setItem('loggedIn',JSON.stringify(login))
+        localStorage.setItem('loggedIn',login)
         console.log(token)
         return token;
     }
@@ -32,7 +32,7 @@ const LoginSlice = createSlice({
 
                state.isLoggedIn = true
                 let login = true
-                localStorage.setItem('loggedIn',JSON.stringify(login))
+                localStorage.setItem('loggedIn',login)
             },
 
             logOut: (state, action) => {
@@ -41,7 +41,7 @@ const LoginSlice = createSlice({
                 let token = 0
                 document.cookie = `token=${token}`
                 let login = false
-                localStorage.setItem('loggedIn',JSON.stringify(login))
+                localStorage.setItem('loggedIn',login)
             },
             extraReducers: {
                 [logIn.pending]: (state) => {
