@@ -7,6 +7,7 @@ export const logIn = createAsyncThunk(
     async function({email,password}) {
         const token   =  await axios.post('http://localhost:9000/api/auth/login',{email:email,password:password});
         localStorage.setItem('token',JSON.stringify(token))
+        document. cookie = `token=${token.data.accessToken}`;
         console.log(token)
         return token;
     }
