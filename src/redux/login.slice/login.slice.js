@@ -5,8 +5,9 @@ import {readCookie} from "../../readCookie.js";
 export const logIn = createAsyncThunk(
     'Login/logIn',
     async function({email,password}) {
-        const token   =  await axios.post('http://localhost:9000/api/auth/login',{email:email,password:password});
+        const token   =  await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/auth/login`,{email:email,password:password});
         document.cookie = `token=${token.data.accessToken}`;
+        console.log(import.meta.env.VITE_APP_API_URL)
         let login = true
         localStorage.setItem('loggedIn',login)
         console.log(token)
@@ -16,7 +17,7 @@ export const logIn = createAsyncThunk(
 export const register = createAsyncThunk(
     'Login/register',
     async function({emailOrPhone,password,name,surname,gender,mounth,day,year}) {
-         await axios.post('http://localhost:9000/api/auth/registration',{email:emailOrPhone,password:password,name:name,surname:surname,gender:gender,month:mounth,day:day,year:year});
+         await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/auth/registration`,{email:emailOrPhone,password:password,name:name,surname:surname,gender:gender,month:mounth,day:day,year:year});
 
     }
 )

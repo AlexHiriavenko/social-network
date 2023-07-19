@@ -6,7 +6,7 @@ import {readCookie} from "./readCookie.js";
 
 const instance = axios.create({
 
-    baseURL:'http://localhost:9000'
+    baseURL:`${import.meta.env.VITE_APP_API_URL}`
 
 
 
