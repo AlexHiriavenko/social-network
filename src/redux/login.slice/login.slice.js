@@ -7,6 +7,8 @@ export const logIn = createAsyncThunk(
     async function({email,password}) {
         const token   =  await axios.post('http://localhost:9000/api/auth/login',{email:email,password:password});
         document.cookie = `token=${token.data.accessToken}`;
+        let login = true
+        localStorage.setItem('loggedIn',JSON.stringify(login))
         console.log(token)
         return token;
     }
@@ -22,16 +24,21 @@ const LoginSlice = createSlice({
         name: 'Login',
         initialState: {
             isLoading: true,
+            isLoggedIn:JSON.parse(localStorage.getItem('loggedIn')),
             token: readCookie('token'),
         },
         reducers: {
-            login: (state, action) => {
-                state.token = action.payload
+            setLogin: (state, action) => {
+
+                state.isLoggedIn = action.payload
             },
 
             logOut: (state, action) => {
-                state.token = action.payload
+
+                state.isLoggedIn = false
                 document.cookie = `token=${null}`
+                let login = false
+                localStorage.setItem('loggedIn',JSON.stringify(login))
             },
             extraReducers: {
                 [logIn.pending]: (state) => {
@@ -53,7 +60,7 @@ const LoginSlice = createSlice({
 
 
 
-export  const { login, logOut } = LoginSlice.actions;
+export  const { setLogin, logOut } = LoginSlice.actions;
 
 
 

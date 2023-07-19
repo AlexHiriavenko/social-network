@@ -7,13 +7,6 @@ import {getUsers} from "../../redux/user.slice/user.slice.js";
 
 function Home() {
 
-    const dispatch = useDispatch();
-    useEffect(async()=>{
-      const users = await dispatch(getUsers())
-
-        console.log(users)
-
-    },[])
     return (
         <div className="container-page">
             <HomeAsideLeft />

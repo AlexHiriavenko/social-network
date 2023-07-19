@@ -12,7 +12,7 @@ import loginValidation from "./Validation/loginValidation";
 import RegisterModal from "./RegisterModal";
 import ForgotForm from "./ForgotForm";
 import { useDispatch } from "react-redux";
-import { logIn } from "../../redux/login.slice/login.slice";
+import { logIn,setLogin } from "../../redux/login.slice/login.slice";
 import instance from "../../instance.js";
 import axios from 'axios';
 import {readCookie} from "../../readCookie.js";
@@ -40,6 +40,7 @@ export default function LogIn() {
      const  email = loginForm.values.email
      const  password = loginForm.values.password
       dispatch(logIn({email:loginForm.values.email,password:loginForm.values.password}));
+     dispatch(setLogin(true))
      console.log(readCookie('token'))
       return console.log({
         email:email ,
