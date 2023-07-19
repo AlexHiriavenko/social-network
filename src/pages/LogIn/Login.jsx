@@ -11,7 +11,7 @@ import { useFormik } from "formik";
 import loginValidation from "./Validation/loginValidation";
 import RegisterModal from "./RegisterModal";
 import ForgotForm from "./ForgotForm";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { logIn,setLogin } from "../../redux/login.slice/login.slice";
 import instance from "../../instance.js";
 import axios from 'axios';
@@ -58,6 +58,7 @@ export default function LogIn() {
     setShowPassword(!showPassword);
   };
   const recentLogin = localStorage.getItem("recentLogin") || [];
+    const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   return (
     <>
         {isLoggedIn ? null : (
