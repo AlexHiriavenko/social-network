@@ -13,13 +13,16 @@ import RegisterModal from "./RegisterModal";
 import ForgotForm from "./ForgotForm";
 import {useDispatch, useSelector} from "react-redux";
 import { logIn,setLogin } from "../../redux/login.slice/login.slice";
+import { useNavigate } from "react-router-dom";
 import instance from "../../instance.js";
 import axios from 'axios';
 import {readCookie} from "../../readCookie.js";
 export default function LogIn() {
+    const navigate = useNavigate();
+    const token = useSelector(store => store.login.token)
   useEffect(()=>{
    if(!readCookie('token')) {
-     document.cookie = `token=${null}`
+     document.cookie = `token=${0}`
 
    }
 
@@ -40,7 +43,12 @@ export default function LogIn() {
      const  email = loginForm.values.email
      const  password = loginForm.values.password
       dispatch(logIn({email:loginForm.values.email,password:loginForm.values.password}));
-     dispatch(setLogin(true))
+let cookieToken = readCookie('token');
+     console.log(typeof readCookie('token'))
+     if(readCookie('token' ) != '0'){
+         dispatch(setLogin())
+         navigate('/')
+     }
      console.log(readCookie('token'))
       return console.log({
         email:email ,

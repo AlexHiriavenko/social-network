@@ -30,13 +30,16 @@ const LoginSlice = createSlice({
         reducers: {
             setLogin: (state, action) => {
 
-                state.isLoggedIn = action.payload
+               state.isLoggedIn = true
+                let login = true
+                localStorage.setItem('loggedIn',JSON.stringify(login))
             },
 
             logOut: (state, action) => {
 
                 state.isLoggedIn = false
-                document.cookie = `token=${null}`
+                let token = 0
+                document.cookie = `token=${token}`
                 let login = false
                 localStorage.setItem('loggedIn',JSON.stringify(login))
             },

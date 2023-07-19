@@ -26,7 +26,7 @@ import Header from "./components/Header/Header";
 
 function App() {
   const dispatch = useDispatch();
-  const token = useSelector(store => store.login.token)
+  const token = useSelector((state) => state.login.token)
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
 
   //const isLoggedIn = token? true : false;
