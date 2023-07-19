@@ -64,7 +64,8 @@ export default function AddWorkplace() {
     },
     validationSchema: WorkplaceSchema,
     onSubmit: (values) => {
-      if (values.timeFrom > values.timeTo) return;
+      if (typeof values.timeTo === "number" && values.timeFrom > values.timeTo)
+        return;
       setInfo(values);
       edit();
     },
@@ -187,7 +188,6 @@ export default function AddWorkplace() {
           <FormControlLabel
             control={
               <Checkbox
-                defaultChecked
                 onChange={formik.handleChange}
                 checked={formik.values.workNow}
                 name="workNow"

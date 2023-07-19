@@ -20,12 +20,16 @@
   background-color: #f0f2f5;
   padding-left: 10px;
   border-radius: 50px;
+  
 }
 
 .friends__search_input {
   border: none;
   background-color: transparent;
   height: 100%;
+  &:focus {
+    outline: none;
+  }
 }
 
 .friends__friends_list {

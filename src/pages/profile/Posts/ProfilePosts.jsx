@@ -3,6 +3,7 @@ import ProfileIntro from "../../../components/Profile/ProfileIntro";
 import ProfilePostsPhotos from "../../../components/Profile/ProfilePosts/PostsPhotos";
 import ProfilePostsFriends from "../../../components/Profile/ProfilePosts/PostsFriends";
 import { useEffect, useRef, useState } from "react";
+import CreatePost from "../../../components/Posts/CreatePost";
 
 export default function ProfilePosts() {
   const userInfoRef = useRef(null);
@@ -25,7 +26,9 @@ export default function ProfilePosts() {
           style={{
             maxHeight: userInfoHeight + "px",
           }}
-        ></section>
+        >
+          <CreatePost />
+        </section>
       </div>
     </section>
   );

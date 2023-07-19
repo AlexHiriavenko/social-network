@@ -2,7 +2,7 @@
     width: 40%;
     display: flex;
     justify-content: center;
-        height: 100%;
+    height: 100%;
     @media (max-width: 700px) {
         display: none;
     }
@@ -32,7 +32,7 @@
             position: absolute;
             top: 118%;
             left: 50%;
-            width: 100%;    
+            width: 100%;
             transform: translate(-50%, 0);
             height: 2px;
             background-color: $active-link-color;
@@ -47,21 +47,26 @@
 }
 
 .header__input {
-    height: 44px;
-  @media (max-width: 1200px) {
-    width: 40px;
     height: 40px;
-  }
+    width: 240px;
+    @media (max-width: 1100px) {
+        width: 40px;
+        height: 40px;
+    }
 }
 
 .header__drawer-searh-input {
     height: 40px;
+    width: 260px;
+    @media (max-width: 600px) {
+        width: 240px;
+    }
 }
 
 .header__search-icon-wrap {
-    @media (max-width: 1200px) {
-    justify-content: center;
-    border-radius: 50%;
+    @media (max-width: 1100px) {
+        justify-content: center;
+        border-radius: 50%;
     }
 }
 
@@ -78,22 +83,22 @@
     max-height: 20px;
     box-sizing: content-box;
     position: absolute;
-    top:50%;
+    top: 50%;
     right: 5%;
-    transform:translate(0, -50%);
+    transform: translate(0, -50%);
     padding: 7px;
     border-radius: 50%;
 
     cursor: pointer;
     &:hover {
-        background-color: rgb(230, 230, 230);
+        background-color: $secondary-hover-color;
     }
 }
 
-.search__list-item{
+.search__list-item {
     &:hover {
         background-color: $main-hover-color;
-    }   
+    }
 }
 
 .header__menu-item-link {
@@ -116,10 +121,10 @@
     box-sizing: content-box;
     padding: 8px;
     border-radius: 50%;
-    background-color: rgb(230, 230, 230);
+    background-color: $secondary-hover-color;
 }
 
 .header__notify-btn {
     border-radius: 15px;
-    background-color: rgb(230, 228, 228);
+    background-color: $secondary-hover-color;
 }
