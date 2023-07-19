@@ -60,6 +60,7 @@ export default function LogIn() {
   const recentLogin = localStorage.getItem("recentLogin") || [];
   return (
     <>
+        {isLoggedIn ? null : (
       <section className="login-section">
         <Container maxWidth="xl">
           <div className="login-section__wrapper">
@@ -144,6 +145,7 @@ export default function LogIn() {
           </div>
         </Container>
       </section>
+            )}
       <RegisterModal modal={registerModal} handleModal={handleRegisterModal} />
       <ForgotForm modal={forgotModal} handleModal={handleForgot} />
     </>
