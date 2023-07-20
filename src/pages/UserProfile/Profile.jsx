@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import ProfileHeader from "../../components/profile/ProfileHeader";
-import ProfileNavigation from "../../components/profile/ProfileNavigation";
+import ProfileHeader from "../../components/UserProfile/ProfileHeader";
+import ProfileNavigation from "../../components/UserProfile/ProfileNavigation";
 
 export default function Profile() {
   return (

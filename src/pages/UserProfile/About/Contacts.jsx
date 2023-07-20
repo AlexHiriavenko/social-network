@@ -1,4 +1,4 @@
-import AddPhoneNumber from "../../../components/Profile/ProfileAbout/AboutFields/AddPhoneNumber";
+import AddPhoneNumber from "../../../components/UserProfile/ProfileAbout/AboutFields/AddPhoneNumber";
 import styles from "./profileAbout.module.scss";
 
 export default function Contacts() {

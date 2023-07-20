@@ -1,4 +1,4 @@
-import FriendsList from "../../../components/Profile/ProfileFriends/FriendsList";
+import FriendsList from "../../../components/UserProfile/ProfileFriends/FriendsList";
 import styles from "./profileFriends.module.scss";
 
 export default function ProfileFriends() {

@@ -1,5 +1,5 @@
-import AddHighschool from "../../../components/Profile/ProfileAbout/AboutFields/AddHighschool";
-import AddWorkplace from "../../../components/Profile/ProfileAbout/AboutFields/AddWorkplace";
+import AddHighschool from "../../../components/UserProfile/ProfileAbout/AboutFields/AddHighschool";
+import AddWorkplace from "../../../components/UserProfile/ProfileAbout/AboutFields/AddWorkplace";
 import styles from "./profileAbout.module.scss";
 
 export default function Employment() {

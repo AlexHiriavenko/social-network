@@ -40,6 +40,10 @@ export const themeDay = createTheme({
       background: "#E4E6EB",
       backgroundHover: "#DEDEDE",
     },
+    input: {
+      mainBackground: "#f0f2f5",
+      activeBorderColor: "#1876f2",
+    },
   },
   components: {
     MuiAvatar: {
@@ -99,6 +103,10 @@ export const themeNight = createTheme({
     buttonColor: {
       background: "#3a3b3c",
       backgroundHover: "#5C5C5C",
+    },
+    input: {
+      mainBackground: "#3a3b3c",
+      activeBorderColor: "#1876f2",
     },
   },
   components: {

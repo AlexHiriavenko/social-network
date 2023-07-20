@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import styles from "./profileAbout.module.scss";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import FriendsList from "../../../components/Profile/ProfileFriends/FriendsList";
-import { ContentBlock } from "../../../components/profile/StyledComponents/ContentBlock/StyledComponents";
+import FriendsList from "../../../components/UserProfile/ProfileFriends/FriendsList";
+import { ContentBlock } from "../../../components/UserProfile/StyledComponents/ContentBlock/StyledComponents";
 
 export default function ProfileAbout() {
   const location = useLocation();

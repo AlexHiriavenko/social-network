@@ -1,4 +1,4 @@
-import Photos from "../../../components/Profile/ProfilePhotos";
+import Photos from "../../../components/UserProfile/ProfilePhotos";
 import styles from "./profilePhotos.module.scss";
 
 export default function ProfilePhotos() {

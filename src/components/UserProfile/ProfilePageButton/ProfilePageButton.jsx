@@ -4,9 +4,9 @@ import { Button } from "@mui/material";
 const StyledProfileButton = styled(Button)(({ theme }) => ({
   color: theme.palette.textColor.main,
   backgroundColor: theme.palette.buttonColor.background,
-  width: "100%",
   textAlign: "center",
   fontFamily: "sans-serif",
+  fontWeight: 600,
   padding: "5px 10px",
   borderRadius: "5px",
   marginTop: "15px",
@@ -26,6 +26,14 @@ const StyledProfileButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function ProfilePageButton(props) {
-  const { text, icon, style, className} = props;
-  return <StyledProfileButton className={className} style={style}>{icon} {text}</StyledProfileButton>;
+  const { text, icon, style, className, clickAction} = props;
+  return (
+    <StyledProfileButton
+      className={className}
+      style={style}
+      onClick={clickAction}
+    >
+      {icon} {text}
+    </StyledProfileButton>
+  );
 }

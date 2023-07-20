@@ -1,5 +1,5 @@
-import AddCurrentCity from "../../../components/Profile/ProfileAbout/AboutFields/AddCurrentCity";
-import AddHometown from "../../../components/Profile/ProfileAbout/AboutFields/AddHometown";
+import AddCurrentCity from "../../../components/UserProfile/ProfileAbout/AboutFields/AddCurrentCity";
+import AddHometown from "../../../components/UserProfile/ProfileAbout/AboutFields/AddHometown";
 import styles from "./profileAbout.module.scss";
 
 export default function Places() {

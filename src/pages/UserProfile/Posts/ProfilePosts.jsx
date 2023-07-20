@@ -1,7 +1,7 @@
 import styles from "./profilePosts.module.scss";
-import ProfileIntro from "../../../components/Profile/ProfileIntro";
-import ProfilePostsPhotos from "../../../components/Profile/ProfilePosts/PostsPhotos";
-import ProfilePostsFriends from "../../../components/Profile/ProfilePosts/PostsFriends";
+import ProfileIntro from "../../../components/UserProfile/ProfileIntro";
+import ProfilePostsPhotos from "../../../components/UserProfile/ProfilePosts/PostsPhotos";
+import ProfilePostsFriends from "../../../components/UserProfile/ProfilePosts/PostsFriends";
 import { useEffect, useRef, useState } from "react";
 import CreatePost from "../../../components/Posts/CreatePost";
 import PostList from "../../../components/Posts/Post/PostList";
