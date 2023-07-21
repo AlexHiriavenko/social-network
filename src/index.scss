@@ -1,4 +1,9 @@
 @import "./styles/normalize.scss";
+@import "./styles/fonts.scss";
 @import "./styles/variables.scss";
-@import "./App.scss";
-@import "./components/Header/header.scss"
+@import "./styles/mixins.scss";
+@import "./pages/LogIn/index.scss";
+@import "./components/Header/header.scss";
+@import "./pages/pagesStyles.scss";
+@import "./pages/Home/home.scss";
+@import "./pages/Watch/watch.scss";
