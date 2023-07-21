@@ -13,7 +13,7 @@ import RegisterModal from "./RegisterModal";
 import ForgotForm from "./ForgotForm";
 import {useDispatch, useSelector} from "react-redux";
 import { logIn,setLogin } from "../../redux/login.slice/login.slice";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import instance from "../../instance.js";
 import axios from 'axios';
 import {readCookie} from "../../readCookie.js";
@@ -150,7 +150,9 @@ let cookieToken = readCookie('token');
                 color="success">
                 Создать новый аккаунт
               </Button>
+                <a href={"http://localhost:9000/oauth2/authorization/google"} onClick={async() =>{dispatch(setLogin())}} >Login with Google</a><br/>
             </form>
+
           </div>
         </Container>
       </section>
@@ -160,3 +162,4 @@ let cookieToken = readCookie('token');
     </>
   );
 }
+//
