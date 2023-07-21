@@ -1,8 +1,60 @@
 import { useEffect, useRef } from "react";
-import styles from "./profileAbout.module.scss";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import FriendsList from "../../../components/UserProfile/ProfileFriends/FriendsList";
-import { ContentBlock } from "../../../components/UserProfile/StyledComponents/ContentBlock/StyledComponents";
+import {
+  ContentBlock,
+  ContentBlockTitel,
+  ProfileContainer,
+} from "../../../components/UserProfile/StyledComponents/ContentBlock/StyledComponents";
+import styled from "@emotion/styled";
+import { Box } from "@mui/material";
+
+const StyledAboutSection = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.backgroundColor.page,
+  paddingTop: "20px",
+  paddingBottom: "20px",
+}));
+const StyledAboutContainer = styled(ProfileContainer)({
+  paddingRight: "16px",
+  paddingLeft: "16px",
+  display: "flex",
+  flexDirection: "column",
+  rowGap: "16px",
+});
+const StyledAboutNavigation = styled("nav")(({ theme }) => ({
+  flex: 1,
+  paddingRight: "6px",
+  paddingLeft: "6px",
+  paddingBottom: "16px",
+  display: "flex",
+  flexDirection: "column",
+  rowGap: "5px",
+  borderRight: `1px solid ${theme.palette.backgroundColor.pageSeparator}`,
+}));
+const StyledAboutNavigationItem = styled(Link)(({ theme }) => ({
+  color: theme.palette.textColor.secondary,
+  fontSize: "15px",
+  fontWeight: 600,
+  fontFamily: "sans-serif",
+  padding: "12px 10px",
+  borderRadius: "10px",
+  transitionDuration: "300ms",
+  "&:hover": {
+    backgroundColor: theme.palette.buttonColor.backgroundHover,
+  },
+  "&[data-active]": {
+    color: theme.palette.accentColor.main,
+    backgroundColor: theme.palette.accentColor.secondary,
+    cursor: "auto",
+  },
+}));
+const StyledAboutContent = styled(Box)({
+  flex: 2,
+  display: "flex",
+  flexDirection: "column",
+  rowGap: "24px",
+  padding: "20px 32px 20px 16px",
+});
 
 export default function ProfileAbout() {
   const location = useLocation();
@@ -18,48 +70,45 @@ export default function ProfileAbout() {
     links.find((link) => link.dataset.active).removeAttribute("data-active");
     newRoute.setAttribute("data-active", true);
   }, [location]);
+
   return (
-    <section className={styles.profile_about}>
-      <div className={styles.profile_about__container}>
-        <ContentBlock className={styles.profile_about__block}>
-          <nav className={styles.profile_about__nav} ref={navRef}>
-            <h2 className={styles.profile_about__title}>About</h2>
-            <Link
+    <StyledAboutSection>
+      <StyledAboutContainer>
+        <ContentBlock>
+          <StyledAboutNavigation ref={navRef}>
+            <ContentBlockTitel>About</ContentBlockTitel>
+            <StyledAboutNavigationItem
               to={"/profile/about/"}
-              className={styles.profile_about__item}
               data-active={true}
               data-loc={"/"}
             >
               Overview
-            </Link>
-            <Link
+            </StyledAboutNavigationItem>
+            <StyledAboutNavigationItem
               to={"/profile/about/employment"}
-              className={styles.profile_about__item}
               data-loc={"/employment"}
             >
               Work and education
-            </Link>
-            <Link
+            </StyledAboutNavigationItem>
+            <StyledAboutNavigationItem
               to={"/profile/about/places"}
-              className={styles.profile_about__item}
               data-loc={"/places"}
             >
               Places lived
-            </Link>
-            <Link
+            </StyledAboutNavigationItem>
+            <StyledAboutNavigationItem
               to={"/profile/about/contacts"}
-              className={styles.profile_about__item}
               data-loc={"/contacts"}
             >
               Contact and basic info
-            </Link>
-          </nav>
-          <div className={styles.profile_about__content}>
+            </StyledAboutNavigationItem>
+          </StyledAboutNavigation>
+          <StyledAboutContent>
             <Outlet />
-          </div>
+          </StyledAboutContent>
         </ContentBlock>
         <FriendsList />
-      </div>
-    </section>
+      </StyledAboutContainer>
+    </StyledAboutSection>
   );
 }

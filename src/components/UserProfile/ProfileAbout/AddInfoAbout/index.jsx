@@ -1,18 +1,19 @@
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import PropTypes from "prop-types";
-import styles from "./addInfoAbout.module.scss";
+import { ProfileAboutAddInfo } from "../../StyledComponents/ContentBlock/StyledAboutComponents";
 
 export default function AddInfoAbout({ text, clickAction }) {
   return (
-    <button className={styles.add_info_btn} onClick={clickAction}>
+    <ProfileAboutAddInfo onClick={clickAction}>
       <AddCircleOutlineIcon sx={{ color: "#1876f2", width: 36, height: 36 }} />
       {text}
-    </button>
+    </ProfileAboutAddInfo>
   );
 }
 
 AddInfoAbout.defaultProps = {
   clickAction: () => {},
+  text: "",
 };
 
 AddInfoAbout.propTypes = {

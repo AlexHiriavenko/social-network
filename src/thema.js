@@ -33,7 +33,7 @@ export const themeDay = createTheme({
     },
     backgroundColor: {
       section: "#ffffff",
-      page: "F0F2F5",
+      page: "#F0F2F5",
       pageSeparator: "#cdcfd3",
     },
     buttonColor: {
@@ -89,7 +89,7 @@ export const themeNight = createTheme({
     },
     accentColor: {
       main: "#1B74E4",
-      secondary: "#E7F3FF",
+      secondary: "#2D88FF33",
     },
     textColor: {
       main: "#FFFFFF",

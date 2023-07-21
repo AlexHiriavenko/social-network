@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import styles from "./profilePhotos.module.scss";
-import { ContentBlock } from "../StyledComponents/ContentBlock/StyledComponents";
+import {
+  ContentBlock,
+  ContentBlockTitel,
+} from "../StyledComponents/ContentBlock/StyledComponents";
+import styled from "@emotion/styled";
+import { Box } from "@mui/material";
 const mockImg = [
   "https://www.ictputovanja.hr/data/public/slike-za-novosti/Island-kucica.jpg",
   "https://i.pinimg.com/564x/15/f0/e0/15f0e0372d1e04df5f325d00e5899069.jpg",
@@ -11,6 +15,54 @@ const mockImg = [
   "https://i.pinimg.com/564x/4f/f9/19/4ff91923790c8ffe4424eb74f05bfecd.jpg",
   "https://i.pinimg.com/564x/8e/d0/2d/8ed02daed42b64b471af335418476f6f.jpg",
 ];
+
+const StyledAddPhotoButton = styled("label")(({ theme }) => ({
+  fontSize: "15px",
+  color: "#1877f2",
+  fontWeight: 600,
+  borderRadius: "10px",
+  transitionDuration: "300ms",
+  paddingLeft: "12px",
+  paddingRight: "12px",
+  marginTop: "20px",
+  marginRight: "16px",
+  lineHeight: "36px",
+  fontFamily: "sans-serif",
+  "&:hover": {
+    backgroundColor: theme.palette.accentColor.secondary,
+  },
+}));
+const StyledPhotosList = styled(Box)({
+  display: "grid",
+  paddingLeft: "16px",
+  paddingRight: "16px",
+  paddingBottom: "20px",
+  gridTemplateColumns: "repeat(5, 1fr)",
+  gap: "5px",
+  width: "100%",
+  marginTop: "15px",
+  "@media (max-width: 910px)": {
+    gridTemplateColumns: "repeat(4, 1fr)",
+  },
+  "@media (max-width: 750px)": {
+    gridTemplateColumns: "repeat(3, 1fr)",
+  },
+  "@media (max-width: 560px)": {
+    gridTemplateColumns: "repeat(2, 1fr)",
+  },
+  "@media (max-width: 390px)": {
+    gridTemplateColumns: "1fr",
+  },
+});
+const StyledPhotosImage = styled("img")({
+  borderRadius: "10px",
+  width: "100%",
+  objectFit: "cover",
+  transitionDuration: "300ms",
+  "&:hover": {
+    transform: "scale(0.99)",
+  },
+});
 export default function Photos() {
   const photosRef = useRef(null);
   const [photoHeight, setPhotoHeight] = useState(213);
@@ -24,26 +76,25 @@ export default function Photos() {
   }, []);
   return (
     <ContentBlock>
-      <h2 className={styles.profile_photos__title}>Photos</h2>
-      <label className={styles.profile_photos__btn}>
-        <input type="file" />
+      <ContentBlockTitel>Photos</ContentBlockTitel>
+      <StyledAddPhotoButton>
+        <input type="file" style={{ display: "none" }} />
         Add new photo
-      </label>
-      <div className={styles.profile_photos__list}>
+      </StyledAddPhotoButton>
+      <StyledPhotosList>
         {mockImg.map((image, index) => {
           return (
-            <img
+            <StyledPhotosImage
               src={image}
               alt="foto"
               width={213}
               height={photoHeight}
-              className={styles.profile_photos__photo}
               ref={photosRef}
               key={index}
             />
           );
         })}
-      </div>
+      </StyledPhotosList>
     </ContentBlock>
   );
 }
