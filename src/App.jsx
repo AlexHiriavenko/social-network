@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PrivateRoute from "./utils/router/PrivateRoute";
-import { Home, Watch, Marketplace, Groups, LogIn, NotFound } from "./pages/";
+import { Home, Watch, Marketplace, Groups, LogIn, NotFound, Friends } from "./pages/";
 import Header from "./components/Header/Header";
 import { logIn } from "./redux/login.slice/login.slice";
 
@@ -14,7 +14,12 @@ function App() {
     const handleLogIn = () => {
         dispatch(logIn());
         navigate("/");
+        console.log("handleLogIn");
     };
+
+    useEffect(() =>{
+        console.log(isLoggedIn);
+    },[isLoggedIn])
 
     return (
         <>
@@ -25,6 +30,7 @@ function App() {
                     <Route path="/watch" element={<Watch />} />
                     <Route path="/marketplace" element={<Marketplace />} />
                     <Route path="/groups" element={<Groups />} />
+                    <Route path="/friends" element={<Friends />} />
                     <Route path="*" element={<NotFound />} />
                 </Route>
                 <Route
