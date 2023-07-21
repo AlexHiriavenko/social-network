@@ -33,7 +33,11 @@ export const themeDay = createTheme({
     },
     backgroundColor: {
       section: "#ffffff",
+<<<<<<< HEAD
       page: "#F0F2F5",
+=======
+      page: "F0F2F5",
+>>>>>>> develop
       pageSeparator: "#cdcfd3",
     },
     buttonColor: {
@@ -89,7 +93,11 @@ export const themeNight = createTheme({
     },
     accentColor: {
       main: "#1B74E4",
+<<<<<<< HEAD
       secondary: "#2D88FF33",
+=======
+      secondary: "#E7F3FF",
+>>>>>>> develop
     },
     textColor: {
       main: "#FFFFFF",

@@ -53,7 +53,6 @@ const StyledPostFriendName = styled(Typography)(({ theme }) => ({
   fontSize: "13px",
   fontWeight: 600,
 }));
-
 export default function ProfilePostsFriends() {
   const photosRef = useRef(null);
   const [photoHeight, setPhotoHeight] = useState(204);

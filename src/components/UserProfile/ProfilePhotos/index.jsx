@@ -5,6 +5,7 @@ import {
 } from "../StyledComponents/ContentBlock/StyledComponents";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
+
 const mockImg = [
   "https://www.ictputovanja.hr/data/public/slike-za-novosti/Island-kucica.jpg",
   "https://i.pinimg.com/564x/15/f0/e0/15f0e0372d1e04df5f325d00e5899069.jpg",
@@ -63,6 +64,7 @@ const StyledPhotosImage = styled("img")({
     transform: "scale(0.99)",
   },
 });
+
 export default function Photos() {
   const photosRef = useRef(null);
   const [photoHeight, setPhotoHeight] = useState(213);

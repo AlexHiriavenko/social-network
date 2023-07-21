@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+<<<<<<< HEAD
 import {
   ContentBlock,
   ContentBlockHeader,
@@ -7,6 +8,9 @@ import {
   ContentBlockTitel,
 } from "../StyledComponents/ContentBlock/StyledComponents";
 import styled from "@emotion/styled";
+=======
+import { ContentBlock } from "../StyledComponents/ContentBlock/StyledComponents";
+>>>>>>> develop
 const mockImg = [
   "https://www.ictputovanja.hr/data/public/slike-za-novosti/Island-kucica.jpg",
   "https://i.pinimg.com/564x/15/f0/e0/15f0e0372d1e04df5f325d00e5899069.jpg",
