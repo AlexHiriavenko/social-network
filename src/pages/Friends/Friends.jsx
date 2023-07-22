@@ -20,11 +20,12 @@ import {
 import { 
     removeSuggestions, 
 } from '../../redux/friends/friends.slise';
+import SidebarFriends from './SidebarFriends';
 
 
 function Friends() {
 
-    const userID = 5;
+    const userID = 1;
 
     //const [isModalOpen, setIsModalOpen] = useState(false);
     const dispatch = useDispatch(); 
@@ -51,6 +52,7 @@ function Friends() {
         dispatch(updateFriendship(payload));
     }
     const handleClickAdd = (userId, friendId) => {
+        console.log(friendId);
         dispatch(createFriendship({userId: userId, friendId: friendId}));
     }
 
@@ -60,8 +62,9 @@ function Friends() {
 
     return <>
         <Box sx={{ width: '100%', display: 'flex', }}>
-            <Box sx={{ width: '30%', height: '100vh', border: 1, }}>
-            </Box>
+            {/* <Box sx={{ width: '30%', height: '100vh', border: 1, }}>
+            </Box> */}
+            <SidebarFriends/>               
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', p: 2.5, bgcolor: '#F0F2F5',}}>
                 <Box sx={{fontSize: '1.25rem', lineHeight: 1.2, textAlign: 'left'}}>
                     <Typography sx={{ px: '4px',  py: '16px', fontWeight: 'fontWeightBold'}}>Friend requests</Typography>
@@ -82,13 +85,13 @@ function Friends() {
                     <Box sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', }}>
                     {
                         friendSuggestions &&  friendSuggestions.map(fr => <Friend 
-                            key={fr.id}
+                            key={fr.friend.id}
                             mutualFriends={fr.mutualFriends}
                             friend={fr.friend} 
                             /* addButton={<Button sx={{bgcolor: 'secondary.main', width: 1, '&:hover': {bgcolor: 'secondary.light'}, textTransform: 'none'}} 
                                                     onClick={handleClickConfirm}>Add friend</Button>} */
-                            addButton={<BlueButton onClick={() =>  handleClickAdd(userID, fr.id)}>Add friend</BlueButton>}
-                            removeButton={<GreyButton onClick={() =>  handleClickRemoveSuggestion(fr)}>Remove</GreyButton>}/>)
+                            addButton={<BlueButton onClick={() =>  handleClickAdd(userID, fr.friend.id)}>Add friend</BlueButton>}
+                            removeButton={<GreyButton onClick={() =>  handleClickRemoveSuggestion(fr.friend)}>Remove</GreyButton>}/>)
                     }
                     </Box>
                 </Box>

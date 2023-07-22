@@ -13,6 +13,7 @@ export const store = configureStore({
         searchDrawer: searchDrawerReducer,
         post: postReducer,
         chat: chatReducer,
-        friends: friendReducer
+        friends: friendReducer,
+        darkMode: darkModeSReducer,
     }
 })
