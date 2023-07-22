@@ -50,7 +50,7 @@ function HomeAsideRight() {
                                 fontSize: "15px",
                                 lineHeight: "1",
                                 m: 0,
-                                color: (theme) => theme.palette.textColor.secondary,
+                                color: (theme) => theme.palette.textColor.content,
                             }}
                         >
                             Master modern IT-profession
@@ -79,7 +79,7 @@ function HomeAsideRight() {
                                 fontSize: "15px",
                                 lineHeight: "1",
                                 m: 0,
-                                color: (theme) => theme.palette.textColor.secondary,
+                                color: (theme) => theme.palette.textColor.content,
                             }}
                         >
                             Here can be your advertising

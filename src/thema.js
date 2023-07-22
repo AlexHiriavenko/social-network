@@ -21,6 +21,7 @@ export const themeDay = createTheme({
         textColor: {
             main: "#050505",
             secondary: "#65676B",
+            content: "#050505",
         },
         backgroundColor: {
             section: "#ffffff",
@@ -76,6 +77,7 @@ export const themeNight = createTheme({
         textColor: {
             main: "#FFFFFF",
             secondary: "#B0B3B8",
+            content: "#E4E6EB",
         },
         backgroundColor: {
             section: "#242526",

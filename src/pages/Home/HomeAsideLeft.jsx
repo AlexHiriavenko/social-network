@@ -22,7 +22,7 @@ function HomeAsideLeft() {
                         <Typography
                             fontWeight={700}
                             fontSize={15}
-                            sx={{ color: (theme) => theme.palette.textColor.main }}
+                            sx={{ color: (theme) => theme.palette.textColor.content }}
                         >
                             {userName}
                         </Typography>
@@ -42,7 +42,7 @@ function HomeAsideLeft() {
                         <Typography
                             fontSize={15}
                             fontWeight={600}
-                            sx={{ color: (theme) => theme.palette.textColor.main }}
+                            sx={{ color: (theme) => theme.palette.textColor.content }}
                         >
                             Friends
                         </Typography>
@@ -62,7 +62,7 @@ function HomeAsideLeft() {
                         <Typography
                             fontSize={15}
                             fontWeight={600}
-                            sx={{ color: (theme) => theme.palette.textColor.main }}
+                            sx={{ color: (theme) => theme.palette.textColor.content }}
                         >
                             Watch
                         </Typography>
@@ -82,7 +82,7 @@ function HomeAsideLeft() {
                         <Typography
                             fontSize={15}
                             fontWeight={600}
-                            sx={{ color: (theme) => theme.palette.textColor.main }}
+                            sx={{ color: (theme) => theme.palette.textColor.content }}
                         >
                             Marketplace
                         </Typography>
@@ -102,7 +102,7 @@ function HomeAsideLeft() {
                         <Typography
                             fontSize={15}
                             fontWeight={600}
-                            sx={{ color: (theme) => theme.palette.textColor.main }}
+                            sx={{ color: (theme) => theme.palette.textColor.content }}
                         >
                             Groups
                         </Typography>
@@ -122,7 +122,7 @@ function HomeAsideLeft() {
                         <Typography
                             fontSize={15}
                             fontWeight={600}
-                            sx={{ color: (theme) => theme.palette.textColor.main }}
+                            sx={{ color: (theme) => theme.palette.textColor.content }}
                         >
                             Messenger
                         </Typography>

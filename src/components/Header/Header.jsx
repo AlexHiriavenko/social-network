@@ -15,10 +15,10 @@ function Header() {
         <AppBar
             position="sticky"
             color="inherit"
-            // sx={{
-            //   boxShadow: shadow,
-            // }}
-            sx={{ backgroundColor: (theme) => theme.palette.backgroundColor.section }}
+            sx={{
+                backgroundColor: (theme) => theme.palette.backgroundColor.section,
+                boxShadow: shadow,
+            }}
         >
             <Container maxWidth="xl" sx={{ pl: { xs: 1, sm: 2 }, pr: { xs: 1, sm: 2 } }}>
                 <Toolbar sx={{ display: "flex", justifyContent: "space-between" }} disableGutters>
