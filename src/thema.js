@@ -14,15 +14,6 @@ export const themeDay = createTheme({
         fontFamily: "Segoe UI Regular",
     },
     palette: {
-        bgColor: {
-            main: "#00FF00",
-        },
-        textColor: {
-            main: "#A52A2A",
-        },
-        hoverColor: {
-            main: "#800080",
-        },
         accentColor: {
             main: "#1B74E4",
             secondary: "#E7F3FF",
@@ -33,7 +24,7 @@ export const themeDay = createTheme({
         },
         backgroundColor: {
             section: "#ffffff",
-            page: "F0F2F5",
+            page: "#F0F2F5",
             pageSeparator: "#cdcfd3",
         },
         buttonColor: {
@@ -78,15 +69,6 @@ export const themeNight = createTheme({
         fontFamily: "Segoe UI Regular",
     },
     palette: {
-        bgColor: {
-            main: "#0000FF",
-        },
-        textColor: {
-            main: "#0000FF",
-        },
-        hoverColor: {
-            main: "#00FF00",
-        },
         accentColor: {
             main: "#1B74E4",
             secondary: "#E7F3FF",

@@ -1,16 +1,21 @@
 import { Typography, List, ListItem, Divider } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import ContactsList from "./ContactsList";
 
 function HomeAsideRight() {
+    const theme = useTheme();
     return (
-        <aside className="sidebar-home sidebar-home-right">
+        <aside
+            className="sidebar-home sidebar-home-right"
+            style={{ backgroundColor: theme.palette.backgroundColor.page }}
+        >
             <Typography
                 id="ad"
                 component="h3"
                 sx={{
                     pl: 2,
                     mt: 2,
-                    color: "rgb(101, 103, 107)",
+                    color: (theme) => theme.palette.textColor.secondary,
                     fontWeight: 600,
                     fontSize: "17px",
                 }}
@@ -45,6 +50,7 @@ function HomeAsideRight() {
                                 fontSize: "15px",
                                 lineHeight: "1",
                                 m: 0,
+                                color: (theme) => theme.palette.textColor.secondary,
                             }}
                         >
                             Master modern IT-profession
@@ -73,6 +79,7 @@ function HomeAsideRight() {
                                 fontSize: "15px",
                                 lineHeight: "1",
                                 m: 0,
+                                color: (theme) => theme.palette.textColor.secondary,
                             }}
                         >
                             Here can be your advertising

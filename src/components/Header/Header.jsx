@@ -15,7 +15,10 @@ function Header() {
         <AppBar
             position="sticky"
             color="inherit"
-            sx={{ backgroundColor: (theme) => theme.palette.bgColor.main }}
+            // sx={{
+            //   boxShadow: shadow,
+            // }}
+            sx={{ backgroundColor: (theme) => theme.palette.backgroundColor.section }}
         >
             <Container maxWidth="xl" sx={{ pl: { xs: 1, sm: 2 }, pr: { xs: 1, sm: 2 } }}>
                 <Toolbar sx={{ display: "flex", justifyContent: "space-between" }} disableGutters>
@@ -27,13 +30,6 @@ function Header() {
                         }}
                     >
                         <HeaderLogo />
-                        <div
-                            style={{
-                                width: "100px",
-                                height: "100px",
-                                backgroundColor: theme.palette.textColor.main,
-                            }}
-                        ></div>
                         <Box sx={isDrawerOpen ? { visibility: "hidden" } : {}}>
                             <HeaderSearch />
                         </Box>

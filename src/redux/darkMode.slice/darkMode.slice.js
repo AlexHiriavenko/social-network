@@ -10,7 +10,6 @@ const darkModeSlice = createSlice({
     reducers: {
         toggleMode: function (state, action) {
             state.isOn = !state.isOn;
-            // При изменении состояния записываем его в localStorage
             localStorage.setItem("darkMode", state.isOn);
         },
     },
