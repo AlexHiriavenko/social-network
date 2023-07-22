@@ -27,7 +27,16 @@ function ListRecentSearches(props) {
                 </Typography>
             )}
             {recentUsersList.map((friend) => (
-                <ListItem key={friend.userID} sx={{ gap: 1 }} className="search__list-item">
+                <ListItem
+                    key={friend.userID}
+                    sx={{
+                        gap: 1,
+                        "&:hover": {
+                            backgroundColor: theme.palette.hoverColor.main,
+                        },
+                    }}
+                    className="search__list-item"
+                >
                     <Link
                         to={`./user-page/${friend.userID}`}
                         onClick={onClick}
@@ -50,7 +59,12 @@ function ListRecentSearches(props) {
                         id={friend.userID}
                         onClick={handleRemoveUser}
                         className="search__user-remove"
-                        sx={{ color: theme.palette.textColor.content }}
+                        sx={{
+                            color: theme.palette.textColor.content,
+                            "&:hover": {
+                                backgroundColor: theme.palette.hoverColor.dark,
+                            },
+                        }}
                     />
                 </ListItem>
             ))}

@@ -12,7 +12,14 @@ function HomeAsideLeft() {
             style={{ backgroundColor: theme.palette.backgroundColor.page }}
         >
             <List sx={{ mt: 1 }}>
-                <ListItem className="search__list-item home__list-item">
+                <ListItem
+                    className="search__list-item home__list-item"
+                    sx={{
+                        "&:hover": {
+                            backgroundColor: theme.palette.hoverColor.secondary,
+                        },
+                    }}
+                >
                     <Link className="header__menu-item-link" to={"/profile"}>
                         <Avatar
                             sx={{ minWidth: "40px", minHeight: "40px" }}
@@ -28,7 +35,14 @@ function HomeAsideLeft() {
                         </Typography>
                     </Link>
                 </ListItem>
-                <ListItem className="search__list-item home__list-item">
+                <ListItem
+                    className="search__list-item home__list-item"
+                    sx={{
+                        "&:hover": {
+                            backgroundColor: theme.palette.hoverColor.secondary,
+                        },
+                    }}
+                >
                     <Link className="header__menu-item-link" to={"#"}>
                         <Group
                             sx={{
@@ -48,7 +62,14 @@ function HomeAsideLeft() {
                         </Typography>
                     </Link>
                 </ListItem>
-                <ListItem className="search__list-item home__list-item">
+                <ListItem
+                    className="search__list-item home__list-item"
+                    sx={{
+                        "&:hover": {
+                            backgroundColor: theme.palette.hoverColor.secondary,
+                        },
+                    }}
+                >
                     <Link className="header__menu-item-link" to={"/watch"}>
                         <OndemandVideo
                             sx={{
@@ -68,7 +89,14 @@ function HomeAsideLeft() {
                         </Typography>
                     </Link>
                 </ListItem>
-                <ListItem className="search__list-item home__list-item">
+                <ListItem
+                    className="search__list-item home__list-item"
+                    sx={{
+                        "&:hover": {
+                            backgroundColor: theme.palette.hoverColor.secondary,
+                        },
+                    }}
+                >
                     <Link className="header__menu-item-link" to={"/marketplace"}>
                         <Store
                             sx={{
@@ -88,7 +116,14 @@ function HomeAsideLeft() {
                         </Typography>
                     </Link>
                 </ListItem>
-                <ListItem className="search__list-item home__list-item">
+                <ListItem
+                    className="search__list-item home__list-item"
+                    sx={{
+                        "&:hover": {
+                            backgroundColor: theme.palette.hoverColor.secondary,
+                        },
+                    }}
+                >
                     <Link className="header__menu-item-link" to={"/groups"}>
                         <Diversity3
                             sx={{
@@ -108,7 +143,14 @@ function HomeAsideLeft() {
                         </Typography>
                     </Link>
                 </ListItem>
-                <ListItem className="search__list-item home__list-item">
+                <ListItem
+                    className="search__list-item home__list-item"
+                    sx={{
+                        "&:hover": {
+                            backgroundColor: theme.palette.hoverColor.secondary,
+                        },
+                    }}
+                >
                     <Link className="header__menu-item-link" to={"#"}>
                         <Forum
                             sx={{

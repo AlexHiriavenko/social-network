@@ -12,7 +12,6 @@
     @include center-flex;
     width: 25%;
     text-align: center;
-    color: $main-content-color;
     padding-top: 5px;
     padding-bottom: 5px;
     border-radius: 10px;
@@ -23,7 +22,6 @@
         @include center-flex;
         width: 25%;
         text-align: center;
-        color: $active-link-color;
         position: relative;
         padding-top: 0;
         padding-bottom: 0;
@@ -90,17 +88,7 @@
     transform: translate(0, -50%);
     padding: 7px;
     border-radius: 50%;
-
     cursor: pointer;
-    &:hover {
-        background-color: $secondary-hover-color;
-    }
-}
-
-.search__list-item {
-    &:hover {
-        background-color: $main-hover-color;
-    }
 }
 
 .header__menu-item-link {

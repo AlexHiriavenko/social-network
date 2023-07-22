@@ -22,6 +22,7 @@ export const themeDay = createTheme({
             main: "#050505",
             secondary: "#65676B",
             content: "#050505",
+            primary: "#1B74E4",
         },
         backgroundColor: {
             section: "#ffffff",
@@ -35,6 +36,11 @@ export const themeDay = createTheme({
         input: {
             mainBackground: "#f0f2f5",
             activeBorderColor: "#1876f2",
+        },
+        hoverColor: {
+            main: "#f0f2f5",
+            secondary: "#E4E6EB",
+            dark: "#E4E6EB",
         },
     },
     components: {
@@ -78,6 +84,7 @@ export const themeNight = createTheme({
             main: "#FFFFFF",
             secondary: "#B0B3B8",
             content: "#E4E6EB",
+            primary: "#1B74E4",
         },
         backgroundColor: {
             section: "#242526",
@@ -91,6 +98,11 @@ export const themeNight = createTheme({
         input: {
             mainBackground: "#3a3b3c",
             activeBorderColor: "#1876f2",
+        },
+        hoverColor: {
+            main: "#3a3b3c",
+            secondary: "#3a3b3c",
+            dark: "#65676B",
         },
     },
     components: {
