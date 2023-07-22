@@ -5,7 +5,6 @@ import { Menu, Switch, FormControlLabel, Box, Typography } from "@mui/material";
 
 function DarkModeMenu(props) {
     const dispatch = useDispatch();
-    const mockDarkMode = false;
     const { anchor, goBack, toggleMenu } = props;
     const darkMode = useSelector((state) => state.darkMode.isOn);
     const toggleDisplayMode = () => {
@@ -30,7 +29,8 @@ function DarkModeMenu(props) {
                 paper: {
                     className: "header__options-drop-menu",
                 },
-            }}>
+            }}
+        >
             <Box sx={{ p: 2 }}>
                 <BtnArrowBack onClick={goBack} />
                 <FormControlLabel
@@ -38,7 +38,7 @@ function DarkModeMenu(props) {
                     value="dark mode"
                     control={
                         <Switch
-                            defaultChecked={mockDarkMode ? true : false}
+                            defaultChecked={darkMode ? true : false}
                             color="primary"
                             onClick={toggleDisplayMode}
                         />
