@@ -150,7 +150,7 @@ let cookieToken = readCookie('token');
                 color="success">
                 Создать новый аккаунт
               </Button>
-                <a href={"http://localhost:9000/oauth2/authorization/google"} onClick={async() =>{dispatch(setLogin())}} >Login with Google</a><br/>
+                <a  className="google_link" href={"http://localhost:9000/oauth2/authorization/google"} onClick={async() =>{dispatch(setLogin())}} >Login with Google</a><br/>
             </form>
 
           </div>
