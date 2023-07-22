@@ -17,9 +17,9 @@ export const themeDay = createTheme({
     bgColor: {
       main: "#FFA500",
     },
-    textColor: {
+   /*  textColor: {
       main: "#A52A2A",
-    },
+    }, */
     hoverColor: {
       main: "#800080",
     },
@@ -81,9 +81,9 @@ export const themeNight = createTheme({
     bgColor: {
       main: "#FF0000",
     },
-    textColor: {
+/*     textColor: {
       main: "#0000FF",
-    },
+    }, */
     hoverColor: {
       main: "#00FF00",
     },
@@ -126,7 +126,7 @@ export const themeNight = createTheme({
       },
     },
   },
-  components: {
+/*   components: {
     MuiAvatar: {
       styleOverrides: {
         root: {
@@ -142,5 +142,5 @@ export const themeNight = createTheme({
         },
       },
     },
-  },
+  }, */
 });

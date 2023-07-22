@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useState, useEffect} from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import Friend from "../../components/Friends/Friend/Friend";
 import {
@@ -7,7 +7,6 @@ import {
     Divider,
     Typography,
     Button
-    //Modal
 } from "@mui/material";
 import {GreyButton, BlueButton, StandardButton} from '../../components/StyledComponents/Buttons';
 import { 
@@ -17,17 +16,15 @@ import {
     createFriendship, 
     updateFriendship 
 } from '../../redux/friends/actionCreators';
-import { 
-    removeSuggestions, 
-} from '../../redux/friends/friends.slise';
+import {  removeSuggestions } from '../../redux/friends/friends.slise';
 import SidebarFriends from './SidebarFriends';
+import styled from "@emotion/styled";
+import SideBarList from './SideBarList'
 
 
-function Friends() {
+function FriendsHome() {
 
-    const userID = 1;
-
-    //const [isModalOpen, setIsModalOpen] = useState(false);
+    const userID = 4;
     const dispatch = useDispatch(); 
     const friendsRequests = useSelector((store)=>store.friends.friendsRequests);
     const friendSuggestions = useSelector((store)=>store.friends.friendSuggestions);
@@ -60,29 +57,55 @@ function Friends() {
         dispatch(removeSuggestions(payload));
     }
 
-    return <>
+    const SectorTitle = styled(Typography)({
+        padding: '16px 4px',
+        fontWeight: 700,
+        fontSize: '1.25rem',
+        lineHeight: 1.2,
+        textAlign: 'left'
+    })
+
+    const FriendsContainer = styled(Box)({
+        width: '100%',
+        display: 'flex',
+        flexWrap: 'wrap',
+    }) 
+
+    const SectionWraper = styled(Box)({
+        width: '100%', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        padding: 20, 
+        backgroundColor: '#F0F2F5',
+    })
+
+    const H1Styled = styled('h1')({
+        fontWeight: 900,
+        fontSize: '1.5rem',
+        fontFamily: 'inherit',
+    })
+
+    return (<>
         <Box sx={{ width: '100%', display: 'flex', }}>
-            {/* <Box sx={{ width: '30%', height: '100vh', border: 1, }}>
-            </Box> */}
-            <SidebarFriends/>               
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', p: 2.5, bgcolor: '#F0F2F5',}}>
-                <Box sx={{fontSize: '1.25rem', lineHeight: 1.2, textAlign: 'left'}}>
-                    <Typography sx={{ px: '4px',  py: '16px', fontWeight: 'fontWeightBold'}}>Friend requests</Typography>
-                    <Box sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', }}>
-                    {
-                        friendsRequestsToUser && friendsRequestsToUser.map(fr => <Friend 
-                            key={fr.id}
-                            mutualFriends={fr.mutualFriends} 
-                            friend={fr.user} 
-                            addButton={<StandardButton variant="contained" onClick={() => handleClickConfirm(fr)}>Confirm</StandardButton>}
-                            removeButton={<GreyButton onClick={() => handleClickRemove(fr)}>Remove</GreyButton>}/>)
-                    }
+            <SidebarFriends headContent={<H1Styled>Friends</H1Styled>} menulist={<SideBarList/>}/>               
+                <SectionWraper>
+                    <Box>
+                        <SectorTitle>Friend requests</SectorTitle>
+                        <FriendsContainer>
+                        {
+                            friendsRequestsToUser && friendsRequestsToUser.map(fr => <Friend 
+                                key={fr.id}
+                                mutualFriends={fr.mutualFriends} 
+                                friend={fr.user} 
+                                addButton={<StandardButton variant="contained" onClick={() => handleClickConfirm(fr)}>Confirm</StandardButton>}
+                                removeButton={<GreyButton onClick={() => handleClickRemove(fr)}>Remove</GreyButton>}/>)
+                        }
+                        </FriendsContainer>
+                        <Divider sx={{ my: '12px', }}/>
                     </Box>
-                    <Divider sx={{ my: '12px', }}/>
-                </Box>
-                <Box sx={{fontSize: '1.25rem', lineHeight: 1.2, textAlign: 'left'}}>
-                    <Typography sx={{ px: '4px', py: '16px', fontWeight: 'fontWeightBold'}}>People you may know</Typography>
-                    <Box sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', }}>
+                <Box>
+                    <SectorTitle>People you may know</SectorTitle>
+                    <FriendsContainer>
                     {
                         friendSuggestions &&  friendSuggestions.map(fr => <Friend 
                             key={fr.friend.id}
@@ -93,15 +116,15 @@ function Friends() {
                             addButton={<BlueButton onClick={() =>  handleClickAdd(userID, fr.friend.id)}>Add friend</BlueButton>}
                             removeButton={<GreyButton onClick={() =>  handleClickRemoveSuggestion(fr.friend)}>Remove</GreyButton>}/>)
                     }
-                    </Box>
+                    </FriendsContainer>
                 </Box>
-            </Box>
+            </SectionWraper>
         </Box>
-       {/*  {isModalOpen && <Modal/>} */}
-    </>;
+    </>
+    );
 }
 
-export default Friends;
+export default FriendsHome;
 
  /*  const mutialFriendsClickHandle = () =>{
         setIsModalOpen(true);

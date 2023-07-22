@@ -9,7 +9,7 @@ import Marketplace from "./Marketplace/Marketplace";
 import Groups from "./Groups/Groups";
 import LogIn from "./LogIn/Login";
 import NotFound from "./NotFound/NotFound";
-import Friends from "./Friends/Friends";
+import FriendsHome from "./Friends/FriendsHome";
 import Overview from "./UserProfile/About/Overview";
 import Employment from "./UserProfile/About/Employment";
 import Places from "./UserProfile/About/Places";
@@ -21,7 +21,8 @@ export {
     Marketplace,
     Groups,
     LogIn,
-    NotFound, Friends,
+    NotFound, 
+    FriendsHome,
     Profile,
     ProfilePosts,
     ProfileAbout,
