@@ -6,7 +6,10 @@ function Sidebar(props) {
     return (
         <aside
             className={s["page-sidebar"]}
-            style={{ backgroundColor: theme.palette.backgroundColor.section }}
+            style={{
+                backgroundColor: theme.palette.backgroundColor.section,
+                borderRight: theme.palette.border.transp,
+            }}
         >
             {props.children}
         </aside>

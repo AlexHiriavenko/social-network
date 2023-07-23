@@ -8,7 +8,10 @@ function HomeAsideRight() {
     return (
         <aside
             className="sidebar-home sidebar-home-right"
-            style={{ backgroundColor: theme.palette.backgroundColor.page }}
+            style={{
+                backgroundColor: theme.palette.backgroundColor.page,
+                borderLeft: theme.palette.border.transp,
+            }}
         >
             <Typography
                 id="ad"
@@ -82,7 +85,11 @@ function HomeAsideRight() {
                     </a>
                 </ListItem>
             </List>
-            <Divider />
+            <Divider
+                sx={{
+                    backgroundColor: theme.palette.border.simpleTransp,
+                }}
+            />
             <Typography
                 component="h3"
                 sx={{

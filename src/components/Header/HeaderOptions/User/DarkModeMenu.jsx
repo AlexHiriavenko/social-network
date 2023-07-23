@@ -1,65 +1,12 @@
-// import { useSelector, useDispatch } from "react-redux";
-// import { toggleMode } from "../../../../redux/darkMode.slice/darkMode.slice";
-// import BtnArrowBack from "../../../Buttons/BtnArrowBack";
-// import { Menu, Switch, FormControlLabel, Box, Typography } from "@mui/material";
-
-// function DarkModeMenu(props) {
-//     const dispatch = useDispatch();
-//     const mockDarkMode = false;
-//     const { anchor, goBack, toggleMenu } = props;
-//     const darkMode = useSelector((state) => state.darkMode.isOn);
-//     const toggleDisplayMode = () => {
-//         dispatch(toggleMode());
-//     };
-//     return (
-//         <Menu
-//             sx={{ mt: "45px" }}
-//             anchorEl={anchor}
-//             anchorOrigin={{
-//                 vertical: "top",
-//                 horizontal: "right",
-//             }}
-//             transformOrigin={{
-//                 vertical: "top",
-//                 horizontal: "right",
-//             }}
-//             // keepMounted
-//             open={Boolean(anchor)}
-//             onClose={toggleMenu}
-//             slotProps={{
-//                 paper: {
-//                     className: "header__options-drop-menu",
-//                 },
-//             }}>
-//             <Box sx={{ p: 2 }}>
-//                 <BtnArrowBack onClick={goBack} />
-//                 <FormControlLabel
-//                     name="darke mode"
-//                     value="dark mode"
-//                     control={
-//                         <Switch
-//                             defaultChecked={mockDarkMode ? true : false}
-//                             color="primary"
-//                             onClick={toggleDisplayMode}
-//                         />
-//                     }
-//                     label={<Typography fontWeight={600}>Dark Mode</Typography>}
-//                     labelPlacement="start"
-//                 />
-//             </Box>
-//         </Menu>
-//     );
-// }
-
-// export default DarkModeMenu;
-
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleMode } from "../../../../redux/darkMode.slice/darkMode.slice";
 import BtnArrowBack from "../../../Buttons/BtnArrowBack";
 import { Menu, Switch, FormControlLabel, Box, Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 function DarkModeMenu(props) {
+    const theme = useTheme();
     const dispatch = useDispatch();
     const { anchor, goBack, toggleMenu } = props;
     const darkMode = useSelector((state) => state.darkMode.isOn);
@@ -72,8 +19,7 @@ function DarkModeMenu(props) {
     }, [darkMode]);
 
     const toggleDisplayMode = () => {
-        // setIsChecked((prevChecked) => !prevChecked); // Инвертируем значение при клике
-        dispatch(toggleMode()); // Вызываем функцию для обновления Redux состояния
+        dispatch(toggleMode());
     };
 
     return (
@@ -94,18 +40,30 @@ function DarkModeMenu(props) {
             slotProps={{
                 paper: {
                     className: "header__options-drop-menu",
+                    style: { backgroundColor: theme.palette.backgroundColor.section },
                 },
             }}
         >
             <Box sx={{ p: 2 }}>
-                <BtnArrowBack onClick={goBack} />
+                <BtnArrowBack
+                    onClick={goBack}
+                    color={theme.palette.textColor.secondary}
+                    hoverColor={theme.palette.input.mainBackground}
+                />
                 <FormControlLabel
                     name="dark mode"
                     value="dark mode"
                     control={
                         <Switch checked={isChecked} color="primary" onClick={toggleDisplayMode} />
                     }
-                    label={<Typography fontWeight={600}>Dark Mode</Typography>}
+                    label={
+                        <Typography
+                            fontWeight={600}
+                            sx={{ color: theme.palette.textColor.content }}
+                        >
+                            Dark Mode
+                        </Typography>
+                    }
                     labelPlacement="start"
                 />
             </Box>

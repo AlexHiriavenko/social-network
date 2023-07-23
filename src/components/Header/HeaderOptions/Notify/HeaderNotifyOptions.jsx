@@ -84,7 +84,7 @@ function HeaderNotifyOptions() {
                             borderRadius: "12px",
                             backgroundColor: "rgb(240, 242, 245)",
                             textTransform: "capitalize",
-                            "&:hover": { backgroundColor: "rgb(240, 242, 245)" },
+                            "&:hover": { backgroundColor: "rgb(215, 220, 220)" },
                         }}
                     >
                         <Typography fontSize={15} fontWeight={600}>
@@ -99,7 +99,7 @@ function HeaderNotifyOptions() {
                             borderRadius: "12px",
                             backgroundColor: "rgb(240, 242, 245)",
                             textTransform: "capitalize",
-                            "&:hover": { backgroundColor: "rgb(240, 242, 245)" },
+                            "&:hover": { backgroundColor: "rgb(215, 220, 220)" },
                         }}
                     >
                         <Typography fontSize={15} fontWeight={600}>
@@ -117,6 +117,7 @@ function HeaderNotifyOptions() {
                                 gap: 1,
                                 whiteSpace: "normal",
                                 mb: 1,
+                                "&:hover": { backgroundColor: theme.palette.hoverColor.main },
                             }}
                         >
                             <Avatar

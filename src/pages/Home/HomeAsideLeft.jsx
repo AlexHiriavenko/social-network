@@ -9,7 +9,10 @@ function HomeAsideLeft() {
     return (
         <aside
             className="sidebar-home sidebar-home-left"
-            style={{ backgroundColor: theme.palette.backgroundColor.page }}
+            style={{
+                backgroundColor: theme.palette.backgroundColor.page,
+                borderRight: theme.palette.border.transp,
+            }}
         >
             <List sx={{ mt: 1 }}>
                 <ListItem

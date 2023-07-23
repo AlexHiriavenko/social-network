@@ -73,12 +73,20 @@ function HeaderMessageOptions() {
                     </Typography>
                     <Box>
                         <Tooltip title="See all in Messenger">
-                            <IconButton>
+                            <IconButton
+                                sx={{
+                                    "&:hover": { backgroundColor: theme.palette.hoverColor.main },
+                                }}
+                            >
                                 <ZoomOutMapIcon sx={{ color: theme.palette.textColor.content }} />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="New Message" sx={{ ml: 0.5 }}>
-                            <IconButton>
+                            <IconButton
+                                sx={{
+                                    "&:hover": { backgroundColor: theme.palette.hoverColor.main },
+                                }}
+                            >
                                 <EditNoteIcon sx={{ color: theme.palette.textColor.content }} />
                             </IconButton>
                         </Tooltip>
@@ -94,6 +102,7 @@ function HeaderMessageOptions() {
                                 gap: 1,
                                 whiteSpace: "normal",
                                 mb: 1,
+                                "&:hover": { backgroundColor: theme.palette.hoverColor.main },
                             }}
                         >
                             <Avatar
