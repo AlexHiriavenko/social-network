@@ -55,7 +55,7 @@ function HeaderSearch() {
                         />
                         <Search
                             inputClass="header__drawer-searh-input"
-                            searchIconWrapClass="header__search-icon-wrap"
+                            searchIconWrapClass="drawer__search-icon-wrap"
                             inputId="header-drawer-search"
                         />
                     </Box>

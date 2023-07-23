@@ -16,7 +16,7 @@ function Header() {
             position="sticky"
             color="inherit"
             sx={{
-                backgroundColor: (theme) => theme.palette.backgroundColor.section,
+                backgroundColor: theme.palette.backgroundColor.section,
                 boxShadow: shadow,
             }}
         >

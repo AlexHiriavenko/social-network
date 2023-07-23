@@ -1,5 +1,6 @@
 import { Typography, List, ListItem, Divider } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import SvgDanIT from "../../components/SVG/DanIT";
 import ContactsList from "./ContactsList";
 
 function HomeAsideRight() {
@@ -35,15 +36,9 @@ function HomeAsideRight() {
                         href="https://dan-it.com.ua/uk/"
                         target="_blank"
                     >
-                        <img
-                            style={{
-                                paddingTop: "10px",
-                                paddingBottom: "10px",
-                            }}
-                            alt="company logo"
-                            src="https://dan-it.com.ua/wp-content/themes/danIT%20v2.0/assets/img/svg/dan-logo.svg"
-                            width={100}
-                        />
+                        <div style={{ paddingTop: "12px", paddingBottom: "12px" }}>
+                            <SvgDanIT />
+                        </div>
                         <Typography
                             paragraph
                             sx={{

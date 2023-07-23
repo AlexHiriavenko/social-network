@@ -56,7 +56,7 @@
 .header__drawer-searh-input {
     border-radius: 50px;
     height: 40px;
-    width: 260px;
+    width: 280px;
     @media (max-width: 600px) {
         width: 240px;
     }
@@ -69,6 +69,11 @@
         border-radius: 50%;
     }
 }
+
+.drawer__search-icon-wrap {
+       border-radius: 50px;
+}
+
 
 .search__user-link {
     display: flex;
