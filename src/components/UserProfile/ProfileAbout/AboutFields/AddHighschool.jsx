@@ -1,20 +1,29 @@
 import { useEffect, useRef, useState } from "react";
 import AddInfoAbout from "../AddInfoAbout";
-import styles from "./AboutFields.module.scss";
-import EditFormButton from "../EditFormButton";
 import {
+  Box,
   Checkbox,
   FormControl,
-  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
-  TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import SchoolIcon from "@mui/icons-material/School";
 import ChangenInfoButton from "../AboutInfo/ChangeInfoButton";
+import {
+  ProfileAboutInfoBlock,
+  ProfileAboutInfoForm,
+  ProfileAboutInfoFormCheckboxLabel,
+  ProfileAboutInfoFormInputName,
+  ProfileAboutInfoFormSeparator,
+  ProfileAboutInfoFormTextField,
+  ProfileAboutInfoFormTimePeriod,
+  ProfileAboutInfoText,
+  ProfileSaveInfoButton,
+} from "../../StyledComponents/ContentBlock/StyledAboutComponents";
+import ProfilePageButton from "../../ProfilePageButton/ProfilePageButton";
 
 const mockInfo = {
   school: "CYL",
@@ -89,40 +98,36 @@ export default function AddHighschool() {
 
   if (!isEdit) {
     return (
-      <li>
+      <Box>
         {!info ? (
           <AddInfoAbout text={"Add high school"} clickAction={edit} />
         ) : (
-          <div className={styles.about__info_block}>
+          <ProfileAboutInfoBlock>
             <SchoolIcon
-              sx={{ color: "#808080", width: "36px", height: "36px" }}
+              sx={{ color: "#727b87", width: "36px", height: "36px" }}
             />
-            <div style={{ width: "100%" }}>
-              <p className={styles.about_info__text}>
+            <Box style={{ width: "100%" }}>
+              <ProfileAboutInfoText>
                 Went to <span style={{ fontWeight: 600 }}>{info.school}</span>
-              </p>
-              <p className={styles.about_info__text}>
+              </ProfileAboutInfoText>
+              <ProfileAboutInfoText>
                 Attended from {info.timeFrom} to {info.timeTo}
-              </p>
-            </div>
+              </ProfileAboutInfoText>
+            </Box>
             <ChangenInfoButton
               infoName={"high school"}
               edit={edit}
               remove={removeInfo}
             />
-          </div>
+          </ProfileAboutInfoBlock>
         )}
-      </li>
+      </Box>
     );
   } else {
     return (
-      <li>
-        <form
-          className={styles.about__form}
-          onSubmit={formik.handleSubmit}
-          ref={formRef}
-        >
-          <TextField
+      <Box>
+        <ProfileAboutInfoForm onSubmit={formik.handleSubmit} ref={formRef}>
+          <ProfileAboutInfoFormTextField
             fullWidth
             id="outlined-basic"
             name="school"
@@ -131,9 +136,11 @@ export default function AddHighschool() {
             onChange={formik.handleChange}
             value={formik.values.school}
           />
-          <p className={styles.about__form_input_name}>Time period</p>
+          <ProfileAboutInfoFormInputName>
+            Time period
+          </ProfileAboutInfoFormInputName>
 
-          <div className={styles.about__form_time_period}>
+          <ProfileAboutInfoFormTimePeriod>
             <p>from</p>
             <FormControl sx={{ minWidth: "76px" }} size="small">
               <InputLabel id="demo-simple-select-label">Year</InputLabel>
@@ -202,8 +209,8 @@ export default function AddHighschool() {
                 <MenuItem value={2004}>2004</MenuItem>
               </Select>
             </FormControl>
-          </div>
-          <FormControlLabel
+          </ProfileAboutInfoFormTimePeriod>
+          <ProfileAboutInfoFormCheckboxLabel
             control={
               <Checkbox
                 onChange={formik.handleChange}
@@ -213,7 +220,7 @@ export default function AddHighschool() {
             }
             label="Graduated"
           />
-          <TextField
+          <ProfileAboutInfoFormTextField
             fullWidth
             rows={4}
             name="description"
@@ -230,20 +237,11 @@ export default function AddHighschool() {
             onChange={formik.handleChange}
             value={formik.values.description}
           />
-          <span className={styles.about__form_separator}></span>
-          <EditFormButton text={"Cancel"} clickAction={edit} type={"reset"} />
-          <EditFormButton
-            text={"Save"}
-            type={"submit"}
-            active={
-              !(
-                Object.keys(formik.errors).length === 0 &&
-                formik.errors.constructor === Object
-              )
-            }
-          />
-        </form>
-      </li>
+          <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
+          <ProfilePageButton text={"Cancel"} clickAction={edit} />
+          <ProfileSaveInfoButton text={"Save"} clickAction={edit} />
+        </ProfileAboutInfoForm>
+      </Box>
     );
   }
 }

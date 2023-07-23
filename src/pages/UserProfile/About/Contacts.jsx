@@ -1,10 +1,10 @@
 import AddPhoneNumber from "../../../components/UserProfile/ProfileAbout/AboutFields/AddPhoneNumber";
-import styles from "./profileAbout.module.scss";
+import { ProfileAboutInfoTitle } from "../../../components/UserProfile/StyledComponents/ContentBlock/StyledAboutComponents";
 
 export default function Contacts() {
   return (
     <>
-      <p className={styles.profile_about__info_title}>Contact info</p>
+      <ProfileAboutInfoTitle>Contact info</ProfileAboutInfoTitle>
       <AddPhoneNumber />
     </>
   );

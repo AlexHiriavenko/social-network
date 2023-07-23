@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import ProfilePageButton from "../ProfilePageButton/ProfilePageButton";
 import { Box, Typography } from "@mui/material";
 
-const StyledIntroLink = styled("li")({
+const StyledIntroLink = styled("div")({
   paddingTop: "16px",
   display: "flex",
   flexWrap: "wrap",

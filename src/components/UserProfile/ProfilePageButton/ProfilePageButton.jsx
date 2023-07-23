@@ -9,7 +9,6 @@ const StyledProfileButton = styled(Button)(({ theme }) => ({
   fontWeight: 600,
   padding: "5px 10px",
   borderRadius: "5px",
-  marginTop: "15px",
   transitionDuration: "500ms",
   display: "flex",
   flexWrap: "nowrap",

@@ -1,7 +1,13 @@
-import { Link } from "react-router-dom";
-import styles from "./profilePosts.module.scss";
 import { useEffect, useRef, useState } from "react";
-import { ContentBlock } from "../StyledComponents/ContentBlock/StyledComponents";
+import {
+  ContentBlock,
+  ContentBlockHeader,
+  ContentBlockLink,
+  ContentBlockList,
+  ContentBlockTitel,
+} from "../StyledComponents/ContentBlock/StyledComponents";
+import { Box, Typography } from "@mui/material";
+import styled from "@emotion/styled";
 const mockFriends = [
   {
     userPhoto:
@@ -18,6 +24,35 @@ const mockFriends = [
     userName: "Ron Weasley",
   },
 ];
+
+const StyledPostFriendsSubtitle = styled(Typography)(({ theme }) => ({
+  width: "100%",
+  color: theme.palette.textColor.secondary,
+  paddingLeft: "16px",
+}));
+
+const StyledPostFriendsList = styled(ContentBlockList)({
+  gap: "11px",
+});
+
+const StyledPostFriendItem = styled(Box)({
+  cursor: "pointer",
+  "&:hover img": {
+    transform: "scale(0.98)",
+  },
+});
+const StyledPostFriendImage = styled("img")({
+  objectFit: "cover",
+  borderRadius: "10px",
+  width: "100%",
+  maxWidth: "204px",
+  transitionDuration: "500ms",
+});
+const StyledPostFriendName = styled(Typography)(({ theme }) => ({
+  color: theme.palette.textColor.main,
+  fontSize: "13px",
+  fontWeight: 600,
+}));
 export default function ProfilePostsFriends() {
   const photosRef = useRef(null);
   const [photoHeight, setPhotoHeight] = useState(204);
@@ -30,38 +65,32 @@ export default function ProfilePostsFriends() {
     if (photosRef.current) setPhotoHeight(photosRef.current.width);
   }, []);
   return (
-    <ContentBlock className={styles.profile_posts__block}>
-      <h2 className={styles.profile_posts__block_title}>Friends</h2>
-      <Link
-        to={"/profile/friends"}
-        className={styles.profile_posts__block_link}
-      >
-        See all friends
-      </Link>
-      <p className={styles.profile_posts__block_subtitle}>
+    <ContentBlock style={{maxWidth: "680px"}}>
+      <ContentBlockHeader>
+        <ContentBlockTitel>Friends</ContentBlockTitel>
+        <ContentBlockLink to={"/profile/friends"}>
+          See all friends
+        </ContentBlockLink>
+      </ContentBlockHeader>
+      <StyledPostFriendsSubtitle>
         {mockFriends.length} friends
-      </p>
-      <ul
-        className={`${styles.profile_posts__block_list} ${styles.friends_list}`}
-      >
+      </StyledPostFriendsSubtitle>
+      <StyledPostFriendsList>
         {mockFriends.map((friend, index) => {
           return (
-            <li className={styles.profile_posts__friend} key={index}>
-              <img
+            <StyledPostFriendItem key={index}>
+              <StyledPostFriendImage
                 src={friend.userPhoto}
                 alt="foto"
                 width={204}
                 height={photoHeight}
-                className={styles.profile_posts__friend_image}
                 ref={photosRef}
               />
-              <p className={styles.profile_posts__friend_name}>
-                {friend.userName}
-              </p>
-            </li>
+              <StyledPostFriendName>{friend.userName}</StyledPostFriendName>
+            </StyledPostFriendItem>
           );
         })}
-      </ul>
+      </StyledPostFriendsList>
     </ContentBlock>
   );
 }
