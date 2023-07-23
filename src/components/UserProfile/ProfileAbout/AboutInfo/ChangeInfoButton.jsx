@@ -5,7 +5,6 @@ import styled from "@emotion/styled";
 import { Button, List, ListItem } from "@mui/material";
 
 const ProfileAboutChangeBtn = styled(Button)(({ theme }) => ({
-  display: "block",
   minWidth: "36px",
   minHeight: "36px",
   borderRadius: "50%",

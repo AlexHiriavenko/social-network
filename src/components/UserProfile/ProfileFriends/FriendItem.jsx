@@ -21,6 +21,7 @@ const StyledFriendName = styled("a")(({ theme }) => ({
   fontSize: "17px",
   color: theme.palette.textColor.main,
   fontWeight: 600,
+  fontFamily: "sans-serif",
   borderBottom: "2px solid transparent",
   lineHeight: "90%",
   transitionDuration: "500ms",
