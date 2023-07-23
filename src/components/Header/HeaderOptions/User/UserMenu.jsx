@@ -4,8 +4,10 @@ import { Typography, Menu, Avatar, MenuItem } from "@mui/material";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import NightsStayIcon from "@mui/icons-material/NightsStay";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { useTheme } from "@mui/material/styles";
 
 function UserMenu(props) {
+    const theme = useTheme();
     const { anchor, toggleMenu, toggleDisplayModeMenu, logOut } = props;
     return (
         <Menu
@@ -25,6 +27,7 @@ function UserMenu(props) {
             slotProps={{
                 paper: {
                     className: "header__options-drop-menu",
+                    style: { backgroundColor: theme.palette.backgroundColor.section },
                 },
             }}
         >
@@ -45,15 +48,9 @@ function UserMenu(props) {
             >
                 <NightsStayIcon className="header__menu-item-icon" />
                 <Typography fontWeight={700}>Display Mode</Typography>
-                <ArrowForwardIosIcon
-                    sx={{ ml: "auto", color: "rgb(101, 103, 107)" }}
-                />
+                <ArrowForwardIosIcon sx={{ ml: "auto", color: "rgb(101, 103, 107)" }} />
             </MenuItem>
-            <MenuItem
-                onClick={logOut}
-                className="header__menu-item"
-                sx={{ mt: "10px" }}
-            >
+            <MenuItem onClick={logOut} className="header__menu-item" sx={{ mt: "10px" }}>
                 <ExitToAppIcon className="header__menu-item-icon" />
                 <Typography fontWeight={700}>Log Out</Typography>
             </MenuItem>

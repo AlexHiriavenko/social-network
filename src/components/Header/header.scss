@@ -15,9 +15,6 @@
     padding-top: 5px;
     padding-bottom: 5px;
     border-radius: 10px;
-    &:hover {
-        background-color: $main-hover-color;
-    }
     &--active {
         @include center-flex;
         width: 25%;
@@ -28,7 +25,7 @@
         &::after {
             content: "";
             position: absolute;
-            top: 118%;
+            top: 102%;
             left: 50%;
             width: 100%;
             transform: translate(-50%, 0);

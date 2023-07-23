@@ -10,10 +10,12 @@ import {
     Box,
     Button,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mockInfo } from "../../HeaderSearch/SeacrhComponents/mockData";
 
 function HeaderNotifyOptions() {
+    const theme = useTheme();
     const [anchorNotifyMenu, setAnchorNotifyMenu] = React.useState(null);
     const toggleMenu = () =>
         anchorNotifyMenu
@@ -25,20 +27,17 @@ function HeaderNotifyOptions() {
             <Tooltip title="Notifications" sx={{ p: { xs: "4px", sm: 1 } }}>
                 <IconButton
                     onClick={toggleMenu}
-                    sx={
-                        ({ pt: 1, pb: 1 },
-                        { pl: { xs: 0.5, sm: 1 }, pr: { xs: 0.5, sm: 1 } })
-                    }
+                    sx={({ pt: 1, pb: 1 }, { pl: { xs: 0.5, sm: 1 }, pr: { xs: 0.5, sm: 1 } })}
                 >
                     <Badge badgeContent={3} color="secondary">
                         <Avatar
                             sx={{
-                                bgcolor: "#F0F2F5",
+                                bgcolor: theme.palette.hoverColor.dark,
                                 minWidth: "40px",
                                 minHeight: "40px",
                             }}
                         >
-                            <NotificationsIcon style={{ color: "black" }} />
+                            <NotificationsIcon style={{ color: theme.palette.textColor.content }} />
                         </Avatar>
                     </Badge>
                 </IconButton>
@@ -60,6 +59,7 @@ function HeaderNotifyOptions() {
                 slotProps={{
                     paper: {
                         className: "header__options-drop-menu",
+                        style: { backgroundColor: theme.palette.backgroundColor.section },
                     },
                 }}
             >
@@ -71,6 +71,7 @@ function HeaderNotifyOptions() {
                     pt={1}
                     pb={1}
                     fontWeight={600}
+                    sx={{ color: theme.palette.textColor.content }}
                 >
                     Notifications
                 </Typography>
@@ -83,6 +84,7 @@ function HeaderNotifyOptions() {
                             borderRadius: "12px",
                             backgroundColor: "rgb(240, 242, 245)",
                             textTransform: "capitalize",
+                            "&:hover": { backgroundColor: "rgb(240, 242, 245)" },
                         }}
                     >
                         <Typography fontSize={15} fontWeight={600}>
@@ -97,6 +99,7 @@ function HeaderNotifyOptions() {
                             borderRadius: "12px",
                             backgroundColor: "rgb(240, 242, 245)",
                             textTransform: "capitalize",
+                            "&:hover": { backgroundColor: "rgb(240, 242, 245)" },
                         }}
                     >
                         <Typography fontSize={15} fontWeight={600}>
@@ -121,7 +124,10 @@ function HeaderNotifyOptions() {
                                 alt="user icon"
                                 src={user.userPhoto}
                             ></Avatar>
-                            <Typography fontSize={15}>
+                            <Typography
+                                fontSize={15}
+                                sx={{ color: theme.palette.textColor.content }}
+                            >
                                 <b>{user.userName}</b> added a new post
                             </Typography>
                         </MenuItem>
