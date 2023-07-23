@@ -22,7 +22,6 @@ export default function CreatePost() {
     let file = fileRef.current.files[0];
     const formData = new FormData();
     formData.append("file", file);
-    console.log(formData);
     setImgUrl(URL.createObjectURL(file));
   }
 
@@ -32,7 +31,6 @@ export default function CreatePost() {
       userName: `${mockUser.firstName} ${mockUser.lastName}`,
     },
     onSubmit: (values) => {
-      console.log(values);
       handleClose();
     },
   });

@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import AddInfoAbout from "../AddInfoAbout";
-import styles from "./AboutFields.module.scss";
-import EditFormButton from "../EditFormButton";
-import { TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import RoomIcon from '@mui/icons-material/Room';
 import ChangenInfoButton from "../AboutInfo/ChangeInfoButton";
+import { ProfileAboutInfoBlock, ProfileAboutInfoForm, ProfileAboutInfoFormSeparator, ProfileAboutInfoFormTextField, ProfileAboutInfoText, ProfileSaveInfoButton } from "../../StyledComponents/ContentBlock/StyledAboutComponents";
+import ProfilePageButton from "../../ProfilePageButton/ProfilePageButton";
 
 const mockInfo = {
   hometown: "Dnipro"
@@ -62,38 +62,36 @@ export default function AddHometown() {
 
   if (!isEdit) {
     return (
-      <li>
+      <Box>
         {!info ? (
           <AddInfoAbout text={"Add hometown"} clickAction={edit} />
         ) : (
-          <div className={styles.about__info_block}>
+          <ProfileAboutInfoBlock>
             <RoomIcon
-              sx={{ color: "#808080", width: "36px", height: "36px" }}
+              sx={{ color: "#727b87", width: "36px", height: "36px" }}
             />
-            <div style={{ width: "100%" }}>
-              <p className={styles.about_info__text}>
+            <Box style={{ width: "100%" }}>
+              <ProfileAboutInfoText>
                 From <span style={{ fontWeight: 600 }}>{info.hometown}</span>
-              </p>
-              
-            </div>
+              </ProfileAboutInfoText>
+            </Box>
             <ChangenInfoButton
               infoName={"hometown"}
               edit={edit}
               remove={removeInfo}
             />
-          </div>
+          </ProfileAboutInfoBlock>
         )}
-      </li>
+      </Box>
     );
   } else {
     return (
-      <li>
-        <form
-          className={styles.about__form}
+      <Box>
+        <ProfileAboutInfoForm
           onSubmit={formik.handleSubmit}
           ref={formRef}
         >
-          <TextField
+          <ProfileAboutInfoFormTextField
             fullWidth
             id="outlined-basic"
             name="hometown"
@@ -102,20 +100,11 @@ export default function AddHometown() {
             onChange={formik.handleChange}
             value={formik.values.hometown}
           />
-          <span className={styles.about__form_separator}></span>
-          <EditFormButton text={"Cancel"} clickAction={edit} type={"reset"} />
-          <EditFormButton
-            text={"Save"}
-            type={"submit"}
-            active={
-              !(
-                Object.keys(formik.errors).length === 0 &&
-                formik.errors.constructor === Object
-              )
-            }
-          />
-        </form>
-      </li>
+          <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
+          <ProfilePageButton text={"Cancel"} clickAction={edit} />
+          <ProfileSaveInfoButton text={"Save"} clickAction={edit} />
+        </ProfileAboutInfoForm>
+      </Box>
     );
   }
 }

@@ -1,7 +1,12 @@
-import { Link } from "react-router-dom";
-import styles from "./profilePosts.module.scss";
 import { useEffect, useRef, useState } from "react";
-import { ContentBlock } from "../StyledComponents/ContentBlock/StyledComponents";
+import {
+  ContentBlock,
+  ContentBlockHeader,
+  ContentBlockLink,
+  ContentBlockList,
+  ContentBlockTitel,
+} from "../StyledComponents/ContentBlock/StyledComponents";
+import styled from "@emotion/styled";
 const mockImg = [
   "https://www.ictputovanja.hr/data/public/slike-za-novosti/Island-kucica.jpg",
   "https://i.pinimg.com/564x/15/f0/e0/15f0e0372d1e04df5f325d00e5899069.jpg",
@@ -12,38 +17,50 @@ const mockImg = [
   "https://i.pinimg.com/564x/4f/f9/19/4ff91923790c8ffe4424eb74f05bfecd.jpg",
   "https://i.pinimg.com/564x/8e/d0/2d/8ed02daed42b64b471af335418476f6f.jpg",
 ];
+
+const StyledPostPagePhoto = styled("img")({
+  objectFit: "cover",
+  cursor: "pointer",
+  transitionDuration: "500ms",
+  "&:hover": {
+    transform: "scale(0.98)",
+  },
+});
 export default function ProfilePostsPhotos() {
   const photosRef = useRef(null);
   const [photoHeight, setPhotoHeight] = useState(213);
+
   useEffect(() => {
     window.addEventListener("resize", () => {
       if (photosRef.current) setPhotoHeight(photosRef.current.width);
     });
   }, [photosRef]);
+
   useEffect(() => {
     if (photosRef.current) setPhotoHeight(photosRef.current.width);
   }, []);
   return (
-    <ContentBlock className={styles.profile_posts__block}>
-      <h2 className={styles.profile_posts__block_title}>Photos</h2>
-      <Link to={"/profile/photos"} className={styles.profile_posts__block_link}>
-        See all photos
-      </Link>
-      <div className={styles.profile_posts__block_list}>
+    <ContentBlock style={{maxWidth: "680px"}}>
+      <ContentBlockHeader>
+        <ContentBlockTitel>Photos</ContentBlockTitel>
+        <ContentBlockLink to={"/profile/photos"}>
+          See all photos
+        </ContentBlockLink>
+      </ContentBlockHeader>
+      <ContentBlockList>
         {mockImg.map((image, index) => {
           return (
-            <img
+            <StyledPostPagePhoto
               src={image}
               alt="foto"
               width={213}
               height={photoHeight}
-              className={styles.profile_posts__photo}
               ref={photosRef}
               key={index}
             />
           );
         })}
-      </div>
+      </ContentBlockList>
     </ContentBlock>
   );
 }

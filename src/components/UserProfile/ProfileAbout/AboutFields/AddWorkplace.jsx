@@ -1,20 +1,29 @@
 import { useEffect, useRef, useState } from "react";
 import AddInfoAbout from "../AddInfoAbout";
-import styles from "./AboutFields.module.scss";
-import EditFormButton from "../EditFormButton";
 import {
+  Box,
   Checkbox,
   FormControl,
-  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
-  TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import ChangenInfoButton from "../AboutInfo/ChangeInfoButton";
+import {
+  ProfileAboutInfoBlock,
+  ProfileAboutInfoForm,
+  ProfileAboutInfoFormCheckboxLabel,
+  ProfileAboutInfoFormInputName,
+  ProfileAboutInfoFormSeparator,
+  ProfileAboutInfoFormTextField,
+  ProfileAboutInfoFormTimePeriod,
+  ProfileAboutInfoText,
+  ProfileSaveInfoButton,
+} from "../../StyledComponents/ContentBlock/StyledAboutComponents";
+import ProfilePageButton from "../../ProfilePageButton/ProfilePageButton";
 
 const mockInfo = {
   company: "Dan IT",
@@ -45,6 +54,7 @@ const WorkplaceSchema = Yup.object().shape({
   }),
   workNow: Yup.boolean(),
 });
+
 
 export default function AddWorkplace() {
   // States
@@ -107,40 +117,36 @@ export default function AddWorkplace() {
 
   if (!isEdit) {
     return (
-      <li>
+      <Box>
         {!info ? (
           <AddInfoAbout text={"Add a workplace"} clickAction={edit} />
         ) : (
-          <div className={styles.about__info_block}>
+          <ProfileAboutInfoBlock>
             <BusinessCenterIcon
-              sx={{ color: "#808080", width: "36px", height: "36px" }}
+              sx={{ color: "#727b87", width: "36px", height: "36px" }}
             />
-            <div style={{ width: "100%" }}>
-              <p className={styles.about_info__text}>
+            <Box style={{ width: "100%" }}>
+              <ProfileAboutInfoText>
                 {info.position} at {info.company}
-              </p>
-              <p className={styles.about_info__text}>
+              </ProfileAboutInfoText>
+              <ProfileAboutInfoText>
                 {info.timeFrom} to {info.workNow ? "present" : info.timeTo}
-              </p>
-            </div>
+              </ProfileAboutInfoText>
+            </Box>
             <ChangenInfoButton
               infoName={"workplace"}
               edit={edit}
               remove={removeInfo}
             />
-          </div>
+          </ProfileAboutInfoBlock>
         )}
-      </li>
+      </Box>
     );
   } else {
     return (
-      <li>
-        <form
-          className={styles.about__form}
-          onSubmit={formik.handleSubmit}
-          ref={formRef}
-        >
-          <TextField
+      <Box>
+        <ProfileAboutInfoForm onSubmit={formik.handleSubmit} ref={formRef}>
+          <ProfileAboutInfoFormTextField
             fullWidth
             id="outlined-basic"
             name="company"
@@ -149,16 +155,16 @@ export default function AddWorkplace() {
             onChange={formik.handleChange}
             value={formik.values.company}
           />
-          <TextField
+          <ProfileAboutInfoFormTextField
             fullWidth
             id="outlined-basic"
             name="position"
             label="Position"
             variant="outlined"
             onChange={formik.handleChange}
-            value={formik.values.position}
+            value={formik.values.position} 
           />
-          <TextField
+          <ProfileAboutInfoFormTextField
             fullWidth
             id="outlined-basic"
             name="city"
@@ -167,7 +173,7 @@ export default function AddWorkplace() {
             onChange={formik.handleChange}
             value={formik.values.city}
           />
-          <TextField
+          <ProfileAboutInfoFormTextField
             fullWidth
             rows={4}
             name="description"
@@ -177,15 +183,16 @@ export default function AddWorkplace() {
                 minHeight: "100px",
                 padding: "10px",
                 borderRadius: "5px",
-                border: "1px solid #ccc",
                 resize: "vertical",
               },
             }}
             onChange={formik.handleChange}
             value={formik.values.description}
           />
-          <p className={styles.about__form_input_name}>Time period</p>
-          <FormControlLabel
+          <ProfileAboutInfoFormInputName>
+            Time period
+          </ProfileAboutInfoFormInputName>
+          <ProfileAboutInfoFormCheckboxLabel
             control={
               <Checkbox
                 onChange={formik.handleChange}
@@ -195,7 +202,7 @@ export default function AddWorkplace() {
             }
             label="I currently work here"
           />
-          <div className={styles.about__form_time_period}>
+          <ProfileAboutInfoFormTimePeriod>
             <p>from</p>
             <FormControl sx={{ minWidth: "76px" }} size="small">
               <InputLabel id="demo-simple-select-label">Year</InputLabel>
@@ -270,22 +277,13 @@ export default function AddWorkplace() {
             ) : (
               <></>
             )}
-          </div>
+          </ProfileAboutInfoFormTimePeriod>
 
-          <span className={styles.about__form_separator}></span>
-          <EditFormButton text={"Cancel"} clickAction={edit} type={"reset"} />
-          <EditFormButton
-            text={"Save"}
-            type={"submit"}
-            active={
-              !(
-                Object.keys(formik.errors).length === 0 &&
-                formik.errors.constructor === Object
-              )
-            }
-          />
-        </form>
-      </li>
+          <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
+          <ProfilePageButton text={"Cancel"} clickAction={edit} />
+          <ProfileSaveInfoButton text={"Save"} clickAction={edit} />
+        </ProfileAboutInfoForm>
+      </Box>
     );
   }
 }
