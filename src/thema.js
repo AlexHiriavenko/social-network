@@ -161,7 +161,7 @@ export const themeNight = createTheme({
   palette: {
     accentColor: {
       main: "#1B74E4",
-      secondary: "#E7F3FF",
+      secondary: "#263951",
     },
     textColor: {
       main: "#FFFFFF",
