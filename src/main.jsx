@@ -33,11 +33,7 @@ import { themeDay, themeNight } from "./thema.js";
 const DarkModeThemeProvider = ({ children }) => {
     const darkMode = useSelector((state) => state.darkMode.isOn);
 
-    return (
-        <ThemeProvider theme={darkMode ? themeDay : themeNight}>
-            {children}
-        </ThemeProvider>
-    );
+    return <ThemeProvider theme={darkMode ? themeNight : themeDay}>{children}</ThemeProvider>;
 };
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
