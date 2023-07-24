@@ -106,6 +106,7 @@ export default function RegisterModal(props) {
             id="password"
             required
             name="password"
+            error={!!registerForm.errors.password}
             value={registerForm.values.password}
             onChange={registerForm.handleChange}
             variant="outlined"

@@ -5,7 +5,7 @@ import {readCookie} from "../../readCookie.js";
 export const logIn = createAsyncThunk(
     'Login/logIn',
     async function({email,password}) {
-        const token   =  await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/auth/login`,{email:email,password:password});
+        const token   =  await axios.post(`https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/login`,{email:email,password:password});
         document.cookie = `token=${token.data.accessToken}`;
         document.cookie = `refresh=${token.data.refreshToken}`;
         console.log(import.meta.env.VITE_APP_API_URL)
