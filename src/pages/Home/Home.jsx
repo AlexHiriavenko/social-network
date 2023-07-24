@@ -4,11 +4,9 @@ import HomeAsideRight from "./HomeAsideRight";
 import { useTheme } from "@mui/material/styles";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getUsers, setUsers,getUser} from "../../redux/user.slice/user.slice.js";
-import axios from "axios";
 import {readCookie} from '../../readCookie.js'
 import {getAccessToken, loginGoogle, setLogin} from "../../redux/login.slice/login.slice.js";
-import {getChat, sendMessage} from "../../redux/chat.slice/chat.slice.js";
+
 
 
 function Home() {
@@ -21,16 +19,6 @@ function Home() {
         dispatch(loginGoogle())
 
     }
-        ( async function(){
-      const user = await  dispatch(getUser(1));
-       console.log(user)
-let id =1
-        const chat = await dispatch(getChat(1));
-            console.log(chat.payload)
-
-           // dispatch(sendMessage({sender:user.payload,chat:chat.payload.data,content:"New message"}))
-        })()
-
 
        },[])
 
