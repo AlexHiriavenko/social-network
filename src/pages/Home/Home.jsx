@@ -1,6 +1,7 @@
 import HomeMain from "./HomeMain";
 import HomeAsideLeft from "./HomeAsideLeft";
 import HomeAsideRight from "./HomeAsideRight";
+import { useTheme } from "@mui/material/styles";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getUsers, setUsers,getUser} from "../../redux/user.slice/user.slice.js";
@@ -11,6 +12,7 @@ import {getChat, sendMessage} from "../../redux/chat.slice/chat.slice.js";
 
 
 function Home() {
+    const theme = useTheme();
 
     const dispatch = useDispatch();
 
@@ -33,14 +35,14 @@ let id =1
        },[])
 
     return (
-        <>
-        <div className="container-page">
-
+        <div
+            className="container-page"
+            style={{ backgroundColor: theme.palette.backgroundColor.page }}
+        >
             <HomeAsideLeft />
             <HomeMain />
             <HomeAsideRight />
         </div>
-</>
     );
 }
 

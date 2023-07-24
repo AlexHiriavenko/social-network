@@ -1,7 +1,13 @@
 import React from "react";
-import { Formik, Field } from "formik";
+import { Formik } from "formik";
+import Checkbox from "@mui/material/Checkbox";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import { useTheme } from "@mui/material/styles";
 
 const CheckboxMenu = (props) => {
+    const theme = useTheme();
     const { onFilterCategories } = props;
 
     const initialValues = {
@@ -31,22 +37,76 @@ const CheckboxMenu = (props) => {
                     >
                         Select All
                     </button>
-                    <label>
-                        <Field type="checkbox" name="options" value="sports" />
-                        Sports
-                    </label>
-                    <label>
-                        <Field type="checkbox" name="options" value="comedy" />
-                        Comedy
-                    </label>
-                    <label>
-                        <Field type="checkbox" name="options" value="edu" />
-                        Education
-                    </label>
-                    <label>
-                        <Field type="checkbox" name="options" value="other" />
-                        Other
-                    </label>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    id="comedy"
+                                    name="options"
+                                    value="comedy"
+                                    checked={formik.values.options.includes("comedy")}
+                                    onChange={formik.handleChange}
+                                    icon={
+                                        <CheckBoxOutlineBlankIcon
+                                            style={{ color: theme.palette.textColor.main }}
+                                        />
+                                    }
+                                />
+                            }
+                            label="Comedy"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    id="edu"
+                                    name="options"
+                                    value="edu"
+                                    checked={formik.values.options.includes("edu")}
+                                    onChange={formik.handleChange}
+                                    icon={
+                                        <CheckBoxOutlineBlankIcon
+                                            style={{ color: theme.palette.textColor.main }}
+                                        />
+                                    }
+                                />
+                            }
+                            label="Education"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    id="sports"
+                                    name="options"
+                                    value="sports"
+                                    checked={formik.values.options.includes("sports")}
+                                    onChange={formik.handleChange}
+                                    icon={
+                                        <CheckBoxOutlineBlankIcon
+                                            style={{ color: theme.palette.textColor.main }}
+                                        />
+                                    }
+                                />
+                            }
+                            label="Sports"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    id="other"
+                                    name="options"
+                                    value="other"
+                                    checked={formik.values.options.includes("other")}
+                                    onChange={formik.handleChange}
+                                    icon={
+                                        <CheckBoxOutlineBlankIcon
+                                            style={{ color: theme.palette.textColor.main }}
+                                        />
+                                    }
+                                />
+                            }
+                            label="Other"
+                        />
+                    </FormGroup>
                     <button type="submit" className="watch__btn-submit">
                         Filter
                     </button>

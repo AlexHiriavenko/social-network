@@ -12,25 +12,20 @@
     @include center-flex;
     width: 25%;
     text-align: center;
-    color: $main-content-color;
     padding-top: 5px;
     padding-bottom: 5px;
     border-radius: 10px;
-    &:hover {
-        background-color: $main-hover-color;
-    }
     &--active {
         @include center-flex;
         width: 25%;
         text-align: center;
-        color: $active-link-color;
         position: relative;
         padding-top: 0;
         padding-bottom: 0;
         &::after {
             content: "";
             position: absolute;
-            top: 118%;
+            top: 102%;
             left: 50%;
             width: 100%;
             transform: translate(-50%, 0);
@@ -56,19 +51,26 @@
 }
 
 .header__drawer-searh-input {
+    border-radius: 50px;
     height: 40px;
-    width: 260px;
+    width: 280px;
     @media (max-width: 600px) {
         width: 240px;
     }
 }
 
 .header__search-icon-wrap {
+        border-radius: 50px;
     @media (max-width: 1100px) {
         justify-content: center;
         border-radius: 50%;
     }
 }
+
+.drawer__search-icon-wrap {
+       border-radius: 50px;
+}
+
 
 .search__user-link {
     display: flex;
@@ -88,17 +90,7 @@
     transform: translate(0, -50%);
     padding: 7px;
     border-radius: 50%;
-
     cursor: pointer;
-    &:hover {
-        background-color: $secondary-hover-color;
-    }
-}
-
-.search__list-item {
-    &:hover {
-        background-color: $main-hover-color;
-    }
 }
 
 .header__menu-item-link {

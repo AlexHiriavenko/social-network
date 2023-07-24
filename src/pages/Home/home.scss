@@ -1,6 +1,5 @@
 .main-home-content {
     width: calc(100% - 720px);
-    background-color: #F0F2F5;;
     @media (max-width: 1100px) {
         width: 68%;
         padding-left: 32px;
@@ -11,13 +10,8 @@
     }
 }
 
-.sidebar-home {
-    background-color: #F0F2F5;;
-}
-
 .sidebar-home-left {
     width: 360px;
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
     @media (max-width: 1100px) {
         display: none;
     }
@@ -25,7 +19,6 @@
 
 .sidebar-home-right {
     width: 360px;
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
     @media (max-width: 1100px) {
         width: 360px;
         max-width: 32%;
@@ -33,10 +26,6 @@
     @media (max-width: 900px) {
         display: none;
     }
-}
-
-.sidebar-home__item-link {
-    color: #F0F2F5;
 }
 
 .sidebar-home__advertisement-link {
@@ -47,8 +36,4 @@
     &:visited {
         color: inherit;
     }
-}
-
-.home__list-item:hover {
-    background-color: $secondary-hover-color;
 }

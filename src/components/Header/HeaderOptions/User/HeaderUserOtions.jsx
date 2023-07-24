@@ -4,8 +4,10 @@ import { logOut } from "../../../../redux/login.slice/login.slice";
 import { IconButton, Avatar, Tooltip } from "@mui/material";
 import DarkModeMenu from "./DarkModeMenu";
 import UserMenu from "./UserMenu";
+import { useTheme } from "@mui/material/styles";
 
 function HeaderUserOtions() {
+    const theme = useTheme();
     const dispatch = useDispatch();
 
     const handleLogOut = (event) => {
