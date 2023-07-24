@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React  from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PrivateRoute from "./utils/router/PrivateRoute";
@@ -25,7 +25,7 @@ import Header from "./components/Header/Header";
 
 
 function App() {
-  const dispatch = useDispatch();
+
   const token = useSelector((state) => state.login.token)
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
 

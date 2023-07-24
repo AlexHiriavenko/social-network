@@ -5,7 +5,7 @@ import instance from '../../instance';
 export const getUsers = createAsyncThunk(
     'Users/getUsers',
     async function() {
-        const {status,data}    =  await instance.get('/users');
+        const {data}    =  await instance.get('/users');
         console.log(data)
         return data;
     }
@@ -15,7 +15,7 @@ export const getUsers = createAsyncThunk(
 export const getUser = createAsyncThunk(
     'Users/getUser',
     async function(id) {
-        const {status,data}    =  await instance.get(`/users/${id}`);
+        const {data}    =  await instance.get(`/users/${id}`);
         console.log(data)
         return data;
     }
@@ -32,7 +32,7 @@ export const updateUser = createAsyncThunk(
 export const getFriends = createAsyncThunk(
     'Users/getFriends',
     async function(id) {
-        const {status,data}=   await instance.get(`/friends/${id}/friends`);
+        const {data}=   await instance.get(`/friends/${id}/friends`);
         console.log(data)
         return data;
     }

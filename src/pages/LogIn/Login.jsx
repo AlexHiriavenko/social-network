@@ -14,8 +14,6 @@ import ForgotForm from "./ForgotForm";
 import {useDispatch, useSelector} from "react-redux";
 import { logIn,setLogin } from "../../redux/login.slice/login.slice";
 import {Link, useNavigate} from "react-router-dom";
-import instance from "../../instance.js";
-import axios from 'axios';
 import {readCookie} from "../../readCookie.js";
 export default function LogIn() {
     const navigate = useNavigate();
@@ -43,7 +41,7 @@ export default function LogIn() {
      const  email = loginForm.values.email
      const  password = loginForm.values.password
     await  dispatch(logIn({email:loginForm.values.email,password:loginForm.values.password}));
-let cookieToken = readCookie('token');
+//let cookieToken = readCookie('token');
      console.log(typeof readCookie('token'))
      if(readCookie('token' ) != '0'){
          dispatch(setLogin())
