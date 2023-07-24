@@ -1,5 +1,5 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import instance from '../../instance'
+import instance from '../../instance';
 
 //Получение всех пользователей
 export const getUsers = createAsyncThunk(
@@ -38,42 +38,40 @@ export const getFriends = createAsyncThunk(
     }
 )
 const UserSlice = createSlice({
-        name:'Users',
-        initialState:{
-            value: [],
-            user:null,
-            friends:[],
-            isLoading: true},
-        reducers:{
+    name:'Users',
+    initialState:{
+        value: [],
+        user:null,
+        friends:[],
+        isLoading: true },
+    reducers:{
             //Загрузка юзеров в стейт
-            setUsers:(state,action) =>{
-                state.value = action.payload
+        setUsers:(state,action) =>{
+            state.value = action.payload
             },
             //Загрузка юзера в стейт
-            setUser:(state,action) =>{
-                state.user = action.payload
+        setUser:(state,action) =>{
+            state.user = action.payload
             },
             //Загрузка друзей юзера в стейт
-            setFriends:(state,action) =>{
-                state.friends = action.payload
+        setFriends:(state,action) =>{
+            state.friends = action.payload
             },
 
         },
-        extraReducers:{
-            [getUsers.pending]:(state) =>{
-                state.isLoading= true;
+    extraReducers:{
+        [getUsers.pending]:(state) =>{
+            state.isLoading= true;
             },
-            [getUsers.fulfilled]:(state,action) =>{
-                state.isLoading = false
-                state.value =action.payload},
-            [getUsers.rejected]:(state) =>{}
+        [getUsers.fulfilled]:(state,action) =>{
+            state.isLoading = false
+            state.value =action.payload},
+        [getUsers.rejected]:(state) =>{}
         }
-
-
 
     }
 )
 
-export const { setUsers,setUser,setFriends } =UserSlice.actions
+export const { setUsers,setUser,setFriends } =UserSlice.actions;
 
-export default UserSlice.reducer
+export default UserSlice.reducer;

@@ -6,7 +6,6 @@ export const getChats = createAsyncThunk(
     async function() {
       const chats   =  await instance.get('/chats').then(response=>response.json());
       console.log(chats)
-
       return chats;
     }
 )
@@ -22,10 +21,10 @@ export const sendMessage = createAsyncThunk(
     'chat/sendMessage',
     async function({sender,chat,content}) {
       let message ={
-        id:0,
-        content:content,
-        sender:sender,
-        chat:chat
+          id:0,
+          content:content,
+          sender:sender,
+          chat:chat
 
       }
       const {status,data}    =  await instance.post(`/messages`,message);
@@ -39,7 +38,6 @@ export const addNewUser = createAsyncThunk(
 
         const {status,data}    =  await instance.put(`/messages/${chatId}/participants`,newUser);
         console.log(status)
-
     }
 )
 const initialState = {

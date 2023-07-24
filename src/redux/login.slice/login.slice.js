@@ -20,9 +20,7 @@ export const getAccessToken = createAsyncThunk(
     async function() {
 
         const refresh = readCookie('refresh')
-
         let token = await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/auth/token`,{refreshToken:refresh})
-
         document.cookie = `token=${token.data.accessToken}`;
 
     }
@@ -41,58 +39,48 @@ export const loginGoogle = createAsyncThunk(
 async function() {
 
         let token = await axios.get("http://localhost:9000/api/oauth2/authorization/google")
-
         document.cookie = `token=${token.data.accessToken}`;
         document.cookie = `refresh=${token.data.refreshToken}`;
 }
 
 )
 const LoginSlice = createSlice({
-        name: 'Login',
-        initialState: {
-            isLoading: true,
-            isLoggedIn:JSON.parse(localStorage.getItem('loggedIn')),
-            token: readCookie('token'),
+    name: 'Login',
+    initialState: {
+        isLoading: true,
+        isLoggedIn:JSON.parse(localStorage.getItem('loggedIn')),
+        token: readCookie('token'),
         },
-        reducers: {
-            setLogin: (state, action) => {
-
-               state.isLoggedIn = true
-                let login = true
-                localStorage.setItem('loggedIn',login)
+    reducers: {
+        setLogin: (state, action) => {
+            state.isLoggedIn = true
+            let login = true
+            localStorage.setItem('loggedIn',login)
             },
-
-            logOut: (state, action) => {
-
-                state.isLoggedIn = false
-                let token = 0
-                document.cookie = `token=${token}`
-
-                let login = false
-                localStorage.setItem('loggedIn',login)
+        logOut: (state, action) => {
+            state.isLoggedIn = false
+            let token = 0
+            document.cookie = `token=${token}`
+            let login = false
+            localStorage.setItem('loggedIn',login)
             },
-            extraReducers: {
-                [logIn.pending]: (state) => {
-                    state.isLoading = true;
+        extraReducers: {
+            [logIn.pending]: (state) => {
+                state.isLoading = true;
                 },
-                [logIn.fulfilled]: (state, action) => {
-                    state.isLoading = false
-                    state.token = action.payload
+            [logIn.fulfilled]: (state, action) => {
+                state.isLoading = false
+                state.token = action.payload
                 },
-                [logIn.rejected]: (state) => {
+            [logIn.rejected]: (state) => {
                 }
             }
-
 
         }
     }
 )
 
-
-
-
 export  const { setLogin, logOut } = LoginSlice.actions;
-
 
 
 export default LoginSlice.reducer;
