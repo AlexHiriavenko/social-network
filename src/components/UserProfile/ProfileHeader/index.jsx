@@ -5,6 +5,8 @@ import styled from "@emotion/styled";
 import { ProfileContainer } from "../StyledComponents/ContentBlock/StyledComponents";
 import ProfilePageButton from "../ProfilePageButton/ProfilePageButton";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { openEditProfileModal } from "../../../redux/modal.slice/modal.slice";
 
 const user = {
   full_name: "Julian Read",
@@ -187,6 +189,8 @@ const StyledProfileUserFriends = styled(Typography)(({ theme }) => ({
 
 export default function ProfileHeader() {
   const [mutualFriendsIsOpen, setMutualFriendsStatus] = useState(true);
+  const dispatch = useDispatch();
+  const handleOpen = () => dispatch(openEditProfileModal());
   return (
     <StyledProfileHeader>
       <ProfileContainer>
@@ -240,6 +244,7 @@ export default function ProfileHeader() {
             <ProfilePageButton
               text={<Typography>Edit profile</Typography>}
               icon={<ModeEditOutlineIcon />}
+              clickAction={handleOpen}
             />
             <StyledProfileShowMutualFriend
               onClick={() => setMutualFriendsStatus(!mutualFriendsIsOpen)}

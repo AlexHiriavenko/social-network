@@ -5,13 +5,15 @@ import searchDrawerReducer from "./searchDrawer.slice/headerSearch.slice";
 import postReducer from "./post.slice/post.slice";
 import chatReducer from "./chat.slice/chat.slice";
 import darkModeSReducer from "./darkMode.slice/darkMode.slice";
+import modalReducer from "./modal.slice/modal.slice";
 
 export const store = configureStore({
-    reducer: {
-        login: loginReducer,
-        searchDrawer: searchDrawerReducer,
-        post: postReducer,
-        chat: chatReducer,
-        darkMode: darkModeSReducer,
-    },
+  reducer: {
+    login: loginReducer,
+    searchDrawer: searchDrawerReducer,
+    post: postReducer,
+    chat: chatReducer,
+    darkMode: darkModeSReducer,
+    modal: modalReducer,
+  },
 });

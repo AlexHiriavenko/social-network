@@ -22,6 +22,7 @@ import {
 } from "./pages/";
 import Header from "./components/Header/Header";
 import { logIn } from "./redux/login.slice/login.slice";
+import Modals from "./components/Modals/Modals";
 
 function App() {
   const dispatch = useDispatch();
@@ -64,6 +65,7 @@ function App() {
           element={<LogIn isLoggedIn={isLoggedIn} onClick={handleLogIn} />}
         />
       </Routes>
+      <Modals />
     </>
   );
 }

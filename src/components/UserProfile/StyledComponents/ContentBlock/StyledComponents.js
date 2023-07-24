@@ -44,7 +44,7 @@ const ContentBlockLink = styled(Link)(({ theme }) => ({
   borderRadius: "5px",
   transitionDuration: "500ms",
   "&:hover": {
-    backgroundColor: theme.palette.buttonColor.backgroundHover,
+    backgroundColor: theme.palette.accentColor.secondary,
   },
 }));
 
@@ -60,6 +60,10 @@ const ContentBlockList = styled(Box)({
   paddingBottom: "20px",
 });
 
+const BlockUserImage = styled("img")({
+  objectFit: "cover",
+  borderRadius: "50%",
+});
 export {
   ContentBlock,
   ProfileContainer,
@@ -67,4 +71,5 @@ export {
   ContentBlockLink,
   ContentBlockList,
   ContentBlockHeader,
+  BlockUserImage,
 };

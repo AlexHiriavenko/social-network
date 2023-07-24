@@ -25,7 +25,7 @@ const StyledProfileButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function ProfilePageButton(props) {
-  const { text, icon, style, className, clickAction} = props;
+  const { text, icon, style, className, clickAction } = props;
   return (
     <StyledProfileButton
       className={className}
@@ -36,3 +36,9 @@ export default function ProfilePageButton(props) {
     </StyledProfileButton>
   );
 }
+
+ProfilePageButton.defaultProps = {
+  icon: null,
+  text: "",
+  clickAction: () => {},
+};
