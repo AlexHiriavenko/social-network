@@ -1,7 +1,8 @@
-import React from "react";
+import React  from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PrivateRoute from "./utils/router/PrivateRoute";
+
 import {
   Home,
   Watch,
@@ -21,15 +22,20 @@ import {
   UserPage,
 } from "./pages/";
 import Header from "./components/Header/Header";
-import { logIn } from "./redux/login.slice/login.slice";
+
 
 function App() {
-  const dispatch = useDispatch();
+
+  const token = useSelector((state) => state.login.token)
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+
+  //const isLoggedIn = token? true : false;
+
+
   const navigate = useNavigate();
 
   const handleLogIn = () => {
-    dispatch(logIn());
+ //   dispatch(logIn());
     navigate("/");
   };
 
@@ -61,7 +67,7 @@ function App() {
         </Route>
         <Route
           path="/login"
-          element={<LogIn isLoggedIn={isLoggedIn} onClick={handleLogIn} />}
+          element={  <LogIn isLoggedIn={isLoggedIn} onClick={handleLogIn} />}
         />
       </Routes>
     </>

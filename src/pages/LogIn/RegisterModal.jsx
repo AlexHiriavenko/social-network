@@ -13,7 +13,11 @@ import { useFormik } from "formik";
 import registerValidation from "./Validation/registerValidation";
 import { Link } from "react-router-dom";
 import { dayOfBirth, yearOfBirth, mounthOfBirst } from "./registerOptions";
+import {register} from '../../redux/login.slice/login.slice'
+import {useDispatch} from 'react-redux'
+
 export default function RegisterModal(props) {
+  const dispatch = useDispatch();
   const registerForm = useFormik({
     initialValues: {
       name: "",
@@ -27,6 +31,16 @@ export default function RegisterModal(props) {
     },
     validationSchema: registerValidation,
     onSubmit: () => {
+      dispatch(register({
+        name: registerForm.values.name,
+        surname: registerForm.values.surname,
+        day: registerForm.values.day,
+        mounth: registerForm.values.mounth,
+        year: registerForm.values.year,
+        emailOrPhone: registerForm.values.emailOrPhone,
+        password: registerForm.values.password,
+        gender: registerForm.values.gender,
+      }));
       return console.log({
         name: registerForm.values.name,
         surname: registerForm.values.surname,
@@ -52,6 +66,7 @@ export default function RegisterModal(props) {
           <h2 className="register-title">Регистрация</h2>
           <p className="register-subtitle">Быстро и легко.</p>
           <Box className="register-form__row-inputs">
+            <form action="#" className="register-form">
             <TextField
               id="name"
               onBlur={registerForm.handleBlur}
@@ -74,7 +89,7 @@ export default function RegisterModal(props) {
               onChange={registerForm.handleChange}
               variant="outlined"
             />
-          </Box>
+
           <TextField
             label="Номер мобильного телефона или эл.адрес"
             required
@@ -91,6 +106,7 @@ export default function RegisterModal(props) {
             id="password"
             required
             name="password"
+            error={!!registerForm.errors.password}
             value={registerForm.values.password}
             onChange={registerForm.handleChange}
             variant="outlined"
@@ -167,6 +183,17 @@ export default function RegisterModal(props) {
               />
             </RadioGroup>
           </FormControl>
+            <Button
+                onClick={registerForm.handleSubmit}
+                className="form-btn create--btn "
+                variant="contained"
+                type="submit"
+                color="success"
+                fullWidth>
+              Регистрация
+            </Button>
+            </form>
+          </Box>
           <p className="form-footer-text">
             Люди, которые пользуются нашим сервисом, могли загрузить вашу
             контактную информацию на Facebook.{" "}
@@ -180,15 +207,7 @@ export default function RegisterModal(props) {
             файлов cookie. Вы можете получать от нас SMS-уведомления, отказаться
             от которых можно в любой момент.
           </p>
-          <Button
-            onClick={registerForm.handleSubmit}
-            className="form-btn create--btn "
-            variant="contained"
-            type="submit"
-            color="success"
-            fullWidth>
-            Регистрация
-          </Button>
+
         </Box>
       </Modal>
     </>
