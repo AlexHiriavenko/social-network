@@ -8,7 +8,6 @@ import {readCookie} from '../../readCookie.js'
 import { loginGoogle} from "../../redux/login.slice/login.slice.js";
 
 
-
 function Home() {
     const theme = useTheme();
 
