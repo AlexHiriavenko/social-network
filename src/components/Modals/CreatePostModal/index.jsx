@@ -80,8 +80,6 @@ const StyledPostModalAddFilesButton = styled("label")(({ theme }) => ({
 const StyledPostModalButton = styled(Button)({
   textAlign: "center",
   fontWeight: 600,
-  color: "#b6b6b6",
-  backgroundColor: "#e4e6eb",
   paddingLeft: "12px",
   paddingRight: "12px",
   height: "36px",

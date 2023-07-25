@@ -5,16 +5,8 @@ import styled from "@emotion/styled";
 import { ProfileContainer } from "../StyledComponents/ContentBlock/StyledComponents";
 import ProfilePageButton from "../ProfilePageButton/ProfilePageButton";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openEditProfileModal } from "../../../redux/modal.slice/modal.slice";
-
-const user = {
-  full_name: "Julian Read",
-  profile_picture:
-    "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg?w=2000",
-  profile_background_picture:
-    "https://image.geo.de/30145342/t/Cs/v4/w1440/r0/-/nationalpark-saechsische-schweiz-mauritius-reya43-jpg--82748-.jpg",
-};
 
 const StyledProfileBackgroundWrapper = styled(Box)({
   maxHeight: "450px",
@@ -191,12 +183,15 @@ export default function ProfileHeader() {
   const [mutualFriendsIsOpen, setMutualFriendsStatus] = useState(true);
   const dispatch = useDispatch();
   const handleOpen = () => dispatch(openEditProfileModal());
+
+  const user = useSelector((state) => state.user.user);
+
   return (
     <StyledProfileHeader>
       <ProfileContainer>
         <StyledProfileBackgroundWrapper>
           <img
-            src={user.profile_background_picture}
+            src={user ? user.profileBackgroundPicture : ""}
             alt="profile_background_picture"
           />
           <StyledProfileBackgroundWButtonsWrapper>
@@ -213,7 +208,7 @@ export default function ProfileHeader() {
         <StyledProfileUserInfoSection>
           <StyledProfileUserPictureWrapper>
             <StyledProfileUserPicture
-              src={user.profile_picture}
+              src={user ? user.profilePicture : ""}
               alt="profile_picture"
               width={168}
               height={168}
@@ -223,9 +218,11 @@ export default function ProfileHeader() {
             </StyledProfileUserPictureButton>
           </StyledProfileUserPictureWrapper>
           <StyledProfileUserInfo>
-            <StyledProfileUserName>{user.full_name}</StyledProfileUserName>
+            <StyledProfileUserName>
+              {user ? user.fullName : ""}
+            </StyledProfileUserName>
             <StyledProfileUserFriends href="#">
-              Friends: {54}
+              Friends: {user && user.friends ? user.friends.length : 0}
             </StyledProfileUserFriends>
             <AvatarGroup
               max={6}
