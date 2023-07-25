@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-
 import loginReducer from "./login.slice/login.slice";
 import searchDrawerReducer from "./searchDrawer.slice/headerSearch.slice";
 import postReducer from "./post.slice/post.slice";
 import chatReducer from "./chat.slice/chat.slice";
+import userReducer from "./user.slice/user.slice.js";
 import darkModeSReducer from "./darkMode.slice/darkMode.slice";
 import modalReducer from "./modal.slice/modal.slice";
 
@@ -15,5 +15,6 @@ export const store = configureStore({
     chat: chatReducer,
     darkMode: darkModeSReducer,
     modal: modalReducer,
+    user: userReducer,
   },
 });
