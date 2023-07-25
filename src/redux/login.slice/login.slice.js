@@ -1,6 +1,7 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
 import {readCookie} from "../../readCookie.js";
+import {parseJwt} from "../../parseJwt.js";
 
 export const logIn = createAsyncThunk(
     'Login/logIn',
@@ -11,6 +12,8 @@ export const logIn = createAsyncThunk(
         console.log(import.meta.env.VITE_APP_API_URL)
         let login = true
         localStorage.setItem('loggedIn',login)
+        let auth = parseJwt(token.data.accessToken)
+         localStorage.setItem('auth',JSON.stringify(auth))
         console.log(token)
         return token;
     }
