@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import ProfilePageButton from "../ProfilePageButton/ProfilePageButton";
 import { Box, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
+import { setUser, updateUser } from "../../../redux/user.slice/user.slice";
 
 const StyledIntroLink = styled("div")({
   paddingTop: "16px",
@@ -47,6 +48,7 @@ export default function IntroBio() {
     setInputStatus(!isEdit);
   }
 
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
 
   const formik = useFormik({
@@ -54,7 +56,15 @@ export default function IntroBio() {
       about: "",
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      const updatedUser = { ...user };
+      updatedUser.about = values.about;
+      dispatch(updateUser(updatedUser));
+      dispatch(setUser(updatedUser));
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      editBio();
+    },
+    onReset: (values) => {
+      values.about = userAbout;
     },
   });
   useEffect(() => {
@@ -84,10 +94,17 @@ export default function IntroBio() {
             value={formik.values.about}
             onChange={formik.handleChange}
           />
-          <ProfilePageButton text={"Cancel"} clickAction={editBio} />
+          <ProfilePageButton
+            text={"Cancel"}
+            clickAction={() => {
+              editBio();
+              formik.handleReset();
+            }}
+          />
           <ProfilePageButton
             text={"Save"}
             style={{ color: "#FFFFFF", backgroundColor: "#1B74E4" }}
+            clickAction={formik.handleSubmit}
           />
         </StyledIntroBioWrapper>
       )}

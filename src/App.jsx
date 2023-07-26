@@ -24,10 +24,7 @@ import {
 import Header from "./components/Header/Header";
 import { logIn } from "./redux/login.slice/login.slice";
 import Modals from "./components/Modals/Modals";
-import {
-  getUser,
-  setUser,
-} from "./redux/user.slice/user.slice";
+import { getUser, setUser } from "./redux/user.slice/user.slice";
 
 function App() {
   const dispatch = useDispatch();
@@ -44,13 +41,18 @@ function App() {
     navigate("/");
   };
   useEffect(() => {
-    if (isLoggedIn) {
-    const user = dispatch(getUser(1));
+    if (!localStorage.getItem("user")) {
+      const userID = localStorage.getItem("auth");
+      const user = dispatch(getUser(JSON.parse(userID).id));
       user
-        .then((result) => dispatch(setUser(result.payload)))
+        .then((result) => {
+          localStorage.setItem("user", JSON.stringify(result.payload));
+        })
         .catch((error) => alert(error));
     }
-  },[]);
+    dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
+  }, []);
+
   return (
     <>
       {isLoggedIn && <Header />}
