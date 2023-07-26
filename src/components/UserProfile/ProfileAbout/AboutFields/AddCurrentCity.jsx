@@ -14,10 +14,8 @@ import {
   ProfileSaveInfoButton,
 } from "../../StyledComponents/ContentBlock/StyledAboutComponents";
 import ProfilePageButton from "../../ProfilePageButton/ProfilePageButton";
-
-const mockInfo = {
-  currentCity: "Cologne",
-};
+import { useDispatch, useSelector } from "react-redux";
+import { setUser, updateUser } from "../../../../redux/user.slice/user.slice";
 
 const CurrentCitySchema = Yup.object().shape({
   currentCity: Yup.string()
@@ -28,9 +26,11 @@ const CurrentCitySchema = Yup.object().shape({
 
 export default function AddCurrentCity() {
   // States
-  const [info, setInfo] = useState({});
+  const [currentCity, setCurrentCity] = useState(null);
   const [isEdit, setInputStatus] = useState(false);
-
+  // Redux
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
   // Form
   const formRef = useRef(null);
   const formik = useFormik({
@@ -39,7 +39,18 @@ export default function AddCurrentCity() {
     },
     validationSchema: CurrentCitySchema,
     onSubmit: (values) => {
-      setInfo(values);
+      setCurrentCity(values.currentCity);
+      const updatedUser = { ...user };
+      updatedUser.city = values.currentCity;
+      dispatch(updateUser(updatedUser));
+      dispatch(setUser(updatedUser));
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      edit();
+    },
+    onReset: () => {
+      formik.setValues({
+        currentCity: user.city,
+      });
       edit();
     },
   });
@@ -50,27 +61,32 @@ export default function AddCurrentCity() {
   }
 
   function removeInfo() {
-    setInfo(null);
+    setCurrentCity(null);
+    const updatedUser = { ...user };
+    updatedUser.city = null;
+    dispatch(updateUser(updatedUser));
+    dispatch(setUser(updatedUser));
+    localStorage.setItem("user", JSON.stringify(updatedUser));
     formik.setValues({
       currentCity: "",
     });
   }
   // useEffects
   useEffect(() => {
-    setInfo(mockInfo);
-  }, []);
+    setCurrentCity(user.city);
+  }, [user]);
 
   useEffect(() => {
-    if (!info) return;
+    if (!currentCity) return;
     formik.setValues({
-      currentCity: info.currentCity,
+      currentCity: currentCity,
     });
-  }, [info]);
+  }, [currentCity]);
 
   if (!isEdit) {
     return (
       <Box>
-        {!info ? (
+        {!currentCity ? (
           <AddInfoAbout text={"Add current city"} clickAction={edit} />
         ) : (
           <ProfileAboutInfoBlock>
@@ -79,8 +95,8 @@ export default function AddCurrentCity() {
             />
             <Box style={{ width: "100%" }}>
               <ProfileAboutInfoText>
-                Live in{" "}
-                <span style={{ fontWeight: 600 }}>{info.currentCity}</span>
+                Live in
+                <span style={{ fontWeight: 600 }}> {currentCity}</span>
               </ProfileAboutInfoText>
             </Box>
             <ChangenInfoButton
@@ -106,8 +122,11 @@ export default function AddCurrentCity() {
             value={formik.values.currentCity}
           />
           <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
-          <ProfilePageButton text={"Cancel"} clickAction={edit} />
-          <ProfileSaveInfoButton text={"Save"} clickAction={edit} />
+          <ProfilePageButton text={"Cancel"} clickAction={formik.handleReset} />
+          <ProfileSaveInfoButton
+            text={"Save"}
+            clickAction={formik.handleSubmit}
+          />
         </ProfileAboutInfoForm>
       </Box>
     );

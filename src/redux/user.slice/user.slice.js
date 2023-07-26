@@ -32,14 +32,13 @@ export const getFriends = createAsyncThunk(
 );
 const UserSlice = createSlice({
   name: "Users",
-  initialState: JSON.parse(localStorage.getItem("user"))
-    ? JSON.parse(localStorage.getItem("user"))
-    : {
-        value: [],
-        user: null,
-        friends: [],
-        isLoading: true,
-      },
+  initialState: {
+    value: [],
+    user: JSON.parse(localStorage.getItem("user")) || null,
+    friends: [],
+    isLoading: true,
+  },
+
   reducers: {
     //Загрузка юзеров в стейт
     setUsers: (state, action) => {

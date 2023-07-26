@@ -7,10 +7,8 @@ import RoomIcon from '@mui/icons-material/Room';
 import ChangenInfoButton from "../AboutInfo/ChangeInfoButton";
 import { ProfileAboutInfoBlock, ProfileAboutInfoForm, ProfileAboutInfoFormSeparator, ProfileAboutInfoFormTextField, ProfileAboutInfoText, ProfileSaveInfoButton } from "../../StyledComponents/ContentBlock/StyledAboutComponents";
 import ProfilePageButton from "../../ProfilePageButton/ProfilePageButton";
+import { useDispatch, useSelector } from "react-redux";
 
-const mockInfo = {
-  hometown: "Dnipro"
-};
 
 const HometownSchema = Yup.object().shape({
     hometown: Yup.string()
@@ -21,9 +19,11 @@ const HometownSchema = Yup.object().shape({
 
 export default function AddHometown() {
   // States
-  const [info, setInfo] = useState({});
+  const [hometown, setHometown] = useState(null);
   const [isEdit, setInputStatus] = useState(false);
-
+  // Redux
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
   // Form
   const formRef = useRef(null);
   const formik = useFormik({
@@ -32,7 +32,7 @@ export default function AddHometown() {
     },
     validationSchema: HometownSchema,
     onSubmit: (values) => {
-      setInfo(values);
+      setHometown(values.hometown);
       edit();
     },
   });
@@ -50,20 +50,20 @@ export default function AddHometown() {
   }
   // useEffects
   useEffect(() => {
-    setInfo(mockInfo);
-  }, []);
+    setHometown(user.hometown);
+  }, [user]);
 
   useEffect(() => {
-    if (!info) return;
+    if (!hometown) return;
     formik.setValues({
-        hometown: info.hometown,
+        hometown: hometown,
     });
-  }, [info]);
+  }, [hometown]);
 
   if (!isEdit) {
     return (
       <Box>
-        {!info ? (
+        {!hometown ? (
           <AddInfoAbout text={"Add hometown"} clickAction={edit} />
         ) : (
           <ProfileAboutInfoBlock>
@@ -72,7 +72,7 @@ export default function AddHometown() {
             />
             <Box style={{ width: "100%" }}>
               <ProfileAboutInfoText>
-                From <span style={{ fontWeight: 600 }}>{info.hometown}</span>
+                From <span style={{ fontWeight: 600 }}>{hometown}</span>
               </ProfileAboutInfoText>
             </Box>
             <ChangenInfoButton
@@ -101,8 +101,8 @@ export default function AddHometown() {
             value={formik.values.hometown}
           />
           <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
-          <ProfilePageButton text={"Cancel"} clickAction={edit} />
-          <ProfileSaveInfoButton text={"Save"} clickAction={edit} />
+          <ProfilePageButton text={"Cancel"} clickAction={formik.handleReset} />
+          <ProfileSaveInfoButton text={"Save"} clickAction={formik.handleSubmit} />
         </ProfileAboutInfoForm>
       </Box>
     );

@@ -63,8 +63,10 @@ export default function IntroBio() {
       localStorage.setItem("user", JSON.stringify(updatedUser));
       editBio();
     },
-    onReset: (values) => {
-      values.about = userAbout;
+    onReset: () => {
+      formik.setValues({
+        about: userAbout,
+      });
     },
   });
   useEffect(() => {

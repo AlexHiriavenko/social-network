@@ -41,17 +41,19 @@ function App() {
     navigate("/");
   };
   useEffect(() => {
-    if (!localStorage.getItem("user")) {
-      const userID = localStorage.getItem("auth");
-      const user = dispatch(getUser(JSON.parse(userID).id));
+    if (!localStorage.getItem("user") && localStorage.getItem("auth")) {
+      const auth = localStorage.getItem("auth");
+      const user = dispatch(getUser(JSON.parse(auth).id));
       user
         .then((result) => {
+          dispatch(setUser(result.payload));
           localStorage.setItem("user", JSON.stringify(result.payload));
         })
         .catch((error) => alert(error));
+    } else {
+      dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
     }
-    dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <>
