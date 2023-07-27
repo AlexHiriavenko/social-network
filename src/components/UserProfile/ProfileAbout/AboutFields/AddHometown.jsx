@@ -27,6 +27,7 @@ export default function AddHometown() {
   // States
   const [hometown, setHometown] = useState(null);
   const [isEdit, setInputStatus] = useState(false);
+  const [isAuthorized, setAuthorized] = useState(false);
   // Redux
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
@@ -63,6 +64,7 @@ export default function AddHometown() {
   // useEffects
   useEffect(() => {
     setHometown(user.hometown);
+    setAuthorized(user.isAuthorized);
   }, [user]);
 
   useEffect(() => {
@@ -72,6 +74,7 @@ export default function AddHometown() {
     });
   }, [hometown]);
 
+  if (!isAuthorized && !hometown) return;
   if (!isEdit) {
     return (
       <Box>
@@ -87,11 +90,13 @@ export default function AddHometown() {
                 From <span style={{ fontWeight: 600 }}>{hometown}</span>
               </ProfileAboutInfoText>
             </Box>
-            <ChangenInfoButton
-              infoName={"hometown"}
-              edit={edit}
-              remove={removeInfo}
-            />
+            {isAuthorized && (
+              <ChangenInfoButton
+                infoName={"hometown"}
+                edit={edit}
+                remove={removeInfo}
+              />
+            )}
           </ProfileAboutInfoBlock>
         )}
       </Box>

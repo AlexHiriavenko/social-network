@@ -63,6 +63,8 @@ export default function AddWorkplace() {
   // States
   const [workPlace, setWorkPlace] = useState(null);
   const [isEdit, setInputStatus] = useState(false);
+  const [isAuthorized, setAuthorized] = useState(false);
+  // Constants
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   // Form
@@ -127,6 +129,7 @@ export default function AddWorkplace() {
   // useEffects
   useEffect(() => {
     setWorkPlace(user.workPlace);
+    setAuthorized(user.isAuthorized);
   }, [user]);
 
   useEffect(() => {
@@ -148,6 +151,7 @@ export default function AddWorkplace() {
     });
   }, [workPlace]);
 
+  if (!isAuthorized && !workPlace) return;
   if (!isEdit) {
     return (
       <Box>
@@ -167,11 +171,13 @@ export default function AddWorkplace() {
                 {/* {info.timeFrom} to {info.workNow ? "present" : info.timeTo} */}
               </ProfileAboutInfoText>
             </Box>
-            <ChangenInfoButton
-              infoName={"workplace"}
-              edit={edit}
-              remove={removeInfo}
-            />
+            {isAuthorized && (
+              <ChangenInfoButton
+                infoName={"workplace"}
+                edit={edit}
+                remove={removeInfo}
+              />
+            )}
           </ProfileAboutInfoBlock>
         )}
       </Box>

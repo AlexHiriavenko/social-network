@@ -37,6 +37,7 @@ export default function ProfileIntro() {
   // States
   const [isEdit, setInputStatus] = useState(false);
   const [userAbout, setUserAbout] = useState("");
+  const [isAuthorized, setAuthorized] = useState(false);
   // Functions
   function editBio() {
     setInputStatus(!isEdit);
@@ -46,6 +47,7 @@ export default function ProfileIntro() {
     if (user && user.about) {
       setUserAbout(user.about);
     }
+    setAuthorized(user.isAuthorized);
   }, [user]);
   return (
     <StyledIntroContentBlock>
@@ -54,22 +56,31 @@ export default function ProfileIntro() {
         {!isEdit && (
           <>
             <StyledIntroText>{userAbout}</StyledIntroText>
+            {isAuthorized && (
+              <ProfilePageButton
+                text={userAbout !== "" ? "Edit bio" : "Add bio"}
+                clickAction={editBio}
+                style={{ width: "100%" }}
+              />
+            )}
+          </>
+        )}
+        {isAuthorized && (
+          <>
+            <IntroBio
+              edit={isEdit}
+              userAbout={userAbout}
+              setEditState={editBio}
+            />
             <ProfilePageButton
-              text={userAbout !== "" ? "Edit bio" : "Add bio"}
-              clickAction={editBio}
-              style={{ width: "100%" }}
+              text={"Add details"}
+              clickAction={() => {
+                navigate("/profile/about");
+              }}
+              style={{ width: "100%", marginTop: "15px" }}
             />
           </>
         )}
-
-        <IntroBio edit={isEdit} userAbout={userAbout} setEditState = {editBio} />
-        <ProfilePageButton
-          text={"Add details"}
-          clickAction={() => {
-            navigate("/profile/about");
-          }}
-          style={{ width: "100%", marginTop: "15px" }}
-        />
       </StyledIntroContentWrapper>
     </StyledIntroContentBlock>
   );

@@ -5,7 +5,14 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import ChangenInfoButton from "../AboutInfo/ChangeInfoButton";
-import { ProfileAboutInfoBlock, ProfileAboutInfoForm, ProfileAboutInfoFormSeparator, ProfileAboutInfoFormTextField, ProfileAboutInfoText, ProfileSaveInfoButton } from "../../StyledComponents/ContentBlock/StyledAboutComponents";
+import {
+  ProfileAboutInfoBlock,
+  ProfileAboutInfoForm,
+  ProfileAboutInfoFormSeparator,
+  ProfileAboutInfoFormTextField,
+  ProfileAboutInfoText,
+  ProfileSaveInfoButton,
+} from "../../StyledComponents/ContentBlock/StyledAboutComponents";
 import ProfilePageButton from "../../ProfilePageButton/ProfilePageButton";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -19,6 +26,7 @@ export default function AddPhoneNumber() {
   // States
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [isEdit, setInputStatus] = useState(false);
+  const [isAuthorized, setAuthorized] = useState(false);
   // Redux
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
@@ -59,6 +67,7 @@ export default function AddPhoneNumber() {
   // useEffects
   useEffect(() => {
     setPhoneNumber(user.phoneNumber);
+    setAuthorized(user.isAuthorized);
   }, [user]);
 
   useEffect(() => {
@@ -68,6 +77,7 @@ export default function AddPhoneNumber() {
     });
   }, [phoneNumber]);
 
+  if (!isAuthorized && !phoneNumber) return;
   if (!isEdit) {
     return (
       <Box>
@@ -82,11 +92,13 @@ export default function AddPhoneNumber() {
               <ProfileAboutInfoText>{phoneNumber}</ProfileAboutInfoText>
               <ProfileAboutInfoText>Mobile</ProfileAboutInfoText>
             </Box>
-            <ChangenInfoButton
-              infoName={"phone number"}
-              edit={edit}
-              remove={removeInfo}
-            />
+            {isAuthorized && (
+              <ChangenInfoButton
+                infoName={"phone number"}
+                edit={edit}
+                remove={removeInfo}
+              />
+            )}
           </ProfileAboutInfoBlock>
         )}
       </Box>
@@ -94,9 +106,7 @@ export default function AddPhoneNumber() {
   } else {
     return (
       <Box>
-        <ProfileAboutInfoForm
-          onSubmit={formik.handleSubmit}
-        >
+        <ProfileAboutInfoForm onSubmit={formik.handleSubmit}>
           <ProfileAboutInfoFormTextField
             fullWidth
             id="outlined-basic"
@@ -108,7 +118,10 @@ export default function AddPhoneNumber() {
           />
           <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
           <ProfilePageButton text={"Cancel"} clickAction={resetForm} />
-          <ProfileSaveInfoButton text={"Save"} clickAction={formik.handleSubmit} />
+          <ProfileSaveInfoButton
+            text={"Save"}
+            clickAction={formik.handleSubmit}
+          />
         </ProfileAboutInfoForm>
       </Box>
     );

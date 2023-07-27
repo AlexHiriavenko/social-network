@@ -4,7 +4,7 @@ import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import styled from "@emotion/styled";
 import { ProfileContainer } from "../StyledComponents/ContentBlock/StyledComponents";
 import ProfilePageButton from "../ProfilePageButton/ProfilePageButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { openEditProfileModal } from "../../../redux/modal.slice/modal.slice";
 
@@ -14,6 +14,10 @@ const StyledProfileBackgroundWrapper = styled(Box)({
   borderBottomRightRadius: " 12px",
   borderBottomLeftRadius: " 12px",
   position: "relative",
+});
+const StyledProfileBackgroundPicture = styled("img")({
+  width: "100%",
+  objectFit: "cover",
 });
 const StyledProfileBackgroundWButtonsWrapper = styled(Box)({
   position: "absolute",
@@ -180,30 +184,38 @@ const StyledProfileUserFriends = styled(Typography)(({ theme }) => ({
 }));
 
 export default function ProfileHeader() {
-  const [mutualFriendsIsOpen, setMutualFriendsStatus] = useState(true);
+  // Constants
   const dispatch = useDispatch();
-  const handleOpen = () => dispatch(openEditProfileModal());
-
   const user = useSelector((state) => state.user.user);
-
+  // State
+  const [mutualFriendsIsOpen, setMutualFriendsStatus] = useState(true);
+  const [isAuthorized, setAuthorized] = useState(false);
+  // Functions
+  const handleOpen = () => dispatch(openEditProfileModal());
+  // UseEffect
+  useEffect(() => {
+    setAuthorized(user.isAuthorized);
+  }, [user]);
   return (
     <StyledProfileHeader>
       <ProfileContainer>
         <StyledProfileBackgroundWrapper>
-          <img
+          <StyledProfileBackgroundPicture
             src={user ? user.profileBackgroundPicture : ""}
             alt="profile_background_picture"
           />
-          <StyledProfileBackgroundWButtonsWrapper>
-            <StyledProfileBackgroundButton
-              text={
-                <StyledProfileBackgroundWButtonText>
-                  Edit cover photo
-                </StyledProfileBackgroundWButtonText>
-              }
-              icon={<CameraAltIcon fontSize="small" />}
-            />
-          </StyledProfileBackgroundWButtonsWrapper>
+          {isAuthorized && (
+            <StyledProfileBackgroundWButtonsWrapper>
+              <StyledProfileBackgroundButton
+                text={
+                  <StyledProfileBackgroundWButtonText>
+                    Edit cover photo
+                  </StyledProfileBackgroundWButtonText>
+                }
+                icon={<CameraAltIcon fontSize="small" />}
+              />
+            </StyledProfileBackgroundWButtonsWrapper>
+          )}
         </StyledProfileBackgroundWrapper>
         <StyledProfileUserInfoSection>
           <StyledProfileUserPictureWrapper>
@@ -213,9 +225,11 @@ export default function ProfileHeader() {
               width={168}
               height={168}
             />
-            <StyledProfileUserPictureButton>
-              <CameraAltIcon />
-            </StyledProfileUserPictureButton>
+            {isAuthorized && (
+              <StyledProfileUserPictureButton>
+                <CameraAltIcon />
+              </StyledProfileUserPictureButton>
+            )}
           </StyledProfileUserPictureWrapper>
           <StyledProfileUserInfo>
             <StyledProfileUserName>
@@ -238,20 +252,36 @@ export default function ProfileHeader() {
             </AvatarGroup>
           </StyledProfileUserInfo>
           <StyledProfileButtonsWrapper>
-            <ProfilePageButton
-              text={<Typography>Edit profile</Typography>}
-              icon={<ModeEditOutlineIcon />}
-              clickAction={handleOpen}
-            />
-            <StyledProfileShowMutualFriend
-              onClick={() => setMutualFriendsStatus(!mutualFriendsIsOpen)}
-            >
-              {mutualFriendsIsOpen ? (
-                <StyledProfileShowButtonLineOpen></StyledProfileShowButtonLineOpen>
-              ) : (
-                <StyledProfileShowButtonLine></StyledProfileShowButtonLine>
-              )}
-            </StyledProfileShowMutualFriend>
+            {isAuthorized && (
+              <>
+                <ProfilePageButton
+                  text={<Typography>Edit profile</Typography>}
+                  icon={<ModeEditOutlineIcon />}
+                  clickAction={handleOpen}
+                />
+                <StyledProfileShowMutualFriend
+                  onClick={() => setMutualFriendsStatus(!mutualFriendsIsOpen)}
+                >
+                  {mutualFriendsIsOpen ? (
+                    <StyledProfileShowButtonLineOpen></StyledProfileShowButtonLineOpen>
+                  ) : (
+                    <StyledProfileShowButtonLine></StyledProfileShowButtonLine>
+                  )}
+                </StyledProfileShowMutualFriend>
+              </>
+            )}
+            {!isAuthorized && (
+              <ProfilePageButton
+                text={
+                  <Typography style={{ color: "#ffffff", fontWeight: 600 }}>
+                    {false ? "Remove from friends" : "Add to friends"}
+                  </Typography>
+                }
+                style={{
+                  backgroundColor: false ? "" : "#1B74E4",
+                }}
+              />
+            )}
           </StyledProfileButtonsWrapper>
         </StyledProfileUserInfoSection>
       </ProfileContainer>

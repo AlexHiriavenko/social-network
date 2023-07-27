@@ -24,7 +24,13 @@ import {
 import Header from "./components/Header/Header";
 import { logIn } from "./redux/login.slice/login.slice";
 import Modals from "./components/Modals/Modals";
-import { getUser, setUser } from "./redux/user.slice/user.slice";
+import {
+  getUser,
+  getUsers,
+  setAuthorizedUser,
+  setUser,
+  setUsers,
+} from "./redux/user.slice/user.slice";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,18 +47,35 @@ function App() {
     navigate("/");
   };
   useEffect(() => {
-    if (!localStorage.getItem("user") && localStorage.getItem("auth")) {
+    if (
+      !localStorage.getItem("authorizedUser") &&
+      localStorage.getItem("auth")
+    ) {
       const auth = localStorage.getItem("auth");
-      const user = dispatch(getUser(JSON.parse(auth).id));
-      user
+      const authorizedUserResponse = dispatch(getUser(JSON.parse(auth).id));
+      authorizedUserResponse
         .then((result) => {
-          dispatch(setUser(result.payload));
-          localStorage.setItem("user", JSON.stringify(result.payload));
+          dispatch(
+            setAuthorizedUser({ ...result.payload, isAuthorized: true })
+          );
+          localStorage.setItem(
+            "authorizedUser",
+            JSON.stringify({ ...result.payload, isAuthorized: true })
+          );
         })
         .catch((error) => alert(error));
     } else {
-      dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
+      dispatch(
+        setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser")))
+      );
     }
+    // get all users
+    const allUsersResponse = dispatch(getUsers());
+    allUsersResponse
+      .then((result) => {
+        dispatch(setUsers(result.payload));
+      })
+      .catch((error) => alert(error));
   }, [isLoggedIn]);
 
   return (

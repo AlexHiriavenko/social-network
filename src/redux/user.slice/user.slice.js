@@ -33,8 +33,9 @@ export const getFriends = createAsyncThunk(
 const UserSlice = createSlice({
   name: "Users",
   initialState: {
-    value: [],
+    allUsers: [],
     user: JSON.parse(localStorage.getItem("user")) || null,
+    authorizedUser: JSON.parse(localStorage.getItem("authorizedUser")) || null,
     friends: [],
     isLoading: true,
   },
@@ -42,7 +43,7 @@ const UserSlice = createSlice({
   reducers: {
     //Загрузка юзеров в стейт
     setUsers: (state, action) => {
-      state.value = action.payload;
+      state.allUsers = action.payload;
     },
     //Загрузка юзера в стейт
     setUser: (state, action) => {
@@ -51,6 +52,10 @@ const UserSlice = createSlice({
     //Загрузка друзей юзера в стейт
     setFriends: (state, action) => {
       state.friends = action.payload;
+    },
+    //Set autorized user to State
+    setAuthorizedUser: (state, action) => {
+      state.authorizedUser = action.payload;
     },
   },
   extraReducers: {
@@ -65,6 +70,6 @@ const UserSlice = createSlice({
   },
 });
 
-export const { setUsers, setUser, setFriends } = UserSlice.actions;
+export const { setUsers, setUser, setFriends, setAuthorizedUser } = UserSlice.actions;
 
 export default UserSlice.reducer;

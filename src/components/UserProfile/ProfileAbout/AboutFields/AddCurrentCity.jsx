@@ -28,6 +28,7 @@ export default function AddCurrentCity() {
   // States
   const [currentCity, setCurrentCity] = useState(null);
   const [isEdit, setInputStatus] = useState(false);
+  const [isAuthorized, setAuthorized] = useState(false);
   // Redux
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
@@ -71,10 +72,11 @@ export default function AddCurrentCity() {
     });
     edit();
   }
-  
+
   // useEffects
   useEffect(() => {
     setCurrentCity(user.city);
+    setAuthorized(user.isAuthorized);
   }, [user]);
 
   useEffect(() => {
@@ -84,6 +86,7 @@ export default function AddCurrentCity() {
     });
   }, [currentCity]);
 
+  if (!isAuthorized && !currentCity) return;
   if (!isEdit) {
     return (
       <Box>
@@ -100,11 +103,13 @@ export default function AddCurrentCity() {
                 <span style={{ fontWeight: 600 }}> {currentCity}</span>
               </ProfileAboutInfoText>
             </Box>
-            <ChangenInfoButton
-              infoName={"current city"}
-              edit={edit}
-              remove={removeInfo}
-            />
+            {isAuthorized && (
+              <ChangenInfoButton
+                infoName={"current city"}
+                edit={edit}
+                remove={removeInfo}
+              />
+            )}
           </ProfileAboutInfoBlock>
         )}
       </Box>
