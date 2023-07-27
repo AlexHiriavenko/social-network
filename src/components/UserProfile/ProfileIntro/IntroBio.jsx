@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import ProfilePageButton from "../ProfilePageButton/ProfilePageButton";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { setUser, updateUser } from "../../../redux/user.slice/user.slice";
@@ -26,13 +26,6 @@ const StyledIntroTextarea = styled("textarea")(({ theme }) => ({
     border: `2px solid ${theme.palette.input.activeBorderColor}`,
   },
 }));
-const StyledIntroText = styled(Typography)(({ theme }) => ({
-  color: theme.palette.textColor.main,
-  textAlign: "center",
-  marginRight: "50%",
-  transform: "translateX(50%)",
-  marginBottom: "10px",
-}));
 const StyledIntroBioWrapper = styled(Box)({
   width: "100%",
   display: "flex",
@@ -41,19 +34,13 @@ const StyledIntroBioWrapper = styled(Box)({
   columnGap: "5px",
   justifyContent: "flex-end",
 });
-export default function IntroBio() {
-  const [isEdit, setInputStatus] = useState(false);
-  const [userAbout, setUserAbout] = useState("");
-  function editBio() {
-    setInputStatus(!isEdit);
-  }
-
+export default function IntroBio({edit, userAbout, setEditState}) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
 
   const formik = useFormik({
     initialValues: {
-      about: "",
+      about: userAbout,
     },
     onSubmit: (values) => {
       const updatedUser = { ...user };
@@ -61,32 +48,24 @@ export default function IntroBio() {
       dispatch(updateUser(updatedUser));
       dispatch(setUser(updatedUser));
       localStorage.setItem("user", JSON.stringify(updatedUser));
-      editBio();
-    },
-    onReset: () => {
-      formik.setValues({
-        about: userAbout,
-      });
+      setEditState();
     },
   });
-  useEffect(() => {
-    if (user && user.about) {
-      setUserAbout(user.about);
-      formik.values.about = user.about;
-    }
-  }, [user]);
+ 
+  function resetForm() {
+    formik.setValues({
+      about: userAbout,
+    });
+    setEditState();
+  }
+  useEffect(()=>{
+    formik.setValues({
+      about: userAbout,
+    });
+  }, [userAbout])
   return (
     <StyledIntroLink>
-      {!isEdit ? (
-        <>
-          <StyledIntroText>{userAbout}</StyledIntroText>
-          <ProfilePageButton
-            text={userAbout !== "" ? "Edit bio" : "Add bio"}
-            clickAction={editBio}
-            style={{ width: "100%" }}
-          />
-        </>
-      ) : (
+      {edit && (
         <StyledIntroBioWrapper>
           <StyledIntroTextarea
             maxLength="100"
@@ -98,10 +77,7 @@ export default function IntroBio() {
           />
           <ProfilePageButton
             text={"Cancel"}
-            clickAction={() => {
-              editBio();
-              formik.handleReset();
-            }}
+            clickAction={resetForm}
           />
           <ProfilePageButton
             text={"Save"}

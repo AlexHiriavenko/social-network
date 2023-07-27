@@ -86,7 +86,6 @@ const StyledPostModalButton = styled(Button)({
   borderRadius: "5px",
   transitionDuration: "300ms",
   width: "100%",
-  cursor: "not-allowed",
   backgroundColor: "#1b74e4",
   color: "#fff",
   cursor: "pointer",

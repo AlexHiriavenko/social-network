@@ -47,12 +47,6 @@ export default function AddCurrentCity() {
       localStorage.setItem("user", JSON.stringify(updatedUser));
       edit();
     },
-    onReset: () => {
-      formik.setValues({
-        currentCity: user.city,
-      });
-      edit();
-    },
   });
 
   // Functions
@@ -71,6 +65,13 @@ export default function AddCurrentCity() {
       currentCity: "",
     });
   }
+  function resetForm() {
+    formik.setValues({
+      currentCity: user.city,
+    });
+    edit();
+  }
+  
   // useEffects
   useEffect(() => {
     setCurrentCity(user.city);
@@ -122,7 +123,7 @@ export default function AddCurrentCity() {
             value={formik.values.currentCity}
           />
           <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
-          <ProfilePageButton text={"Cancel"} clickAction={formik.handleReset} />
+          <ProfilePageButton text={"Cancel"} clickAction={resetForm} />
           <ProfileSaveInfoButton
             text={"Save"}
             clickAction={formik.handleSubmit}

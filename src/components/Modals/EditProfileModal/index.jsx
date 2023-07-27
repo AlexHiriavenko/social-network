@@ -10,18 +10,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeEditProfileModal } from "../../../redux/modal.slice/modal.slice";
 import styled from "@emotion/styled";
 import ProfilePageButton from "../../UserProfile/ProfilePageButton/ProfilePageButton";
+import IntroBio from "../../UserProfile/ProfileIntro/IntroBio";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const user = {
-  full_name: "Julian Read",
-  profile_picture:
-    "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg?w=2000",
-  profile_background_picture:
-    "https://image.geo.de/30145342/t/Cs/v4/w1440/r0/-/nationalpark-saechsische-schweiz-mauritius-reya43-jpg--82748-.jpg",
-  bio: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquid vel quod accusamus dolor dicta odio quia commodi vitae, rerum amet fugiat, beatae dolores reiciendis! Praesentium tempore voluptates distinctio libero numquam.",
-};
-
-// const StyledEditProfile = styled()({})
-// const StyledEditProfile = styled()(({theme})=>({}))
 const StyledEditProfileModal = styled(StyledModalBlock)({
   maxWidth: "710px",
 });
@@ -36,11 +28,16 @@ const StyledEditedPartTitle = styled("h2")(({ theme }) => ({
   fontSize: "20px",
   fontWeight: 700,
 }));
-const StyledEditedPartButton = styled(Button)(({ theme }) => ({
+const StyledEditedPartButton = styled("button")(({ theme }) => ({
   color: theme.palette.accentColor.main,
   fontSize: "17px",
-  padding: "2px",
+  padding: "5px",
+  borderRadius: "5px",
   lineHeight: "100%",
+  transitionDuration: "300ms",
+  "&:hover": {
+    backgroundColor: theme.palette.accentColor.secondary,
+  },
 }));
 const StyledEditedContentWrapper = styled(Box)({
   display: "flex",
@@ -67,18 +64,34 @@ const StyledEditProfileButton = styled(ProfilePageButton)(({ theme }) => ({
   width: "100%",
   color: theme.palette.accentColor.main,
   backgroundColor: theme.palette.accentColor.secondary,
+  transitionDuration: "300ms",
   "&:hover": {
     backgroundColor: theme.palette.accentColor.secondary,
   },
 }));
 
 export default function EditProfileModal() {
+  // Constants
   const dispatch = useDispatch();
   const editProfileModalIsOpen = useSelector(
     (state) => state.modal.editProfile.isOpen
   );
+  const user = useSelector((state) => state.user.user);
+  const navigate = useNavigate();
+  // States
+  const [isEdit, setInputStatus] = useState(false);
+  const [userAbout, setUserAbout] = useState("");
+  // Functions
+  function editBio() {
+    setInputStatus(!isEdit);
+  }
   const handleClose = () => dispatch(closeEditProfileModal());
-
+  // UseEffect
+  useEffect(() => {
+    if (user && user.about) {
+      setUserAbout(user.about);
+    }
+  }, [user]);
   return (
     <Modal
       open={editProfileModalIsOpen}
@@ -98,7 +111,7 @@ export default function EditProfileModal() {
           <StyledEditedPartButton>Edit</StyledEditedPartButton>
           <StyledEditedContentWrapper>
             <StyledEditedUserPicture
-              src={user.profile_picture}
+              src={user && user.profilePicture}
               width={168}
               height={168}
             />
@@ -109,7 +122,7 @@ export default function EditProfileModal() {
           <StyledEditedPartButton>Edit</StyledEditedPartButton>
           <StyledEditedContentWrapper>
             <StyledEditedCoverPicture
-              src={user.profile_background_picture}
+              src={user && user.profileBackgroundPicture}
               width={500}
               height={168}
             />
@@ -117,13 +130,26 @@ export default function EditProfileModal() {
         </StyledEditedPart>
         <StyledEditedPart>
           <StyledEditedPartTitle>Bio</StyledEditedPartTitle>
-          <StyledEditedPartButton>Edit</StyledEditedPartButton>
+          <StyledEditedPartButton onClick={editBio}>
+            Edit
+          </StyledEditedPartButton>
           <StyledEditedContentWrapper>
-            <StyledEditedBio>{user.bio}</StyledEditedBio>
+            {!isEdit && <StyledEditedBio>{userAbout}</StyledEditedBio>}
+            <IntroBio
+              edit={isEdit}
+              userAbout={userAbout}
+              setEditState={editBio}
+            />
           </StyledEditedContentWrapper>
         </StyledEditedPart>
         <StyledEditedPart>
-          <StyledEditProfileButton text={"Edit your About info"} />
+          <StyledEditProfileButton
+            text={"Edit your About info"}
+            clickAction={() => {
+              navigate("/profile/about");
+              dispatch(closeEditProfileModal());
+            }}
+          />
         </StyledEditedPart>
       </StyledEditProfileModal>
     </Modal>

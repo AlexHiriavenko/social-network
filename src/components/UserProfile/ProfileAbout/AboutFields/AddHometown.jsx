@@ -3,15 +3,21 @@ import AddInfoAbout from "../AddInfoAbout";
 import { Box } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import RoomIcon from '@mui/icons-material/Room';
+import RoomIcon from "@mui/icons-material/Room";
 import ChangenInfoButton from "../AboutInfo/ChangeInfoButton";
-import { ProfileAboutInfoBlock, ProfileAboutInfoForm, ProfileAboutInfoFormSeparator, ProfileAboutInfoFormTextField, ProfileAboutInfoText, ProfileSaveInfoButton } from "../../StyledComponents/ContentBlock/StyledAboutComponents";
+import {
+  ProfileAboutInfoBlock,
+  ProfileAboutInfoForm,
+  ProfileAboutInfoFormSeparator,
+  ProfileAboutInfoFormTextField,
+  ProfileAboutInfoText,
+  ProfileSaveInfoButton,
+} from "../../StyledComponents/ContentBlock/StyledAboutComponents";
 import ProfilePageButton from "../../ProfilePageButton/ProfilePageButton";
 import { useDispatch, useSelector } from "react-redux";
 
-
 const HometownSchema = Yup.object().shape({
-    hometown: Yup.string()
+  hometown: Yup.string()
     .min(2, "Must be a valid name")
     .max(25, "Must be a valid name")
     .required("City is required"),
@@ -28,7 +34,7 @@ export default function AddHometown() {
   const formRef = useRef(null);
   const formik = useFormik({
     initialValues: {
-        hometown: "",
+      hometown: "",
     },
     validationSchema: HometownSchema,
     onSubmit: (values) => {
@@ -45,8 +51,14 @@ export default function AddHometown() {
   function removeInfo() {
     setInfo(null);
     formik.setValues({
-        hometown: "",
+      hometown: "",
     });
+  }
+  function resetForm() {
+    formik.setValues({
+      hometown: hometown,
+    });
+    edit();
   }
   // useEffects
   useEffect(() => {
@@ -56,7 +68,7 @@ export default function AddHometown() {
   useEffect(() => {
     if (!hometown) return;
     formik.setValues({
-        hometown: hometown,
+      hometown: hometown,
     });
   }, [hometown]);
 
@@ -87,10 +99,7 @@ export default function AddHometown() {
   } else {
     return (
       <Box>
-        <ProfileAboutInfoForm
-          onSubmit={formik.handleSubmit}
-          ref={formRef}
-        >
+        <ProfileAboutInfoForm onSubmit={formik.handleSubmit} ref={formRef}>
           <ProfileAboutInfoFormTextField
             fullWidth
             id="outlined-basic"
@@ -101,8 +110,11 @@ export default function AddHometown() {
             value={formik.values.hometown}
           />
           <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
-          <ProfilePageButton text={"Cancel"} clickAction={formik.handleReset} />
-          <ProfileSaveInfoButton text={"Save"} clickAction={formik.handleSubmit} />
+          <ProfilePageButton text={"Cancel"} clickAction={resetForm} />
+          <ProfileSaveInfoButton
+            text={"Save"}
+            clickAction={formik.handleSubmit}
+          />
         </ProfileAboutInfoForm>
       </Box>
     );
