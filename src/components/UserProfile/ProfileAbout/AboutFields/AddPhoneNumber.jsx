@@ -7,10 +7,7 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import ChangenInfoButton from "../AboutInfo/ChangeInfoButton";
 import { ProfileAboutInfoBlock, ProfileAboutInfoForm, ProfileAboutInfoFormSeparator, ProfileAboutInfoFormTextField, ProfileAboutInfoText, ProfileSaveInfoButton } from "../../StyledComponents/ContentBlock/StyledAboutComponents";
 import ProfilePageButton from "../../ProfilePageButton/ProfilePageButton";
-
-const mockInfo = {
-  phoneNumber: "+380 65 6336378"
-};
+import { useDispatch, useSelector } from "react-redux";
 
 const PhoneNumberSchema = Yup.object().shape({
   phoneNumber: Yup.string()
@@ -20,18 +17,19 @@ const PhoneNumberSchema = Yup.object().shape({
 
 export default function AddPhoneNumber() {
   // States
-  const [info, setInfo] = useState({});
+  const [phoneNumber, setPhoneNumber] = useState(null);
   const [isEdit, setInputStatus] = useState(false);
-
+  // Redux
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
   // Form
-  const formRef = useRef(null);
   const formik = useFormik({
     initialValues: {
       phoneNumber: "",
     },
     validationSchema: PhoneNumberSchema,
     onSubmit: (values) => {
-      setInfo(values);
+      setPhoneNumber(values.phoneNumber);
       edit();
     },
   });
@@ -42,27 +40,38 @@ export default function AddPhoneNumber() {
   }
 
   function removeInfo() {
-    setInfo(null);
+    setPhoneNumber(null);
+    // const updatedUser = { ...user };
+    // updatedUser.phoneNumber = null;
+    // dispatch(updateUser(updatedUser));
+    // dispatch(setUser(updatedUser));
+    // localStorage.setItem("user", JSON.stringify(updatedUser));
     formik.setValues({
       phoneNumber: "",
     });
   }
+  function resetForm() {
+    formik.setValues({
+      phoneNumber: user.phoneNumber,
+    });
+    edit();
+  }
   // useEffects
   useEffect(() => {
-    setInfo(mockInfo);
-  }, []);
+    setPhoneNumber(user.phoneNumber);
+  }, [user]);
 
   useEffect(() => {
-    if (!info) return;
+    if (!phoneNumber) return;
     formik.setValues({
-      phoneNumber: info.phoneNumber,
+      phoneNumber: phoneNumber,
     });
-  }, [info]);
+  }, [phoneNumber]);
 
   if (!isEdit) {
     return (
       <Box>
-        {!info ? (
+        {!phoneNumber ? (
           <AddInfoAbout text={"Add phone number"} clickAction={edit} />
         ) : (
           <ProfileAboutInfoBlock>
@@ -70,7 +79,7 @@ export default function AddPhoneNumber() {
               sx={{ color: "#727b87", width: "36px", height: "36px" }}
             />
             <Box style={{ width: "100%" }}>
-              <ProfileAboutInfoText>{info.phoneNumber}</ProfileAboutInfoText>
+              <ProfileAboutInfoText>{phoneNumber}</ProfileAboutInfoText>
               <ProfileAboutInfoText>Mobile</ProfileAboutInfoText>
             </Box>
             <ChangenInfoButton
@@ -87,7 +96,6 @@ export default function AddPhoneNumber() {
       <Box>
         <ProfileAboutInfoForm
           onSubmit={formik.handleSubmit}
-          ref={formRef}
         >
           <ProfileAboutInfoFormTextField
             fullWidth
@@ -99,8 +107,8 @@ export default function AddPhoneNumber() {
             value={formik.values.phoneNumber}
           />
           <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
-          <ProfilePageButton text={"Cancel"} clickAction={edit} />
-          <ProfileSaveInfoButton text={"Save"} clickAction={edit} />
+          <ProfilePageButton text={"Cancel"} clickAction={resetForm} />
+          <ProfileSaveInfoButton text={"Save"} clickAction={formik.handleSubmit} />
         </ProfileAboutInfoForm>
       </Box>
     );

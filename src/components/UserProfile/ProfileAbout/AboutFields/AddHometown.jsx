@@ -3,17 +3,21 @@ import AddInfoAbout from "../AddInfoAbout";
 import { Box } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import RoomIcon from '@mui/icons-material/Room';
+import RoomIcon from "@mui/icons-material/Room";
 import ChangenInfoButton from "../AboutInfo/ChangeInfoButton";
-import { ProfileAboutInfoBlock, ProfileAboutInfoForm, ProfileAboutInfoFormSeparator, ProfileAboutInfoFormTextField, ProfileAboutInfoText, ProfileSaveInfoButton } from "../../StyledComponents/ContentBlock/StyledAboutComponents";
+import {
+  ProfileAboutInfoBlock,
+  ProfileAboutInfoForm,
+  ProfileAboutInfoFormSeparator,
+  ProfileAboutInfoFormTextField,
+  ProfileAboutInfoText,
+  ProfileSaveInfoButton,
+} from "../../StyledComponents/ContentBlock/StyledAboutComponents";
 import ProfilePageButton from "../../ProfilePageButton/ProfilePageButton";
-
-const mockInfo = {
-  hometown: "Dnipro"
-};
+import { useDispatch, useSelector } from "react-redux";
 
 const HometownSchema = Yup.object().shape({
-    hometown: Yup.string()
+  hometown: Yup.string()
     .min(2, "Must be a valid name")
     .max(25, "Must be a valid name")
     .required("City is required"),
@@ -21,18 +25,20 @@ const HometownSchema = Yup.object().shape({
 
 export default function AddHometown() {
   // States
-  const [info, setInfo] = useState({});
+  const [hometown, setHometown] = useState(null);
   const [isEdit, setInputStatus] = useState(false);
-
+  // Redux
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
   // Form
   const formRef = useRef(null);
   const formik = useFormik({
     initialValues: {
-        hometown: "",
+      hometown: "",
     },
     validationSchema: HometownSchema,
     onSubmit: (values) => {
-      setInfo(values);
+      setHometown(values.hometown);
       edit();
     },
   });
@@ -45,25 +51,31 @@ export default function AddHometown() {
   function removeInfo() {
     setInfo(null);
     formik.setValues({
-        hometown: "",
+      hometown: "",
     });
+  }
+  function resetForm() {
+    formik.setValues({
+      hometown: hometown,
+    });
+    edit();
   }
   // useEffects
   useEffect(() => {
-    setInfo(mockInfo);
-  }, []);
+    setHometown(user.hometown);
+  }, [user]);
 
   useEffect(() => {
-    if (!info) return;
+    if (!hometown) return;
     formik.setValues({
-        hometown: info.hometown,
+      hometown: hometown,
     });
-  }, [info]);
+  }, [hometown]);
 
   if (!isEdit) {
     return (
       <Box>
-        {!info ? (
+        {!hometown ? (
           <AddInfoAbout text={"Add hometown"} clickAction={edit} />
         ) : (
           <ProfileAboutInfoBlock>
@@ -72,7 +84,7 @@ export default function AddHometown() {
             />
             <Box style={{ width: "100%" }}>
               <ProfileAboutInfoText>
-                From <span style={{ fontWeight: 600 }}>{info.hometown}</span>
+                From <span style={{ fontWeight: 600 }}>{hometown}</span>
               </ProfileAboutInfoText>
             </Box>
             <ChangenInfoButton
@@ -87,10 +99,7 @@ export default function AddHometown() {
   } else {
     return (
       <Box>
-        <ProfileAboutInfoForm
-          onSubmit={formik.handleSubmit}
-          ref={formRef}
-        >
+        <ProfileAboutInfoForm onSubmit={formik.handleSubmit} ref={formRef}>
           <ProfileAboutInfoFormTextField
             fullWidth
             id="outlined-basic"
@@ -101,8 +110,11 @@ export default function AddHometown() {
             value={formik.values.hometown}
           />
           <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
-          <ProfilePageButton text={"Cancel"} clickAction={edit} />
-          <ProfileSaveInfoButton text={"Save"} clickAction={edit} />
+          <ProfilePageButton text={"Cancel"} clickAction={resetForm} />
+          <ProfileSaveInfoButton
+            text={"Save"}
+            clickAction={formik.handleSubmit}
+          />
         </ProfileAboutInfoForm>
       </Box>
     );

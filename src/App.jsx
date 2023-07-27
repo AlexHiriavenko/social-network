@@ -1,4 +1,4 @@
-import React  from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PrivateRoute from "./utils/router/PrivateRoute";
@@ -22,22 +22,38 @@ import {
   UserPage,
 } from "./pages/";
 import Header from "./components/Header/Header";
-
+import { logIn } from "./redux/login.slice/login.slice";
+import Modals from "./components/Modals/Modals";
+import { getUser, setUser } from "./redux/user.slice/user.slice";
 
 function App() {
+  const dispatch = useDispatch();
 
-  const token = useSelector((state) => state.login.token)
+  const token = useSelector((state) => state.login.token);
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
 
   //const isLoggedIn = token? true : false;
 
-
   const navigate = useNavigate();
 
   const handleLogIn = () => {
- //   dispatch(logIn());
+    //   dispatch(logIn());
     navigate("/");
   };
+  useEffect(() => {
+    if (!localStorage.getItem("user") && localStorage.getItem("auth")) {
+      const auth = localStorage.getItem("auth");
+      const user = dispatch(getUser(JSON.parse(auth).id));
+      user
+        .then((result) => {
+          dispatch(setUser(result.payload));
+          localStorage.setItem("user", JSON.stringify(result.payload));
+        })
+        .catch((error) => alert(error));
+    } else {
+      dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
+    }
+  }, [isLoggedIn]);
 
   return (
     <>
@@ -67,9 +83,10 @@ function App() {
         </Route>
         <Route
           path="/login"
-          element={  <LogIn isLoggedIn={isLoggedIn} onClick={handleLogIn} />}
+          element={<LogIn isLoggedIn={isLoggedIn} onClick={handleLogIn} />}
         />
       </Routes>
+      <Modals />
     </>
   );
 }

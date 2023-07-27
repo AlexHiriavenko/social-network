@@ -57,6 +57,7 @@ const StyledFriendsList = styled(Box)({
   gap: "5px",
   paddingLeft: "16px",
   paddingRight: "16px",
+  paddingBottom: "20px",
   "@media (max-width: 680px)": {
     gridTemplateColumns: "1fr",
   },

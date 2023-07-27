@@ -5,14 +5,16 @@ import postReducer from "./post.slice/post.slice";
 import chatReducer from "./chat.slice/chat.slice";
 import userReducer from "./user.slice/user.slice.js";
 import darkModeSReducer from "./darkMode.slice/darkMode.slice";
+import modalReducer from "./modal.slice/modal.slice";
 
 export const store = configureStore({
-    reducer: {
-        login: loginReducer,
-        searchDrawer: searchDrawerReducer,
-        post: postReducer,
-        chat: chatReducer,
-        darkMode: darkModeSReducer,
-        user:userReducer
-    },
+  reducer: {
+    login: loginReducer,
+    searchDrawer: searchDrawerReducer,
+    post: postReducer,
+    chat: chatReducer,
+    darkMode: darkModeSReducer,
+    modal: modalReducer,
+    user: userReducer,
+  },
 });

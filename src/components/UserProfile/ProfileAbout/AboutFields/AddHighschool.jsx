@@ -24,6 +24,7 @@ import {
   ProfileSaveInfoButton,
 } from "../../StyledComponents/ContentBlock/StyledAboutComponents";
 import ProfilePageButton from "../../ProfilePageButton/ProfilePageButton";
+import { useDispatch, useSelector } from "react-redux";
 
 const mockInfo = {
   school: "CYL",
@@ -44,9 +45,11 @@ const HighSchoolSchema = Yup.object().shape({
 
 export default function AddHighschool() {
   // States
-  const [info, setInfo] = useState({});
+  const [highschool, setHighschool] = useState(null);
   const [isEdit, setInputStatus] = useState(false);
-
+  // Redux
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
   // Form
   const formRef = useRef(null);
   const formik = useFormik({
@@ -60,7 +63,7 @@ export default function AddHighschool() {
     validationSchema: HighSchoolSchema,
     onSubmit: (values) => {
       if (values.timeFrom > values.timeTo) return;
-      setInfo(values);
+      setHighschool(values.school);
       edit();
     },
   });
@@ -71,7 +74,12 @@ export default function AddHighschool() {
   }
 
   function removeInfo() {
-    setInfo(null);
+    setHighschool(null);
+    // const updatedUser = { ...user };
+    // updatedUser.highschool = null;
+    // dispatch(updateUser(updatedUser));
+    // dispatch(setUser(updatedUser));
+    // localStorage.setItem("user", JSON.stringify(updatedUser));
     formik.setValues({
       school: "",
       graduated: true,
@@ -80,26 +88,36 @@ export default function AddHighschool() {
       description: "",
     });
   }
+  function resetForm() {
+    formik.setValues({
+      school: user.highschool,
+    });
+    edit();
+  }
   // useEffects
   useEffect(() => {
-    setInfo(mockInfo);
-  }, []);
+    setHighschool(user.highschool);
+  }, [user]);
 
   useEffect(() => {
-    if (!info) return;
+    if (!highschool) return;
     formik.setValues({
-      school: info.school,
-      graduated: info.graduated,
-      timeFrom: info.timeFrom,
-      timeTo: info.timeTo,
-      description: info.description,
+      school: highschool,
+      graduated: true,
+      timeFrom: 2011,
+      timeTo: 2019,
+      description: "",
+      // graduated: info.graduated,
+      // timeFrom: info.timeFrom,
+      // timeTo: info.timeTo,
+      // description: info.description,
     });
-  }, [info]);
+  }, [highschool]);
 
   if (!isEdit) {
     return (
       <Box>
-        {!info ? (
+        {!highschool ? (
           <AddInfoAbout text={"Add high school"} clickAction={edit} />
         ) : (
           <ProfileAboutInfoBlock>
@@ -108,10 +126,11 @@ export default function AddHighschool() {
             />
             <Box style={{ width: "100%" }}>
               <ProfileAboutInfoText>
-                Went to <span style={{ fontWeight: 600 }}>{info.school}</span>
+                Went to <span style={{ fontWeight: 600 }}>{highschool}</span>
               </ProfileAboutInfoText>
               <ProfileAboutInfoText>
-                Attended from {info.timeFrom} to {info.timeTo}
+                Attended from {"2011"} to {"2019"}
+                {/* Attended from {info.timeFrom} to {info.timeTo} */}
               </ProfileAboutInfoText>
             </Box>
             <ChangenInfoButton
@@ -238,8 +257,8 @@ export default function AddHighschool() {
             value={formik.values.description}
           />
           <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
-          <ProfilePageButton text={"Cancel"} clickAction={edit} />
-          <ProfileSaveInfoButton text={"Save"} clickAction={edit} />
+          <ProfilePageButton text={"Cancel"} clickAction={resetForm} />
+          <ProfileSaveInfoButton text={"Save"} clickAction={formik.handleSubmit} />
         </ProfileAboutInfoForm>
       </Box>
     );

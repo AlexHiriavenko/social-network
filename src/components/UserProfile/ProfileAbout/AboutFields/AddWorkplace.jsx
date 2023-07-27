@@ -24,6 +24,8 @@ import {
   ProfileSaveInfoButton,
 } from "../../StyledComponents/ContentBlock/StyledAboutComponents";
 import ProfilePageButton from "../../ProfilePageButton/ProfilePageButton";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser, updateUser } from "../../../../redux/user.slice/user.slice";
 
 const mockInfo = {
   company: "Dan IT",
@@ -48,20 +50,22 @@ const WorkplaceSchema = Yup.object().shape({
     .max(25, "Must be a valid name")
     .required("City is required"),
   timeFrom: Yup.number().required("Required"),
-  timeTo: Yup.number().when("workNow", {
-    is: false,
-    then: () => Yup.number().required("Required"),
-  }),
+  timeTo: Yup.number()
+    .nullable(true)
+    .when("workNow", {
+      is: false,
+      then: () => Yup.number().required("Required"),
+    }),
   workNow: Yup.boolean(),
 });
 
-
 export default function AddWorkplace() {
   // States
-  const [info, setInfo] = useState({});
+  const [workPlace, setWorkPlace] = useState(null);
   const [isEdit, setInputStatus] = useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
   // Form
-  const formRef = useRef(null);
   const formik = useFormik({
     initialValues: {
       company: "",
@@ -76,7 +80,12 @@ export default function AddWorkplace() {
     onSubmit: (values) => {
       if (typeof values.timeTo === "number" && values.timeFrom > values.timeTo)
         return;
-      setInfo(values);
+      setWorkPlace(values.company);
+      const updatedUser = { ...user };
+      updatedUser.workPlace = values.company;
+      dispatch(updateUser(updatedUser));
+      dispatch(setUser(updatedUser));
+      localStorage.setItem("user", JSON.stringify(updatedUser));
       edit();
     },
   });
@@ -86,7 +95,12 @@ export default function AddWorkplace() {
   }
 
   function removeInfo() {
-    setInfo(null);
+    setWorkPlace(null);
+    const updatedUser = { ...user };
+    updatedUser.workPlace = null;
+    dispatch(updateUser(updatedUser));
+    dispatch(setUser(updatedUser));
+    localStorage.setItem("user", JSON.stringify(updatedUser));
     formik.setValues({
       company: "",
       position: "",
@@ -97,28 +111,47 @@ export default function AddWorkplace() {
       timeTo: "",
     });
   }
+
+  function resetForm() {
+    formik.setValues({
+      company: user.workPlace,
+      position: "Employee",
+      city: user.city,
+      description: "",
+      workNow: true,
+      timeFrom: "2016",
+      timeTo: null,
+    });
+    edit();
+  }
   // useEffects
   useEffect(() => {
-    setInfo(mockInfo);
-  }, []);
+    setWorkPlace(user.workPlace);
+  }, [user]);
 
   useEffect(() => {
-    if (!info) return;
+    if (!workPlace) return;
     formik.setValues({
-      company: info.company,
-      position: info.position,
-      city: info.city,
-      description: info.description,
-      workNow: info.workNow,
-      timeFrom: info.timeFrom,
-      timeTo: info.timeTo,
+      company: workPlace,
+      position: "Employee",
+      city: user.city,
+      description: "",
+      workNow: true,
+      timeFrom: "2016",
+      timeTo: "",
+      // position: info.position,
+      // city: info.city,
+      // description: info.description,
+      // workNow: info.workNow,
+      // timeFrom: info.timeFrom,
+      // timeTo: info.timeTo,
     });
-  }, [info]);
+  }, [workPlace]);
 
   if (!isEdit) {
     return (
       <Box>
-        {!info ? (
+        {!workPlace ? (
           <AddInfoAbout text={"Add a workplace"} clickAction={edit} />
         ) : (
           <ProfileAboutInfoBlock>
@@ -127,10 +160,11 @@ export default function AddWorkplace() {
             />
             <Box style={{ width: "100%" }}>
               <ProfileAboutInfoText>
-                {info.position} at {info.company}
+                {"Employee"} at {workPlace}
               </ProfileAboutInfoText>
               <ProfileAboutInfoText>
-                {info.timeFrom} to {info.workNow ? "present" : info.timeTo}
+                {"2016"} to {true ? "present" : "2020"}
+                {/* {info.timeFrom} to {info.workNow ? "present" : info.timeTo} */}
               </ProfileAboutInfoText>
             </Box>
             <ChangenInfoButton
@@ -145,7 +179,7 @@ export default function AddWorkplace() {
   } else {
     return (
       <Box>
-        <ProfileAboutInfoForm onSubmit={formik.handleSubmit} ref={formRef}>
+        <ProfileAboutInfoForm onSubmit={formik.handleSubmit}>
           <ProfileAboutInfoFormTextField
             fullWidth
             id="outlined-basic"
@@ -162,7 +196,7 @@ export default function AddWorkplace() {
             label="Position"
             variant="outlined"
             onChange={formik.handleChange}
-            value={formik.values.position} 
+            value={formik.values.position}
           />
           <ProfileAboutInfoFormTextField
             fullWidth
@@ -280,8 +314,11 @@ export default function AddWorkplace() {
           </ProfileAboutInfoFormTimePeriod>
 
           <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
-          <ProfilePageButton text={"Cancel"} clickAction={edit} />
-          <ProfileSaveInfoButton text={"Save"} clickAction={edit} />
+          <ProfilePageButton text={"Cancel"} clickAction={resetForm} />
+          <ProfileSaveInfoButton
+            text={"Save"}
+            clickAction={formik.handleSubmit}
+          />
         </ProfileAboutInfoForm>
       </Box>
     );

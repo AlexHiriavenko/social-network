@@ -22,6 +22,7 @@ const ProfileAboutAddInfo = styled(Button)({
   display: "flex",
   alignItems: "center",
   columnGap: "10px",
+  paddingLeft: 0,
   "&:hover": {
     backgroundColor: "transparent",
     textDecoration: "underline",
@@ -45,6 +46,7 @@ const ProfileAboutInfoForm = styled("form")({
   flexWrap: "wrap",
   rowGap: "10px",
   columnGap: "5px",
+  fontFamily: "sans-serif",
 });
 
 const ProfileAboutInfoFormSeparator = styled("span")(({ theme }) => ({
@@ -60,7 +62,7 @@ const ProfileAboutInfoFormInputName = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   fontFamily: "sans-serif",
 }));
-const ProfileAboutInfoFormTimePeriod = styled(Typography)(({ theme }) => ({
+const ProfileAboutInfoFormTimePeriod = styled(Box)(({ theme }) => ({
   display: "flex",
   flexWrap: "wrap",
   rowGap: "10px",
@@ -103,11 +105,11 @@ const ProfileAboutInfoFormCheckboxLabel = styled(FormControlLabel)(
 );
 
 const ProfileSaveInfoButton = styled(ProfilePageButton)(({ theme }) => ({
-    backgroundColor: theme.palette.accentColor.main,
-    "&:hover": {
-      backgroundColor: theme.palette.accentColor.secondary,
-    },
-  }));
+  backgroundColor: theme.palette.accentColor.main,
+  "&:hover": {
+    backgroundColor: theme.palette.accentColor.secondary,
+  },
+}));
 
 export {
   ProfileAboutInfoTitle,
@@ -120,5 +122,5 @@ export {
   ProfileAboutInfoFormTimePeriod,
   ProfileAboutInfoFormTextField,
   ProfileAboutInfoFormCheckboxLabel,
-  ProfileSaveInfoButton
+  ProfileSaveInfoButton,
 };
