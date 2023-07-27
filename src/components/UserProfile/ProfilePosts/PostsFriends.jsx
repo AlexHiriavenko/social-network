@@ -8,6 +8,8 @@ import {
 } from "../StyledComponents/ContentBlock/StyledComponents";
 import { Box, Typography } from "@mui/material";
 import styled from "@emotion/styled";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../../redux/user.slice/user.slice";
 const mockFriends = [
   {
     userPhoto:
@@ -52,20 +54,40 @@ const StyledPostFriendName = styled(Typography)(({ theme }) => ({
   color: theme.palette.textColor.main,
   fontSize: "13px",
   fontWeight: 600,
+  fontFamily: "sans-serif",
 }));
 export default function ProfilePostsFriends() {
+  // Constants
   const photosRef = useRef(null);
   const [photoHeight, setPhotoHeight] = useState(204);
+  const allUsers = useSelector((state) => state.user.allUsers);
+  const authUser = useSelector((state) => state.user.authorizedUser);
+  const dispatch = useDispatch();
+  // State
+  const [friends, setFriends] = useState([]);
+  // UseEffect
   useEffect(() => {
     window.addEventListener("resize", () => {
       if (photosRef.current) setPhotoHeight(photosRef.current.width);
     });
   }, [photosRef]);
+
   useEffect(() => {
     if (photosRef.current) setPhotoHeight(photosRef.current.width);
-  }, []);
+  }, [photosRef.current]);
+
+  useEffect(() => {
+    if (!allUsers) return;
+    setFriends(allUsers);
+  }, [allUsers]);
+  // Functions
+  function lookFriendPage(friend) {
+    dispatch(setUser(friend));
+    localStorage.setItem("user", JSON.stringify(friend));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
   return (
-    <ContentBlock style={{maxWidth: "680px"}}>
+    <ContentBlock style={{ maxWidth: "680px" }}>
       <ContentBlockHeader>
         <ContentBlockTitel>Friends</ContentBlockTitel>
         <ContentBlockLink to={"/profile/friends"}>
@@ -73,20 +95,26 @@ export default function ProfilePostsFriends() {
         </ContentBlockLink>
       </ContentBlockHeader>
       <StyledPostFriendsSubtitle>
-        {mockFriends.length} friends
+        {friends.length} friends
       </StyledPostFriendsSubtitle>
       <StyledPostFriendsList>
-        {mockFriends.map((friend, index) => {
+        {friends.map((friend, index) => {
           return (
-            <StyledPostFriendItem key={index}>
+            <StyledPostFriendItem
+              key={index}
+              onClick={() => lookFriendPage(friend)}
+            >
               <StyledPostFriendImage
-                src={friend.userPhoto}
+                src={
+                  friend.profilePicture ||
+                  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1200px-User-avatar.svg.png"
+                }
                 alt="foto"
                 width={204}
                 height={photoHeight}
                 ref={photosRef}
               />
-              <StyledPostFriendName>{friend.userName}</StyledPostFriendName>
+              <StyledPostFriendName>{friend.fullName}</StyledPostFriendName>
             </StyledPostFriendItem>
           );
         })}

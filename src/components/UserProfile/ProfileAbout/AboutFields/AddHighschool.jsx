@@ -47,6 +47,7 @@ export default function AddHighschool() {
   // States
   const [highschool, setHighschool] = useState(null);
   const [isEdit, setInputStatus] = useState(false);
+  const [isAuthorized, setAuthorized] = useState(false);
   // Redux
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
@@ -97,6 +98,7 @@ export default function AddHighschool() {
   // useEffects
   useEffect(() => {
     setHighschool(user.highschool);
+    setAuthorized(user.isAuthorized);
   }, [user]);
 
   useEffect(() => {
@@ -114,6 +116,7 @@ export default function AddHighschool() {
     });
   }, [highschool]);
 
+  if (!isAuthorized && !highschool) return;
   if (!isEdit) {
     return (
       <Box>
@@ -133,11 +136,13 @@ export default function AddHighschool() {
                 {/* Attended from {info.timeFrom} to {info.timeTo} */}
               </ProfileAboutInfoText>
             </Box>
-            <ChangenInfoButton
-              infoName={"high school"}
-              edit={edit}
-              remove={removeInfo}
-            />
+            {isAuthorized && (
+              <ChangenInfoButton
+                infoName={"high school"}
+                edit={edit}
+                remove={removeInfo}
+              />
+            )}
           </ProfileAboutInfoBlock>
         )}
       </Box>
@@ -258,7 +263,10 @@ export default function AddHighschool() {
           />
           <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
           <ProfilePageButton text={"Cancel"} clickAction={resetForm} />
-          <ProfileSaveInfoButton text={"Save"} clickAction={formik.handleSubmit} />
+          <ProfileSaveInfoButton
+            text={"Save"}
+            clickAction={formik.handleSubmit}
+          />
         </ProfileAboutInfoForm>
       </Box>
     );

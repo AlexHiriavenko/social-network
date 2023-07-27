@@ -5,6 +5,7 @@ import {
 } from "../StyledComponents/ContentBlock/StyledComponents";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const mockImg = [
   "https://www.ictputovanja.hr/data/public/slike-za-novosti/Island-kucica.jpg",
@@ -68,21 +69,29 @@ const StyledPhotosImage = styled("img")({
 export default function Photos() {
   const photosRef = useRef(null);
   const [photoHeight, setPhotoHeight] = useState(213);
+  const [isAuthorized, setAuthorized] = useState(false);
+  const user = useSelector((state) => state.user.user);
+
   useEffect(() => {
     window.addEventListener("resize", () => {
       if (photosRef.current) setPhotoHeight(photosRef.current.width);
     });
-  }, [photosRef]);
+  }, [photosRef.current]);
   useEffect(() => {
     if (photosRef.current) setPhotoHeight(photosRef.current.width);
-  }, []);
+  }, [photosRef.current]);
+  useEffect(() => {
+    setAuthorized(user.isAuthorized);
+  }, [user]);
   return (
     <ContentBlock>
       <ContentBlockTitel>Photos</ContentBlockTitel>
-      <StyledAddPhotoButton>
-        <input type="file" style={{ display: "none" }} />
-        Add new photo
-      </StyledAddPhotoButton>
+      {isAuthorized && (
+        <StyledAddPhotoButton>
+          <input type="file" style={{ display: "none" }} />
+          Add new photo
+        </StyledAddPhotoButton>
+      )}
       <StyledPhotosList>
         {mockImg.map((image, index) => {
           return (
