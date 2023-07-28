@@ -46,13 +46,13 @@ async function() {
         let token = await axios.get("http://localhost:9000/api/oauth2/authorization/google")
         document.cookie = `token=${token.data.accessToken}`;
         document.cookie = `refresh=${token.data.refreshToken}`;
-    let auth = parseJwt(token.data.accessToken)
-    localStorage.setItem('auth',JSON.stringify(auth))
-    const { data } = await instance.get(`/users/${auth.id}`);
-    localStorage.setItem("authorizedUser",JSON.stringify(data))
-    localStorage.setItem("user",JSON.stringify(data))
+        let auth = parseJwt(token.data.accessToken)
+        localStorage.setItem('auth',JSON.stringify(auth))
+        const { data } = await instance.get(`/users/${auth.id}`);
+        localStorage.setItem("authorizedUser",JSON.stringify(data))
+        localStorage.setItem("user",JSON.stringify(data))
 
-    console.log(token)
+        console.log(token)
 }
 
 )
