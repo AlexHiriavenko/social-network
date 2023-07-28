@@ -2,6 +2,8 @@ import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
 import {readCookie} from "../../readCookie.js";
 import {parseJwt} from "../../parseJwt.js";
+import instance from "../../instance.js";
+
 
 export const logIn = createAsyncThunk(
     'Login/logIn',
@@ -44,6 +46,13 @@ async function() {
         let token = await axios.get("http://localhost:9000/api/oauth2/authorization/google")
         document.cookie = `token=${token.data.accessToken}`;
         document.cookie = `refresh=${token.data.refreshToken}`;
+    let auth = parseJwt(token.data.accessToken)
+    localStorage.setItem('auth',JSON.stringify(auth))
+    const { data } = await instance.get(`/users/${auth.id}`);
+    localStorage.setItem("authorizedUser",JSON.stringify(data))
+    localStorage.setItem("user",JSON.stringify(data))
+
+    console.log(token)
 }
 
 )
@@ -66,6 +75,9 @@ const LoginSlice = createSlice({
             document.cookie = `token=${token}`
             let login = false
             localStorage.setItem('loggedIn',login)
+            localStorage.removeItem("authorizedUser")
+            localStorage.removeItem("auth")
+            localStorage.removeItem('user')
             },
         extraReducers: {
             [logIn.pending]: (state) => {

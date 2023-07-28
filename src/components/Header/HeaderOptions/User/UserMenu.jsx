@@ -16,7 +16,11 @@ function UserMenu(props) {
   const { anchor, toggleMenu, toggleDisplayModeMenu, logOut } = props;
 
   const dispatch = useDispatch();
-  const authorizedUser = useSelector((state) => state.user.authorizedUser);
+  let authorizedUser = useSelector((state) => state.user.authorizedUser);
+  if(authorizedUser == null){
+    dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
+    authorizedUser = JSON.parse(localStorage.getItem("authorizedUser")) ;
+  }
   function showAuthorizedUser() {
     dispatch(setUser(authorizedUser));
     localStorage.setItem("user", JSON.stringify(authorizedUser))
