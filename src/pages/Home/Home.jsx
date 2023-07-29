@@ -1,10 +1,35 @@
 import HomeMain from "./HomeMain";
 import HomeAsideLeft from "./HomeAsideLeft";
 import HomeAsideRight from "./HomeAsideRight";
+import { useTheme } from "@mui/material/styles";
+import {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {readCookie} from '../../readCookie.js'
+import { loginGoogle} from "../../redux/login.slice/login.slice.js";
+import {getUser, getUsers, setAuthorizedUser, setUsers} from "../../redux/user.slice/user.slice.js";
+
+
 
 function Home() {
+    const theme = useTheme();
+
+    const dispatch = useDispatch();
+    const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+    useEffect(()=>{
+       if(readCookie('token' ) == '0'){
+        dispatch(loginGoogle())
+
+    }
+
+        dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
+
+       },[isLoggedIn])
+
     return (
-        <div className="container-page">
+        <div
+            className="container-page"
+            style={{ backgroundColor: theme.palette.backgroundColor.page }}
+        >
             <HomeAsideLeft />
             <HomeMain />
             <HomeAsideRight />

@@ -1,5 +1,6 @@
 import { Typography, List, ListItem, Divider } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import SvgDanIT from "../../components/SVG/DanIT";
 import ContactsList from "./ContactsList";
 
 function HomeAsideRight() {
@@ -7,7 +8,10 @@ function HomeAsideRight() {
     return (
         <aside
             className="sidebar-home sidebar-home-right"
-            style={{ backgroundColor: theme.palette.backgroundColor.page }}
+            style={{
+                backgroundColor: theme.palette.backgroundColor.page,
+                borderLeft: theme.palette.border.transp,
+            }}
         >
             <Typography
                 id="ad"
@@ -26,7 +30,7 @@ function HomeAsideRight() {
                 <ListItem
                     sx={{
                         ":hover": {
-                            backgroundColor: "rgb(230, 230, 230)",
+                            backgroundColor: theme.palette.hoverColor.secondary,
                         },
                     }}
                 >
@@ -35,22 +39,16 @@ function HomeAsideRight() {
                         href="https://dan-it.com.ua/uk/"
                         target="_blank"
                     >
-                        <img
-                            style={{
-                                paddingTop: "10px",
-                                paddingBottom: "10px",
-                            }}
-                            alt="company logo"
-                            src="https://dan-it.com.ua/wp-content/themes/danIT%20v2.0/assets/img/svg/dan-logo.svg"
-                            width={100}
-                        />
+                        <div style={{ paddingTop: "12px", paddingBottom: "12px" }}>
+                            <SvgDanIT />
+                        </div>
                         <Typography
                             paragraph
                             sx={{
                                 fontSize: "15px",
                                 lineHeight: "1",
                                 m: 0,
-                                color: (theme) => theme.palette.textColor.secondary,
+                                color: (theme) => theme.palette.textColor.content,
                             }}
                         >
                             Master modern IT-profession
@@ -60,7 +58,7 @@ function HomeAsideRight() {
                 <ListItem
                     sx={{
                         ":hover": {
-                            backgroundColor: "rgb(230, 230, 230)",
+                            backgroundColor: theme.palette.hoverColor.secondary,
                         },
                     }}
                 >
@@ -79,7 +77,7 @@ function HomeAsideRight() {
                                 fontSize: "15px",
                                 lineHeight: "1",
                                 m: 0,
-                                color: (theme) => theme.palette.textColor.secondary,
+                                color: (theme) => theme.palette.textColor.content,
                             }}
                         >
                             Here can be your advertising
@@ -87,13 +85,17 @@ function HomeAsideRight() {
                     </a>
                 </ListItem>
             </List>
-            <Divider />
+            <Divider
+                sx={{
+                    backgroundColor: theme.palette.border.simpleTransp,
+                }}
+            />
             <Typography
                 component="h3"
                 sx={{
                     pl: 2,
                     mt: 2,
-                    color: "rgb(101, 103, 107)",
+                    color: theme.palette.textColor.secondary,
                     fontWeight: 600,
                     fontSize: "17px",
                 }}

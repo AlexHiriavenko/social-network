@@ -1,19 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import AddInfoAbout from "../AddInfoAbout";
-import styles from "./AboutFields.module.scss";
-import EditFormButton from "../EditFormButton";
-import { TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import HomeIcon from '@mui/icons-material/Home';
+import HomeIcon from "@mui/icons-material/Home";
 import ChangenInfoButton from "../AboutInfo/ChangeInfoButton";
-
-const mockInfo = {
-  currentCity: "Cologne"
-};
+import {
+  ProfileAboutInfoBlock,
+  ProfileAboutInfoForm,
+  ProfileAboutInfoFormSeparator,
+  ProfileAboutInfoFormTextField,
+  ProfileAboutInfoText,
+  ProfileSaveInfoButton,
+} from "../../StyledComponents/ContentBlock/StyledAboutComponents";
+import ProfilePageButton from "../../ProfilePageButton/ProfilePageButton";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser, updateUser } from "../../../../redux/user.slice/user.slice";
 
 const CurrentCitySchema = Yup.object().shape({
-    currentCity: Yup.string()
+  currentCity: Yup.string()
     .min(2, "Must be a valid name")
     .max(25, "Must be a valid name")
     .required("City is required"),
@@ -21,18 +26,26 @@ const CurrentCitySchema = Yup.object().shape({
 
 export default function AddCurrentCity() {
   // States
-  const [info, setInfo] = useState({});
+  const [currentCity, setCurrentCity] = useState(null);
   const [isEdit, setInputStatus] = useState(false);
-
+  const [isAuthorized, setAuthorized] = useState(false);
+  // Redux
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
   // Form
   const formRef = useRef(null);
   const formik = useFormik({
     initialValues: {
-        currentCity: "",
+      currentCity: "",
     },
     validationSchema: CurrentCitySchema,
     onSubmit: (values) => {
-      setInfo(values);
+      setCurrentCity(values.currentCity);
+      const updatedUser = { ...user };
+      updatedUser.city = values.currentCity;
+      dispatch(updateUser(updatedUser));
+      dispatch(setUser(updatedUser));
+      localStorage.setItem("user", JSON.stringify(updatedUser));
       edit();
     },
   });
@@ -43,57 +56,69 @@ export default function AddCurrentCity() {
   }
 
   function removeInfo() {
-    setInfo(null);
+    setCurrentCity(null);
+    const updatedUser = { ...user };
+    updatedUser.city = null;
+    dispatch(updateUser(updatedUser));
+    dispatch(setUser(updatedUser));
+    localStorage.setItem("user", JSON.stringify(updatedUser));
     formik.setValues({
-        currentCity: "",
+      currentCity: "",
     });
   }
+  function resetForm() {
+    formik.setValues({
+      currentCity: user.city,
+    });
+    edit();
+  }
+
   // useEffects
   useEffect(() => {
-    setInfo(mockInfo);
-  }, []);
+    setCurrentCity(user.city);
+    setAuthorized(user.isAuthorized);
+  }, [user]);
 
   useEffect(() => {
-    if (!info) return;
+    if (!currentCity) return;
     formik.setValues({
-        currentCity: info.currentCity,
+      currentCity: currentCity,
     });
-  }, [info]);
+  }, [currentCity]);
 
+  if (!isAuthorized && !currentCity) return;
   if (!isEdit) {
     return (
-      <li>
-        {!info ? (
+      <Box>
+        {!currentCity ? (
           <AddInfoAbout text={"Add current city"} clickAction={edit} />
         ) : (
-          <div className={styles.about__info_block}>
+          <ProfileAboutInfoBlock>
             <HomeIcon
-              sx={{ color: "#808080", width: "36px", height: "36px" }}
+              sx={{ color: "#727b87", width: "36px", height: "36px" }}
             />
-            <div style={{ width: "100%" }}>
-              <p className={styles.about_info__text}>
-                Live in <span style={{ fontWeight: 600 }}>{info.currentCity}</span>
-              </p>
-              
-            </div>
-            <ChangenInfoButton
-              infoName={"current city"}
-              edit={edit}
-              remove={removeInfo}
-            />
-          </div>
+            <Box style={{ width: "100%" }}>
+              <ProfileAboutInfoText>
+                Live in
+                <span style={{ fontWeight: 600 }}> {currentCity}</span>
+              </ProfileAboutInfoText>
+            </Box>
+            {isAuthorized && (
+              <ChangenInfoButton
+                infoName={"current city"}
+                edit={edit}
+                remove={removeInfo}
+              />
+            )}
+          </ProfileAboutInfoBlock>
         )}
-      </li>
+      </Box>
     );
   } else {
     return (
-      <li>
-        <form
-          className={styles.about__form}
-          onSubmit={formik.handleSubmit}
-          ref={formRef}
-        >
-          <TextField
+      <Box>
+        <ProfileAboutInfoForm onSubmit={formik.handleSubmit} ref={formRef}>
+          <ProfileAboutInfoFormTextField
             fullWidth
             id="outlined-basic"
             name="currentCity"
@@ -102,20 +127,14 @@ export default function AddCurrentCity() {
             onChange={formik.handleChange}
             value={formik.values.currentCity}
           />
-          <span className={styles.about__form_separator}></span>
-          <EditFormButton text={"Cancel"} clickAction={edit} type={"reset"} />
-          <EditFormButton
+          <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
+          <ProfilePageButton text={"Cancel"} clickAction={resetForm} />
+          <ProfileSaveInfoButton
             text={"Save"}
-            type={"submit"}
-            active={
-              !(
-                Object.keys(formik.errors).length === 0 &&
-                formik.errors.constructor === Object
-              )
-            }
+            clickAction={formik.handleSubmit}
           />
-        </form>
-      </li>
+        </ProfileAboutInfoForm>
+      </Box>
     );
   }
 }

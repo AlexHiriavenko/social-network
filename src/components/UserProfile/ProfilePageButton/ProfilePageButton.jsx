@@ -9,7 +9,6 @@ const StyledProfileButton = styled(Button)(({ theme }) => ({
   fontWeight: 600,
   padding: "5px 10px",
   borderRadius: "5px",
-  marginTop: "15px",
   transitionDuration: "500ms",
   display: "flex",
   flexWrap: "nowrap",
@@ -26,7 +25,7 @@ const StyledProfileButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function ProfilePageButton(props) {
-  const { text, icon, style, className, clickAction} = props;
+  const { text, icon, style, className, clickAction } = props;
   return (
     <StyledProfileButton
       className={className}
@@ -37,3 +36,9 @@ export default function ProfilePageButton(props) {
     </StyledProfileButton>
   );
 }
+
+ProfilePageButton.defaultProps = {
+  icon: null,
+  text: "",
+  clickAction: () => {},
+};

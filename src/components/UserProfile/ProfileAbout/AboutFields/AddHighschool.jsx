@@ -1,20 +1,30 @@
 import { useEffect, useRef, useState } from "react";
 import AddInfoAbout from "../AddInfoAbout";
-import styles from "./AboutFields.module.scss";
-import EditFormButton from "../EditFormButton";
 import {
+  Box,
   Checkbox,
   FormControl,
-  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
-  TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import SchoolIcon from "@mui/icons-material/School";
 import ChangenInfoButton from "../AboutInfo/ChangeInfoButton";
+import {
+  ProfileAboutInfoBlock,
+  ProfileAboutInfoForm,
+  ProfileAboutInfoFormCheckboxLabel,
+  ProfileAboutInfoFormInputName,
+  ProfileAboutInfoFormSeparator,
+  ProfileAboutInfoFormTextField,
+  ProfileAboutInfoFormTimePeriod,
+  ProfileAboutInfoText,
+  ProfileSaveInfoButton,
+} from "../../StyledComponents/ContentBlock/StyledAboutComponents";
+import ProfilePageButton from "../../ProfilePageButton/ProfilePageButton";
+import { useDispatch, useSelector } from "react-redux";
 
 const mockInfo = {
   school: "CYL",
@@ -35,9 +45,12 @@ const HighSchoolSchema = Yup.object().shape({
 
 export default function AddHighschool() {
   // States
-  const [info, setInfo] = useState({});
+  const [highschool, setHighschool] = useState(null);
   const [isEdit, setInputStatus] = useState(false);
-
+  const [isAuthorized, setAuthorized] = useState(false);
+  // Redux
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
   // Form
   const formRef = useRef(null);
   const formik = useFormik({
@@ -51,7 +64,7 @@ export default function AddHighschool() {
     validationSchema: HighSchoolSchema,
     onSubmit: (values) => {
       if (values.timeFrom > values.timeTo) return;
-      setInfo(values);
+      setHighschool(values.school);
       edit();
     },
   });
@@ -62,7 +75,12 @@ export default function AddHighschool() {
   }
 
   function removeInfo() {
-    setInfo(null);
+    setHighschool(null);
+    // const updatedUser = { ...user };
+    // updatedUser.highschool = null;
+    // dispatch(updateUser(updatedUser));
+    // dispatch(setUser(updatedUser));
+    // localStorage.setItem("user", JSON.stringify(updatedUser));
     formik.setValues({
       school: "",
       graduated: true,
@@ -71,58 +89,69 @@ export default function AddHighschool() {
       description: "",
     });
   }
+  function resetForm() {
+    formik.setValues({
+      school: user.highschool,
+    });
+    edit();
+  }
   // useEffects
   useEffect(() => {
-    setInfo(mockInfo);
-  }, []);
+    setHighschool(user.highschool);
+    setAuthorized(user.isAuthorized);
+  }, [user]);
 
   useEffect(() => {
-    if (!info) return;
+    if (!highschool) return;
     formik.setValues({
-      school: info.school,
-      graduated: info.graduated,
-      timeFrom: info.timeFrom,
-      timeTo: info.timeTo,
-      description: info.description,
+      school: highschool,
+      graduated: true,
+      timeFrom: 2011,
+      timeTo: 2019,
+      description: "",
+      // graduated: info.graduated,
+      // timeFrom: info.timeFrom,
+      // timeTo: info.timeTo,
+      // description: info.description,
     });
-  }, [info]);
+  }, [highschool]);
 
+  if (!isAuthorized && !highschool) return;
   if (!isEdit) {
     return (
-      <li>
-        {!info ? (
+      <Box>
+        {!highschool ? (
           <AddInfoAbout text={"Add high school"} clickAction={edit} />
         ) : (
-          <div className={styles.about__info_block}>
+          <ProfileAboutInfoBlock>
             <SchoolIcon
-              sx={{ color: "#808080", width: "36px", height: "36px" }}
+              sx={{ color: "#727b87", width: "36px", height: "36px" }}
             />
-            <div style={{ width: "100%" }}>
-              <p className={styles.about_info__text}>
-                Went to <span style={{ fontWeight: 600 }}>{info.school}</span>
-              </p>
-              <p className={styles.about_info__text}>
-                Attended from {info.timeFrom} to {info.timeTo}
-              </p>
-            </div>
-            <ChangenInfoButton
-              infoName={"high school"}
-              edit={edit}
-              remove={removeInfo}
-            />
-          </div>
+            <Box style={{ width: "100%" }}>
+              <ProfileAboutInfoText>
+                Went to <span style={{ fontWeight: 600 }}>{highschool}</span>
+              </ProfileAboutInfoText>
+              <ProfileAboutInfoText>
+                Attended from {"2011"} to {"2019"}
+                {/* Attended from {info.timeFrom} to {info.timeTo} */}
+              </ProfileAboutInfoText>
+            </Box>
+            {isAuthorized && (
+              <ChangenInfoButton
+                infoName={"high school"}
+                edit={edit}
+                remove={removeInfo}
+              />
+            )}
+          </ProfileAboutInfoBlock>
         )}
-      </li>
+      </Box>
     );
   } else {
     return (
-      <li>
-        <form
-          className={styles.about__form}
-          onSubmit={formik.handleSubmit}
-          ref={formRef}
-        >
-          <TextField
+      <Box>
+        <ProfileAboutInfoForm onSubmit={formik.handleSubmit} ref={formRef}>
+          <ProfileAboutInfoFormTextField
             fullWidth
             id="outlined-basic"
             name="school"
@@ -131,9 +160,11 @@ export default function AddHighschool() {
             onChange={formik.handleChange}
             value={formik.values.school}
           />
-          <p className={styles.about__form_input_name}>Time period</p>
+          <ProfileAboutInfoFormInputName>
+            Time period
+          </ProfileAboutInfoFormInputName>
 
-          <div className={styles.about__form_time_period}>
+          <ProfileAboutInfoFormTimePeriod>
             <p>from</p>
             <FormControl sx={{ minWidth: "76px" }} size="small">
               <InputLabel id="demo-simple-select-label">Year</InputLabel>
@@ -202,8 +233,8 @@ export default function AddHighschool() {
                 <MenuItem value={2004}>2004</MenuItem>
               </Select>
             </FormControl>
-          </div>
-          <FormControlLabel
+          </ProfileAboutInfoFormTimePeriod>
+          <ProfileAboutInfoFormCheckboxLabel
             control={
               <Checkbox
                 onChange={formik.handleChange}
@@ -213,7 +244,7 @@ export default function AddHighschool() {
             }
             label="Graduated"
           />
-          <TextField
+          <ProfileAboutInfoFormTextField
             fullWidth
             rows={4}
             name="description"
@@ -230,20 +261,14 @@ export default function AddHighschool() {
             onChange={formik.handleChange}
             value={formik.values.description}
           />
-          <span className={styles.about__form_separator}></span>
-          <EditFormButton text={"Cancel"} clickAction={edit} type={"reset"} />
-          <EditFormButton
+          <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
+          <ProfilePageButton text={"Cancel"} clickAction={resetForm} />
+          <ProfileSaveInfoButton
             text={"Save"}
-            type={"submit"}
-            active={
-              !(
-                Object.keys(formik.errors).length === 0 &&
-                formik.errors.constructor === Object
-              )
-            }
+            clickAction={formik.handleSubmit}
           />
-        </form>
-      </li>
+        </ProfileAboutInfoForm>
+      </Box>
     );
   }
 }

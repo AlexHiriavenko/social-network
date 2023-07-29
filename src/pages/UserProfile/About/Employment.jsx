@@ -1,13 +1,13 @@
 import AddHighschool from "../../../components/UserProfile/ProfileAbout/AboutFields/AddHighschool";
 import AddWorkplace from "../../../components/UserProfile/ProfileAbout/AboutFields/AddWorkplace";
-import styles from "./profileAbout.module.scss";
+import { ProfileAboutInfoTitle } from "../../../components/UserProfile/StyledComponents/ContentBlock/StyledAboutComponents";
 
 export default function Employment() {
   return (
     <>
-      <p className={styles.profile_about__info_title}>Work</p>
+      <ProfileAboutInfoTitle>Work</ProfileAboutInfoTitle>
       <AddWorkplace />
-      <p className={styles.profile_about__info_title}>High school</p>
+      <ProfileAboutInfoTitle>High school</ProfileAboutInfoTitle>
       <AddHighschool />
     </>
   );

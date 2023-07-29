@@ -1,20 +1,31 @@
 import { useEffect, useRef, useState } from "react";
 import AddInfoAbout from "../AddInfoAbout";
-import styles from "./AboutFields.module.scss";
-import EditFormButton from "../EditFormButton";
 import {
+  Box,
   Checkbox,
   FormControl,
-  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
-  TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import ChangenInfoButton from "../AboutInfo/ChangeInfoButton";
+import {
+  ProfileAboutInfoBlock,
+  ProfileAboutInfoForm,
+  ProfileAboutInfoFormCheckboxLabel,
+  ProfileAboutInfoFormInputName,
+  ProfileAboutInfoFormSeparator,
+  ProfileAboutInfoFormTextField,
+  ProfileAboutInfoFormTimePeriod,
+  ProfileAboutInfoText,
+  ProfileSaveInfoButton,
+} from "../../StyledComponents/ContentBlock/StyledAboutComponents";
+import ProfilePageButton from "../../ProfilePageButton/ProfilePageButton";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser, updateUser } from "../../../../redux/user.slice/user.slice";
 
 const mockInfo = {
   company: "Dan IT",
@@ -39,19 +50,24 @@ const WorkplaceSchema = Yup.object().shape({
     .max(25, "Must be a valid name")
     .required("City is required"),
   timeFrom: Yup.number().required("Required"),
-  timeTo: Yup.number().when("workNow", {
-    is: false,
-    then: () => Yup.number().required("Required"),
-  }),
+  timeTo: Yup.number()
+    .nullable(true)
+    .when("workNow", {
+      is: false,
+      then: () => Yup.number().required("Required"),
+    }),
   workNow: Yup.boolean(),
 });
 
 export default function AddWorkplace() {
   // States
-  const [info, setInfo] = useState({});
+  const [workPlace, setWorkPlace] = useState(null);
   const [isEdit, setInputStatus] = useState(false);
+  const [isAuthorized, setAuthorized] = useState(false);
+  // Constants
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
   // Form
-  const formRef = useRef(null);
   const formik = useFormik({
     initialValues: {
       company: "",
@@ -66,7 +82,12 @@ export default function AddWorkplace() {
     onSubmit: (values) => {
       if (typeof values.timeTo === "number" && values.timeFrom > values.timeTo)
         return;
-      setInfo(values);
+      setWorkPlace(values.company);
+      const updatedUser = { ...user };
+      updatedUser.workPlace = values.company;
+      dispatch(updateUser(updatedUser));
+      dispatch(setUser(updatedUser));
+      localStorage.setItem("user", JSON.stringify(updatedUser));
       edit();
     },
   });
@@ -76,7 +97,12 @@ export default function AddWorkplace() {
   }
 
   function removeInfo() {
-    setInfo(null);
+    setWorkPlace(null);
+    const updatedUser = { ...user };
+    updatedUser.workPlace = null;
+    dispatch(updateUser(updatedUser));
+    dispatch(setUser(updatedUser));
+    localStorage.setItem("user", JSON.stringify(updatedUser));
     formik.setValues({
       company: "",
       position: "",
@@ -87,60 +113,80 @@ export default function AddWorkplace() {
       timeTo: "",
     });
   }
+
+  function resetForm() {
+    formik.setValues({
+      company: user.workPlace,
+      position: "Employee",
+      city: user.city,
+      description: "",
+      workNow: true,
+      timeFrom: "2016",
+      timeTo: null,
+    });
+    edit();
+  }
   // useEffects
   useEffect(() => {
-    setInfo(mockInfo);
-  }, []);
+    setWorkPlace(user.workPlace);
+    setAuthorized(user.isAuthorized);
+  }, [user]);
 
   useEffect(() => {
-    if (!info) return;
+    if (!workPlace) return;
     formik.setValues({
-      company: info.company,
-      position: info.position,
-      city: info.city,
-      description: info.description,
-      workNow: info.workNow,
-      timeFrom: info.timeFrom,
-      timeTo: info.timeTo,
+      company: workPlace,
+      position: "Employee",
+      city: user.city,
+      description: "",
+      workNow: true,
+      timeFrom: "2016",
+      timeTo: "",
+      // position: info.position,
+      // city: info.city,
+      // description: info.description,
+      // workNow: info.workNow,
+      // timeFrom: info.timeFrom,
+      // timeTo: info.timeTo,
     });
-  }, [info]);
+  }, [workPlace]);
 
+  if (!isAuthorized && !workPlace) return;
   if (!isEdit) {
     return (
-      <li>
-        {!info ? (
+      <Box>
+        {!workPlace ? (
           <AddInfoAbout text={"Add a workplace"} clickAction={edit} />
         ) : (
-          <div className={styles.about__info_block}>
+          <ProfileAboutInfoBlock>
             <BusinessCenterIcon
-              sx={{ color: "#808080", width: "36px", height: "36px" }}
+              sx={{ color: "#727b87", width: "36px", height: "36px" }}
             />
-            <div style={{ width: "100%" }}>
-              <p className={styles.about_info__text}>
-                {info.position} at {info.company}
-              </p>
-              <p className={styles.about_info__text}>
-                {info.timeFrom} to {info.workNow ? "present" : info.timeTo}
-              </p>
-            </div>
-            <ChangenInfoButton
-              infoName={"workplace"}
-              edit={edit}
-              remove={removeInfo}
-            />
-          </div>
+            <Box style={{ width: "100%" }}>
+              <ProfileAboutInfoText>
+                {"Employee"} at {workPlace}
+              </ProfileAboutInfoText>
+              <ProfileAboutInfoText>
+                {"2016"} to {true ? "present" : "2020"}
+                {/* {info.timeFrom} to {info.workNow ? "present" : info.timeTo} */}
+              </ProfileAboutInfoText>
+            </Box>
+            {isAuthorized && (
+              <ChangenInfoButton
+                infoName={"workplace"}
+                edit={edit}
+                remove={removeInfo}
+              />
+            )}
+          </ProfileAboutInfoBlock>
         )}
-      </li>
+      </Box>
     );
   } else {
     return (
-      <li>
-        <form
-          className={styles.about__form}
-          onSubmit={formik.handleSubmit}
-          ref={formRef}
-        >
-          <TextField
+      <Box>
+        <ProfileAboutInfoForm onSubmit={formik.handleSubmit}>
+          <ProfileAboutInfoFormTextField
             fullWidth
             id="outlined-basic"
             name="company"
@@ -149,7 +195,7 @@ export default function AddWorkplace() {
             onChange={formik.handleChange}
             value={formik.values.company}
           />
-          <TextField
+          <ProfileAboutInfoFormTextField
             fullWidth
             id="outlined-basic"
             name="position"
@@ -158,7 +204,7 @@ export default function AddWorkplace() {
             onChange={formik.handleChange}
             value={formik.values.position}
           />
-          <TextField
+          <ProfileAboutInfoFormTextField
             fullWidth
             id="outlined-basic"
             name="city"
@@ -167,7 +213,7 @@ export default function AddWorkplace() {
             onChange={formik.handleChange}
             value={formik.values.city}
           />
-          <TextField
+          <ProfileAboutInfoFormTextField
             fullWidth
             rows={4}
             name="description"
@@ -177,15 +223,16 @@ export default function AddWorkplace() {
                 minHeight: "100px",
                 padding: "10px",
                 borderRadius: "5px",
-                border: "1px solid #ccc",
                 resize: "vertical",
               },
             }}
             onChange={formik.handleChange}
             value={formik.values.description}
           />
-          <p className={styles.about__form_input_name}>Time period</p>
-          <FormControlLabel
+          <ProfileAboutInfoFormInputName>
+            Time period
+          </ProfileAboutInfoFormInputName>
+          <ProfileAboutInfoFormCheckboxLabel
             control={
               <Checkbox
                 onChange={formik.handleChange}
@@ -195,7 +242,7 @@ export default function AddWorkplace() {
             }
             label="I currently work here"
           />
-          <div className={styles.about__form_time_period}>
+          <ProfileAboutInfoFormTimePeriod>
             <p>from</p>
             <FormControl sx={{ minWidth: "76px" }} size="small">
               <InputLabel id="demo-simple-select-label">Year</InputLabel>
@@ -270,22 +317,16 @@ export default function AddWorkplace() {
             ) : (
               <></>
             )}
-          </div>
+          </ProfileAboutInfoFormTimePeriod>
 
-          <span className={styles.about__form_separator}></span>
-          <EditFormButton text={"Cancel"} clickAction={edit} type={"reset"} />
-          <EditFormButton
+          <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
+          <ProfilePageButton text={"Cancel"} clickAction={resetForm} />
+          <ProfileSaveInfoButton
             text={"Save"}
-            type={"submit"}
-            active={
-              !(
-                Object.keys(formik.errors).length === 0 &&
-                formik.errors.constructor === Object
-              )
-            }
+            clickAction={formik.handleSubmit}
           />
-        </form>
-      </li>
+        </ProfileAboutInfoForm>
+      </Box>
     );
   }
 }

@@ -1,16 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import AddInfoAbout from "../AddInfoAbout";
-import styles from "./AboutFields.module.scss";
-import EditFormButton from "../EditFormButton";
-import { TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import ChangenInfoButton from "../AboutInfo/ChangeInfoButton";
-
-const mockInfo = {
-  phoneNumber: "+380 65 6336378"
-};
+import {
+  ProfileAboutInfoBlock,
+  ProfileAboutInfoForm,
+  ProfileAboutInfoFormSeparator,
+  ProfileAboutInfoFormTextField,
+  ProfileAboutInfoText,
+  ProfileSaveInfoButton,
+} from "../../StyledComponents/ContentBlock/StyledAboutComponents";
+import ProfilePageButton from "../../ProfilePageButton/ProfilePageButton";
+import { useDispatch, useSelector } from "react-redux";
 
 const PhoneNumberSchema = Yup.object().shape({
   phoneNumber: Yup.string()
@@ -20,18 +24,20 @@ const PhoneNumberSchema = Yup.object().shape({
 
 export default function AddPhoneNumber() {
   // States
-  const [info, setInfo] = useState({});
+  const [phoneNumber, setPhoneNumber] = useState(null);
   const [isEdit, setInputStatus] = useState(false);
-
+  const [isAuthorized, setAuthorized] = useState(false);
+  // Redux
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
   // Form
-  const formRef = useRef(null);
   const formik = useFormik({
     initialValues: {
       phoneNumber: "",
     },
     validationSchema: PhoneNumberSchema,
     onSubmit: (values) => {
-      setInfo(values);
+      setPhoneNumber(values.phoneNumber);
       edit();
     },
   });
@@ -42,55 +48,66 @@ export default function AddPhoneNumber() {
   }
 
   function removeInfo() {
-    setInfo(null);
+    setPhoneNumber(null);
+    // const updatedUser = { ...user };
+    // updatedUser.phoneNumber = null;
+    // dispatch(updateUser(updatedUser));
+    // dispatch(setUser(updatedUser));
+    // localStorage.setItem("user", JSON.stringify(updatedUser));
     formik.setValues({
       phoneNumber: "",
     });
   }
+  function resetForm() {
+    formik.setValues({
+      phoneNumber: user.phoneNumber,
+    });
+    edit();
+  }
   // useEffects
   useEffect(() => {
-    setInfo(mockInfo);
-  }, []);
+    setPhoneNumber(user.phoneNumber);
+    setAuthorized(user.isAuthorized);
+  }, [user]);
 
   useEffect(() => {
-    if (!info) return;
+    if (!phoneNumber) return;
     formik.setValues({
-      phoneNumber: info.phoneNumber,
+      phoneNumber: phoneNumber,
     });
-  }, [info]);
+  }, [phoneNumber]);
 
+  if (!isAuthorized && !phoneNumber) return;
   if (!isEdit) {
     return (
-      <li>
-        {!info ? (
+      <Box>
+        {!phoneNumber ? (
           <AddInfoAbout text={"Add phone number"} clickAction={edit} />
         ) : (
-          <div className={styles.about__info_block}>
+          <ProfileAboutInfoBlock>
             <LocalPhoneIcon
-              sx={{ color: "#808080", width: "36px", height: "36px" }}
+              sx={{ color: "#727b87", width: "36px", height: "36px" }}
             />
-            <div style={{ width: "100%" }}>
-              <p className={styles.about_info__text}>{info.phoneNumber}</p>
-              <p className={styles.about_info__text}>Mobile</p>
-            </div>
-            <ChangenInfoButton
-              infoName={"phone number"}
-              edit={edit}
-              remove={removeInfo}
-            />
-          </div>
+            <Box style={{ width: "100%" }}>
+              <ProfileAboutInfoText>{phoneNumber}</ProfileAboutInfoText>
+              <ProfileAboutInfoText>Mobile</ProfileAboutInfoText>
+            </Box>
+            {isAuthorized && (
+              <ChangenInfoButton
+                infoName={"phone number"}
+                edit={edit}
+                remove={removeInfo}
+              />
+            )}
+          </ProfileAboutInfoBlock>
         )}
-      </li>
+      </Box>
     );
   } else {
     return (
-      <li>
-        <form
-          className={styles.about__form}
-          onSubmit={formik.handleSubmit}
-          ref={formRef}
-        >
-          <TextField
+      <Box>
+        <ProfileAboutInfoForm onSubmit={formik.handleSubmit}>
+          <ProfileAboutInfoFormTextField
             fullWidth
             id="outlined-basic"
             name="phoneNumber"
@@ -99,20 +116,14 @@ export default function AddPhoneNumber() {
             onChange={formik.handleChange}
             value={formik.values.phoneNumber}
           />
-          <span className={styles.about__form_separator}></span>
-          <EditFormButton text={"Cancel"} clickAction={edit} type={"reset"} />
-          <EditFormButton
+          <ProfileAboutInfoFormSeparator></ProfileAboutInfoFormSeparator>
+          <ProfilePageButton text={"Cancel"} clickAction={resetForm} />
+          <ProfileSaveInfoButton
             text={"Save"}
-            type={"submit"}
-            active={
-              !(
-                Object.keys(formik.errors).length === 0 &&
-                formik.errors.constructor === Object
-              )
-            }
+            clickAction={formik.handleSubmit}
           />
-        </form>
-      </li>
+        </ProfileAboutInfoForm>
+      </Box>
     );
   }
 }

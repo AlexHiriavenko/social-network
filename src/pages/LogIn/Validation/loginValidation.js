@@ -9,6 +9,6 @@ const loginValidation = Yup.object().shape({
 
       return emailRegex.test(value) || phoneRegex.test(value);
     }),
-  password: Yup.string().required("Password is required").min(5),
+  password: Yup.string().required("Password is required").min(1),
 });
 export default loginValidation;

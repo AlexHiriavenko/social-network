@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PrivateRoute from "./utils/router/PrivateRoute";
+
 import {
   Home,
   Watch,
@@ -25,16 +26,60 @@ import {
 } from "./pages/";
 import Header from "./components/Header/Header";
 import { logIn } from "./redux/login.slice/login.slice";
+import Modals from "./components/Modals/Modals";
+import {
+  getUser,
+  getUsers,
+  setAuthorizedUser,
+  setUser,
+  setUsers,
+} from "./redux/user.slice/user.slice";
 
 function App() {
   const dispatch = useDispatch();
+
+  const token = useSelector((state) => state.login.token);
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+
+  //const isLoggedIn = token? true : false;
+
   const navigate = useNavigate();
 
   const handleLogIn = () => {
-    dispatch(logIn());
+    //   dispatch(logIn());
     navigate("/");
   };
+  useEffect(() => {
+    if (
+      !localStorage.getItem("authorizedUser") &&
+      localStorage.getItem("auth")
+    ) {
+      const auth = localStorage.getItem("auth");
+      const authorizedUserResponse = dispatch(getUser(JSON.parse(auth).id));
+      authorizedUserResponse
+        .then((result) => {
+          dispatch(
+            setAuthorizedUser({ ...result.payload, isAuthorized: true })
+          );
+          localStorage.setItem(
+            "authorizedUser",
+            JSON.stringify({ ...result.payload, isAuthorized: true })
+          );
+        })
+        .catch((error) => alert(error));
+    } else {
+      dispatch(
+        setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser")))
+      );
+    }
+    // get all users
+    const allUsersResponse = dispatch(getUsers());
+    allUsersResponse
+      .then((result) => {
+        dispatch(setUsers(result.payload));
+      })
+      .catch((error) => alert(error));
+  }, [isLoggedIn]);
 
   return (
     <>
@@ -70,6 +115,7 @@ function App() {
           element={<LogIn isLoggedIn={isLoggedIn} onClick={handleLogIn} />}
         />
       </Routes>
+      <Modals />
     </>
   );
 }

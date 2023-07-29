@@ -4,8 +4,10 @@ import Search from "./SeacrhComponents/Search";
 import ListRecentSearches from "./SeacrhComponents/ListRecentSearches";
 import { toggleVisible } from "../../../redux/searchDrawer.slice/headerSearch.slice";
 import BtnArrowBack from "../../Buttons/BtnArrowBack";
+import { useTheme } from "@mui/material/styles";
 
 function HeaderSearch() {
+    const theme = useTheme();
     const dispatch = useDispatch();
     const isDrawerOpen = useSelector((state) => state.searchDrawer.isVisible);
 
@@ -36,12 +38,24 @@ function HeaderSearch() {
                     classes: {
                         root: "custom-backdrop",
                     },
-                }}>
-                <Box sx={{ width: { xs: "320px", sm: "360px" } }}>
+                }}
+            >
+                <Box
+                    sx={{
+                        width: { xs: "320px", sm: "360px" },
+                        backgroundColor: theme.palette.backgroundColor.section,
+                        minHeight: "100%",
+                    }}
+                >
                     <Box sx={{ display: "flex", p: 1 }}>
-                        <BtnArrowBack onClick={toggleDrawer} />
+                        <BtnArrowBack
+                            onClick={toggleDrawer}
+                            color={theme.palette.textColor.secondary}
+                            hoverColor={theme.palette.input.mainBackground}
+                        />
                         <Search
                             inputClass="header__drawer-searh-input"
+                            searchIconWrapClass="drawer__search-icon-wrap"
                             inputId="header-drawer-search"
                         />
                     </Box>
@@ -52,9 +66,11 @@ function HeaderSearch() {
                                 flexGrow: 1,
                                 p: 2,
                                 fontFamily: "Segoe UI Bold",
+                                color: theme.palette.textColor.content,
                             }}
                             component="h3"
-                            variant="h6">
+                            variant="h6"
+                        >
                             Recent searches
                         </Typography>
                         <ListRecentSearches onClick={toggleDrawer} />

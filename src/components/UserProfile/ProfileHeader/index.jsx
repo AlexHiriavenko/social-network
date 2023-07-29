@@ -4,15 +4,9 @@ import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import styled from "@emotion/styled";
 import { ProfileContainer } from "../StyledComponents/ContentBlock/StyledComponents";
 import ProfilePageButton from "../ProfilePageButton/ProfilePageButton";
-import { useState } from "react";
-
-const user = {
-  full_name: "Julian Read",
-  profile_picture:
-    "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg?w=2000",
-  profile_background_picture:
-    "https://image.geo.de/30145342/t/Cs/v4/w1440/r0/-/nationalpark-saechsische-schweiz-mauritius-reya43-jpg--82748-.jpg",
-};
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { openEditProfileModal } from "../../../redux/modal.slice/modal.slice";
 
 const StyledProfileBackgroundWrapper = styled(Box)({
   maxHeight: "450px",
@@ -20,6 +14,10 @@ const StyledProfileBackgroundWrapper = styled(Box)({
   borderBottomRightRadius: " 12px",
   borderBottomLeftRadius: " 12px",
   position: "relative",
+});
+const StyledProfileBackgroundPicture = styled("img")({
+  width: "100%",
+  objectFit: "cover",
 });
 const StyledProfileBackgroundWButtonsWrapper = styled(Box)({
   position: "absolute",
@@ -186,42 +184,59 @@ const StyledProfileUserFriends = styled(Typography)(({ theme }) => ({
 }));
 
 export default function ProfileHeader() {
+  // Constants
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+  // State
   const [mutualFriendsIsOpen, setMutualFriendsStatus] = useState(true);
+  const [isAuthorized, setAuthorized] = useState(false);
+  // Functions
+  const handleOpen = () => dispatch(openEditProfileModal());
+  // UseEffect
+  useEffect(() => {
+    setAuthorized(user.isAuthorized);
+  }, [user]);
   return (
     <StyledProfileHeader>
       <ProfileContainer>
         <StyledProfileBackgroundWrapper>
-          <img
-            src={user.profile_background_picture}
+          <StyledProfileBackgroundPicture
+            src={user ? user.profileBackgroundPicture : ""}
             alt="profile_background_picture"
           />
-          <StyledProfileBackgroundWButtonsWrapper>
-            <StyledProfileBackgroundButton
-              text={
-                <StyledProfileBackgroundWButtonText>
-                  Edit cover photo
-                </StyledProfileBackgroundWButtonText>
-              }
-              icon={<CameraAltIcon fontSize="small" />}
-            />
-          </StyledProfileBackgroundWButtonsWrapper>
+          {isAuthorized && (
+            <StyledProfileBackgroundWButtonsWrapper>
+              <StyledProfileBackgroundButton
+                text={
+                  <StyledProfileBackgroundWButtonText>
+                    Edit cover photo
+                  </StyledProfileBackgroundWButtonText>
+                }
+                icon={<CameraAltIcon fontSize="small" />}
+              />
+            </StyledProfileBackgroundWButtonsWrapper>
+          )}
         </StyledProfileBackgroundWrapper>
         <StyledProfileUserInfoSection>
           <StyledProfileUserPictureWrapper>
             <StyledProfileUserPicture
-              src={user.profile_picture}
+              src={user ? user.profilePicture : ""}
               alt="profile_picture"
               width={168}
               height={168}
             />
-            <StyledProfileUserPictureButton>
-              <CameraAltIcon />
-            </StyledProfileUserPictureButton>
+            {isAuthorized && (
+              <StyledProfileUserPictureButton>
+                <CameraAltIcon />
+              </StyledProfileUserPictureButton>
+            )}
           </StyledProfileUserPictureWrapper>
           <StyledProfileUserInfo>
-            <StyledProfileUserName>{user.full_name}</StyledProfileUserName>
+            <StyledProfileUserName>
+              {user ? user.fullName : ""}
+            </StyledProfileUserName>
             <StyledProfileUserFriends href="#">
-              Friends: {54}
+              Friends: {user && user.friends ? user.friends.length : 0}
             </StyledProfileUserFriends>
             <AvatarGroup
               max={6}
@@ -237,19 +252,36 @@ export default function ProfileHeader() {
             </AvatarGroup>
           </StyledProfileUserInfo>
           <StyledProfileButtonsWrapper>
-            <ProfilePageButton
-              text={<Typography>Edit profile</Typography>}
-              icon={<ModeEditOutlineIcon />}
-            />
-            <StyledProfileShowMutualFriend
-              onClick={() => setMutualFriendsStatus(!mutualFriendsIsOpen)}
-            >
-              {mutualFriendsIsOpen ? (
-                <StyledProfileShowButtonLineOpen></StyledProfileShowButtonLineOpen>
-              ) : (
-                <StyledProfileShowButtonLine></StyledProfileShowButtonLine>
-              )}
-            </StyledProfileShowMutualFriend>
+            {isAuthorized && (
+              <>
+                <ProfilePageButton
+                  text={<Typography>Edit profile</Typography>}
+                  icon={<ModeEditOutlineIcon />}
+                  clickAction={handleOpen}
+                />
+                <StyledProfileShowMutualFriend
+                  onClick={() => setMutualFriendsStatus(!mutualFriendsIsOpen)}
+                >
+                  {mutualFriendsIsOpen ? (
+                    <StyledProfileShowButtonLineOpen></StyledProfileShowButtonLineOpen>
+                  ) : (
+                    <StyledProfileShowButtonLine></StyledProfileShowButtonLine>
+                  )}
+                </StyledProfileShowMutualFriend>
+              </>
+            )}
+            {!isAuthorized && (
+              <ProfilePageButton
+                text={
+                  <Typography style={{ color: "#ffffff", fontWeight: 600 }}>
+                    {false ? "Remove from friends" : "Add to friends"}
+                  </Typography>
+                }
+                style={{
+                  backgroundColor: false ? "" : "#1B74E4",
+                }}
+              />
+            )}
           </StyledProfileButtonsWrapper>
         </StyledProfileUserInfoSection>
       </ProfileContainer>

@@ -23,6 +23,8 @@ export const themeDay = createTheme({
             main: "#050505",
             secondary: "#65676B",
             blueLink: '#216FDB',
+            content: "#050505",
+            primary: "#1B74E4",
         },
         backgroundColor: {
             section: "#ffffff",
@@ -42,6 +44,18 @@ export const themeDay = createTheme({
         input: {
             mainBackground: "#f0f2f5",
             activeBorderColor: "#1876f2",
+        },
+        hoverColor: {
+            main: "#f0f2f5",
+            secondary: "#E4E6EB",
+            dark: "#E4E6EB",
+        },
+        shadow: {
+            down: "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.12), 0px 1px 6px 0px rgba(0,0,0,0.12)",
+        },
+        border: {
+            transp: "1px solid rgba(0, 0, 0, 0.1)",
+            simpleTransp: "rgba(0, 0, 0, 0.1)",
         },
     },
     components: {
@@ -79,11 +93,13 @@ export const themeNight = createTheme({
     palette: {
         accentColor: {
             main: "#1B74E4",
-            secondary: "#E7F3FF",
+            secondary: "#263951",
         },
         textColor: {
             main: "#FFFFFF",
             secondary: "#B0B3B8",
+            content: "#E4E6EB",
+            primary: "#1B74E4",
         },
         backgroundColor: {
             section: "#242526",
@@ -97,6 +113,18 @@ export const themeNight = createTheme({
         input: {
             mainBackground: "#3a3b3c",
             activeBorderColor: "#1876f2",
+        },
+        hoverColor: {
+            main: "#3a3b3c",
+            secondary: "#3a3b3c",
+            dark: "#65676B",
+        },
+        shadow: {
+            down: "0px 2px 4px -1px rgba(255,255,255,0.2), 0px 2px 2px 0px rgba(255,255,255,0.12), 0px 1px 6px 0px rgba(255,255,255,0.12)",
+        },
+        border: {
+            transp: "1px solid rgba(255, 255, 255, 0.1)",
+            simpleTransp: "rgba(255, 255, 255, 0.1)",
         },
     },
     components: {

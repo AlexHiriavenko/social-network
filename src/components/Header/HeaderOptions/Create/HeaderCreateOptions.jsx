@@ -1,17 +1,12 @@
 import React from "react";
-import {
-    IconButton,
-    Typography,
-    Menu,
-    Avatar,
-    Tooltip,
-    MenuItem,
-} from "@mui/material";
+import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem, Box } from "@mui/material";
 import { default as AddOption } from "@mui/icons-material/Add";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import GroupsIcon from "@mui/icons-material/Groups";
+import { useTheme } from "@mui/material/styles";
 
 function HeaderCreateOptions() {
+    const theme = useTheme();
     const [anchorCreateMenu, setAnchorCreateMenu] = React.useState(null);
 
     const toggleMenu = () =>
@@ -25,12 +20,12 @@ function HeaderCreateOptions() {
                 <IconButton onClick={toggleMenu}>
                     <Avatar
                         sx={{
-                            bgcolor: "#F0F2F5",
+                            bgcolor: theme.palette.hoverColor.dark,
                             minWidth: "40px",
                             minHeight: "40px",
                         }}
                     >
-                        <AddOption style={{ color: "black" }} />
+                        <AddOption style={{ color: theme.palette.textColor.content }} />
                     </Avatar>
                 </IconButton>
             </Tooltip>
@@ -52,6 +47,7 @@ function HeaderCreateOptions() {
                 slotProps={{
                     paper: {
                         className: "header__options-drop-menu",
+                        style: { backgroundColor: theme.palette.backgroundColor.section },
                     },
                 }}
             >
@@ -60,20 +56,49 @@ function HeaderCreateOptions() {
                     component={"h4"}
                     p={2}
                     fontWeight={600}
+                    sx={{ color: theme.palette.textColor.content }}
                 >
                     Create
                 </Typography>
-                <MenuItem onClick={toggleMenu} sx={{ gap: 2, mb: 1 }}>
-                    <IconButton sx={{ backgroundColor: "rgb(230, 228, 228)" }}>
+                <MenuItem
+                    onClick={toggleMenu}
+                    sx={{
+                        gap: 2,
+                        mb: 1,
+                        "&:hover": { backgroundColor: theme.palette.hoverColor.main },
+                    }}
+                >
+                    <IconButton
+                        sx={{
+                            backgroundColor: "rgb(230, 228, 228)",
+                            "&:hover": { backgroundColor: "rgb(230, 228, 228)" },
+                        }}
+                    >
                         <PostAddIcon />
                     </IconButton>
-                    <Typography fontWeight={600}>Post</Typography>
+                    <Typography fontWeight={600} sx={{ color: theme.palette.textColor.content }}>
+                        Post
+                    </Typography>
                 </MenuItem>
-                <MenuItem onClick={toggleMenu} sx={{ gap: 2, mb: 1 }}>
-                    <IconButton sx={{ backgroundColor: "rgb(230, 228, 228)" }}>
+                <MenuItem
+                    onClick={toggleMenu}
+                    sx={{
+                        gap: 2,
+                        mb: 1,
+                        "&:hover": { backgroundColor: theme.palette.hoverColor.main },
+                    }}
+                >
+                    <IconButton
+                        sx={{
+                            backgroundColor: "rgb(230, 228, 228)",
+                            "&:hover": { backgroundColor: "rgb(230, 228, 228)" },
+                        }}
+                    >
                         <GroupsIcon />
                     </IconButton>
-                    <Typography fontWeight={600}>Group</Typography>
+                    <Typography fontWeight={600} sx={{ color: theme.palette.textColor.content }}>
+                        Group
+                    </Typography>
                 </MenuItem>
             </Menu>
         </>
