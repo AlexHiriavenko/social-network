@@ -7,6 +7,7 @@ const initialState = {
   isNeedToRefreshFriends: false,
   friendsRequests: [],
   friendSuggestions: [],
+  currentFriend: {},
   status: null,
   error: null,
 };
@@ -16,8 +17,11 @@ const friendsSlice = createSlice({
   initialState,
   reducers: {
     removeSuggestions: function (state, action) {
-      state.friendSuggestions = state.friendSuggestions.filter(el => el.id != action.payload.id);
+      state.friendSuggestions = state.friendSuggestions.filter(el => el.friend.id != action.payload.friend.id);
     },
+    setCurrentFriend: function(state, action) {
+      state.currentFriend = action.payload;
+    }
   },
   extraReducers: {
 /*     [getFriendList.pending]: (state)=>{
@@ -49,6 +53,8 @@ const friendsSlice = createSlice({
       state.friendSuggestions = state.friendSuggestions.filter(el => el.friend.id !== action.payload.friend.id);
     },
     [updateFriendship.fulfilled]: (state, action)=>{
+     console.log('updateFriendship');
+
       state.status = 'resolved';
       state.error = null;
       if(action.payload.status === 'accepted'){
@@ -59,6 +65,6 @@ const friendsSlice = createSlice({
   }
 });
 
-export const {removeSuggestions} = friendsSlice.actions;
+export const {removeSuggestions, setCurrentFriend} = friendsSlice.actions;
 
 export default friendsSlice.reducer;

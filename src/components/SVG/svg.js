@@ -6,5 +6,16 @@ import SVGPeople from "./People";
 import SVGFriendsList from "./FriendsList";
 import SVGBirthdays from "./Birthdays";
 import SVGNext from "./Next";
+import SVGNoFrienSelected from "./NoFriendSelected";
+import SVGArrowBack from "./ArrowBack";
 
-export { SvgFacebook, SvgHome, SVGpersonGo, SVGpersonPlus, SVGPeople, SVGFriendsList, SVGBirthdays, SVGNext };
+export { SvgFacebook, 
+            SvgHome, 
+            SVGpersonGo, 
+            SVGpersonPlus, 
+            SVGPeople, 
+            SVGFriendsList, 
+            SVGBirthdays, 
+            SVGNext, 
+            SVGNoFrienSelected,
+            SVGArrowBack, };

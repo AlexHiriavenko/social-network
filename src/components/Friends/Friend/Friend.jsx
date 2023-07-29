@@ -2,6 +2,8 @@
 import { Card, CardContent, CardMedia, Typography, Tooltip, Box, List, Avatar, CardActions } from "@mui/material";
 import { Link } from "react-router-dom";
 import React from "react";
+import styled from "@emotion/styled";
+
 
 function Friend (props) {
 
@@ -10,63 +12,115 @@ function Friend (props) {
         friend, 
         addButton, 
         removeButton, 
-        mutialFriendsClick,
+        horizontal,
+        referenseForLinks,
+        handleLinkClick
     } = props;
+
+    console.log(referenseForLinks);
 
     const mutialFriendsAvatars = (mutualFriends && mutualFriends.length > 2 ? mutualFriends.slice(1) : mutualFriends);
 
+    const CardStyled = styled(Card)(({horizontal, theme}) => ({
+        maxWidth: horizontal ? "100%" : "250px",
+        minWidth: horizontal ? '250px' : "200px",
+        width: horizontal ? '100%' : null,
+        display: "flex",
+        flexDirection: horizontal ? "row" : "column",
+        alignItems: horizontal ? 'center' : null,
+        margin: "4px",
+        flexShrink: 1,
+        '&:hover': horizontal ? {backgroundColor: theme.palette.backgroundColor.page,} : null,
+        boxShadow:  horizontal ? 'none' : null,
+        zIndex: 100,
+    }));
+
+    const CardMediaStyled = styled(CardMedia)(({horizontal}) => ({
+        width: horizontal ? '60px' : '100%',
+        height: horizontal ? '60px' : null,
+        borderRadius: horizontal ? '50%' : null,
+        paddingTop: '100%',
+        zIndex: 200,
+    }))
+
+    const CardContentStyled = styled(CardContent)({
+        display: 'flex', 
+        flexDirection: 'column', 
+        paddingBottom: 0,
+        zIndex: 200,
+    })
+
+    const FriendName = styled(Typography)(({theme, horizontal}) => ({
+        color: theme.palette.textColor.main, 
+        fontSize: '1.0625rem', 
+        fontWeight: '600', 
+        lineHeight: '1.1765',
+        fontFamily: 'inherit',
+        '&:hover': horizontal ? null : {textDecoration: 'underline' },
+        zIndex: 200,
+    }))
+
+    const MutualFriendsList = styled(Typography)(({theme}) => ({
+        display: 'flex',
+        color: theme.palette.textColor.secondary, 
+        fontSize: '.9375rem', 
+        fontWeight: 'fontWeightRegular', 
+        lineHeight: '1.3333',
+        fontFamily: 'inherit',
+        alignItems: 'center',
+        cursor: 'pointer',
+        zIndex: 200,
+    }))
+
+    const CardActionsStyled = styled(CardActions)(({horizontal}) => ({
+        display: 'flex', 
+        flexDirection: horizontal ? 'row' : 'column', 
+        gap: '6px', 
+        width: '100%', 
+        '&>:not(:first-of-type)': {marginLeft: 0}, 
+        paddingTop: 0 ,
+        zIndex: 200,
+    }))
+
+    const ContainerStyled = styled(Box)({
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        flexShrink: 1,
+    })
+
     return (
         <>
-        <Card sx={{ maxWidth: "250px",
-                    minWidth: "200px",
-                    display: "flex",
-                    flexDirection: "column",
-                    m: "4px",
-                    flexShrink: 1,
-                    }}>
-            <Link href="#">
-                <CardMedia
+        <CardStyled horizontal={horizontal}>
+            <Link to={referenseForLinks}  onClick={handleLinkClick}>
+                <CardMediaStyled horizontal={horizontal}
                     image={friend.profilePicture}
-                    title="Profile Picture"
+                    title={friend.fullName}
                     alt="Profile Picture"
-                    sx={{ width: '100%', pt: '100%'/* , minHeight: '240px' */}}
                 />
-            </Link>    
-            <CardContent sx={{ display: 'flex', flexDirection: 'column', pb: 0}}>
-                <Link href="#" sx={{width: '100%',}}>
-                    <Typography sx={{color: 'text.primary', 
-                                    fontSize: '1.0625rem', 
-                                    fontWeight: '600', 
-                                    lineHeight: '1.1765',
-                                    fontFamily: 'inherit',
-                                    '&:hover': {textDecoration: 'underline' } }}>
-                        {friend.fullName}
-                    </Typography>
-                </Link>
-                <Box sx={{ display: 'flex', gap: 1/2, height: 30}}>
-                     <List sx={{ display: 'flex', '&:nth-last-of-type()': {ml: '-15%'}}}>
-                        {mutialFriendsAvatars.map(el => <Link href="#" key={el.id}><Avatar src={el.profilePicture} sx={{width: 16, height: 16}}/></Link>)}
-                    </List>
-                    {mutualFriends.length>0 && <Tooltip title={<ul>{mutualFriends.map(el => <li key={el.id}>{el.fullName}</li>)}</ul>}>
-                        <Typography  onClick={mutialFriendsClick} sx={{ display: 'flex',
-                                            color: 'text.secondary', 
-                                            fontSize: '.9375rem', 
-                                            fontWeight: 'fontWeightRegular', 
-                                            lineHeight: '1.3333',
-                                            fontFamily: 'inherit',
-                                            alignItems: 'center',
-                                            cursor: 'pointer',
-                                            }}>
-                            mutual friends
-                        </Typography>
-                    </Tooltip>}
-                </Box>
-            </CardContent>
-            <CardActions sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: '100%', '&>:not(:first-of-type)': {ml: 0}, pt:0 }}>
-                {addButton}
-                {removeButton}
-            </CardActions>
-        </Card>
+            </Link>
+            <ContainerStyled>
+                <CardContentStyled>
+                    <Link to={referenseForLinks} onClick={handleLinkClick} sx={{width: '100%',}}>
+                        <FriendName horizontal={horizontal}>{friend.fullName}</FriendName>
+                    </Link>
+                    <Box sx={{ display: 'flex', gap: 1/2, height: 30}}>
+                        <List sx={{ display: 'flex', '&:nth-last-of-type()': {ml: '-15%'}}}>
+                            {mutialFriendsAvatars.map(el => <Link to={`/user-page/${el.id}`} key={el.id}><Avatar src={el.profilePicture} sx={{width: 16, height: 16}}/></Link>)}
+                        </List>
+                        {mutualFriends.length>0 && <Tooltip title={<ul>{mutualFriends.map(el => <li key={el.id}>{el.fullName}</li>)}</ul>}>
+                            <MutualFriendsList>
+                                mutual friends
+                            </MutualFriendsList>
+                        </Tooltip>}
+                    </Box>
+                </CardContentStyled>
+                <CardActionsStyled horizontal={horizontal}>
+                    {addButton}
+                    {removeButton}
+                </CardActionsStyled>
+            </ContainerStyled>
+        </CardStyled>
         </>
     )
 

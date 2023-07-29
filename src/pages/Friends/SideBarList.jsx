@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import {SVGpersonGo, SVGpersonPlus, SVGPeople, SVGFriendsList, SVGBirthdays, SVGNext} from '../../components/SVG/svg';
 import { NavLink } from "react-router-dom";
-import { ListItem, Typography, Box } from "@mui/material";
+import { ListItem, Typography, Box, List } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
 
 function SideBarList() {
@@ -52,14 +52,14 @@ function SideBarList() {
     })
 
     return(
-        <>
+        <List sx={{padding: 0}}>
             <ListItemStyled>
-                <MenuItem to={"/friends/home"} 
+                <MenuItem to="/friends/home"
                         style={({ isActive }) => {return{backgroundColor: isActive 
                         ? theme.palette.backgroundColor.page 
                         : null}}}>
                     <MenuItemContent>
-                        <IconContainer sx={{bgcolor: '#1877F2'}}>
+                        <IconContainer data-path="Home" sx={{bgcolor: theme.palette.backgroundColor.activeIcon}}>
                             <SVGPeople color={'#FFF'} sx={{height: 36}}/>
                         </IconContainer>
                         <MenuItemName>
@@ -69,19 +69,19 @@ function SideBarList() {
                 </MenuItem>
             </ListItemStyled>
             <ListItemStyled>
-                <MenuItem to={"/friends/requests"}  
+                <MenuItem to="/friends/requests" 
                         style={({ isActive }) => {return{backgroundColor: isActive 
                         ? theme.palette.backgroundColor.page 
                         : null}}}>
                     <MenuItemContent>
-                        <IconContainer sx={{bgcolor: theme.palette.buttonColor.background}}>
+                        <IconContainer data-path="requests" sx={{bgcolor: theme.palette.buttonColor.background}}>
                             <SVGpersonGo/>
                         </IconContainer>
                         <MenuItemName>
                             Friend requests
                         </MenuItemName>
                     </MenuItemContent>
-                    <SVGNext color={'#8D949E'}/>
+                    <SVGNext color={theme.palette.backgroundColor.iconFill}/>
                 </MenuItem>
             </ListItemStyled>
             <ListItemStyled>
@@ -90,14 +90,14 @@ function SideBarList() {
                         ? theme.palette.backgroundColor.page 
                         : null}}}>
                     <MenuItemContent>
-                        <IconContainer sx={{bgcolor: theme.palette.buttonColor.background}}>
+                        <IconContainer data-path="suggestions" sx={{bgcolor: theme.palette.buttonColor.background}}>
                             <SVGpersonPlus/>
                         </IconContainer>
                         <MenuItemName>
                             Suggestions
                         </MenuItemName>
                     </MenuItemContent>
-                    <SVGNext color={'#8D949E'}/>
+                    <SVGNext color={theme.palette.backgroundColor.iconFill}/>
                 </MenuItem>
             </ListItemStyled>
             <ListItemStyled>
@@ -106,14 +106,14 @@ function SideBarList() {
                         ? theme.palette.backgroundColor.page 
                         : null}}}>
                     <MenuItemContent>
-                        <IconContainer sx={{bgcolor: theme.palette.buttonColor.background}}>
+                        <IconContainer data-path="allfriend" sx={{bgcolor: theme.palette.buttonColor.background}}>
                             <SVGFriendsList/>
                         </IconContainer>
                         <MenuItemName>
                             All Friends
                         </MenuItemName>
                     </MenuItemContent>
-                    <SVGNext color={'#8D949E'}/>
+                    <SVGNext color={theme.palette.backgroundColor.iconFill}/>
                 </MenuItem>
             </ListItemStyled>
             <ListItemStyled>
@@ -122,7 +122,7 @@ function SideBarList() {
                         ? theme.palette.backgroundColor.page 
                         : null}}}>
                     <MenuItemContent>
-                        <IconContainer sx={{bgcolor: theme.palette.buttonColor.background}}>
+                        <IconContainer data-path="birthdays" sx={{bgcolor: theme.palette.buttonColor.background}}>
                             <SVGBirthdays/>
                         </IconContainer>
                         <MenuItemName>
@@ -137,17 +137,17 @@ function SideBarList() {
                         ? theme.palette.backgroundColor.page 
                         : null}}}>
                     <MenuItemContent>
-                        <IconContainer sx={{bgcolor: theme.palette.buttonColor.background/* '#E4E6EB' */}}>
+                        <IconContainer data-path="customlists" sx={{bgcolor: theme.palette.buttonColor.background/* '#E4E6EB' */}}>
                             <SVGFriendsList/>
                         </IconContainer>
                         <MenuItemName>
                             Custom lists
                         </MenuItemName>
                     </MenuItemContent>
-                    <SVGNext color={'#8D949E'}/>
+                    <SVGNext color={theme.palette.backgroundColor.iconFill /* '#8D949E' */}/>
                 </MenuItem>
             </ListItemStyled>
-        </>
+        </List>
     )
 }
 

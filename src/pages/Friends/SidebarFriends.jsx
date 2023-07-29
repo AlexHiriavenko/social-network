@@ -1,31 +1,147 @@
-import Sidebar from '../../components/Sidebar/Sidebar';
-import { List, Box } from "@mui/material";
+import React, { useEffect } from "react";
+import {useDispatch, useSelector} from "react-redux";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import SideBarHeader from '../../components/Friends/SideBar/SideBarHeader';
 import styled from "@emotion/styled";
+import { Box, Typography, List, Divider, ListItemButton } from "@mui/material";
+import Friend from "../../components/Friends/Friend/Friend";
+import {GreyButton, StandardButton, BlueButton } from '../../components/StyledComponents/Buttons';
+import { NavLink } from "react-router-dom";
+import {SVGArrowBack} from '../../components/SVG/svg';
+import { useTheme } from '@mui/material/styles';
+import { setCurrentFriend, } from '../../redux/friends/friends.slise';
 
-function SidebarFriends (props) {
 
-const { headContent, menulist } = props;
+function SideBarRequests(props) {
 
-    const HeadContainer = styled(Box)({
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'space-between',
-        marginTop: 20,
-        marginBottom: 12,
-        marginLeft: 16,
-        marginRight: 16,
+    const {
+        headerTitle,
+        subTitle,
+        additionItems,
+        noItemMessage,
+        sideBarItems,
+        handleClickConfirm,
+        handleClickRemove,
+        isAddButton,
+        isRemoveButton,
+        isConfirmButton,
+    } = props;
+
+    const currentFriend = useSelector((store)=>store.friends.currentFriend);
+    const dispatch = useDispatch(); 
+
+/*     const addButton = isConfirmButton 
+        ? <StandardButton variant="contained" onClick={() => handleClickConfirm(fr)}>Confirm</StandardButton> 
+        :  isAddButton
+            ? <BlueButton variant="contained" onClick={() => handleClickConfirm(fr)}>Add friend</BlueButton> 
+            : null;
+
+    const removeButton = isRemoveButton 
+        ? <GreyButton onClick={() => handleClickRemove(fr)}>Remove</GreyButton>
+        : null; */
+    
+    const handleLinkClick = (payload) => {
+        console.log(payload);
+        dispatch(setCurrentFriend(payload));
+    }
+
+    const SidebarStyled = styled(Sidebar)({
+        width: 500,
     })
 
-    return (
-        <Sidebar>
-            <HeadContainer>
-                {headContent}
-            </HeadContainer>
+    const TitleStyled = styled('h1')({
+        fontWeight: 900,
+        fontSize: '1.5rem',
+        fontFamily: 'inherit',
+    })
+
+    const LinkStyled = styled(NavLink)(({color}) => ({
+        fontFamily: 'inherit',
+        fontSize: '.8125rem',
+        fontWeight: 400,
+        lineHeight: 1.2308,
+        paddingBottom: 1,
+        color: {color},
+        textDecoration: 'none',
+    }))
+
+    const SubTitleStyled = styled(Typography)(({theme}) => ({
+        paddingBottom: 10,
+        fontWeight: 600,
+        textAlign: 'left',
+        lineHeight: 1.1765,
+        fontSize: '1.0625rem',
+        color: theme.palette.textColor.main,
+    }))
+
+    const MenuItem = styled(ListItemButton)(({theme}) => ({
+        display: 'flex',
+        width: '100%',
+/*         color: '#050505',
+        '&:hover': {backgroundColor: '#F0F2F5',},
+        '&:active': {backgroundColor: '#E4E6EB',}, */
+        color: theme.palette.textColor.main,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        borderRadius: 4,
+        padding: 0,
+        '&:hover': {backgroundColor: theme.palette.backgroundColor.page,},
+        '&:active': {backgroundColor: theme.palette.buttonColor.background}, 
+    }))
+
+    const theme = useTheme();
+
+    return(
+        <SidebarStyled>
+            <SideBarHeader>
+                <Box sx={{display: 'flex', gap: 2, alignItems: 'center'}}>
+                    <NavLink to="/friends/home">
+                        <SVGArrowBack/>
+                    </NavLink>
+                    <Box sx={{display: 'flex', gap: 1/2, flexDirection: 'column'}}>
+                        <LinkStyled color={theme.palette.textColor.secondary} 
+                                    to="/friends/home"
+                                    sx={{'&:hover': {textDecoration: 'underline' }}}>Friends</LinkStyled>
+                        <TitleStyled>{headerTitle}</TitleStyled>
+                    </Box>
+                </Box>
+                <Divider sx={{my: '12px'}}/>
+                <Box>
+                    <SubTitleStyled>{subTitle}</SubTitleStyled>
+                    {additionItems}
+                    { sideBarItems.length === 0 
+                && <Typography sx={{py: 2, fontSize: 12}}>{noItemMessage}</Typography>}
+                </Box>                
+            </SideBarHeader>
             <List sx={{padding: 0}}>
-                {menulist}
+                {
+                    sideBarItems && sideBarItems.map(fr =>
+                    <MenuItem onClick={() => handleLinkClick(fr.friend)} key={fr.friend.id} selected={currentFriend.id === fr.friend.id}>
+                        <Friend horizontal = 'true'
+                            key={fr.id}
+                            mutualFriends={fr.mutualFriends} 
+                            handleLinkClick={() => handleLinkClick(fr.friend)}
+                            friend={fr.friend}
+                            addButton={isConfirmButton 
+                                ? <StandardButton variant="contained" onClick={() => handleClickConfirm(fr)}>Confirm</StandardButton> 
+                                :  isAddButton
+                                    ? <BlueButton variant="contained" onClick={() => handleClickConfirm(fr)}>Add friend</BlueButton> 
+                                    : null}
+                            /* addButton={<ButtonStyled sx={{backgroundColor: theme.palette.accentColor.main, 
+                                                            color: theme.palette.textColor.onDarkFone, 
+                                                            '&:hover': {backgroundColor: theme.palette.buttonColor.primaryHover,
+                                                                opacity: [0.9, 0.8, 0.7],}, 
+                                                            '&:active': {backgroundColor:theme.palette.buttonColor.primaryPressed}}}
+                                                        onClick={() => handleClickConfirm(fr)}>Confirm</ButtonStyled>} */
+                            removeButton={isRemoveButton 
+                                ? <GreyButton onClick={() => handleClickRemove(fr)}>Remove</GreyButton>
+                                : null}
+                            />
+                    </MenuItem>)
+                }
             </List>
-        </Sidebar>
+        </SidebarStyled>
     )
-} 
-  /* person messages <?xml version="1.0" ?><svg fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2C7.79086 2 6 3.79086 6 6C6 8.20914 7.79086 10 10 10C12.2091 10 14 8.20914 14 6C14 3.79086 12.2091 2 10 2ZM5.00873 11C3.90315 11 3 11.8869 3 13C3 14.6912 3.83281 15.9663 5.13499 16.7966C6.21303 17.484 7.60667 17.8663 9.12572 17.9705L9.49033 16.7731C9.17516 16.0794 8.99984 15.3091 8.99984 14.5C8.99984 13.1704 9.47165 11.9509 10.257 11L5.00873 11ZM19 14.5C19 16.9853 16.9853 19 14.5 19C13.7085 19 12.9647 18.7956 12.3185 18.4368L10.5294 18.9812C10.2162 19.0765 9.92358 18.7838 10.0189 18.4707L10.5635 16.6821C10.2045 16.0358 10 15.2918 10 14.5C10 12.0147 12.0147 10 14.5 10C16.9853 10 19 12.0147 19 14.5ZM12.5 13C12.2239 13 12 13.2239 12 13.5C12 13.7761 12.2239 14 12.5 14H16.5C16.7761 14 17 13.7761 17 13.5C17 13.2239 16.7761 13 16.5 13H12.5ZM12 15.5C12 15.7761 12.2239 16 12.5 16H14.5C14.7761 16 15 15.7761 15 15.5C15 15.2239 14.7761 15 14.5 15H12.5C12.2239 15 12 15.2239 12 15.5Z" fill="#212121"/></svg> */
-export default SidebarFriends;
+}
+
+export default SideBarRequests;
