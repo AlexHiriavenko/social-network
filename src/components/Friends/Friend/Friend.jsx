@@ -1,14 +1,16 @@
 /* eslint-disable react/prop-types */
-import { Card, CardContent, CardMedia, Typography, Tooltip, Box, List, Avatar, CardActions } from "@mui/material";
-import { Link } from "react-router-dom";
 import React from "react";
+import { Card, CardContent, CardMedia, Typography, Tooltip, Box, List, Avatar, CardActions } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
+import { setUser } from "../../../redux/user.slice/user.slice";
 
 
 function Friend (props) {
 
     const { 
-        mutualFriends, 
+        mutualFriends,
         friend, 
         addButton, 
         removeButton, 
@@ -17,7 +19,7 @@ function Friend (props) {
         handleLinkClick
     } = props;
 
-    console.log(referenseForLinks);
+    const dispatch = useDispatch(); 
 
     const mutialFriendsAvatars = (mutualFriends && mutualFriends.length > 2 ? mutualFriends.slice(1) : mutualFriends);
 
@@ -89,10 +91,14 @@ function Friend (props) {
         flexShrink: 1,
     })
 
+    const handleMutualFriendClick = (payload) => {
+        dispatch(setUser(payload));
+    }
+
     return (
         <>
         <CardStyled horizontal={horizontal}>
-            <Link to={referenseForLinks}  onClick={handleLinkClick}>
+            <Link to={referenseForLinks}  onClick={()=>handleLinkClick(friend)}>
                 <CardMediaStyled horizontal={horizontal}
                     image={friend.profilePicture}
                     title={friend.fullName}
@@ -101,12 +107,12 @@ function Friend (props) {
             </Link>
             <ContainerStyled>
                 <CardContentStyled>
-                    <Link to={referenseForLinks} onClick={handleLinkClick} sx={{width: '100%',}}>
+                    <Link to={referenseForLinks} onClick={()=>handleLinkClick(friend)} sx={{width: '100%',}}>
                         <FriendName horizontal={horizontal}>{friend.fullName}</FriendName>
                     </Link>
                     <Box sx={{ display: 'flex', gap: 1/2, height: 30}}>
                         <List sx={{ display: 'flex', '&:nth-last-of-type()': {ml: '-15%'}}}>
-                            {mutialFriendsAvatars.map(el => <Link to={`/user-page/${el.id}`} key={el.id}><Avatar src={el.profilePicture} sx={{width: 16, height: 16}}/></Link>)}
+                            {mutialFriendsAvatars.map(el => <Link onClick={()=>handleMutualFriendClick(el)} to={`/Profile`} key={el.id}><Avatar src={el.profilePicture} sx={{width: 16, height: 16}}/></Link>)}
                         </List>
                         {mutualFriends.length>0 && <Tooltip title={<ul>{mutualFriends.map(el => <li key={el.id}>{el.fullName}</li>)}</ul>}>
                             <MutualFriendsList>

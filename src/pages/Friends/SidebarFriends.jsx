@@ -9,7 +9,8 @@ import {GreyButton, StandardButton, BlueButton } from '../../components/StyledCo
 import { NavLink } from "react-router-dom";
 import {SVGArrowBack} from '../../components/SVG/svg';
 import { useTheme } from '@mui/material/styles';
-import { setCurrentFriend, } from '../../redux/friends/friends.slise';
+import { setUser } from "../../redux/user.slice/user.slice";
+import { setCurrentFriend } from '../../redux/friends/friends.slise';
 
 
 function SideBarRequests(props) {
@@ -29,19 +30,10 @@ function SideBarRequests(props) {
 
     const currentFriend = useSelector((store)=>store.friends.currentFriend);
     const dispatch = useDispatch(); 
-
-/*     const addButton = isConfirmButton 
-        ? <StandardButton variant="contained" onClick={() => handleClickConfirm(fr)}>Confirm</StandardButton> 
-        :  isAddButton
-            ? <BlueButton variant="contained" onClick={() => handleClickConfirm(fr)}>Add friend</BlueButton> 
-            : null;
-
-    const removeButton = isRemoveButton 
-        ? <GreyButton onClick={() => handleClickRemove(fr)}>Remove</GreyButton>
-        : null; */
     
     const handleLinkClick = (payload) => {
         console.log(payload);
+        dispatch(setUser(payload));
         dispatch(setCurrentFriend(payload));
     }
 
@@ -116,12 +108,13 @@ function SideBarRequests(props) {
             <List sx={{padding: 0}}>
                 {
                     sideBarItems && sideBarItems.map(fr =>
-                    <MenuItem onClick={() => handleLinkClick(fr.friend)} key={fr.friend.id} selected={currentFriend.id === fr.friend.id}>
+                    <MenuItem onClick={() => handleLinkClick(fr.user ? fr.user : fr.friend)} 
+                        key={fr.user ? fr.user.id : fr.friend.id} selected={currentFriend.id === (fr.user ? fr.user.id : fr.friend.id)}>
                         <Friend horizontal = 'true'
                             key={fr.id}
                             mutualFriends={fr.mutualFriends} 
-                            handleLinkClick={() => handleLinkClick(fr.friend)}
-                            friend={fr.friend}
+                            handleLinkClick={() => handleLinkClick(fr.user ? fr.user : fr.friend)}
+                            friend={fr.user ? fr.user : fr.friend}
                             addButton={isConfirmButton 
                                 ? <StandardButton variant="contained" onClick={() => handleClickConfirm(fr)}>Confirm</StandardButton> 
                                 :  isAddButton

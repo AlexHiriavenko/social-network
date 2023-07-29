@@ -53,8 +53,6 @@ const friendsSlice = createSlice({
       state.friendSuggestions = state.friendSuggestions.filter(el => el.friend.id !== action.payload.friend.id);
     },
     [updateFriendship.fulfilled]: (state, action)=>{
-     console.log('updateFriendship');
-
       state.status = 'resolved';
       state.error = null;
       if(action.payload.status === 'accepted'){

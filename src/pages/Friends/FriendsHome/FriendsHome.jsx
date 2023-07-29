@@ -2,56 +2,47 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import Friend from "../../../components/Friends/Friend/Friend";
-import { Box, Divider, Typography, Link, Button } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import {GreyButton, BlueButton, StandardButton} from '../../../components/StyledComponents/Buttons';
-import { 
-    getFriendList, 
-    getFriendshipRequests,
-    getFriendSuggestions, 
-    createFriendship, 
-    updateFriendship,
-} from '../../../redux/friends/actionCreators';
+import { getFriendList, getFriendshipRequests, getFriendSuggestions,  createFriendship, updateFriendship } from '../../../redux/friends/actionCreators';
 import { removeSuggestions, setCurrentFriend, } from '../../../redux/friends/friends.slise';
 import styled from "@emotion/styled";
 import SideBarList from '../SideBarList'
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import SideBarHeader from '../../../components/Friends/SideBar/SideBarHeader';
 import { NavLink } from "react-router-dom";
+import { setUser } from "../../../redux/user.slice/user.slice";
 /* import { useTheme } from '@mui/material/styles'; */
-
 
 function FriendsHome() {
 
-    const userID = 1;
+    const user = useSelector((store)=>store.user.authorizedUser);
 
-    const dispatch = useDispatch(); 
+    const dispatch = useDispatch();
     const friendsRequests = useSelector((store)=>store.friends.friendsRequests);
     const friendSuggestions = useSelector((store)=>store.friends.friendSuggestions);
     const friendsRequestsToUser = (friendsRequests.length > 0 
-                                ? friendsRequests.filter((elem) => elem.status==='pending' && elem.user.id !== userID)
+                                ? friendsRequests.filter((elem) => elem.status==='pending' && elem.user.id !== user.id)
                                 : []);
 
     useEffect(()=>{
-        dispatch(getFriendList(userID));
-        dispatch(getFriendshipRequests(userID));
-        dispatch(getFriendSuggestions(userID));
-        return () => {
-            dispatch(setCurrentFriend({}));;
-          };
+        dispatch(getFriendList(user.id));
+        dispatch(getFriendshipRequests(user.id));
+        dispatch(getFriendSuggestions(user.id));
     },[])
 
     const handleClickConfirm = (friend) => {
-        const payload = {id: friend.id, status: "accepted", userID: userID,  friendID: friend.friend.id}
+        const payload = {id: friend.id, status: "accepted", userID: friend.user.id, friendID: friend.friend.id}
         dispatch(updateFriendship(payload));
     }
 
     const handleClickRemove = (friend) => {
-        const payload = {id: friend.id, status: "rejected", userID: userID,  friendID: friend.friend.id}
+        const payload = {id: friend.id, status: "rejected", userID: friend.user.id,  friendID: friend.friend.id}
         dispatch(updateFriendship(payload));
     }
-    const handleClickAdd = (userId, friendId) => {
+    const handleClickAdd = (friendId) => {
         console.log(friendId);
-        dispatch(createFriendship({userId: userId, friendId: friendId}));
+        dispatch(createFriendship({friendId: friendId}));
     }
 
     const handleClickRemoveSuggestion = (payload) => {
@@ -59,6 +50,7 @@ function FriendsHome() {
     }
 
     const handleLinkClick = (payload) => {
+        dispatch(setUser(payload));
         dispatch(setCurrentFriend(payload));
     }
 
@@ -108,7 +100,6 @@ function FriendsHome() {
     }))
 
 /*     const theme = useTheme(); */
-console.log(friendsRequestsToUser);
 
     return (<>
         <Box sx={{ width: '100%', display: 'flex', minHeight: '93vh'}}>
@@ -129,7 +120,7 @@ console.log(friendsRequestsToUser);
                         friendsRequestsToUser.map(fr => <Friend 
                             key={fr.id}
                             referenseForLinks={"/friends/requests/"}
-                            handleLinkClick={() => handleLinkClick(fr)}
+                            handleLinkClick={handleLinkClick}
                             mutualFriends={fr.mutualFriends} 
                             friend={fr.user} 
                             addButton={<StandardButton variant="contained" onClick={() => handleClickConfirm(fr)}>Confirm</StandardButton>}
@@ -147,11 +138,13 @@ console.log(friendsRequestsToUser);
                     {
                         friendSuggestions &&  friendSuggestions.map(fr => <Friend 
                             key={fr.friend.id}
+                            referenseForLinks={"/friends/suggestions/"}
+                            handleLinkClick={handleLinkClick}
                             mutualFriends={fr.mutualFriends}
                             friend={fr.friend} 
                             /* addButton={<Button sx={{bgcolor: 'secondary.main', width: 1, '&:hover': {bgcolor: 'secondary.light'}, textTransform: 'none'}} 
                                                     onClick={handleClickConfirm}>Add friend</Button>} */
-                            addButton={<BlueButton onClick={() =>  handleClickAdd(userID, fr.friend.id)}>Add friend</BlueButton>}
+                            addButton={<BlueButton onClick={() =>  handleClickAdd( fr.friend.id)}>Add friend</BlueButton>}
                             removeButton={<GreyButton /* bgColor={theme.palette.buttonColor.background}
                                                     hoverBgColor={theme.palette.buttonColor.backgroundHover}
                                                     color={"#cdcfd3"}/* theme.palette.textColor.main */
@@ -167,36 +160,3 @@ console.log(friendsRequestsToUser);
 }
 
 export default FriendsHome;
-
- /*  const mutialFriendsClickHandle = () =>{
-        setIsModalOpen(true);
-    } */
-
-    /* const friends = [
-        {
-            id: 3,
-            avatar: "https://marketplace.canva.com/EAEjuxgtTrE/2/0/1600w/canva-%D0%B6%D0%B5%D0%BB%D1%82%D1%8B%D0%B9-%D0%B8-%D1%87%D0%B5%D1%80%D0%BD%D1%8B%D0%B9-%D0%B3%D0%B5%D0%B9%D0%BC%D0%B5%D1%80-%D0%B3%D1%80%D0%B0%D0%BD%D0%B4%D0%B6-%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B4%D0%BB%D1%8F-%D0%BF%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D1%8F-twitch-GwiHF3J6qRM.jpg", 
-            name: "Test Person",
-            mutialFriends: [
-                {id: 1,
-                    avatar: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Fronalpstock_big.jpg", 
-                    name: "Emily White"},
-                {id: 2,
-                    avatar: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Fronalpstock_big.jpg", 
-                    name: "Ivan Gray"}
-            ]
-        },
-        {
-            id: 4,
-            avatar: "https://marketplace.canva.com/EAEjuxgtTrE/2/0/1600w/canva-%D0%B6%D0%B5%D0%BB%D1%82%D1%8B%D0%B9-%D0%B8-%D1%87%D0%B5%D1%80%D0%BD%D1%8B%D0%B9-%D0%B3%D0%B5%D0%B9%D0%BC%D0%B5%D1%80-%D0%B3%D1%80%D0%B0%D0%BD%D0%B4%D0%B6-%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B4%D0%BB%D1%8F-%D0%BF%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D1%8F-twitch-GwiHF3J6qRM.jpg", 
-            name: "Test Person",
-            mutialFriends: [
-                {id: 1,
-                    avatar: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Fronalpstock_big.jpg", 
-                    name: "Masha Martinos"},
-                {id: 2,
-                    avatar: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Fronalpstock_big.jpg", 
-                    name: "Pasha Golombki"}
-            ]
-        }
-    ] */

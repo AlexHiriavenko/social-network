@@ -1,31 +1,26 @@
-import React, {useState, useEffect } from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import { 
-    getFriendshipRequests,
-    updateFriendship 
-} from '../../../redux/friends/actionCreators';
+import { getFriendshipRequests, updateFriendship } from '../../../redux/friends/actionCreators';
 import { useTheme } from '@mui/material/styles';
 import SideBarFriends from '../SideBarFriends';
-import UserPage from '../../UserPage/UserPage';
+import { Profile } from '../../index';
 import { setCurrentFriend, } from '../../../redux/friends/friends.slise';
 import FriendEmptyPage from  '../FriendEmptyPage';
 
 
 function FriendRequests(){
-    const userID = 1;
+    const user = useSelector((store)=>store.user.authorizedUser);
     const theme = useTheme();
 
     const dispatch = useDispatch(); 
     const friendsRequests = useSelector((store)=>store.friends.friendsRequests);
     const currentFriend = useSelector((store)=>store.friends.currentFriend);
 
-    console.log(friendsRequests)
-
     const friendsRequestsToUser = (friendsRequests.length > 0 
-        ? friendsRequests.filter((elem) => elem.status==='pending' && elem.user.id !== userID)
+        ? friendsRequests.filter((elem) => elem.status==='pending' && elem.user.id !== user.id)
         : []);
 
     const requestsCount = friendsRequestsToUser.length === 0 ? null : friendsRequestsToUser.length;
@@ -37,19 +32,19 @@ function FriendRequests(){
     },[friendsRequests, dispatch])
 
     useEffect(()=>{
-        dispatch(getFriendshipRequests(userID));
+        dispatch(getFriendshipRequests());
         return () => {
-            dispatch(setCurrentFriend({}));;
+            dispatch(setCurrentFriend({}));
           };
     },[])
 
     const handleClickConfirm = (friend) => {
-        const payload = {id: friend.id, status: "accepted", userID: userID,  friendID: friend.friend.id}
+        const payload = {id: friend.id, status: "accepted", userID: user.id,  friendID: friend.friend.id}
         dispatch(updateFriendship(payload));
     }
 
     const handleClickRemove = (friend) => {
-        const payload = {id: friend.id, status: "rejected", userID: userID,  friendID: friend.friend.id}
+        const payload = {id: friend.id, status: "rejected", userID: user.id,  friendID: friend.friend.id}
         dispatch(updateFriendship(payload));
     }
     
@@ -97,7 +92,7 @@ function FriendRequests(){
                     currentFriend.id === undefined && <FriendEmptyPage>{textMessage}</FriendEmptyPage>
                 }
                 {
-                    !(currentFriend.id === undefined) && <UserPage/>
+                    !(currentFriend.id === undefined) && <Profile/>
                 }
             </SectionWraper>
         </Box>

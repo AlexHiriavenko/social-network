@@ -1,27 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
-import { 
-    getFriendshipRequests,
-    updateFriendship,
-    createFriendship
-} from '../../../redux/friends/actionCreators';
-import { useTheme } from '@mui/material/styles';
+import { getFriendshipRequests, createFriendship } from '../../../redux/friends/actionCreators';
 import SideBarFriends from '../SideBarFriends';
-import UserPage from '../../UserPage/UserPage';
+import { Profile } from '../../index';
 import { setCurrentFriend, removeSuggestions } from '../../../redux/friends/friends.slise';
 import FriendEmptyPage from  '../FriendEmptyPage';
 
 function FriendSuggestionsPage() {
 
-    const userID = 1;
-
     const dispatch = useDispatch(); 
     const friendSuggestions = useSelector((store)=>store.friends.friendSuggestions);
     const currentFriend = useSelector((store)=>store.friends.currentFriend);
-
-    console.log(friendSuggestions);
 
     useEffect(()=>{
         if(friendSuggestions.length === 0) {
@@ -30,20 +21,21 @@ function FriendSuggestionsPage() {
     },[friendSuggestions, dispatch])
 
     useEffect(()=>{
-        dispatch(getFriendshipRequests(userID));
+        dispatch(getFriendshipRequests());
         return () => {
-            dispatch(setCurrentFriend({}));;
+            dispatch(setCurrentFriend({}));
           };
     },[])
 
-    const handleClickAdd = (userId, friendId) => {
+    const handleClickAdd = (friendId) => {
         console.log(friendId);
-        dispatch(createFriendship({userId: userId, friendId: friendId}));
+        dispatch(createFriendship({friendId: friendId}));
     }
 
     const handleClickRemoveSuggestion = (payload) => {
         dispatch(removeSuggestions(payload));
     }
+    
 
     const SectionWraper = styled(Box)(({theme}) => ({
         width: '100%', 
@@ -62,8 +54,8 @@ function FriendSuggestionsPage() {
     return(
         <Box sx={{ width: '100%', display: 'flex', }}>
             <SideBarFriends sideBarItems={friendSuggestions}
-                                headerTitle={"Friend requests"}
-                                subTitle={"Friend suggestions"}
+                                headerTitle={"Friend suggestions"}
+                                subTitle={"People You May Know"}
                                 noItemMessage={noItemMessage}
                                 handleClickConfirm={handleClickAdd}
                                 handleClickRemove={handleClickRemoveSuggestion}
@@ -74,7 +66,7 @@ function FriendSuggestionsPage() {
                     currentFriend.id === undefined && <FriendEmptyPage>{textMessage}</FriendEmptyPage>
                 }
                 {
-                    !(currentFriend.id === undefined) && <UserPage/>
+                    !(currentFriend.id === undefined) && <Profile/>
                 }
             </SectionWraper>
         </Box>

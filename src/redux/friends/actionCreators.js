@@ -1,62 +1,50 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import instance from "../../instance";
 
-const SERVER_URL = 'http://localhost:9000';
+export const getFriendsById = createAsyncThunk(
+    'friends/getFriendsById',
+    async function(userId) {
+      const { data } = await instance.get(`/friends/${userId}/friends`);
+      return data;
+    }
+  );
 
-export const getFriendList = createAsyncThunk(
+  export const getFriendList = createAsyncThunk(
     'friends/getFriendList',
-    async function(userId){
-      const response = await fetch(`${SERVER_URL}/friends/${userId}/friends`);
-      const data = await response.json();
+    async function() {
+      const { data } = await instance.get(`/friends/userFriends`);
       return data;
     }
   );
 
   export const getFriendshipRequests = createAsyncThunk(
     'friends/getFriendshipRequests',
-    async function(userId){
-      const response = await fetch(`${SERVER_URL}/friends/${userId}/requests`);
-      const data = await response.json();
+    async function() {
+      const { data } = await instance.get("/friends/requests");
       return data;
     }
   );
   
   export const getFriendSuggestions = createAsyncThunk(
     'friends/getFriendSuggestions',
-    async function(userId){
-      const response = await fetch(`${SERVER_URL}/friends/${userId}/suggestions`);
-      const data = await response.json();
+    async function() {
+      const { data } = await instance.get("/friends/suggestions");
       return data;
     }
   );
 
   export const createFriendship = createAsyncThunk(
     'friends/createFriendship',
-    async function(payload){
-      const response = await fetch(`${SERVER_URL}/friends`, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-      const data = await response.json();
+    async function(payload) {
+      const { data } = await instance.post("/friends", payload);
       return data;
     }
   );
 
   export const updateFriendship = createAsyncThunk(
     'friends/updateFriendship',
-    async function(payload){
-      const response = await fetch(`${SERVER_URL}/friends`, {
-        method: 'PUT',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-      const data = await response.json();
+    async function(payload) {
+      const { data } = await instance.put("/friends", payload);
       return data;
     }
   );
