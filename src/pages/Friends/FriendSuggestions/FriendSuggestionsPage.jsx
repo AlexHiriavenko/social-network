@@ -3,11 +3,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
-import { getFriendshipRequests, createFriendship } from '../../../redux/friends/actionCreators';
-import SideBarFriends from '../SideBarFriends';
-import { Profile } from '../../index';
-import { setCurrentFriend, removeSuggestions } from '../../../redux/friends/friends.slise';
-import FriendEmptyPage from  '../FriendEmptyPage';
+import { getFriendshipRequests, createFriendship } from "../../../redux/friends/actionCreators";
+import SideBarFriends from "../SideBarFriends";
+import { Profile } from "../../index";
+import { setCurrentFriend, removeSuggestions } from "../../../redux/friends/friends.slise";
+import FriendEmptyPage from  "../FriendEmptyPage";
 
 function FriendSuggestionsPage() {
 
