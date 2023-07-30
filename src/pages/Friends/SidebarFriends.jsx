@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import SideBarHeader from '../../components/Friends/SideBar/SideBarHeader';
@@ -11,6 +11,7 @@ import {SVGArrowBack} from '../../components/SVG/svg';
 import { useTheme } from '@mui/material/styles';
 import { setUser } from "../../redux/user.slice/user.slice";
 import { setCurrentFriend } from '../../redux/friends/friends.slise';
+import PropTypes from 'prop-types';
 
 
 function SideBarFriends(props) {
@@ -139,5 +140,33 @@ function SideBarFriends(props) {
         </SidebarStyled>
     )
 }
+
+SideBarFriends.propTypes  = {
+    headerTitle: PropTypes.string,
+    subTitle: PropTypes.string,
+    additionItems: PropTypes.node,
+    noItemMessage: PropTypes.string,
+    sideBarItems: PropTypes.arrayOf(PropTypes.object),
+    handleClickConfirm: PropTypes.func,
+    handleClickRemove: PropTypes.func,
+    isAddButton: PropTypes.bool,
+    isRemoveButton: PropTypes.bool,
+    isConfirmButton: PropTypes.bool,
+    isAvatarMutualFriend: PropTypes.bool,
+  };
+  
+  SideBarFriends.defaultProps = {
+    headerTitle: '',
+    subTitle: '',
+    additionItems: null,
+    noItemMessage: '',
+    sideBarItems: [],
+    handleClickConfirm: () => {},
+    handleClickRemove: () => {},
+    isAddButton: false,
+    isRemoveButton: false,
+    isConfirmButton: false,
+    isAvatarMutualFriend: false,
+  };
 
 export default SideBarFriends;
