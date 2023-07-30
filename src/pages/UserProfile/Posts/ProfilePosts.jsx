@@ -21,7 +21,6 @@ const StyledPostsContainer = styled(ProfileContainer)({
     gridTemplateColumns: "1fr 1.5fr",
   },
 });
-
 const StyledPostsPage = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.backgroundColor.page,
   paddingTop: "20px",

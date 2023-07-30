@@ -1,9 +1,14 @@
+import { useSelector } from "react-redux";
+import PostList from "../../components/Posts/Post/PostList";
+
 function HomeMain() {
-    return (
-        <main className="main-home-content">
-            <h2 className="main-title">Home Page Content</h2>
-        </main>
-    );
+  // Constants
+  const allPosts = useSelector((state) => state.post.allPosts);
+  return (
+    <main className="main-home-content">
+      <PostList posts={allPosts} />
+    </main>
+  );
 }
 
 export default HomeMain;

@@ -31,6 +31,7 @@ import {
   setUser,
   setUsers,
 } from "./redux/user.slice/user.slice";
+import { getPosts, setPosts } from "./redux/post.slice/post.slice";
 
 function App() {
   const dispatch = useDispatch();
@@ -69,11 +70,20 @@ function App() {
         setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser")))
       );
     }
+
     // get all users
     const allUsersResponse = dispatch(getUsers());
     allUsersResponse
       .then((result) => {
         dispatch(setUsers(result.payload));
+      })
+      .catch((error) => alert(error));
+      
+      // get all posts
+    const allPostsResponse = dispatch(getPosts());
+    allPostsResponse
+      .then((result) => {
+        dispatch(setPosts(result.payload));
       })
       .catch((error) => alert(error));
   }, [isLoggedIn]);
