@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
@@ -29,14 +30,14 @@ function FriendRequests(){
         if(friendsRequestsToUser.length === 0) {
             dispatch(setCurrentFriend({}));
         } 
-    },[friendsRequests, dispatch])
+    },[friendsRequests, dispatch, friendsRequestsToUser.length])
 
     useEffect(()=>{
         dispatch(getFriendshipRequests());
         return () => {
             dispatch(setCurrentFriend({}));
           };
-    },[])
+    },[dispatch])
 
     const handleClickConfirm = (friend) => {
         const payload = {id: friend.id, status: "accepted", userID: user.id,  friendID: friend.friend.id}

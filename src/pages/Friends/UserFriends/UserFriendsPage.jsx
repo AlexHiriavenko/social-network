@@ -27,7 +27,7 @@ function UserFriendsPage() {
         return () => {
             dispatch(setCurrentFriend({}));
           };
-    },[])
+    },[dispatch])
 
     const SectionWraper = styled(Box)(({theme}) => ({
         width: '100%', 

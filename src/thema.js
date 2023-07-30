@@ -149,21 +149,4 @@ export const themeNight = createTheme({
             },
         },
     },
-    components: {
-        MuiAvatar: {
-            styleOverrides: {
-                root: {
-                    width: 32 + "px",
-                    height: 32 + "px",
-                },
-            },
-        },
-        MuiTooltip: {
-            styleOverrides: {
-                tooltip: {
-                    fontSize: "14px",
-                },
-            },
-        },
-    },
 });
