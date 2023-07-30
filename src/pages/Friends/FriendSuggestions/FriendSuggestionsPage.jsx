@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 import { getFriendshipRequests, createFriendship } from "../../../redux/friends/actionCreators";
 import { setCurrentFriend, removeSuggestions } from "../../../redux/friends/friends.slise";
 import { Profile } from "../../index";
-import SideBarFriends from "../SideBarFriends";
+import SideBarFriends from '../SideBarFriends';
 import FriendEmptyPage from  "../FriendEmptyPage";
 
 function FriendSuggestionsPage() {
