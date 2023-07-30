@@ -12,6 +12,7 @@ import NotFound from "./NotFound/NotFound";
 import FriendsHome from "./Friends/FriendsHome/FriendsHome";
 import FriendRequests from "./Friends/FriendRequests/FriendRequests";
 import FriendSuggestions from "./Friends/FriendSuggestions/FriendSuggestionsPage";
+import UserFriendsPage from "./Friends/UserFriends/UserFriendsPage";
 import Overview from "./UserProfile/About/Overview";
 import Employment from "./UserProfile/About/Employment";
 import Places from "./UserProfile/About/Places";
@@ -37,4 +38,5 @@ export {
     Contacts,
     UserPage,
     FriendSuggestions,
+    UserFriendsPage,
 };

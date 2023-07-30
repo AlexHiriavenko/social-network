@@ -101,12 +101,12 @@ function SideBarList() {
                 </MenuItem>
             </ListItemStyled>
             <ListItemStyled>
-                <MenuItem to={"/friends/allfriend"} 
+                <MenuItem to={"/friends/allfriends"} 
                         style={({ isActive }) => {return{backgroundColor: isActive 
                         ? theme.palette.backgroundColor.page 
                         : null}}}>
                     <MenuItemContent>
-                        <IconContainer data-path="allfriend" sx={{bgcolor: theme.palette.buttonColor.background}}>
+                        <IconContainer data-path="allfriends" sx={{bgcolor: theme.palette.buttonColor.background}}>
                             <SVGFriendsList/>
                         </IconContainer>
                         <MenuItemName>

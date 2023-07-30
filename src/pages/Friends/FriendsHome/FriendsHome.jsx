@@ -12,7 +12,7 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import SideBarHeader from '../../../components/Friends/SideBar/SideBarHeader';
 import { NavLink } from "react-router-dom";
 import { setUser } from "../../../redux/user.slice/user.slice";
-/* import { useTheme } from '@mui/material/styles'; */
+import { useTheme } from '@mui/material/styles';
 
 function FriendsHome() {
 
@@ -54,13 +54,14 @@ function FriendsHome() {
         dispatch(setCurrentFriend(payload));
     }
 
-    const SectorTitle = styled(Typography)({
+    const SectorTitle = styled(Typography)(({theme}) => ({
         padding: '16px 4px',
         fontWeight: 700,
         fontSize: '1.25rem',
         lineHeight: 1.2,
-        textAlign: 'left'
-    })
+        textAlign: 'left',
+        color: theme.palette.textColor.content
+    }))
 
     const SectorHeader = styled(Box)({
         width:'100%',
@@ -99,7 +100,7 @@ function FriendsHome() {
         textDecoration: 'none'
     }))
 
-/*     const theme = useTheme(); */
+    const theme = useTheme();
 
     return (<>
         <Box sx={{ width: '100%', display: 'flex', minHeight: '93vh'}}>
@@ -121,14 +122,16 @@ function FriendsHome() {
                             key={fr.id}
                             referenseForLinks={"/friends/requests/"}
                             handleLinkClick={handleLinkClick}
-                            mutualFriends={fr.mutualFriends} 
+                            mutualFriends={fr.mutualFriends}
+                            isAvatarMutualFriend={true}
                             friend={fr.user} 
                             addButton={<StandardButton variant="contained" onClick={() => handleClickConfirm(fr)}>Confirm</StandardButton>}
                             removeButton={<GreyButton onClick={() => handleClickRemove(fr)}>Remove</GreyButton>}/>)
                     }
                     </FriendsContainer>
                 </Box>}
-                {friendSuggestions.length > 0 && friendsRequestsToUser.length > 0 && <Divider sx={{ my: '12px', }}/>}
+                {friendSuggestions.length > 0 && friendsRequestsToUser.length > 0 
+                    && <Divider sx={{ my: '12px', borderColor: theme.palette.border.card}}/>}
                 {friendSuggestions.length > 0 && <Box sx={{px: '16px'}}>
                     <SectorHeader>
                         <SectorTitle>People you may know</SectorTitle>
@@ -141,6 +144,7 @@ function FriendsHome() {
                             referenseForLinks={"/friends/suggestions/"}
                             handleLinkClick={handleLinkClick}
                             mutualFriends={fr.mutualFriends}
+                            isAvatarMutualFriend={true}
                             friend={fr.friend} 
                             /* addButton={<Button sx={{bgcolor: 'secondary.main', width: 1, '&:hover': {bgcolor: 'secondary.light'}, textTransform: 'none'}} 
                                                     onClick={handleClickConfirm}>Add friend</Button>} */

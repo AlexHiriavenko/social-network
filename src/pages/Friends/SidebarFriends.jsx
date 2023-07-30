@@ -13,7 +13,7 @@ import { setUser } from "../../redux/user.slice/user.slice";
 import { setCurrentFriend } from '../../redux/friends/friends.slise';
 
 
-function SideBarRequests(props) {
+function SideBarFriends(props) {
 
     const {
         headerTitle,
@@ -26,13 +26,18 @@ function SideBarRequests(props) {
         isAddButton,
         isRemoveButton,
         isConfirmButton,
+        isAvatarMutualFriend,
     } = props;
+
+    console.log("isAvatarMutualFriend");
+    console.log(isAvatarMutualFriend);
+
 
     const currentFriend = useSelector((store)=>store.friends.currentFriend);
     const dispatch = useDispatch(); 
     
     const handleLinkClick = (payload) => {
-        console.log(payload);
+        console.log("handleLinkClick");
         dispatch(setUser(payload));
         dispatch(setCurrentFriend(payload));
     }
@@ -94,15 +99,15 @@ function SideBarRequests(props) {
                         <LinkStyled color={theme.palette.textColor.secondary} 
                                     to="/friends/home"
                                     sx={{'&:hover': {textDecoration: 'underline' }}}>Friends</LinkStyled>
-                        <TitleStyled>{headerTitle}</TitleStyled>
+                        <TitleStyled>{ headerTitle }</TitleStyled>
                     </Box>
                 </Box>
                 <Divider sx={{my: '12px'}}/>
                 <Box>
-                    <SubTitleStyled>{subTitle}</SubTitleStyled>
-                    {additionItems}
+                    <SubTitleStyled>{ subTitle }</SubTitleStyled>
+                    { additionItems }
                     { sideBarItems.length === 0 
-                && <Typography sx={{py: 2, fontSize: 12}}>{noItemMessage}</Typography>}
+                && <Typography sx={{py: 2, fontSize: 12}}>{ noItemMessage }</Typography>}
                 </Box>                
             </SideBarHeader>
             <List sx={{padding: 0}}>
@@ -115,6 +120,7 @@ function SideBarRequests(props) {
                             mutualFriends={fr.mutualFriends} 
                             handleLinkClick={() => handleLinkClick(fr.user ? fr.user : fr.friend)}
                             friend={fr.user ? fr.user : fr.friend}
+                            isAvatarMutualFriend={isAvatarMutualFriend}
                             addButton={isConfirmButton 
                                 ? <StandardButton variant="contained" onClick={() => handleClickConfirm(fr)}>Confirm</StandardButton> 
                                 :  isAddButton
@@ -137,4 +143,4 @@ function SideBarRequests(props) {
     )
 }
 
-export default SideBarRequests;
+export default SideBarFriends;

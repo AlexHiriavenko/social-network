@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import { setUser } from "../../../redux/user.slice/user.slice";
+import zIndex from "@mui/material/styles/zIndex";
+import { NULL } from "sass";
 
 
 function Friend (props) {
@@ -16,12 +18,28 @@ function Friend (props) {
         removeButton, 
         horizontal,
         referenseForLinks,
-        handleLinkClick
+        handleLinkClick,
+        isAvatarMutualFriend,
     } = props;
 
     const dispatch = useDispatch(); 
 
-    const mutialFriendsAvatars = (mutualFriends && mutualFriends.length > 2 ? mutualFriends.slice(1) : mutualFriends);
+    const countForDisplayMF = 2;
+    const countMutualFriends = mutualFriends.length;
+    console.log(countMutualFriends);
+
+    const mutialFriendsAvatars = isAvatarMutualFriend 
+        ? (mutualFriends && mutualFriends.length > 2 ? mutualFriends.slice(0, 2) : mutualFriends)
+        : null;
+
+    const listMutualFriends =  mutualFriends && mutualFriends.length > countForDisplayMF
+        ? (<ul>
+                {mutualFriends.slice(0, countForDisplayMF).map(el => <li key={el.id}>{el.fullName}</li>)}
+                <li>and {countMutualFriends-countForDisplayMF} more...</li>
+            </ul>) 
+        : ( <ul>
+                {mutualFriends.map(el => <li key={el.id}>{el.fullName}</li>)}
+            </ul>);
 
     const CardStyled = styled(Card)(({horizontal, theme}) => ({
         maxWidth: horizontal ? "100%" : "250px",
@@ -32,8 +50,10 @@ function Friend (props) {
         alignItems: horizontal ? 'center' : null,
         margin: "4px",
         flexShrink: 1,
+        backgroundColor: theme.palette.backgroundColor.card,
         '&:hover': horizontal ? {backgroundColor: theme.palette.backgroundColor.page,} : null,
         boxShadow:  horizontal ? 'none' : null,
+        border: horizontal ? null: `solid 1px ${theme.palette.border.card}`,
         zIndex: 100,
     }));
 
@@ -112,11 +132,14 @@ function Friend (props) {
                     </Link>
                     <Box sx={{ display: 'flex', gap: 1/2, height: 30}}>
                         <List sx={{ display: 'flex', '&:nth-last-of-type()': {ml: '-15%'}}}>
-                            {mutialFriendsAvatars.map(el => <Link onClick={()=>handleMutualFriendClick(el)} to={`/Profile`} key={el.id}><Avatar src={el.profilePicture} sx={{width: 16, height: 16}}/></Link>)}
+                            {mutialFriendsAvatars && mutialFriendsAvatars.map(el => 
+                                <Link onClick={()=>handleMutualFriendClick(el)} to={`/Profile`} key={el.id}>
+                                    <Avatar src={el.profilePicture} sx={{width: 16, height: 16, zIndex: 1000}}/>
+                                </Link>)}
                         </List>
-                        {mutualFriends.length>0 && <Tooltip title={<ul>{mutualFriends.map(el => <li key={el.id}>{el.fullName}</li>)}</ul>}>
+                        {mutualFriends.length>0 && <Tooltip title={listMutualFriends}>
                             <MutualFriendsList>
-                                mutual friends
+                                {countMutualFriends} mutual friends
                             </MutualFriendsList>
                         </Tooltip>}
                     </Box>

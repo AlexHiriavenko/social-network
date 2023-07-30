@@ -32,6 +32,7 @@ export const themeDay = createTheme({
             pageSeparator: "#cdcfd3",
             iconFill: "#8D949E",
             activeIcon: "#1877F2",
+            card: "#ffffff",
         },
         buttonColor: {
             background: "#E4E6EB",
@@ -56,6 +57,7 @@ export const themeDay = createTheme({
         border: {
             transp: "1px solid rgba(0, 0, 0, 0.1)",
             simpleTransp: "rgba(0, 0, 0, 0.1)",
+            card: '#CED0D4',
         },
     },
     components: {
@@ -100,10 +102,12 @@ export const themeNight = createTheme({
             secondary: "#B0B3B8",
             content: "#E4E6EB",
             primary: "#1B74E4",
+            blueLink:'#4599FF',
         },
         backgroundColor: {
             section: "#242526",
             page: "#18191A",
+            card: "#242526",
             pageSeparator: "#393a3b",
         },
         buttonColor: {
@@ -125,6 +129,7 @@ export const themeNight = createTheme({
         border: {
             transp: "1px solid rgba(255, 255, 255, 0.1)",
             simpleTransp: "rgba(255, 255, 255, 0.1)",
+            card: '#3E4042',
         },
     },
     components: {

@@ -85,6 +85,7 @@ function FriendRequests(){
                                 noItemMessage={noItemMessage}
                                 handleClickConfirm={handleClickConfirm}
                                 handleClickRemove={handleClickRemove}
+                                isAvatarMutualFriend={true}
                                 isRemoveButton={true}
                                 isConfirmButton={true}/>
             <SectionWraper sx={{minHeight: '93vh'}}>

@@ -27,12 +27,14 @@ function FriendSuggestionsPage() {
           };
     },[])
 
+
     const handleClickAdd = (friendId) => {
         console.log(friendId);
         dispatch(createFriendship({friendId: friendId}));
     }
 
     const handleClickRemoveSuggestion = (payload) => {
+        console.log("handleClickRemoveSuggestion")
         dispatch(removeSuggestions(payload));
     }
     
@@ -59,6 +61,7 @@ function FriendSuggestionsPage() {
                                 noItemMessage={noItemMessage}
                                 handleClickConfirm={handleClickAdd}
                                 handleClickRemove={handleClickRemoveSuggestion}
+                                isAvatarMutualFriend={true}
                                 isRemoveButton={true}
                                 isAddButton={true}/>
             <SectionWraper sx={{minHeight: '93vh'}}>
