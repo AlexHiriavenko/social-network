@@ -9,23 +9,11 @@ import {
 import { Box, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../../../redux/user.slice/user.slice";
-const mockFriends = [
-  {
-    userPhoto:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7SX9B49bv1yhPTT3zTSerDv4-jDoT2SN975WZ_dEEGqHaI9U09woZkiJej2vxeqUypeY&usqp=CAU",
-    userName: "Garry Potter",
-  },
-  {
-    userPhoto: "https://myhero.com/images/guest/g282317/hero105677/image2.jpg",
-    userName: "Hermione Granger",
-  },
-  {
-    userPhoto:
-      "https://upload.wikimedia.org/wikipedia/en/thumb/5/5e/Ron_Weasley_poster.jpg/220px-Ron_Weasley_poster.jpg",
-    userName: "Ron Weasley",
-  },
-];
+import {
+  getFriends,
+  getUser,
+  setUser,
+} from "../../../redux/user.slice/user.slice";
 
 const StyledPostFriendsSubtitle = styled(Typography)(({ theme }) => ({
   width: "100%",
@@ -60,11 +48,13 @@ export default function ProfilePostsFriends() {
   // Constants
   const photosRef = useRef(null);
   const [photoHeight, setPhotoHeight] = useState(204);
-  const allUsers = useSelector((state) => state.user.allUsers);
   const authUser = useSelector((state) => state.user.authorizedUser);
+  const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
+
   // State
   const [friends, setFriends] = useState([]);
+
   // UseEffect
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -77,14 +67,29 @@ export default function ProfilePostsFriends() {
   }, [photosRef.current]);
 
   useEffect(() => {
-    if (!allUsers) return;
-    setFriends(allUsers);
-  }, [allUsers]);
+    if (!user) return;
+    const userFriendsResponse = dispatch(getFriends(user.id));
+    userFriendsResponse
+      .then((data) => setFriends(data.payload))
+      .catch((error) => console.log(error.message));
+  }, [user]);
+
   // Functions
   function lookFriendPage(friend) {
-    dispatch(setUser(friend));
-    localStorage.setItem("user", JSON.stringify(friend));
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (friend.id === authUser.id) {
+      dispatch(setUser(authUser));
+      localStorage.setItem("user", JSON.stringify(authUser));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      const lookedFriend = dispatch(getUser(friend.id));
+      lookedFriend
+        .then((data) => {
+          dispatch(setUser(data.payload));
+          localStorage.setItem("user", JSON.stringify(data.payload));
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        })
+        .catch((error) => console.log(error.message));
+    }
   }
   return (
     <ContentBlock style={{ maxWidth: "680px" }}>
@@ -102,11 +107,11 @@ export default function ProfilePostsFriends() {
           return (
             <StyledPostFriendItem
               key={index}
-              onClick={() => lookFriendPage(friend)}
+              onClick={() => lookFriendPage(friend.friend)}
             >
               <StyledPostFriendImage
                 src={
-                  friend.profilePicture ||
+                  friend.friend.profilePicture ||
                   "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1200px-User-avatar.svg.png"
                 }
                 alt="foto"
@@ -114,7 +119,9 @@ export default function ProfilePostsFriends() {
                 height={photoHeight}
                 ref={photosRef}
               />
-              <StyledPostFriendName>{friend.fullName}</StyledPostFriendName>
+              <StyledPostFriendName>
+                {friend.friend.fullName}
+              </StyledPostFriendName>
             </StyledPostFriendItem>
           );
         })}
