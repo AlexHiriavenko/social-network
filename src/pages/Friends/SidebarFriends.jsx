@@ -29,9 +29,6 @@ function SideBarFriends(props) {
         isAvatarMutualFriend,
     } = props;
 
-    console.log("isAvatarMutualFriend");
-    console.log(isAvatarMutualFriend);
-
 
     const currentFriend = useSelector((store)=>store.friends.currentFriend);
     const dispatch = useDispatch(); 

@@ -5,8 +5,6 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import { setUser } from "../../../redux/user.slice/user.slice";
-import zIndex from "@mui/material/styles/zIndex";
-import { NULL } from "sass";
 
 
 function Friend (props) {
