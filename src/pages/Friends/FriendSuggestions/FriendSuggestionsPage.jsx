@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import { getFriendshipRequests, createFriendship } from "../../../redux/friends/actionCreators";
-import SideBarFriends from "../SideBarFriends";
-import { Profile } from "../../index";
 import { setCurrentFriend, removeSuggestions } from "../../../redux/friends/friends.slise";
+import { Profile } from "../../index";
+import SideBarFriends from "../SideBarFriends";
 import FriendEmptyPage from  "../FriendEmptyPage";
 
 function FriendSuggestionsPage() {
