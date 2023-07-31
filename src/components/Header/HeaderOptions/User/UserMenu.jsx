@@ -17,11 +17,12 @@ function UserMenu(props) {
 
   const dispatch = useDispatch();
   let authorizedUser = useSelector((state) => state.user.authorizedUser);
-  if(authorizedUser == null){
-    dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
-    authorizedUser = JSON.parse(localStorage.getItem("authorizedUser")) ;
-  }
+
   function showAuthorizedUser() {
+    if(authorizedUser == null){
+      dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
+      authorizedUser = JSON.parse(localStorage.getItem("authorizedUser")) ;
+    }
     dispatch(setUser(authorizedUser));
     localStorage.setItem("user", JSON.stringify(authorizedUser))
     window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -20,6 +20,10 @@ import {
   ProfileFriends,
   ProfilePhotos,
   UserPage,
+  FriendsHome,
+  FriendRequests,
+  FriendSuggestions,
+  UserFriendsPage,
 } from "./pages/";
 import Header from "./components/Header/Header";
 import { logIn } from "./redux/login.slice/login.slice";
@@ -32,6 +36,7 @@ import {
   setUsers,
 } from "./redux/user.slice/user.slice";
 import { getPosts, setPosts } from "./redux/post.slice/post.slice";
+import ChangePasswordForm from "./pages/LogIn/ChangePasswordForm.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -112,12 +117,17 @@ function App() {
             <Route path="/profile/photos" element={<ProfilePhotos />} />
           </Route>
           <Route path="/user-page/:id" element={<UserPage />} />
+          <Route path="/friends/home" element={<FriendsHome />}/>
+          <Route path="/friends/requests/" element={<FriendRequests />}/>
+          <Route path="/friends/suggestions/" element={<FriendSuggestions />}/>
+          <Route path="//friends/allfriends" element={<UserFriendsPage />}/>
           <Route path="*" element={<NotFound />} />
         </Route>
         <Route
           path="/login"
           element={<LogIn isLoggedIn={isLoggedIn} onClick={handleLogIn} />}
         />
+        <Route path="/password" element={<ChangePasswordForm />} />
       </Routes>
       <Modals />
     </>

@@ -46,7 +46,7 @@ function HomeAsideLeft() {
                         },
                     }}
                 >
-                    <Link className="header__menu-item-link" to={"#"}>
+                    <Link className="header__menu-item-link" to={"/friends/home"}>
                         <Group
                             sx={{
                                 minWidth: "40px",

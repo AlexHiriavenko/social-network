@@ -1,16 +1,19 @@
 import { Box, Button, Modal, TextField } from "@mui/material";
 import forgotValidation from "./Validation/forgotValidation";
 import { useFormik } from "formik";
+import {useDispatch} from "react-redux";
+import {sendEmail} from "../../redux/login.slice/login.slice.js";
 
 export default function ForgotForm(props) {
+const dispatch = useDispatch();
   const { modal, handleModal } = props;
-
   const forgotForm = useFormik({
     initialValues: {
       emailOrPhone: "",
     },
     validationSchema: forgotValidation,
     onSubmit: () => {
+      dispatch(sendEmail(forgotForm.values.emailOrPhone))
       return console.log({
         emailOrPhone: forgotForm.values.emailOrPhone,
       });
@@ -34,7 +37,7 @@ export default function ForgotForm(props) {
               error={!!forgotForm.errors.emailOrPhone}
               name="emailOrPhone"
               required
-              label="Ваш почтовый ящик или телефон"
+              label="Ваш почтовый ящик "
               fullWidth
               value={forgotForm.values.emailOrPhone}
               onChange={forgotForm.handleChange}

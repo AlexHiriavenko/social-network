@@ -148,7 +148,7 @@ export default function LogIn() {
                 color="success">
                 Создать новый аккаунт
               </Button>
-                <a  className="google_link" href={"http://localhost:9000/oauth2/authorization/google"} onClick={async() =>{dispatch(setLogin())}} >Login with Google</a><br/>
+                <a  className="google_link" href={"https://social-network-backend-2782464b9c31.herokuapp.com/oauth2/authorization/google"} onClick={async() =>{dispatch(setLogin())}} >Login with Google</a><br/>
             </form>
 
           </div>

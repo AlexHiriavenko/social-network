@@ -17,10 +17,12 @@ export const themeDay = createTheme({
         accentColor: {
             main: "#1B74E4",
             secondary: "#E7F3FF",
+            onDarkFone: "#ffffff",
         },
         textColor: {
             main: "#050505",
             secondary: "#65676B",
+            blueLink: '#216FDB',
             content: "#050505",
             primary: "#1B74E4",
         },
@@ -28,10 +30,17 @@ export const themeDay = createTheme({
             section: "#ffffff",
             page: "#F0F2F5",
             pageSeparator: "#cdcfd3",
+            iconFill: "#8D949E",
+            activeIcon: "#1877F2",
+            card: "#ffffff",
         },
         buttonColor: {
             background: "#E4E6EB",
             backgroundHover: "#DEDEDE",
+            primary: '#1B74E4',
+            primaryHover: '#1877F2',
+            primaryPressed: '#77A7FF',
+            mainLight: "#1B74E4",
         },
         input: {
             mainBackground: "#f0f2f5",
@@ -48,6 +57,7 @@ export const themeDay = createTheme({
         border: {
             transp: "1px solid rgba(0, 0, 0, 0.1)",
             simpleTransp: "rgba(0, 0, 0, 0.1)",
+            card: '#CED0D4',
         },
     },
     components: {
@@ -92,10 +102,12 @@ export const themeNight = createTheme({
             secondary: "#B0B3B8",
             content: "#E4E6EB",
             primary: "#1B74E4",
+            blueLink:'#4599FF',
         },
         backgroundColor: {
             section: "#242526",
             page: "#18191A",
+            card: "#242526",
             pageSeparator: "#393a3b",
         },
         buttonColor: {
@@ -117,23 +129,7 @@ export const themeNight = createTheme({
         border: {
             transp: "1px solid rgba(255, 255, 255, 0.1)",
             simpleTransp: "rgba(255, 255, 255, 0.1)",
-        },
-    },
-    components: {
-        MuiAvatar: {
-            styleOverrides: {
-                root: {
-                    width: 32 + "px",
-                    height: 32 + "px",
-                },
-            },
-        },
-        MuiTooltip: {
-            styleOverrides: {
-                tooltip: {
-                    fontSize: "14px",
-                },
-            },
+            card: '#3E4042',
         },
     },
     components: {
