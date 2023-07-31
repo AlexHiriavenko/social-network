@@ -14,10 +14,7 @@ function HomeMain() {
   }, [allPosts]);
   return (
     <main className="main-home-content">
-<<<<<<< HEAD
       <CreatePost />
-=======
->>>>>>> develop
       <PostList posts={mainPagePosts} />
     </main>
   );
