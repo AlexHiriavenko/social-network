@@ -14,6 +14,11 @@ export const getUser = createAsyncThunk("Users/getUser", async function (id) {
   console.log(data);
   return data;
 });
+export const getProfile = createAsyncThunk("Users/getProfile", async function () {
+  const { data } = await instance.get(`/users/profile`);
+  console.log(data);
+  return data;
+});
 //Редактирование юзера
 export const updateUser = createAsyncThunk(
   "Users/updateUser",
