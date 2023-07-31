@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import PostList from "../../components/Posts/Post/PostList";
 import { useEffect, useState } from "react";
+import CreatePost from "../../components/Posts/CreatePost";
 
 function HomeMain() {
   // State
@@ -13,6 +14,7 @@ function HomeMain() {
   }, [allPosts]);
   return (
     <main className="main-home-content">
+      <CreatePost />
       <PostList posts={mainPagePosts} />
     </main>
   );
