@@ -20,6 +20,10 @@ import {
   ProfileFriends,
   ProfilePhotos,
   UserPage,
+  FriendsHome,
+  FriendRequests,
+  FriendSuggestions,
+  UserFriendsPage,
 } from "./pages/";
 import Header from "./components/Header/Header";
 import { logIn } from "./redux/login.slice/login.slice";
@@ -102,6 +106,10 @@ function App() {
             <Route path="/profile/photos" element={<ProfilePhotos />} />
           </Route>
           <Route path="/user-page/:id" element={<UserPage />} />
+          <Route path="/friends/home" element={<FriendsHome />}/>
+          <Route path="/friends/requests/" element={<FriendRequests />}/>
+          <Route path="/friends/suggestions/" element={<FriendSuggestions />}/>
+          <Route path="//friends/allfriends" element={<UserFriendsPage />}/>
           <Route path="*" element={<NotFound />} />
         </Route>
         <Route

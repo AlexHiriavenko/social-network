@@ -9,6 +9,10 @@ import Marketplace from "./Marketplace/Marketplace";
 import Groups from "./Groups/Groups";
 import LogIn from "./LogIn/Login";
 import NotFound from "./NotFound/NotFound";
+import FriendsHome from "./Friends/FriendsHome/FriendsHome";
+import FriendRequests from "./Friends/FriendRequests/FriendRequests";
+import FriendSuggestions from "./Friends/FriendSuggestions/FriendSuggestionsPage";
+import UserFriendsPage from "./Friends/UserFriends/UserFriendsPage";
 import Overview from "./UserProfile/About/Overview";
 import Employment from "./UserProfile/About/Employment";
 import Places from "./UserProfile/About/Places";
@@ -20,7 +24,9 @@ export {
     Marketplace,
     Groups,
     LogIn,
-    NotFound,
+    NotFound, 
+    FriendsHome,
+    FriendRequests,
     Profile,
     ProfilePosts,
     ProfileAbout,
@@ -31,4 +37,6 @@ export {
     Places,
     Contacts,
     UserPage,
+    FriendSuggestions,
+    UserFriendsPage,
 };
