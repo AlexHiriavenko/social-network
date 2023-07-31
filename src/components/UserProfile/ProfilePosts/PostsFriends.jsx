@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getFriends,
   getUser,
+  setFriends,
   setUser,
 } from "../../../redux/user.slice/user.slice";
 
@@ -47,35 +48,35 @@ const StyledPostFriendName = styled(Typography)(({ theme }) => ({
 export default function ProfilePostsFriends() {
   // Constants
   const photosRef = useRef(null);
-  const [photoHeight, setPhotoHeight] = useState(204);
   const authUser = useSelector((state) => state.user.authorizedUser);
-  const user = useSelector((state) => state.user.user);
+  const userFriends = useSelector((state) => state.user.friends);
   const dispatch = useDispatch();
 
   // State
-  const [friends, setFriends] = useState([]);
+  const [photoHeight, setPhotoHeight] = useState(204);
 
   // UseEffect
+  // Photo size
   useEffect(() => {
     window.addEventListener("resize", () => {
       if (photosRef.current) setPhotoHeight(photosRef.current.width);
     });
   }, [photosRef]);
-
   useEffect(() => {
     if (photosRef.current) setPhotoHeight(photosRef.current.width);
   }, [photosRef.current]);
 
-  useEffect(() => {
-    if (!user) return;
-    const userFriendsResponse = dispatch(getFriends(user.id));
-    userFriendsResponse
-      .then((data) => setFriends(data.payload))
-      .catch((error) => console.log(error.message));
-  }, [user]);
-
   // Functions
   function lookFriendPage(friend) {
+    // get user friends
+    const userFriendsResponse = dispatch(getFriends(friend.id));
+    userFriendsResponse
+      .then((data) => {
+        dispatch(setFriends(data.payload));
+        localStorage.setItem("friends", JSON.stringify(data.payload));
+      })
+      .catch((error) => console.log(error.message));
+
     if (friend.id === authUser.id) {
       dispatch(setUser(authUser));
       localStorage.setItem("user", JSON.stringify(authUser));
@@ -100,10 +101,10 @@ export default function ProfilePostsFriends() {
         </ContentBlockLink>
       </ContentBlockHeader>
       <StyledPostFriendsSubtitle>
-        {friends.length} friends
+        {userFriends.length} friends
       </StyledPostFriendsSubtitle>
       <StyledPostFriendsList>
-        {friends.map((friend, index) => {
+        {userFriends.map((friend, index) => {
           return (
             <StyledPostFriendItem
               key={index}
