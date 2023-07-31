@@ -7,6 +7,11 @@ const StyledPostsList = styled("ul")({
 });
 export default function PostList({ posts }) {
   if (posts.length === 0) return;
+  for (let index = 0; index < posts.length; index++) {
+    if (posts[index].parentId) {
+      console.log(posts[index]);
+    }
+  }
   return (
     <StyledPostsList>
       {posts.map((post, index) => (
