@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { getFriendshipRequests, updateFriendship } from '../../../redux/friends/actionCreators';
 import { useTheme } from '@mui/material/styles';
-import SideBarFriends from "../SideBarFriends";
+import SideBarFriends from "../SideBarForFriends";
 import { Profile } from '../../index';
 import { setCurrentFriend, } from '../../../redux/friends/friends.slise';
 import FriendEmptyPage from  '../FriendEmptyPage';

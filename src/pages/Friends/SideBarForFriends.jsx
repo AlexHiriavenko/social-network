@@ -1,14 +1,14 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import SideBarHeader from '../../components/Friends/SideBar/SideBarHeader';
 import styled from "@emotion/styled";
 import { Box, Typography, List, Divider, ListItemButton } from "@mui/material";
 import Friend from "../../components/Friends/Friend/Friend";
-import {GreyButton, StandardButton, BlueButton } from '../../components/StyledComponents/Buttons';
+import { GreyButton, StandardButton, BlueButton } from '../../components/StyledComponents/Buttons';
 import { NavLink } from "react-router-dom";
-import {SVGArrowBack} from '../../components/SVG/svg';
+import { SVGArrowBack } from '../../components/SVG/svg';
 import { useTheme } from '@mui/material/styles';
 import { setUser } from "../../redux/user.slice/user.slice";
 import { setCurrentFriend } from '../../redux/friends/friends.slise';

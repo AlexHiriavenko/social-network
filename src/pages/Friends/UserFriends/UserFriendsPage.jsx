@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import { getFriendList } from "../../../redux/friends/actionCreators";
-import SideBarFriends from "../SideBarFriends";
+import SideBarFriends from "../SideBarForFriends";
 import { Profile } from "../../index";
 import { setCurrentFriend } from "../../../redux/friends/friends.slise";
 import FriendEmptyPage from  "../FriendEmptyPage";
