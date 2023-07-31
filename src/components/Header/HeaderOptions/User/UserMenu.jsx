@@ -7,7 +7,9 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useTheme } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getFriends,
   setAuthorizedUser,
+  setFriends,
   setUser,
 } from "../../../../redux/user.slice/user.slice";
 
@@ -19,13 +21,23 @@ function UserMenu(props) {
   let authorizedUser = useSelector((state) => state.user.authorizedUser);
 
   function showAuthorizedUser() {
-    if(authorizedUser == null){
-      dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
-      authorizedUser = JSON.parse(localStorage.getItem("authorizedUser")) ;
+    if (authorizedUser == null) {
+      dispatch(
+        setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser")))
+      );
+      authorizedUser = JSON.parse(localStorage.getItem("authorizedUser"));
     }
     dispatch(setUser(authorizedUser));
-    localStorage.setItem("user", JSON.stringify(authorizedUser))
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    localStorage.setItem("user", JSON.stringify(authorizedUser));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    // get user friends
+    const userFriendsResponse = dispatch(getFriends(authorizedUser.id));
+    userFriendsResponse
+      .then((data) => {
+        dispatch(setFriends(data.payload));
+        localStorage.setItem("friends", JSON.stringify(data.payload));
+      })
+      .catch((error) => console.log(error.message));
   }
 
   return (
@@ -62,7 +74,7 @@ function UserMenu(props) {
           <Avatar
             sx={{ minWidth: "40px", minHeight: "40px" }}
             alt="user icon"
-            src="https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg"
+            src={authorizedUser.profilePicture}
           />
           <Typography
             fontWeight={700}

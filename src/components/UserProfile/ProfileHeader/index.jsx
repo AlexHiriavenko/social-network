@@ -187,6 +187,7 @@ export default function ProfileHeader() {
   // Constants
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
+  const userFriends = useSelector((state) => state.user.friends);
   // State
   const [mutualFriendsIsOpen, setMutualFriendsStatus] = useState(true);
   const [isAuthorized, setAuthorized] = useState(false);
@@ -236,7 +237,7 @@ export default function ProfileHeader() {
               {user ? user.fullName : ""}
             </StyledProfileUserName>
             <StyledProfileUserFriends href="#">
-              Friends: {user && user.friends ? user.friends.length : 0}
+              Friends: {userFriends.length}
             </StyledProfileUserFriends>
             <AvatarGroup
               max={6}

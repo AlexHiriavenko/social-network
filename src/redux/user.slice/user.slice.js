@@ -41,7 +41,7 @@ const UserSlice = createSlice({
     allUsers: [],
     user: JSON.parse(localStorage.getItem("user")) || null,
     authorizedUser: JSON.parse(localStorage.getItem("authorizedUser")) || null,
-    friends: [],
+    friends: JSON.parse(localStorage.getItem("friends")) || [],
     isLoading: true,
   },
 
