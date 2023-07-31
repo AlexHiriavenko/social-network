@@ -50,4 +50,5 @@ export const StandardButton = styled(Button)({
         paddingRight: '8px',
         boxShadow: 'none',
         '&:hover': {boxShadow: 'none'},
+        touchAction: 'manipulation',
     });

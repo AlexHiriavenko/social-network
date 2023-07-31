@@ -29,9 +29,10 @@ function FriendSuggestionsPage() {
     },[dispatch])
 
 
-    const handleClickAdd = (friendId) => {
-        console.log(friendId);
-        dispatch(createFriendship({friendId: friendId}));
+    const handleClickAdd = (friend) => {
+        console.log(friend);
+        console.log("handleClickAdd");
+        dispatch(createFriendship({friendId: friend.friend.id}));
     }
 
     const handleClickRemoveSuggestion = (payload) => {

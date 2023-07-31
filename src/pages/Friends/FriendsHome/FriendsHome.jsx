@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+// eslint-disable-next-line no-unused-vars
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import Friend from "../../../components/Friends/Friend/Friend";
@@ -29,7 +29,7 @@ function FriendsHome() {
         dispatch(getFriendList(user.id));
         dispatch(getFriendshipRequests(user.id));
         dispatch(getFriendSuggestions(user.id));
-    },[])
+    },[dispatch, user.id])
 
     const handleClickConfirm = (friend) => {
         const payload = {id: friend.id, status: "accepted", userID: friend.user.id, friendID: friend.friend.id}
