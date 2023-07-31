@@ -8,6 +8,7 @@ import userReducer from "./user.slice/user.slice.js";
 import darkModeSReducer from "./darkMode.slice/darkMode.slice";
 import modalReducer from "./modal.slice/modal.slice";
 
+
 export const store = configureStore({
   reducer: {
     login: loginReducer,
@@ -19,4 +20,8 @@ export const store = configureStore({
     modal: modalReducer,
     user: userReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: false,
+      }),
 });

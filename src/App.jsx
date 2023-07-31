@@ -35,6 +35,8 @@ import {
   setUser,
   setUsers,
 } from "./redux/user.slice/user.slice";
+import ChangePasswordForm from "./pages/LogIn/ChangePasswordForm.jsx";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -116,6 +118,7 @@ function App() {
           path="/login"
           element={<LogIn isLoggedIn={isLoggedIn} onClick={handleLogIn} />}
         />
+        <Route path="/password" element={<ChangePasswordForm />} />
       </Routes>
       <Modals />
     </>
