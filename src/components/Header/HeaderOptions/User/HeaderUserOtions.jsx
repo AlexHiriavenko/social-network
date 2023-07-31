@@ -52,7 +52,7 @@ function HeaderUserOtions() {
           <Avatar
             sx={{ minWidth: "40px", minHeight: "40px" }}
             alt="user icon"
-            src={authorizedUser.profilePicture}
+            src={authorizedUser ? authorizedUser.profilePicture : ""}
           />
         </IconButton>
       </Tooltip>
