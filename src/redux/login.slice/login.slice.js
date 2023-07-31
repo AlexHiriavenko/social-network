@@ -7,6 +7,7 @@ import instance from "../../instance.js";
 
 export const logIn = createAsyncThunk(
     'Login/logIn',
+
     async function({email,password}) {
         const token   =  await axios.post(`http://localhost:9000/api/auth/login`,{email:email,password:password});
         document.cookie = `token=${token.data.accessToken}`;
