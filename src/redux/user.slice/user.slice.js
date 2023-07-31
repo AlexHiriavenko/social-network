@@ -66,7 +66,7 @@ const UserSlice = createSlice({
       state.isLoading = false;
       state.value = action.payload;
     },
-    [getUsers.rejected]: (state) => {},
+    [getUsers.rejected]: (state) => { },
   },
 });
 

@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import instance from "../../instance";
 
 //Получение всех постов
 export const getPosts = createAsyncThunk("Posts/getPosts", async function () {
@@ -105,6 +106,6 @@ const postSlice = createSlice({
   },
 });
 
-export const { createPost, deletePost } = postSlice.actions;
+export const { setPosts, setPost } = postSlice.actions;
 
 export default postSlice.reducer;
