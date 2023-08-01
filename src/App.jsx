@@ -25,7 +25,7 @@ function App() {
       localStorage.getItem("auth")
     ) {
       const auth = localStorage.getItem("auth");
-      const authorizedUserResponse = dispatch(getProfile());
+      const authorizedUserResponse = dispatch(getUser(JSON.parse(auth).id));
       authorizedUserResponse
         .then((result) => {
           dispatch(
