@@ -30,7 +30,7 @@ const navigate = useNavigate()
           <h2 className="register-title">Забыли пароль?</h2>
           <Box className="form-modal">
 
-            <form className={"forgot-form"}>
+            <form className="forgot-form">
 
             <TextField
               id="emailOrPhone"
