@@ -13,10 +13,12 @@ import FriendEmptyPage from  '../FriendEmptyPage';
 
 
 function FriendRequests(){
-    const user = useSelector((store)=>store.user.authorizedUser);
+
+    
+    const dispatch = useDispatch(); 
     const theme = useTheme();
 
-    const dispatch = useDispatch(); 
+    const user = useSelector((store)=>store.user.authorizedUser);
     const friendsRequests = useSelector((store)=>store.friends.friendsRequests);
     const currentFriend = useSelector((store)=>store.friends.currentFriend);
 
@@ -24,7 +26,7 @@ function FriendRequests(){
         ? friendsRequests.filter((elem) => elem.status==='pending' && elem.user.id !== user.id)
         : []);
 
-    const requestsCount = friendsRequestsToUser.length === 0 ? null : friendsRequestsToUser.length;
+    const requestsCount = friendsRequestsToUser.length === 0 ? '' : friendsRequestsToUser.length;
 
     useEffect(()=>{
         if(friendsRequestsToUser.length === 0) {
@@ -54,17 +56,17 @@ function FriendRequests(){
         display: 'flex', 
         flexDirection: 'column', 
         padding: 20, 
-        backgroundColor: theme.palette.backgroundColor.page/* '#F0F2F5' */,
+        backgroundColor: theme.palette.backgroundColor.page,
     }))
 
-    const LinkStyled = styled(NavLink)(({color}) => ({
+    const LinkStyled = styled(NavLink)(({theme}) => ({
         fontFamily: 'inherit',
         fontSize: '.8125rem',
         fontWeight: 400,
         lineHeight: 1.2308,
         paddingBottom: 1,
-        color: {color},
         textDecoration: 'none',
+        color: theme.palette.textColor.blueLink,
     }))
 
     const textMessage = friendsRequestsToUser.length > 0 
@@ -74,7 +76,7 @@ function FriendRequests(){
     const noItemMessage = "No new requests";
 
     const additionItems = (
-        <LinkStyled color={theme.palette.textColor.blueLink} to="#">View sent requests</LinkStyled>
+        <LinkStyled to="#">View sent requests</LinkStyled>
     )
 
     return(

@@ -31,13 +31,17 @@ function Friend (props) {
         : null;
 
     const listMutualFriends =  mutualFriends && mutualFriends.length > countForDisplayMF
-        ? (<ul>
+        ? ( 
+            <ul>
                 {mutualFriends.slice(0, countForDisplayMF).map(el => <li key={el.id}>{el.fullName}</li>)}
                 <li>and {countMutualFriends-countForDisplayMF} more...</li>
-            </ul>) 
-        : ( <ul>
+            </ul>
+            ) 
+        : ( 
+            <ul>
                 {mutualFriends.map(el => <li key={el.id}>{el.fullName}</li>)}
-            </ul>);
+            </ul>
+            );
 
     const CardStyled = styled(Card)(({horizontal, theme}) => ({
         maxWidth: horizontal ? "100%" : "250px",
@@ -150,7 +154,6 @@ function Friend (props) {
         </CardStyled>
         </>
     )
-
 }
 
 export default Friend;
