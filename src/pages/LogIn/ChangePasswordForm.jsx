@@ -17,9 +17,9 @@ const navigate = useNavigate();
         //validationSchema: forgotValidation,
         onSubmit: async() => {
           const status = await  dispatch(changePassword({code:changePasswordForm.values.code,newPassword: changePasswordForm.values.newPassword}))
-            if(+status == 200){
+
                 navigate('/')
-            }
+
             return console.log({
                 code:changePasswordForm.values.code,
                 newPassword: changePasswordForm.values.newPassword,

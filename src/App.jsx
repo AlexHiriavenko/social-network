@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import Header from "./components/Header/Header";
-import { logIn } from "./redux/login.slice/login.slice";
 import Modals from "./components/Modals/Modals";
 import {
   getUser,
@@ -21,6 +19,7 @@ function App() {
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
 
   //const isLoggedIn = token? true : false;
+
 
   useEffect(() => {
     if (
