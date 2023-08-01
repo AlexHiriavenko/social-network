@@ -6,7 +6,6 @@ import {
   getUser,
   getUsers,
   setAuthorizedUser,
-  setUser,
   setUsers,
 } from "./redux/user.slice/user.slice";
 import { getPosts, setPosts } from "./redux/post.slice/post.slice";
@@ -17,8 +16,6 @@ function App() {
 
   const token = useSelector((state) => state.login.token);
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
-
-  //const isLoggedIn = token? true : false;
 
 
   useEffect(() => {
