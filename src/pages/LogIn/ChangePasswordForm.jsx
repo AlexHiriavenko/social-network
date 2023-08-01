@@ -34,7 +34,7 @@ const navigate = useNavigate();
             <Box className="form__wrapper">
                 <h2 className="register-title">Вoccтановление пароля</h2>
                 <Box className="form-modal">
-                    <form>
+                    <form className="change_password-form">
                         <TextField
                             id="code"
                             onBlur={changePasswordForm.handleBlur}

@@ -83,7 +83,22 @@
 
 
 }
+.forgot-form{
+  display: flex;
+  gap:7px;
+  flex-wrap: wrap;
+  margin-left: -15px;
 
+
+}
+.change_password-form{
+  display: flex;
+  gap:7px;
+  flex-wrap: wrap;
+  margin-left: -15px;
+
+
+}
 .recents-account {
   align-self: flex-start;
 }

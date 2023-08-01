@@ -29,7 +29,7 @@ const navigate = useNavigate()
         <Box className="form__wrapper">
           <h2 className="register-title">Забыли пароль?</h2>
           <Box className="form-modal">
-            <form>
+            <form className={"forgot-form"}>
             <TextField
               id="emailOrPhone"
               onBlur={forgotForm.handleBlur}
