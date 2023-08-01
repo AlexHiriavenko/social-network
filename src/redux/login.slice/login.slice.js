@@ -70,7 +70,7 @@ async function() {
         document.cookie = `refresh=${token.data.refreshToken}`;
         let auth = parseJwt(token.data.accessToken)
         localStorage.setItem('auth',JSON.stringify(auth))
-        const { data } = await instance.get(`/users/${auth.id}`);
+        const { data } = await instance.get(`/users/profile`);
         localStorage.setItem("authorizedUser",JSON.stringify(data))
         localStorage.setItem("user",JSON.stringify(data))
 

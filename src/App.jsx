@@ -1,14 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import Header from "./components/Header/Header";
-import { logIn } from "./redux/login.slice/login.slice";
 import Modals from "./components/Modals/Modals";
 import {
+  getProfile,
   getUser,
   getUsers,
   setAuthorizedUser,
-  setUser,
   setUsers,
 } from "./redux/user.slice/user.slice";
 import { getPosts, setPosts } from "./redux/post.slice/post.slice";
@@ -19,8 +17,6 @@ function App() {
 
   const token = useSelector((state) => state.login.token);
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
-
-  //const isLoggedIn = token? true : false;
 
   useEffect(() => {
     if (

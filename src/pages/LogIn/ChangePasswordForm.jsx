@@ -17,9 +17,9 @@ const navigate = useNavigate();
         //validationSchema: forgotValidation,
         onSubmit: async() => {
           const status = await  dispatch(changePassword({code:changePasswordForm.values.code,newPassword: changePasswordForm.values.newPassword}))
-            if(+status == 200){
+
                 navigate('/')
-            }
+
             return console.log({
                 code:changePasswordForm.values.code,
                 newPassword: changePasswordForm.values.newPassword,
@@ -34,7 +34,7 @@ const navigate = useNavigate();
             <Box className="form__wrapper">
                 <h2 className="register-title">Вoccтановление пароля</h2>
                 <Box className="form-modal">
-                    <form>
+                    <form className="change_password-form">
                         <TextField
                             id="code"
                             onBlur={changePasswordForm.handleBlur}

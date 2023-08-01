@@ -3,9 +3,11 @@ import forgotValidation from "./Validation/forgotValidation";
 import { useFormik } from "formik";
 import {useDispatch} from "react-redux";
 import {sendEmail} from "../../redux/login.slice/login.slice.js";
+import {  useNavigate } from "react-router-dom";
 
 export default function ForgotForm(props) {
 const dispatch = useDispatch();
+const navigate = useNavigate()
   const { modal, handleModal } = props;
   const forgotForm = useFormik({
     initialValues: {
@@ -14,6 +16,7 @@ const dispatch = useDispatch();
     validationSchema: forgotValidation,
     onSubmit: () => {
       dispatch(sendEmail(forgotForm.values.emailOrPhone))
+     navigate("/password")
       return console.log({
         emailOrPhone: forgotForm.values.emailOrPhone,
       });
@@ -22,15 +25,13 @@ const dispatch = useDispatch();
 
   return (
     <>
-      <Modal
-        open={modal}
-        onClose={handleModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        style={{ overflow: "auto", outline: "0" }}>
+
         <Box className="form__wrapper">
           <h2 className="register-title">Забыли пароль?</h2>
           <Box className="form-modal">
+
+            <form className="forgot-form">
+
             <TextField
               id="emailOrPhone"
               onBlur={forgotForm.handleBlur}
@@ -51,10 +52,16 @@ const dispatch = useDispatch();
               color="success"
               style={{ alignSelf: "center" }}>
               Отправить письмо
-            </Button>
+            </Button></form>
           </Box>
         </Box>
-      </Modal>
+
     </>
   );
 }
+/*<Modal
+    open={modal}
+    onClose={handleModal}
+    aria-labelledby="modal-modal-title"
+    aria-describedby="modal-modal-description"
+    style={{ overflow: "auto", outline: "0" }}>     </Modal>*/
