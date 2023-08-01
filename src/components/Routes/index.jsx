@@ -24,6 +24,7 @@ import {
 } from "../../pages";
 import ChangePasswordForm from "../../pages/LogIn/ChangePasswordForm";
 import { useSelector } from "react-redux";
+import ForgotForm from "../../pages/LogIn/ForgotForm.jsx";
 
 export default function AllRoutes() {
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
@@ -88,6 +89,7 @@ export default function AllRoutes() {
         element={<LogIn isLoggedIn={isLoggedIn} onClick={handleLogIn} />}
       />
       <Route path="/password" element={<ChangePasswordForm />} />
+      <Route path="/forgot" element={<ForgotForm />} />
     </Routes>
   );
 }

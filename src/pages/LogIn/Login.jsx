@@ -29,6 +29,7 @@ export default function LogIn() {
   const [registerModal, setRegisterModal] = useState(false);
   const handleRegisterModal = () => {
     setRegisterModal(!registerModal);
+
   };
   const loginForm = useFormik({
     initialValues: {
@@ -57,7 +58,8 @@ export default function LogIn() {
 
   const [forgotModal, setForgotModal] = useState(false);
   const handleForgot = () => {
-    setForgotModal(!forgotModal);
+    //setForgotModal(!forgotModal);
+    navigate("/forgot")
   };
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -156,8 +158,8 @@ export default function LogIn() {
       </section>
             )}
       <RegisterModal modal={registerModal} handleModal={handleRegisterModal} />
-      <ForgotForm modal={forgotModal} handleModal={handleForgot} />
+
     </>
   );
 }
-//
+//  <ForgotForm modal={forgotModal} handleModal={handleForgot} />
