@@ -15,9 +15,12 @@ import {useDispatch, useSelector} from "react-redux";
 import { logIn,setLogin } from "../../redux/login.slice/login.slice";
 import { useNavigate} from "react-router-dom";
 import {readCookie} from "../../readCookie.js";
+import axios from 'axios'
 export default function LogIn() {
     const navigate = useNavigate();
    // const token = useSelector(store => store.login.token)
+    let url = window.location.href.slice(0,-6);
+
   useEffect(()=>{
    if(!readCookie('token')) {
      document.cookie = `token=${0}`
@@ -29,6 +32,7 @@ export default function LogIn() {
   const [registerModal, setRegisterModal] = useState(false);
   const handleRegisterModal = () => {
     setRegisterModal(!registerModal);
+
   };
   const loginForm = useFormik({
     initialValues: {
@@ -57,7 +61,8 @@ export default function LogIn() {
 
   const [forgotModal, setForgotModal] = useState(false);
   const handleForgot = () => {
-    setForgotModal(!forgotModal);
+    //setForgotModal(!forgotModal);
+    navigate("/forgot")
   };
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -148,7 +153,12 @@ export default function LogIn() {
                 color="success">
                 Создать новый аккаунт
               </Button>
-                <a  className="google_link" href={"http://localhost:9000/oauth2/authorization/google"} onClick={async() =>{dispatch(setLogin())}} >Login with Google</a><br/>
+                <a  className="google_link" href={"https://social-network-backend-2782464b9c31.herokuapp.com/oauth2/authorization/google"} onClick={async() =>{
+
+                   await axios.post(`https://social-network-backend-2782464b9c31.herokuapp.com/api/auth`,{email:url})
+                    dispatch(setLogin())
+
+                    }} >Login with Google</a><br/>
             </form>
 
           </div>
@@ -156,8 +166,8 @@ export default function LogIn() {
       </section>
             )}
       <RegisterModal modal={registerModal} handleModal={handleRegisterModal} />
-      <ForgotForm modal={forgotModal} handleModal={handleForgot} />
+
     </>
   );
 }
-//
+//  <ForgotForm modal={forgotModal} handleModal={handleForgot} />

@@ -12,8 +12,8 @@ const StyledNavigationContainer = styled(ProfileContainer)(({ theme }) => ({
   paddingTop: "3px",
   position: "relative",
   borderTop: `1px solid ${theme.palette.backgroundColor.pageSeparator}`,
-  paddingLeft: "5px", 
-  paddingRight: "5px", 
+  paddingLeft: "5px",
+  paddingRight: "5px",
 }));
 const StyledNavigation = styled("nav")(({ theme }) => ({
   boxShadow: "0px 16px 27px -19px #8a8a8a",
@@ -118,21 +118,39 @@ const StyledNavigationShowMoreButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function ProfileNavigation() {
-  const [listStatus, setListStatus] = useState(false);
+  // Constants
   const location = useLocation();
   const navRef = useRef(null);
-
+  // State
+  const [listStatus, setListStatus] = useState(false);
+  const [locationNameNavigation, setLocationNameNavigation] = useState("");
+  // Functions
   function toggleList() {
     setListStatus(!listStatus);
   }
+  // Find Location for right way
+  function whatLocation(locationArray) {
+    console.log(locationArray[1]);
+    if (locationArray[1] === "profile") {
+      setLocationNameNavigation("profile");
+    }
+    if (locationArray[1] === "friends") {
+      setLocationNameNavigation("friends/suggestions");
+    }
+  }
   useEffect(() => {
-    const locationName = location.pathname.slice(8);
+    const locationNameArray = location.pathname.split("/");
+    whatLocation(locationNameArray);
+    const locationName = "/" + locationNameArray[locationNameArray.length - 1];
+
     const links = Array.prototype.slice.call(navRef.current.children);
     const newRoute = links.find((link) => {
       if (locationName === "" && link.dataset.loc === "/") return link;
       if (link.dataset.loc === locationName) return link;
     });
+
     if (!newRoute) return;
+    
     links.find((link) => link.dataset.active).removeAttribute("data-active");
     newRoute.setAttribute("data-active", true);
     setListStatus(false);
@@ -146,19 +164,28 @@ export default function ProfileNavigation() {
           style={listStatus ? { display: "flex", width: "80%" } : null}
         >
           <StyledNavigationItem
-            to={"/profile/"}
+            to={`/${locationNameNavigation}/`}
             data-active={true}
             data-loc="/"
           >
             Posts
           </StyledNavigationItem>
-          <StyledNavigationItem to={"/profile/about"} data-loc="/about">
+          <StyledNavigationItem
+            to={`/${locationNameNavigation}/about`}
+            data-loc="/about"
+          >
             About
           </StyledNavigationItem>
-          <StyledNavigationItem to={"/profile/friends"} data-loc="/friends">
+          <StyledNavigationItem
+            to={`/${locationNameNavigation}/friends`}
+            data-loc="/friends"
+          >
             Friends
           </StyledNavigationItem>
-          <StyledNavigationItem to={"/profile/photos"} data-loc="/photos">
+          <StyledNavigationItem
+            to={`/${locationNameNavigation}/photos`}
+            data-loc="/photos"
+          >
             Photos
           </StyledNavigationItem>
         </StyledNavigation>

@@ -37,6 +37,7 @@ const StyledPostContent = styled(Typography)(({ theme }) => ({
   paddingRight: "16px",
   paddingLeft: "16px",
   marginBottom: "16px",
+  fontFamily: "sans-serif",
 }));
 const StyledPostImages = styled(Box)({
   display: "flex",
@@ -124,9 +125,9 @@ const StyledPostButton = styled(Button)(({ theme }) => ({
     backgroundColor: theme.palette.buttonColor.backgroundColor,
   },
 }));
+
 export default function Post(props) {
-  const { author, authorImage, likes, comments, reposts, content, images } =
-    props;
+  const { user, likes, comments, reposts, content, postImages } = props;
   const photosRef = useRef(null);
   const [photoHeight, setPhotoHeight] = useState(195);
   useEffect(() => {
@@ -141,62 +142,65 @@ export default function Post(props) {
     <StyledPost>
       <StyledPostAuthor>
         <BlockUserImage
-          src={authorImage}
+          src={user.profilePicture}
           alt="Author image"
           width={40}
           height={40}
         />
-        <StyledPostAuthorName>{author}</StyledPostAuthorName>
+        <StyledPostAuthorName>{user.fullName}</StyledPostAuthorName>
       </StyledPostAuthor>
 
       <StyledPostContent>{content}</StyledPostContent>
 
       <StyledPostImages>
-        {images && <StyledPostImage src={images[0]} alt="post image" />}
+        {postImages.length > 0 && (
+          <StyledPostImage src={postImages[0].imgUrl} alt="post image" />
+        )}
         <StyledPostExtraImages>
-          {images.map((imgUrl, index) => {
-            if (index === 0) return;
-            if (index > 3) return;
-            if (index === 3) {
-              return (
-                <StyledPostImageItem key={index}>
-                  <StyledPostLastShowedItem>
-                    +{images.length - 3}
-                  </StyledPostLastShowedItem>
-                  <StyledPostImage
-                    src={imgUrl}
-                    alt="post image"
-                    ref={photosRef}
-                    width={195}
-                    height={photoHeight}
-                  />
-                </StyledPostImageItem>
-              );
-            } else {
-              return (
-                <StyledPostImageItem key={index}>
-                  <StyledPostImage
-                    src={imgUrl}
-                    alt="post image"
-                    ref={photosRef}
-                    width={195}
-                    height={photoHeight}
-                  />
-                </StyledPostImageItem>
-              );
-            }
-          })}
+          {postImages.length > 0 &&
+            postImages.map((postImage, index) => {
+              if (index === 0) return;
+              if (index > 3) return;
+              if (index === 3) {
+                return (
+                  <StyledPostImageItem key={index}>
+                    <StyledPostLastShowedItem>
+                      +{postImages.length - 3}
+                    </StyledPostLastShowedItem>
+                    <StyledPostImage
+                      src={postImage.imgUrl}
+                      alt="post image"
+                      ref={photosRef}
+                      width={195}
+                      height={photoHeight}
+                    />
+                  </StyledPostImageItem>
+                );
+              } else {
+                return (
+                  <StyledPostImageItem key={index}>
+                    <StyledPostImage
+                      src={postImage.imgUrl}
+                      alt="post image"
+                      ref={photosRef}
+                      width={195}
+                      height={photoHeight}
+                    />
+                  </StyledPostImageItem>
+                );
+              }
+            })}
         </StyledPostExtraImages>
       </StyledPostImages>
       <StyledPostReach>
         <StyledPostReachItem>
-          {likes ? `${likes} likes` : null}
+          {likes.length > 0 ? `${likes.length} likes` : null}
         </StyledPostReachItem>
         <StyledPostReachItem>
-          {comments.length ? `${comments.length} comments` : null}
+          {comments.length > 0 ? `${comments.length} comments` : null}
         </StyledPostReachItem>
         <StyledPostReachItem>
-          {reposts ? `${reposts} shares` : null}
+          {reposts.length > 0 ? `${reposts.length} shares` : null}
         </StyledPostReachItem>
       </StyledPostReach>
       <StyledPostButtons>
