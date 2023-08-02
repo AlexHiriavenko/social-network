@@ -113,7 +113,7 @@ export default function ProfilePostsFriends() {
               <StyledPostFriendImage
                 src={
                   friend.friend.profilePicture ||
-                  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1200px-User-avatar.svg.png"
+                  "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
                 }
                 alt="foto"
                 width={204}

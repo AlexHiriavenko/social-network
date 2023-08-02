@@ -276,7 +276,10 @@ export default function Post(props) {
     <StyledPost>
       <StyledPostAuthor>
         <BlockUserImage
-          src={user.profilePicture}
+          src={
+            user.profilePicture ||
+            "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
+          }
           alt="Author image"
           width={40}
           height={40}
@@ -341,7 +344,10 @@ export default function Post(props) {
             </StyledPostImages>
             <StyledPostAuthor style={{ paddingTop: "16px" }}>
               <BlockUserImage
-                src={repost.user && repost.user.profilePicture}
+                src={
+                  (repost.user && repost.user.profilePicture) ||
+                  "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
+                }
                 alt="Author image"
                 width={40}
                 height={40}
