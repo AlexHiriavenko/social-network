@@ -15,7 +15,7 @@ function UserFriendsPage() {
     const userFriends = useSelector((store)=>store.friends.friendsList);
     const currentFriend = useSelector((store)=>store.friends.currentFriend);
 
-    const friendsCount = userFriends.length === 0 ? null : userFriends.length;
+    const friendsCount = userFriends.length === 0 ? '' : userFriends.length;
 
     useEffect(()=>{
         if(userFriends.length === 0) {
@@ -35,7 +35,7 @@ function UserFriendsPage() {
         display: 'flex', 
         flexDirection: 'column', 
         padding: 20, 
-        backgroundColor: theme.palette.backgroundColor.page/* '#F0F2F5' */,
+        backgroundColor: theme.palette.backgroundColor.page,
     }))
 
     const textMessage = getFriendList.length > 0 
