@@ -2,15 +2,8 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { Box } from "@mui/material";
 import styled from "@emotion/styled";
 import { openCreateModal } from "../../../redux/modal.slice/modal.slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BlockUserImage } from "../../UserProfile/StyledComponents/ContentBlock/StyledComponents";
-
-const mockUser = {
-  image:
-    "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg",
-  firstName: "Viktor",
-  lastName: "Ostapenko",
-};
 
 const StyledCreatePost = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.backgroundColor.section,
@@ -67,14 +60,20 @@ const StyledCreatePostButton = styled("button")(({ theme }) => ({
 }));
 
 export default function CreatePost() {
+  // Constants
   const dispatch = useDispatch();
+  const authUser = useSelector((state) => state.user.authorizedUser);
+  // Functions
   const handleOpen = () => dispatch(openCreateModal());
 
   return (
     <StyledCreatePost>
       <StyledCreatePostHeader>
         <BlockUserImage
-          src={mockUser.image}
+          src={
+            (authUser && authUser.profilePicture) ||
+            "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
+          }
           alt=""
           width={40}
           height={40}

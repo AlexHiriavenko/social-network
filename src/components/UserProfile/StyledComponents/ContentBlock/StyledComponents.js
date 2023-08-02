@@ -63,6 +63,7 @@ const ContentBlockList = styled(Box)({
 const BlockUserImage = styled("img")({
   objectFit: "cover",
   borderRadius: "50%",
+  cursor: "pointer"
 });
 export {
   ContentBlock,
