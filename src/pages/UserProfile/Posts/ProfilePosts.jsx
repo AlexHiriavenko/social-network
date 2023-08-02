@@ -83,7 +83,7 @@ export default function ProfilePosts() {
             maxHeight: userInfoHeight + "px",
           }}
         >
-          <CreatePost />
+          {user.isAuthorized && <CreatePost />}
           <PostList posts={allUserPosts} />
         </StyledPostsPublications>
       </StyledPostsContainer>
