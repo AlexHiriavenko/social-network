@@ -24,7 +24,6 @@ function Friend (props) {
 
     const countForDisplayMF = 2;
     const countMutualFriends = mutualFriends.length;
-    console.log(countMutualFriends);
 
     const mutialFriendsAvatars = isAvatarMutualFriend 
         ? (mutualFriends && mutualFriends.length > 2 ? mutualFriends.slice(0, 2) : mutualFriends)
