@@ -130,12 +130,11 @@ export default function ProfileNavigation() {
   }
   // Find Location for right way
   function whatLocation(locationArray) {
-    console.log(locationArray[1]);
     if (locationArray[1] === "profile") {
       setLocationNameNavigation("profile");
     }
     if (locationArray[1] === "friends") {
-      setLocationNameNavigation("friends/suggestions");
+      setLocationNameNavigation(`friends/${locationArray[2]}`);
     }
   }
   useEffect(() => {
@@ -150,7 +149,7 @@ export default function ProfileNavigation() {
     });
 
     if (!newRoute) return;
-    
+
     links.find((link) => link.dataset.active).removeAttribute("data-active");
     newRoute.setAttribute("data-active", true);
     setListStatus(false);

@@ -76,7 +76,7 @@ export default function EditProfileModal() {
   const editProfileModalIsOpen = useSelector(
     (state) => state.modal.editProfile.isOpen
   );
-  const user = useSelector((state) => state.user.user);
+  const authUser = useSelector((state) => state.user.authorizedUser);
   const navigate = useNavigate();
   // States
   const [isEdit, setInputStatus] = useState(false);
@@ -88,10 +88,10 @@ export default function EditProfileModal() {
   const handleClose = () => dispatch(closeEditProfileModal());
   // UseEffect
   useEffect(() => {
-    if (user && user.about) {
-      setUserAbout(user.about);
+    if (authUser && authUser.about) {
+      setUserAbout(authUser.about);
     }
-  }, [user]);
+  }, [authUser]);
   return (
     <Modal
       open={editProfileModalIsOpen}
@@ -111,7 +111,7 @@ export default function EditProfileModal() {
           <StyledEditedPartButton>Edit</StyledEditedPartButton>
           <StyledEditedContentWrapper>
             <StyledEditedUserPicture
-              src={user && user.profilePicture}
+              src={authUser && authUser.profilePicture}
               width={168}
               height={168}
             />
@@ -122,7 +122,7 @@ export default function EditProfileModal() {
           <StyledEditedPartButton>Edit</StyledEditedPartButton>
           <StyledEditedContentWrapper>
             <StyledEditedCoverPicture
-              src={user && user.profileBackgroundPicture}
+              src={authUser && authUser.profileBackgroundPicture}
               width={500}
               height={168}
             />

@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "./components/Header/Header";
 import Modals from "./components/Modals/Modals";
 import {
-    getProfile,
-    getUser,
-    getUsers,
-    setAuthorizedUser,
-    setUsers,
+  getProfile,
+  getUser,
+  getUsers,
+  setAuthorizedUser,
+  setUsers,
 } from "./redux/user.slice/user.slice";
 import { getPosts, setPosts } from "./redux/post.slice/post.slice";
 import AllRoutes from "./components/Routes";
@@ -17,7 +17,6 @@ function App() {
 
   const token = useSelector((state) => state.login.token);
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
-
 
   useEffect(() => {
     if (

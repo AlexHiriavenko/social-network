@@ -7,14 +7,24 @@ import ProfilePageButton from "../ProfilePageButton/ProfilePageButton";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { openEditProfileModal } from "../../../redux/modal.slice/modal.slice";
+import {
+  getFriends,
+  getUser,
+  setFriends,
+  setUser,
+} from "../../../redux/user.slice/user.slice";
+import { useNavigate } from "react-router-dom";
 
-const StyledProfileBackgroundWrapper = styled(Box)({
+const StyledProfileBackgroundWrapper = styled(Box)(({ theme }) => ({
   maxHeight: "450px",
+  minHeight: "150px",
   overflow: "hidden",
   borderBottomRightRadius: " 12px",
   borderBottomLeftRadius: " 12px",
   position: "relative",
-});
+  backgroundColor: theme.palette.backgroundColor.pageSeparator,
+  width: "100%",
+}));
 const StyledProfileBackgroundPicture = styled("img")({
   width: "100%",
   objectFit: "cover",
@@ -110,6 +120,7 @@ const StyledProfileUserInfoSection = styled(Box)({
   paddingLeft: "198px",
   paddingRight: "16px",
   position: "relative",
+  minHeight: "147px",
   "@media (max-width: 850px)": {
     flexDirection: "column",
     alignItems: "center",
@@ -186,13 +197,42 @@ const StyledProfileUserFriends = styled(Typography)(({ theme }) => ({
 export default function ProfileHeader() {
   // Constants
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
+  const authUser = useSelector((state) => state.user.authorizedUser);
   const userFriends = useSelector((state) => state.user.friends);
   // State
   const [mutualFriendsIsOpen, setMutualFriendsStatus] = useState(true);
   const [isAuthorized, setAuthorized] = useState(false);
   // Functions
   const handleOpen = () => dispatch(openEditProfileModal());
+  function lookUser(id) {
+    // get user friends
+    const userFriendsResponse = dispatch(getFriends(id));
+    userFriendsResponse
+      .then((data) => {
+        dispatch(setFriends(data.payload));
+        localStorage.setItem("friends", JSON.stringify(data.payload));
+      })
+      .catch((error) => console.log(error.message));
+    // checking if the user is authorized
+    if (id === authUser.id) {
+      dispatch(setUser(authUser));
+      localStorage.setItem("user", JSON.stringify(authUser));
+      navigate("/profile");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      const userResponse = dispatch(getUser(id));
+      userResponse
+        .then((data) => {
+          dispatch(setUser(data.payload));
+          localStorage.setItem("user", JSON.stringify(data.payload));
+          navigate("/profile");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        })
+        .catch((error) => error.message);
+    }
+  }
   // UseEffect
   useEffect(() => {
     setAuthorized(user.isAuthorized);
@@ -201,10 +241,12 @@ export default function ProfileHeader() {
     <StyledProfileHeader>
       <ProfileContainer>
         <StyledProfileBackgroundWrapper>
-          <StyledProfileBackgroundPicture
-            src={user ? user.profileBackgroundPicture : ""}
-            alt="profile_background_picture"
-          />
+          {user && user.profileBackgroundPicture && (
+            <StyledProfileBackgroundPicture
+              src={user.profileBackgroundPicture}
+              alt="profile_background_picture"
+            />
+          )}
           {isAuthorized && (
             <StyledProfileBackgroundWButtonsWrapper>
               <StyledProfileBackgroundButton
@@ -221,7 +263,11 @@ export default function ProfileHeader() {
         <StyledProfileUserInfoSection>
           <StyledProfileUserPictureWrapper>
             <StyledProfileUserPicture
-              src={user ? user.profilePicture : ""}
+              src={
+                user && user.profilePicture
+                  ? user.profilePicture
+                  : "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
+              }
               alt="profile_picture"
               width={168}
               height={168}
@@ -243,13 +289,17 @@ export default function ProfileHeader() {
               max={6}
               sx={{ cursor: "pointer", justifyContent: "flex-end" }}
             >
-              <Avatar alt="Remy Sharp" src="#" />
-              <Avatar alt="Travis Howard" src="#" />
-              <Avatar alt="Cindy Baker" src="#" />
-              <Avatar alt="Agnes Walker" src="#" />
-              <Avatar alt="Cindy Baker" src="#" />
-              <Avatar alt="Agnes Walker" src="#" />
-              <Avatar alt="Trevor Henderson" src="#" />
+              {userFriends.map((friendItem, index) => {
+                return (
+                  <Avatar
+                    alt={friendItem.friend.fullName}
+                    src={friendItem.friend.profilePicture}
+                    key={index}
+                    title={friendItem.friend.fullName}
+                    onClick={() => lookUser(friendItem.friend.id)}
+                  />
+                );
+              })}
             </AvatarGroup>
           </StyledProfileUserInfo>
           <StyledProfileButtonsWrapper>

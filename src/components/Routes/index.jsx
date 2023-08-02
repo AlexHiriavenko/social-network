@@ -54,7 +54,26 @@ export default function AllRoutes() {
         </Route>
         <Route path="/user-page/:id" element={<UserPage />} />
         <Route path="/friends/home" element={<FriendsHome />} />
-        <Route path="/friends/requests/" element={<FriendRequests />} />
+        <Route path="/friends/requests/" element={<FriendRequests />}>
+          <Route path="/friends/requests/" element={<ProfilePosts />} />
+          <Route path="/friends/requests/about" element={<ProfileAbout />}>
+            <Route path="/friends/requests/about/" element={<Overview />} />
+            <Route
+              path="/friends/requests/about/employment"
+              element={<Employment />}
+            />
+            <Route path="/friends/requests/about/places" element={<Places />} />
+            <Route
+              path="/friends/requests/about/contacts"
+              element={<Contacts />}
+            />
+          </Route>
+          <Route
+            path="/friends/requests/friends"
+            element={<ProfileFriends />}
+          />
+          <Route path="/friends/requests/photos" element={<ProfilePhotos />} />
+        </Route>
         <Route path="/friends/suggestions/" element={<FriendSuggestions />}>
           <Route path="/friends/suggestions/" element={<ProfilePosts />} />
           <Route path="/friends/suggestions/about" element={<ProfileAbout />}>
@@ -81,7 +100,32 @@ export default function AllRoutes() {
             element={<ProfilePhotos />}
           />
         </Route>
-        <Route path="//friends/allfriends" element={<UserFriendsPage />} />
+        <Route path="//friends/allfriends" element={<UserFriendsPage />}>
+          <Route path="/friends/allfriends/" element={<ProfilePosts />} />
+          <Route path="/friends/allfriends/about" element={<ProfileAbout />}>
+            <Route path="/friends/allfriends/about/" element={<Overview />} />
+            <Route
+              path="/friends/allfriends/about/employment"
+              element={<Employment />}
+            />
+            <Route
+              path="/friends/allfriends/about/places"
+              element={<Places />}
+            />
+            <Route
+              path="/friends/allfriends/about/contacts"
+              element={<Contacts />}
+            />
+          </Route>
+          <Route
+            path="/friends/allfriends/friends"
+            element={<ProfileFriends />}
+          />
+          <Route
+            path="/friends/allfriends/photos"
+            element={<ProfilePhotos />}
+          />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Route>
       <Route
