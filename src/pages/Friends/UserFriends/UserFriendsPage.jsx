@@ -12,16 +12,20 @@ import FriendEmptyPage from  "../FriendEmptyPage";
 function UserFriendsPage() {
 
     const dispatch = useDispatch(); 
-    const userFriends = useSelector((store)=>store.friends.friendsList);
+    const user = useSelector((store)=>store.user.authorizedUser);
+    const friends = useSelector((store)=>store.friends.friendsList);
     const currentFriend = useSelector((store)=>store.friends.currentFriend);
+    const userFriends = (friends.length > 0 
+        ? friends.filter((elem) => elem.status==='accepted')
+        : []);
 
     const friendsCount = userFriends.length === 0 ? '' : userFriends.length;
 
     useEffect(()=>{
-        if(userFriends.length === 0) {
+        if(friends.length === 0) {
             dispatch(setCurrentFriend({}));
         } 
-    },[userFriends, dispatch])
+    },[friends, dispatch])
 
     useEffect(()=>{
         dispatch(getFriendList());
