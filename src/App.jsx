@@ -19,7 +19,7 @@ function App() {
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
 
   useEffect(() => {
-    if (
+ /*   if (
       !localStorage.getItem("authorizedUser") &&
       localStorage.getItem("auth")
     ) {
@@ -56,7 +56,7 @@ function App() {
       .then((result) => {
         dispatch(setPosts(result.payload));
       })
-      .catch((error) => alert(error));
+      .catch((error) => alert(error));*/
   }, [isLoggedIn]);
 
   return (

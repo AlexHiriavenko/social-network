@@ -9,7 +9,7 @@ export default function PostList({ posts }) {
   if (posts.length === 0) return;
   return (
     <StyledPostsList>
-      {posts.map((post, index) => (
+      {posts?.map((post, index) => (
         <Post {...post} key={index} />
       ))}
     </StyledPostsList>

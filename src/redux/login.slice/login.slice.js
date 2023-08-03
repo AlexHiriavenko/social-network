@@ -26,9 +26,11 @@ export const getAccessToken = createAsyncThunk(
     async function() {
 
         const refresh = readCookie('refresh')
-        let token = await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/auth/token`,{refreshToken:refresh})
-        document.cookie = `token=${token.data.accessToken}`;
-
+        console.log(refresh)
+        let token = await axios.post(`https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/token`,{refreshToken:refresh})
+        console.log(token.data)
+     //   document.cookie = `token=${token.data.accessToken}`;
+return token.data.accessToken;
     }
 
 )
@@ -56,7 +58,7 @@ export const changePassword = createAsyncThunk(
 export const register = createAsyncThunk(
     'Login/register',
     async function({emailOrPhone,password,name,surname,gender,mounth,day,year}) {
-         await axios.post(`https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/registration`,{email:emailOrPhone,password:password,name:name,surname:surname,gender:gender,month:mounth,day:day,year:year});
+         await axios.post(`https://social-network-backend-2782464b9c31.herokuapp.com/auth/registration`,{email:emailOrPhone,password:password,name:name,surname:surname,gender:gender,month:mounth,day:day,year:year});
 
     }
 )
