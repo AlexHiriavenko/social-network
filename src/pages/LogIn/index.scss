@@ -76,7 +76,29 @@
     width: 250px;
   }
 }
+.register-form{
+  display: flex;
+  gap:7px;
+  flex-wrap: wrap;
 
+
+}
+.forgot-form{
+  display: flex;
+  gap:7px;
+  flex-wrap: wrap;
+  margin-left: -15px;
+
+
+}
+.change_password-form{
+  display: flex;
+  gap:7px;
+  flex-wrap: wrap;
+  margin-left: -15px;
+
+
+}
 .recents-account {
   align-self: flex-start;
 }
@@ -181,4 +203,11 @@
   flex-direction: column;
   gap: 25px;
   padding: 16px;
+}
+.google_link {
+
+  color:gray;
+  font-size: 20px;
+  font-weight: bold;
+
 }
