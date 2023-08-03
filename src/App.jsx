@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PrivateRoute from "./utils/router/PrivateRoute";
@@ -27,7 +26,6 @@ function App() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   const navigate = useNavigate();
-
   const handleLogIn = () => {
     dispatch(logIn());
     navigate("/");
