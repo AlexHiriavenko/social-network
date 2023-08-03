@@ -5,18 +5,25 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { useDispatch, useSelector } from "react-redux";
 import { closeChat } from "../../../../redux/chat.slice/chat.slice";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 function Chat(props) {
+  const messageListRef = useRef(null);
   const { user } = props;
+  const { userName, userPhoto, message } = user || [];
+  const [answers, setAnswer] = useState(user.answers || []);
   const handlerSend = () => {
-    if (sendMessage.trim("") !== "") {
-      answers.push(sendMessage);
+    if (sendMessage.trim() !== "") {
+      setAnswer((prevState) => [...prevState, sendMessage]);
       setSendMessage("");
     }
   };
+  useEffect(() => {
+    if (messageListRef.current) {
+      messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+    }
+  }, [answers]);
   const dispatch = useDispatch();
   const [sendMessage, setSendMessage] = useState("");
-  const { userName, userPhoto, message, answers } = user || [];
   const open = useSelector((state) => state.chat.isOpened);
   if (open) {
     return (
@@ -25,8 +32,8 @@ function Chat(props) {
           position: "fixed",
           bottom: "50px",
           backgroundColor: "#ffffff",
-          width: "20%",
-          height: "80%",
+          width: "23%",
+          height: "70%",
           display: "flex",
           flexDirection: "column",
           right: "50px",
@@ -60,36 +67,46 @@ function Chat(props) {
           </Box>
         )}
         <Box
+          ref={messageListRef}
           sx={{
             display: "flex",
             flexDirection: "column",
-            maxHeight: "80%",
-            overflowY: "scroll",
+            overflowY: "auto",
+            flexGrow: 1,
           }}>
-          {message?.map((mes, id) => (
-            <Paper
-              key={id}
-              style={{
-                key: id,
-                display: "inline-block",
-                borderRadius: "16px",
-                padding: "10px 20px",
-                background: "#fefefe",
-                color: "0e0e0e",
-                maxWidth: "70%",
-                marginTop: "3px",
-                boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
-              }}>
-              <Box sx={{ display: "flex", gap: "10px" }}>
-                <Avatar
-                  sx={{ width: 24, height: 24 }}
-                  src={userPhoto}
-                  alt={userName}
-                />
-                <Typography>{mes}</Typography>
-              </Box>
-            </Paper>
-          ))}
+          <Box sx={{ display: "flex" }}>
+            <Avatar
+              sx={{
+                width: 24,
+                height: 24,
+                alignSelf: "flex-end",
+                marginLeft: "5px",
+              }}
+              src={userPhoto}
+              alt={userName}
+            />
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              {message?.map((mes, id) => (
+                <Paper
+                  key={id}
+                  style={{
+                    key: id,
+                    display: "inline-block",
+                    verticalAlign: "middle",
+                    borderRadius: "16px",
+                    padding: "5px 10px",
+                    background: "#fefefe",
+                    wordWrap: "break-word",
+                    color: "0e0e0e",
+                    maxWidth: "70%",
+                    marginTop: "3px",
+                    boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
+                  }}>
+                  <Typography>{mes}</Typography>
+                </Paper>
+              ))}
+            </Box>
+          </Box>
           {answers &&
             answers?.map((ans, id) => (
               <Paper
@@ -100,9 +117,10 @@ function Chat(props) {
                   color: "#ffffff",
                   marginTop: "3px",
                   borderRadius: "16px",
-                  padding: "10px 20px",
+                  padding: "5px 10px",
                   background: "rgb(0, 132, 255)",
                   maxWidth: "70%",
+                  wordWrap: "break-word",
                   boxShadow:
                     "0 1px 2px rgba(0, 0, 0, 0.1), 0 -1px rgba(0, 0, 0, 0.1) inset, 0 2px 1px -1px rgba(255, 255, 255, 0.5) inset",
                   border: "1px solid rgba(0, 0, 0, 0.1)",
@@ -115,18 +133,16 @@ function Chat(props) {
         <Box
           sx={{
             display: "flex",
-            flexGrow: 0,
-            position: "absolute",
-            bottom: 0,
             width: "100%",
             alignItems: "center",
             gap: "5px",
+            paddingTop: "5px",
             paddingBottom: "5px",
           }}>
           <ControlPointIcon sx={{ cursor: "pointer", color: "blue" }} />
           <TextField
+            placeholder="Aa"
             fullWidth={!!sendMessage}
-            sx={{ border: 0, outline: "none" }}
             value={sendMessage}
             onChange={(e) => {
               setSendMessage(e.target.value);
