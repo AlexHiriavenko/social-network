@@ -1,5 +1,6 @@
 import { Box, Button, Modal, Typography } from "@mui/material";
 import {
+  StyledEditedPartButton,
   StyledModalBlock,
   StyledModalCloseButton,
   StyledModalCloseButtonLine,
@@ -13,6 +14,7 @@ import ProfilePageButton from "../../UserProfile/ProfilePageButton/ProfilePageBu
 import IntroBio from "../../UserProfile/ProfileIntro/IntroBio";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import EditChildModal from "../EditChildModal";
 
 const StyledEditProfileModal = styled(StyledModalBlock)({
   maxWidth: "710px",
@@ -27,17 +29,6 @@ const StyledEditedPartTitle = styled("h2")(({ theme }) => ({
   color: theme.palette.textColor.main,
   fontSize: "20px",
   fontWeight: 700,
-}));
-const StyledEditedPartButton = styled("button")(({ theme }) => ({
-  color: theme.palette.accentColor.main,
-  fontSize: "17px",
-  padding: "5px",
-  borderRadius: "5px",
-  lineHeight: "100%",
-  transitionDuration: "300ms",
-  "&:hover": {
-    backgroundColor: theme.palette.accentColor.secondary,
-  },
 }));
 const StyledEditedContentWrapper = styled(Box)({
   display: "flex",
@@ -108,7 +99,7 @@ export default function EditProfileModal() {
         <StyledModalSeparator></StyledModalSeparator>
         <StyledEditedPart>
           <StyledEditedPartTitle>Profile picture</StyledEditedPartTitle>
-          <StyledEditedPartButton>Edit</StyledEditedPartButton>
+          <EditChildModal title={"Select profile picture"} />
           <StyledEditedContentWrapper>
             <StyledEditedUserPicture
               src={authUser && authUser.profilePicture}
@@ -119,7 +110,7 @@ export default function EditProfileModal() {
         </StyledEditedPart>
         <StyledEditedPart>
           <StyledEditedPartTitle>Cover Photo</StyledEditedPartTitle>
-          <StyledEditedPartButton>Edit</StyledEditedPartButton>
+          <EditChildModal title={"Select cover picture"} />
           <StyledEditedContentWrapper>
             <StyledEditedCoverPicture
               src={authUser && authUser.profileBackgroundPicture}
