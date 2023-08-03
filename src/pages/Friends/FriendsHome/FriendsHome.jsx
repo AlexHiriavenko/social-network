@@ -3,7 +3,7 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import Friend from "../../../components/Friends/Friend/Friend";
 import { Box, Divider, Typography } from "@mui/material";
-import {GreyButton, BlueButton, StandardButton} from '../../../components/StyledComponents/Buttons';
+import { ButtonStyled } from '../../../components/StyledComponents/Buttons';
 import { getFriendList, getFriendshipRequests, getFriendSuggestions,  createFriendship, updateFriendship } from '../../../redux/friends/actionCreators';
 import { removeSuggestions, setCurrentFriend, } from '../../../redux/friends/friends.slise';
 import styled from "@emotion/styled";
@@ -84,11 +84,12 @@ function FriendsHome() {
         backgroundColor: theme.palette.backgroundColor.page/* '#F0F2F5' */,
     }))
 
-    const H1Styled = styled('h1')({
+    const H1Styled = styled('h1')(({theme}) => ({
         fontWeight: 900,
         fontSize: '1.5rem',
         fontFamily: 'inherit',
-    })
+        color: theme.palette.textColor.content,
+    }))
 
     const LinkStyled = styled(NavLink)(({theme}) => ({
         fontFamily: 'inherit',
@@ -108,7 +109,7 @@ function FriendsHome() {
                 <SideBarHeader>
                     <H1Styled>Friends</H1Styled>
                 </SideBarHeader>
-                <SideBarList/>
+                <SideBarList  activeItem={"Home"}/>
             </Sidebar>         
             <SectionWraper>
             {friendsRequestsToUser.length > 0 && <Box sx={{px: '16px'}}>
@@ -125,8 +126,13 @@ function FriendsHome() {
                             mutualFriends={fr.mutualFriends}
                             isAvatarMutualFriend={true}
                             friend={fr.user} 
-                            addButton={<StandardButton variant="contained" onClick={() => handleClickConfirm(fr)}>Confirm</StandardButton>}
-                            removeButton={<GreyButton onClick={() => handleClickRemove(fr)}>Remove</GreyButton>}/>)
+                            addButton={<ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.primary}} 
+                                variant="contained" 
+                                onClick={() => handleClickConfirm(fr)}>Confirm</ButtonStyled>}
+                            removeButton={<ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.background,
+                                color: theme.palette.textColor.content,
+                                '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover}}} 
+                                onClick={() => handleClickRemove(fr)}>Remove</ButtonStyled>}/>)
                     }
                     </FriendsContainer>
                 </Box>}
@@ -148,12 +154,13 @@ function FriendsHome() {
                             friend={fr.friend} 
                             /* addButton={<Button sx={{bgcolor: 'secondary.main', width: 1, '&:hover': {bgcolor: 'secondary.light'}, textTransform: 'none'}} 
                                                     onClick={handleClickConfirm}>Add friend</Button>} */
-                            addButton={<BlueButton onClick={() =>  handleClickAdd( fr.friend.id)}>Add friend</BlueButton>}
-                            removeButton={<GreyButton /* bgColor={theme.palette.buttonColor.background}
-                                                    hoverBgColor={theme.palette.buttonColor.backgroundHover}
-                                                    color={"#cdcfd3"}/* theme.palette.textColor.main */
-                                                    onClick={() =>  handleClickRemoveSuggestion(fr)}
-                                                    >Remove</GreyButton>}/>)
+                            addButton={<ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.blueLight,
+                                '&:hover': {backgroundColor: theme.palette.buttonColor.blueLightHover,},
+                                color: theme.palette.textColor.blueLink}} onClick={() => handleClickAdd( fr.friend.id)}>Add friend</ButtonStyled>}
+                            removeButton={<ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.background,
+                                '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},
+                                color: theme.palette.textColor.content}}
+                                onClick={() =>  handleClickRemoveSuggestion(fr)}>Remove</ButtonStyled>}/>)
                     }
                     </FriendsContainer>
                 </Box>}
