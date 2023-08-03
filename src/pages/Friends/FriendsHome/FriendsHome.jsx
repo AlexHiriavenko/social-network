@@ -26,10 +26,10 @@ function FriendsHome() {
                                 : []);
 
     useEffect(()=>{
-        dispatch(getFriendList(user.id));
-        dispatch(getFriendshipRequests(user.id));
-        dispatch(getFriendSuggestions(user.id));
-    },[dispatch, user.id])
+        dispatch(getFriendList());
+        dispatch(getFriendshipRequests());
+        dispatch(getFriendSuggestions());
+    },[dispatch])
 
     const handleClickConfirm = (friend) => {
         const payload = {id: friend.id, status: "accepted", userID: friend.user.id, friendID: friend.friend.id}

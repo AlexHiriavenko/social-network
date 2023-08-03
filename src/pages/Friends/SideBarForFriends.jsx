@@ -9,10 +9,11 @@ import Friend from "../../components/Friends/Friend/Friend";
 import { ButtonStyled } from '../../components/StyledComponents/Buttons';
 import { NavLink } from "react-router-dom";
 import { SVGArrowBack } from '../../components/SVG/svg';
-import { setUser } from "../../redux/user.slice/user.slice";
 import { setCurrentFriend } from '../../redux/friends/friends.slise';
+import { setFriends, setUser, getUser, getFriends } from "../../redux/user.slice/user.slice";
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
+import { useNavigate } from "react-router-dom";
 
 
 function SideBarFriends(props) {
@@ -33,12 +34,42 @@ function SideBarFriends(props) {
 
     const theme = useTheme();
     const dispatch = useDispatch(); 
+    const navigate = useNavigate();
+    const authUser = useSelector((store)=>store.user.authorizedUser);
     const currentFriend = useSelector((store)=>store.friends.currentFriend);
     
-    const handleLinkClick = (payload) => {
-        console.log("handleLinkClick");
-        dispatch(setUser(payload));
-        dispatch(setCurrentFriend(payload));
+
+    const handleLinkClick = (friend) => {
+        const id  = friend.id;
+
+        // get user friends
+    const userFriendsResponse = dispatch(getFriends(id));
+        userFriendsResponse
+            .then((data) => {
+                dispatch(setFriends(data.payload));
+                localStorage.setItem("friends", JSON.stringify(data.payload));
+            })
+            .catch((error) => console.log(error.message));
+
+        // checking if the user is authorized
+        if (id === authUser.id) {
+            dispatch(setUser(authUser));
+            localStorage.setItem("user", JSON.stringify(authUser));
+            navigate("/profile");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+            const userResponse = dispatch(getUser(id));
+            userResponse
+            .then((data) => {
+                dispatch(setUser(data.payload));
+                localStorage.setItem("user", JSON.stringify(data.payload));
+                navigate("/profile");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            })
+            .catch((error) => error.message);
+        }
+        
+        dispatch(setCurrentFriend(id));
     }
 
     const SidebarStyled = styled(Sidebar)({
