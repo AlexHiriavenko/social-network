@@ -1,33 +1,19 @@
-import { useEffect } from "react";
-import Post from "../../components/Posts/Post/Post";
-import postSlice, { getPosts, setPosts } from "../../redux/post.slice/post.slice";
-import { useDispatch, useSelector } from "react-redux";
-
+import { useSelector } from "react-redux";
+import PostList from "../../components/Posts/Post/PostList";
+import { useEffect, useState } from "react";
 
 function HomeMain() {
-    const dispatch = useDispatch();
-
+    // State
+    const [mainPagePosts, setMainPagePosts] = useState([]);
+    // Constants
+    const allPosts = useSelector((state) => state.post.allPosts);
+    //   useEffect
     useEffect(() => {
-        const postsResponse = dispatch(getPosts());
-        postsResponse.then((result) => {
-            dispatch(setPosts(result.payload));
-        })
-            .catch((error) => alert(error));
-    }, [])
-
-
-    const posts = useSelector((state) => state.post.allPosts);
-    console.log(posts);
-
+        setMainPagePosts(allPosts);
+    }, [allPosts]);
     return (
         <main className="main-home-content">
-            <h2 className="main-title">Home Page Content</h2>
-            {/* <ul>
-                {posts.map((post, index) => (
-                    <Post {...post} key={index} />
-                ))}
-            </ul> */}
-            <Post post={posts[2]} />
+            <PostList posts={mainPagePosts} />
         </main>
     );
 }
