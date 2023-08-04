@@ -123,7 +123,7 @@ export default function ProfileNavigation() {
   const navRef = useRef(null);
   // State
   const [listStatus, setListStatus] = useState(false);
-  const [locationNameNavigation, setLocationNameNavigation] = useState("");
+  const [locationNameNavigation, setLocationNameNavigation] = useState("notpage");
   // Functions
   function toggleList() {
     setListStatus(!listStatus);
