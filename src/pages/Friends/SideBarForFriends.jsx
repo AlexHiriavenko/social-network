@@ -13,6 +13,7 @@ import { setCurrentFriend } from '../../redux/friends/friends.slise';
 import { setFriends, setUser, getUser, getFriends } from "../../redux/user.slice/user.slice";
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
+import { useNavigate } from "react-router-dom";
 
 
 function SideBarFriends(props) {
