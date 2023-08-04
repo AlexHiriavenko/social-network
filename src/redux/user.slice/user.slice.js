@@ -10,7 +10,7 @@ export const getUsers = createAsyncThunk("Users/getUsers", async function () {
 
 //Получение юзера по айди
 export const getUser = createAsyncThunk("Users/getUser", async function (id) {
-  const { data } = await instance.get(`/users/${id}`);
+  const { data } = await instance.get(`users/${id}`);
   console.log(data);
   return data;
 });
