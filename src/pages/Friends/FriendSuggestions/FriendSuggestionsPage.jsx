@@ -9,6 +9,7 @@ import { Profile } from "../../index";
 import SideBarFriends from "../SideBarForFriends";
 import FriendEmptyPage from  "../FriendEmptyPage";
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
+import { setUser } from "../../../redux/user.slice/user.slice";
 
 function FriendSuggestionsPage() {
 
@@ -31,13 +32,10 @@ function FriendSuggestionsPage() {
 
 
     const handleClickAdd = (friend) => {
-        console.log(friend);
-        console.log("handleClickAdd");
         dispatch(createFriendship({friendId: friend.friend.id}));
     }
 
     const handleClickRemoveSuggestion = (payload) => {
-        console.log("handleClickRemoveSuggestion")
         dispatch(removeSuggestions(payload));
     }
     

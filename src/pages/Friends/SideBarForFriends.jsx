@@ -13,7 +13,6 @@ import { setCurrentFriend } from '../../redux/friends/friends.slise';
 import { setFriends, setUser, getUser, getFriends } from "../../redux/user.slice/user.slice";
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
-import { useNavigate } from "react-router-dom";
 
 
 function SideBarFriends(props) {
@@ -40,13 +39,16 @@ function SideBarFriends(props) {
 
     const handleLinkClick = (friend) => {
         const id  = friend.id;
+        dispatch(setCurrentFriend({}));
+        dispatch(setUser({}));
 
         // get user friends
     const userFriendsResponse = dispatch(getFriends(id));
         userFriendsResponse
             .then((data) => {
-                dispatch(setFriends(data.payload));
-                localStorage.setItem("friends", JSON.stringify(data.payload));
+                const friends = data.payload.filter(el => el.status === 'accepted');
+                dispatch(setFriends(friends));
+                localStorage.setItem("friends", JSON.stringify(friends));
             })
             .catch((error) => console.log(error.message));
 
@@ -66,7 +68,7 @@ function SideBarFriends(props) {
             .catch((error) => error.message);
         }
         
-        dispatch(setCurrentFriend(id));
+        dispatch(setCurrentFriend(friend));
     }
 
     const SidebarStyled = styled(Sidebar)({

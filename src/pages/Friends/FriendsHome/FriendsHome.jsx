@@ -42,7 +42,6 @@ function FriendsHome() {
         dispatch(updateFriendship(payload));
     }
     const handleClickAdd = (friendId) => {
-        console.log(friendId);
         dispatch(createFriendship({friendId: friendId}));
     }
 

@@ -8,6 +8,7 @@ import SideBarFriends from "../SideBarForFriends";
 import { Profile } from "../../index";
 import { setCurrentFriend } from "../../../redux/friends/friends.slise";
 import FriendEmptyPage from  "../FriendEmptyPage";
+import { setUser } from "../../../redux/user.slice/user.slice";
 
 function UserFriendsPage() {
 
