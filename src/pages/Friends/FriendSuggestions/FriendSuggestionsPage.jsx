@@ -8,6 +8,7 @@ import { setCurrentFriend, removeSuggestions } from "../../../redux/friends/frie
 import { Profile } from "../../index";
 import SideBarFriends from "../SideBarForFriends";
 import FriendEmptyPage from  "../FriendEmptyPage";
+import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 
 function FriendSuggestionsPage() {
 
@@ -56,25 +57,27 @@ function FriendSuggestionsPage() {
     const noItemMessage = "No new suggestions";
 
     return(
-        <Box sx={{ width: '100%', display: 'flex', }}>
-            <SideBarFriends sideBarItems={friendSuggestions}
-                                headerTitle={"Friend suggestions"}
-                                subTitle={"People You May Know"}
-                                noItemMessage={noItemMessage}
-                                handleClickConfirm={handleClickAdd}
-                                handleClickRemove={handleClickRemoveSuggestion}
-                                isAvatarMutualFriend={true}
-                                isRemoveButton={true}
-                                isAddButton={true}/>
-            <SectionWraper sx={{minHeight: '93vh'}}>
-                { 
-                    currentFriend.id === undefined && <FriendEmptyPage>{textMessage}</FriendEmptyPage>
-                }
-                {
-                    !(currentFriend.id === undefined) && <Profile/>
-                }
-            </SectionWraper>
-        </Box>
+        <PageBoxFriendsWrapper>
+            <PageBoxFriends>
+                <SideBarFriends sideBarItems={friendSuggestions}
+                                    headerTitle={"Friend suggestions"}
+                                    subTitle={"People You May Know"}
+                                    noItemMessage={noItemMessage}
+                                    handleClickConfirm={handleClickAdd}
+                                    handleClickRemove={handleClickRemoveSuggestion}
+                                    isAvatarMutualFriend={true}
+                                    isRemoveButton={true}
+                                    isAddButton={true}/>
+                <SectionWraper sx={{minHeight: '93vh'}}>
+                    { 
+                        currentFriend.id === undefined && <FriendEmptyPage>{textMessage}</FriendEmptyPage>
+                    }
+                    {
+                        !(currentFriend.id === undefined) && <Profile/>
+                    }
+                </SectionWraper>
+            </PageBoxFriends>
+        </PageBoxFriendsWrapper>
     )
 }
 

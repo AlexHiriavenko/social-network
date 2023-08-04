@@ -13,7 +13,6 @@ import { setCurrentFriend } from '../../redux/friends/friends.slise';
 import { setFriends, setUser, getUser, getFriends } from "../../redux/user.slice/user.slice";
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
-import { useNavigate } from "react-router-dom";
 
 
 function SideBarFriends(props) {
@@ -34,7 +33,6 @@ function SideBarFriends(props) {
 
     const theme = useTheme();
     const dispatch = useDispatch(); 
-    const navigate = useNavigate();
     const authUser = useSelector((store)=>store.user.authorizedUser);
     const currentFriend = useSelector((store)=>store.friends.currentFriend);
     
@@ -55,7 +53,6 @@ function SideBarFriends(props) {
         if (id === authUser.id) {
             dispatch(setUser(authUser));
             localStorage.setItem("user", JSON.stringify(authUser));
-            navigate("/profile");
             window.scrollTo({ top: 0, behavior: "smooth" });
         } else {
             const userResponse = dispatch(getUser(id));
@@ -63,7 +60,6 @@ function SideBarFriends(props) {
             .then((data) => {
                 dispatch(setUser(data.payload));
                 localStorage.setItem("user", JSON.stringify(data.payload));
-                navigate("/profile");
                 window.scrollTo({ top: 0, behavior: "smooth" });
             })
             .catch((error) => error.message);
@@ -73,7 +69,9 @@ function SideBarFriends(props) {
     }
 
     const SidebarStyled = styled(Sidebar)({
-        width: 500,
+        overflowY: scroll,
+        height: '93vh',
+        boxSizing: 'content-box',
     })
 
     const TitleStyled = styled('h1')(({theme}) => ({
