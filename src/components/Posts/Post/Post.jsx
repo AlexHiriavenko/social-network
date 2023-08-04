@@ -271,7 +271,7 @@ export default function Post(props) {
     } else {
       setLikedStatus(false);
     }
-  }, [repost]);
+  }, [likes]);
   return (
     <StyledPost>
       <StyledPostAuthor>

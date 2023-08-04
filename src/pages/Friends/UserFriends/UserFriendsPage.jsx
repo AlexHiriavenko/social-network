@@ -8,20 +8,25 @@ import SideBarFriends from "../SideBarForFriends";
 import { Profile } from "../../index";
 import { setCurrentFriend } from "../../../redux/friends/friends.slise";
 import FriendEmptyPage from  "../FriendEmptyPage";
+import { setUser } from "../../../redux/user.slice/user.slice";
 
 function UserFriendsPage() {
 
     const dispatch = useDispatch(); 
-    const userFriends = useSelector((store)=>store.friends.friendsList);
+    const user = useSelector((store)=>store.user.authorizedUser);
+    const friends = useSelector((store)=>store.friends.friendsList);
     const currentFriend = useSelector((store)=>store.friends.currentFriend);
+    const userFriends = (friends.length > 0 
+        ? friends.filter((elem) => elem.status==='accepted')
+        : []);
 
     const friendsCount = userFriends.length === 0 ? '' : userFriends.length;
 
     useEffect(()=>{
-        if(userFriends.length === 0) {
+        if(friends.length === 0) {
             dispatch(setCurrentFriend({}));
         } 
-    },[userFriends, dispatch])
+    },[friends, dispatch])
 
     useEffect(()=>{
         dispatch(getFriendList());

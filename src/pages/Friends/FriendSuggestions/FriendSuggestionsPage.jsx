@@ -8,6 +8,8 @@ import { setCurrentFriend, removeSuggestions } from "../../../redux/friends/frie
 import { Profile } from "../../index";
 import SideBarFriends from "../SideBarForFriends";
 import FriendEmptyPage from  "../FriendEmptyPage";
+import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
+import { setUser } from "../../../redux/user.slice/user.slice";
 
 function FriendSuggestionsPage() {
 
@@ -30,13 +32,10 @@ function FriendSuggestionsPage() {
 
 
     const handleClickAdd = (friend) => {
-        console.log(friend);
-        console.log("handleClickAdd");
         dispatch(createFriendship({friendId: friend.friend.id}));
     }
 
     const handleClickRemoveSuggestion = (payload) => {
-        console.log("handleClickRemoveSuggestion")
         dispatch(removeSuggestions(payload));
     }
     
@@ -56,25 +55,27 @@ function FriendSuggestionsPage() {
     const noItemMessage = "No new suggestions";
 
     return(
-        <Box sx={{ width: '100%', display: 'flex', }}>
-            <SideBarFriends sideBarItems={friendSuggestions}
-                                headerTitle={"Friend suggestions"}
-                                subTitle={"People You May Know"}
-                                noItemMessage={noItemMessage}
-                                handleClickConfirm={handleClickAdd}
-                                handleClickRemove={handleClickRemoveSuggestion}
-                                isAvatarMutualFriend={true}
-                                isRemoveButton={true}
-                                isAddButton={true}/>
-            <SectionWraper sx={{minHeight: '93vh'}}>
-                { 
-                    currentFriend.id === undefined && <FriendEmptyPage>{textMessage}</FriendEmptyPage>
-                }
-                {
-                    !(currentFriend.id === undefined) && <Profile/>
-                }
-            </SectionWraper>
-        </Box>
+        <PageBoxFriendsWrapper>
+            <PageBoxFriends>
+                <SideBarFriends sideBarItems={friendSuggestions}
+                                    headerTitle={"Friend suggestions"}
+                                    subTitle={"People You May Know"}
+                                    noItemMessage={noItemMessage}
+                                    handleClickConfirm={handleClickAdd}
+                                    handleClickRemove={handleClickRemoveSuggestion}
+                                    isAvatarMutualFriend={true}
+                                    isRemoveButton={true}
+                                    isAddButton={true}/>
+                <SectionWraper sx={{minHeight: '93vh'}}>
+                    { 
+                        currentFriend.id === undefined && <FriendEmptyPage>{textMessage}</FriendEmptyPage>
+                    }
+                    {
+                        !(currentFriend.id === undefined) && <Profile/>
+                    }
+                </SectionWraper>
+            </PageBoxFriends>
+        </PageBoxFriendsWrapper>
     )
 }
 

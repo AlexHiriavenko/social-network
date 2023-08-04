@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import FriendsList from "../../../components/UserProfile/ProfileFriends/FriendsList";
 import {
@@ -57,10 +57,27 @@ const StyledAboutContent = styled(Box)({
 });
 
 export default function ProfileAbout() {
+  // Constants
   const location = useLocation();
   const navRef = useRef(null);
+  // State
+  const [locationNameNavigation, setLocationNameNavigation] = useState("");
+  // Functions
+  // //Find Location for right way
+  function whatLocation(locationArray) {
+    if (locationArray[1] === "profile") {
+      setLocationNameNavigation("profile");
+    }
+    if (locationArray[1] === "friends") {
+      setLocationNameNavigation(`friends/${locationArray[2]}`);
+    }
+  }
+  // UseEffect
   useEffect(() => {
-    const locationName = location.pathname.slice(14);
+    const locationNameArray = location.pathname.split("/");
+    whatLocation(locationNameArray);
+    const locationName = "/" + locationNameArray[locationNameArray.length - 1];
+
     const links = Array.prototype.slice.call(navRef.current.children);
     const newRoute = links.find((link) => {
       if (locationName === "" && link.dataset.loc === "/") return link;
@@ -78,26 +95,26 @@ export default function ProfileAbout() {
           <StyledAboutNavigation ref={navRef}>
             <ContentBlockTitel>About</ContentBlockTitel>
             <StyledAboutNavigationItem
-              to={"/profile/about/"}
+              to={`/${locationNameNavigation}/about/`}
               data-active={true}
               data-loc={"/"}
             >
               Overview
             </StyledAboutNavigationItem>
             <StyledAboutNavigationItem
-              to={"/profile/about/employment"}
+              to={`/${locationNameNavigation}/about/employment`}
               data-loc={"/employment"}
             >
               Work and education
             </StyledAboutNavigationItem>
             <StyledAboutNavigationItem
-              to={"/profile/about/places"}
+              to={`/${locationNameNavigation}/about/places`}
               data-loc={"/places"}
             >
               Places lived
             </StyledAboutNavigationItem>
             <StyledAboutNavigationItem
-              to={"/profile/about/contacts"}
+              to={`/${locationNameNavigation}/about/contacts`}
               data-loc={"/contacts"}
             >
               Contact and basic info

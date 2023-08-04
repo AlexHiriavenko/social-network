@@ -79,10 +79,22 @@ const StyledModalSeparator = styled("span")(({ theme }) => ({
   marginTop: "12px",
   marginBottom: "8px",
 }));
+const StyledEditedPartButton = styled("button")(({ theme }) => ({
+  color: theme.palette.accentColor.main,
+  fontSize: "17px",
+  padding: "5px",
+  borderRadius: "5px",
+  lineHeight: "100%",
+  transitionDuration: "300ms",
+  "&:hover": {
+    backgroundColor: theme.palette.accentColor.secondary,
+  },
+}));
 export {
   StyledModalBlock,
   StyledModalCloseButton,
   StyledModalCloseButtonLine,
   StyledModalTitle,
   StyledModalSeparator,
+  StyledEditedPartButton,
 };
