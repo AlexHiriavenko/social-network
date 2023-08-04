@@ -13,12 +13,6 @@ import {getPosts, setPosts} from "../../redux/post.slice/post.slice.js";
 
 function Home() {
 
-    window.setInterval(async()=>{
-   const token =  await   dispatch(getAccessToken())
-        console.log(token.payload)
-        console.log("Set access token")
-       document.cookie = `token=${token.payload}`
-    },9 *60 *1000)
     const theme = useTheme();
 
     const dispatch = useDispatch();
@@ -28,6 +22,12 @@ function Home() {
         dispatch(loginGoogle())
 
     }
+        window.setInterval(async()=>{
+            const token =  await   dispatch(getAccessToken())
+            console.log(token.payload)
+            console.log("Set access token")
+            document.cookie = `token=${token.payload}`
+        },540000)
         if (
             !localStorage.getItem("authorizedUser") &&
             localStorage.getItem("auth")

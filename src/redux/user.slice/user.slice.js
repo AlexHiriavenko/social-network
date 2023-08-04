@@ -26,6 +26,15 @@ export const updateUser = createAsyncThunk(
     await instance.put("/users", updatedUser);
   }
 );
+//Получение чатов юзера
+export const getMyChats = createAsyncThunk(
+    'Users/getMyChats',
+    async function(id) {
+      const chats   =  await instance.get(`/users/${id}/chats`);
+      console.log(chats)
+      return chats;
+    }
+)
 //Получение всех друзей по айди юзера
 export const getFriends = createAsyncThunk(
   "Users/getFriends",
