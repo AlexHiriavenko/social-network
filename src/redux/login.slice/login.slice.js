@@ -4,6 +4,7 @@ import { readCookie } from "../../readCookie.js";
 import { parseJwt } from "../../parseJwt.js";
 import instance from "../../instance.js";
 
+
 export const logIn = createAsyncThunk(
   "Login/logIn",
 
@@ -28,10 +29,11 @@ export const getAccessToken = createAsyncThunk(
   async function () {
     const refresh = readCookie("refresh");
     let token = await axios.post(
-      `${import.meta.env.VITE_APP_API_URL}/api/auth/token`,
+        `https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/token`,
       { refreshToken: refresh }
     );
-    document.cookie = `token=${token.data.accessToken}`;
+    //document.cookie = `token=${token.data.accessToken}`;
+      return token.data.accessToken;
   }
 );
 export const sendEmail = createAsyncThunk(
@@ -120,6 +122,7 @@ const LoginSlice = createSlice({
       localStorage.removeItem("authorizedUser");
       localStorage.removeItem("auth");
       localStorage.removeItem("user");
+
     },
     extraReducers: {
       [logIn.pending]: (state) => {
