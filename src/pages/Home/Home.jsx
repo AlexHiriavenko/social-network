@@ -6,7 +6,7 @@ import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {readCookie} from '../../readCookie.js'
 import {getAccessToken, loginGoogle} from "../../redux/login.slice/login.slice.js";
-import {getProfile, getUser, getUsers, setAuthorizedUser, setUsers} from "../../redux/user.slice/user.slice.js";
+import { getUser, getUsers, setAuthorizedUser, setUsers} from "../../redux/user.slice/user.slice.js";
 import {getPosts, setPosts} from "../../redux/post.slice/post.slice.js";
 
 
@@ -16,18 +16,21 @@ function Home() {
     const theme = useTheme();
 
     const dispatch = useDispatch();
+
+   const renewToken = async function () {
+       const token = await dispatch(getAccessToken())
+       console.log(token.payload)
+       console.log("Set access token")
+       document.cookie = `token=${token.payload}`
+   }
+
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
     useEffect(()=>{
        if(readCookie('token' ) == '0'){
         dispatch(loginGoogle())
 
     }
-        window.setInterval(async()=>{
-            const token =  await   dispatch(getAccessToken())
-            console.log(token.payload)
-            console.log("Set access token")
-            document.cookie = `token=${token.payload}`
-        },540000)
+        window.setInterval(renewToken,600000)
         if (
             !localStorage.getItem("authorizedUser") &&
             localStorage.getItem("auth")
@@ -39,11 +42,11 @@ function Home() {
                   //  let promiseResult = result
 
                     dispatch(
-                        setAuthorizedUser({ ...result.payload.data, isAuthorized: true })
+                        setAuthorizedUser({ ...result.payload, isAuthorized: true })
                     );
                     localStorage.setItem(
                         "authorizedUser",
-                        JSON.stringify({ ...result.payload.data, isAuthorized: true })
+                        JSON.stringify({ ...result.payload, isAuthorized: true })
                     );
                 })
                 .catch((error) => alert(error));
@@ -69,7 +72,10 @@ function Home() {
             })
             .catch((error) => alert(error));
         dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
+        return function () {
 
+           window.clearInterval(renewToken)
+        }
        },[isLoggedIn])
 
     return (
