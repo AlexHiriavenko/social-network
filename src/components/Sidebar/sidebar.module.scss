@@ -1,5 +1,6 @@
 .page-sidebar {
-    width: 500px;
+    width: 360px;
+    box-sizing: content-box;
     padding: 10px;
     @media (max-width: 900px) {
         display: none;
