@@ -6,11 +6,22 @@ export const getChats = createAsyncThunk("chat/getChats", async function () {
     console.log(chats);
     return chats;
 });
+
+////////////////////
+export const getParticipants = createAsyncThunk("chat/getParticipants", async function (id) {
+    const chatsParticipants = await instance
+        .get(`/chats/${id}/participants`)
+        .then((response) => response.json());
+    console.log(chatsParticipants);
+    return chatsParticipants;
+});
+////////////////////
 export const getChat = createAsyncThunk("chat/getChat", async function (id) {
     const { data } = await instance.get(`/chats/${id}`);
     console.log(data);
     return data;
 });
+
 export const sendMessage = createAsyncThunk(
     "chat/sendMessage",
     async function ({ sender, chat, content }) {
@@ -24,6 +35,7 @@ export const sendMessage = createAsyncThunk(
         console.log(status);
     }
 );
+
 export const addNewUser = createAsyncThunk("chat/addNewUser", async function ({ chatId, newUser }) {
     const { status } = await instance.put(`/messages/${chatId}/participants`, newUser);
     console.log(status);

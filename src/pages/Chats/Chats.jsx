@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -8,6 +9,8 @@ import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem, Badge, Box } f
 import { openPageChat } from "../../redux/chat.slice/chat.slice";
 
 function Chats() {
+    const currentUser = useSelector((state) => state.user.user);
+    console.log(currentUser);
     const theme = useTheme();
     const dispatch = useDispatch();
     const [user1, setUser1] = useState([]);
@@ -18,8 +21,11 @@ function Chats() {
     };
     return (
         <div
-            // className="container-page"
-            style={{ display: "flex" }}
+            style={{
+                display: "flex",
+                backgroundColor: theme.palette.backgroundColor.card,
+                minHeight: "100%",
+            }}
         >
             <Sidebar>
                 {mockInfo.map((user) => {

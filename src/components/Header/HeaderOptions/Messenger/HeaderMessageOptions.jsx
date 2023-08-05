@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTheme } from "@mui/material/styles";
 import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem, Badge, Box } from "@mui/material";
 import ForumIcon from "@mui/icons-material/Forum";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
@@ -10,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function HeaderMessageOptions() {
+    const theme = useTheme();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -37,12 +39,12 @@ function HeaderMessageOptions() {
                     <Badge badgeContent={4} color="secondary">
                         <Avatar
                             sx={{
-                                bgcolor: "#F0F2F5",
+                                bgcolor: theme.palette.hoverColor.dark,
                                 minWidth: "40px",
                                 minHeight: "40px",
                             }}
                         >
-                            <ForumIcon style={{ color: "black" }} />
+                            <ForumIcon style={{ color: theme.palette.textColor.content }} />
                         </Avatar>
                     </Badge>
                 </IconButton>
