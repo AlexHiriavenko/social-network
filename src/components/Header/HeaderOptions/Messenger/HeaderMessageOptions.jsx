@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import {
-    IconButton,
-    Typography,
-    Menu,
-    Avatar,
-    Tooltip,
-    MenuItem,
-    Badge,
-    Box,
-} from "@mui/material";
+import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem, Badge, Box } from "@mui/material";
 import ForumIcon from "@mui/icons-material/Forum";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import EditNoteIcon from "@mui/icons-material/EditNote";
@@ -41,17 +32,16 @@ function HeaderMessageOptions() {
             <Tooltip title="Messenger" sx={{ p: { xs: "4px", sm: 1 } }}>
                 <IconButton
                     onClick={toggleMenu}
-                    sx={
-                        ({ pt: 1, pb: 1 },
-                        { pl: { xs: 0.5, sm: 1 }, pr: { xs: 0.5, sm: 1 } })
-                    }>
+                    sx={({ pt: 1, pb: 1 }, { pl: { xs: 0.5, sm: 1 }, pr: { xs: 0.5, sm: 1 } })}
+                >
                     <Badge badgeContent={4} color="secondary">
                         <Avatar
                             sx={{
                                 bgcolor: "#F0F2F5",
                                 minWidth: "40px",
                                 minHeight: "40px",
-                            }}>
+                            }}
+                        >
                             <ForumIcon style={{ color: "black" }} />
                         </Avatar>
                     </Badge>
@@ -75,14 +65,16 @@ function HeaderMessageOptions() {
                     paper: {
                         className: "header__options-drop-menu",
                     },
-                }}>
+                }}
+            >
                 <Box
                     sx={{
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
                         p: 2,
-                    }}>
+                    }}
+                >
                     <Typography variant="h5" component={"h4"} fontWeight={600}>
                         Chats
                     </Typography>
@@ -91,11 +83,11 @@ function HeaderMessageOptions() {
                             <IconButton
                                 onClick={(event) => {
                                     if (event.target.closest("button")) {
-                                        console.log(event.target);
                                         navigate("/chats");
                                         toggleMenu();
                                     }
-                                }}>
+                                }}
+                            >
                                 <ZoomOutMapIcon />
                             </IconButton>
                         </Tooltip>
@@ -116,11 +108,13 @@ function HeaderMessageOptions() {
                                 gap: 1,
                                 whiteSpace: "normal",
                                 mb: 1,
-                            }}>
+                            }}
+                        >
                             <Avatar
                                 sx={{ minWidth: "40px", minHeight: "40px" }}
                                 alt="user icon"
-                                src={user.userPhoto}></Avatar>
+                                src={user.userPhoto}
+                            ></Avatar>
                             <Box>
                                 <Typography fontSize={15} fontWeight={600}>
                                     {user.userName}
