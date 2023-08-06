@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import { getFriendList } from "../../../redux/friends/actionCreators";
@@ -8,18 +8,19 @@ import SideBarFriends from "../SideBarForFriends";
 import { Profile } from "../../index";
 import { setCurrentFriend } from "../../../redux/friends/friends.slise";
 import FriendEmptyPage from  "../FriendEmptyPage";
-import { setUser } from "../../../redux/user.slice/user.slice";
+import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 
 function UserFriendsPage() {
 
     const dispatch = useDispatch(); 
-    const user = useSelector((store)=>store.user.authorizedUser);
-    const friends = useSelector((store)=>store.friends.friendsList);
-    const currentFriend = useSelector((store)=>store.friends.currentFriend);
+    //const user = useSelector((store)=>store.user.authorizedUser);
+    const friends = useSelector((store)=>store.friends.friendsList, shallowEqual);
+    const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
     const userFriends = (friends.length > 0 
         ? friends.filter((elem) => elem.status==='accepted')
         : []);
 
+        console.log(friends);
     const friendsCount = userFriends.length === 0 ? '' : userFriends.length;
 
     useEffect(()=>{
@@ -41,6 +42,15 @@ function UserFriendsPage() {
         flexDirection: 'column', 
         padding: 20, 
         backgroundColor: theme.palette.backgroundColor.page,
+        height: '100%',
+        boxSizing: 'content-box',
+        overflowY: 'scroll',
+        overflowX: 'hidden',
+        paddingBottom: 0,
+        paddingTop: 0,
+        "&::-webkit-scrollbar": {
+            width: "0",
+          },
     }))
 
     const textMessage = getFriendList.length > 0 
@@ -50,21 +60,23 @@ function UserFriendsPage() {
     const noItemMessage = "No friends yet.";
 
     return(
-        <Box sx={{ width: '100%', display: 'flex', }}>
-            <SideBarFriends sideBarItems={userFriends}
-                                headerTitle={"All Friends"}
-                                subTitle={`${friendsCount} Friends`}
-                                noItemMessage={noItemMessage}
-                                isAvatarMutualFriend={false}/>
-            <SectionWraper sx={{minHeight: '93vh'}}>
-                { 
-                    currentFriend.id === undefined && <FriendEmptyPage>{textMessage}</FriendEmptyPage>
-                }
-                {
-                    !(currentFriend.id === undefined) && <Profile/>
-                }
-            </SectionWraper>
-        </Box>
+        <PageBoxFriendsWrapper>
+            <PageBoxFriends>
+                <SideBarFriends sideBarItems={userFriends}
+                                    headerTitle={"All Friends"}
+                                    subTitle={`${friendsCount} Friends`}
+                                    noItemMessage={noItemMessage}
+                                    isAvatarMutualFriend={false}/>
+                <SectionWraper>
+                    { 
+                        currentFriend.id === undefined && <FriendEmptyPage>{textMessage}</FriendEmptyPage>
+                    }
+                    {
+                        !(currentFriend.id === undefined) && <Profile/>
+                    }
+                </SectionWraper>
+            </PageBoxFriends>
+        </PageBoxFriendsWrapper>
     )
 }
 

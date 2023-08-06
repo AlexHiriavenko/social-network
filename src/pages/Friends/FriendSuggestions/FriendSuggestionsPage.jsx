@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import { getFriendshipRequests, createFriendship } from "../../../redux/friends/actionCreators";
@@ -9,13 +9,12 @@ import { Profile } from "../../index";
 import SideBarFriends from "../SideBarForFriends";
 import FriendEmptyPage from  "../FriendEmptyPage";
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
-import { setUser } from "../../../redux/user.slice/user.slice";
 
 function FriendSuggestionsPage() {
 
     const dispatch = useDispatch(); 
-    const friendSuggestions = useSelector((store)=>store.friends.friendSuggestions);
-    const currentFriend = useSelector((store)=>store.friends.currentFriend);
+    const friendSuggestions = useSelector((store)=>store.friends.friendSuggestions, shallowEqual);
+    const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
 
     useEffect(()=>{
         if(friendSuggestions.length === 0) {
@@ -45,7 +44,16 @@ function FriendSuggestionsPage() {
         display: 'flex', 
         flexDirection: 'column', 
         padding: 20, 
-        backgroundColor: theme.palette.backgroundColor.page/* '#F0F2F5' */,
+        backgroundColor: theme.palette.backgroundColor.page,
+        height: '100%',
+        boxSizing: 'content-box',
+        overflowY: 'scroll',
+        overflowX: 'hidden',
+        paddingBottom: 0,
+        paddingTop: 0,
+        "&::-webkit-scrollbar": {
+            width: "0",
+          },
     }))
 
     const textMessage = friendSuggestions.length > 0 
@@ -66,7 +74,7 @@ function FriendSuggestionsPage() {
                                     isAvatarMutualFriend={true}
                                     isRemoveButton={true}
                                     isAddButton={true}/>
-                <SectionWraper sx={{minHeight: '93vh'}}>
+                <SectionWraper>
                     { 
                         currentFriend.id === undefined && <FriendEmptyPage>{textMessage}</FriendEmptyPage>
                     }

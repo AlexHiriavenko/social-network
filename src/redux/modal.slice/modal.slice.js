@@ -7,6 +7,9 @@ const initialState = {
   editProfile: {
     isOpen: false,
   },
+  sentFriendRequests: {
+    isOpen: false,
+  },
 };
 
 const modalSlice = createSlice({
@@ -25,6 +28,12 @@ const modalSlice = createSlice({
     closeEditProfileModal: function (state) {
       state.editProfile.isOpen = false;
     },
+    openSentFriendRequests: function (state) {
+      state.sentFriendRequests.isOpen = true;
+    },
+    closeSentFriendRequests: function (state) {
+      state.sentFriendRequests.isOpen = false;
+    },
   },
 });
 
@@ -33,6 +42,8 @@ export const {
   closeCreateModal,
   openEditProfileModal,
   closeEditProfileModal,
+  openSentFriendRequests,
+  closeSentFriendRequests,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;
