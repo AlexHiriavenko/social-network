@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
@@ -7,12 +7,23 @@ import ChatContent from "./ChatContent/ChatContent";
 import { mockInfo } from "../../components/Header/HeaderSearch/SeacrhComponents/mockData";
 import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem, Badge, Box } from "@mui/material";
 import { openPageChat } from "../../redux/chat.slice/chat.slice";
+import { getUser1 } from "../../redux/test.slice/test.slice";
+// import { setUser2 } from "../../redux/test.slice/test.slice";
 
 function Chats() {
-    const currentUser = useSelector((state) => state.user.user);
-    console.log(currentUser);
     const theme = useTheme();
+    const currentUser = useSelector((state) => state.user.user);
+    const currentUserId = currentUser.id;
+
+    const abc = useSelector((state) => state.test.userTest);
+    console.log(abc);
+
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getUser1(currentUserId)); // Здесь уже не нужно оборачивать в then
+    }, [dispatch, currentUserId]);
+
     const [user1, setUser1] = useState([]);
     const handlerChat = (id) => {
         const user = mockInfo.find((users) => users.userID === id);
@@ -55,6 +66,9 @@ function Chats() {
                             </Box>
                         </MenuItem>
                     );
+                })}
+                {abc.map((el) => {
+                    return <p key={el.id}>{el.fullName}</p>;
                 })}
             </Sidebar>
             <ChatContent user={user1}></ChatContent>

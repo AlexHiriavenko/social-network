@@ -7,6 +7,7 @@ import friendReducer from "./friends/friends.slise";
 import userReducer from "./user.slice/user.slice.js";
 import darkModeSReducer from "./darkMode.slice/darkMode.slice";
 import modalReducer from "./modal.slice/modal.slice";
+import testReducer from "./test.slice/test.slice";
 
 export const store = configureStore({
     reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
         friends: friendReducer,
         modal: modalReducer,
         user: userReducer,
+        test: testReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
