@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+// eslint-disable-next-line no-unused-vars
 import React from "react";
 import { Card, CardContent, CardMedia, Typography, Tooltip, Box, List, Avatar, CardActions } from "@mui/material";
 import { useDispatch } from "react-redux";
@@ -53,11 +54,12 @@ function Friend (props) {
         alignItems: horizontal ? 'center' : null,
         margin: "4px",
         flexShrink: 1,
-        backgroundColor: theme.palette.backgroundColor.card,
-        '&:hover': horizontal ? {backgroundColor: theme.palette.backgroundColor.page,} : null,
+        backgroundColor: horizontal ? 'inherit' : theme.palette.backgroundColor.card,
+        '&:hover': horizontal ? 'inherit' : {backgroundColor: theme.palette.backgroundColor.page,},
         boxShadow:  horizontal ? 'none' : null,
         border: horizontal ? null: `solid 1px ${theme.palette.border.card}`,
         zIndex: 100,
+        pointerEvents: horizontal ? 'none' : 'all',
     }));
 
     const CardMediaStyled = styled(CardMedia)(({horizontal}) => ({
@@ -65,14 +67,12 @@ function Friend (props) {
         height: horizontal ? '60px' : null,
         borderRadius: horizontal ? '50%' : null,
         paddingTop: '100%',
-        zIndex: 200,
     }))
 
     const CardContentStyled = styled(CardContent)({
         display: 'flex', 
         flexDirection: 'column', 
         paddingBottom: 0,
-        zIndex: 200,
     })
 
     const FriendName = styled(Typography)(({theme, horizontal}) => ({
@@ -82,7 +82,6 @@ function Friend (props) {
         lineHeight: '1.1765',
         fontFamily: 'inherit',
         '&:hover': horizontal ? null : {textDecoration: 'underline' },
-        zIndex: 200,
     }))
 
     const MutualFriendsList = styled(Typography)(({theme}) => ({
@@ -94,7 +93,6 @@ function Friend (props) {
         fontFamily: 'inherit',
         alignItems: 'center',
         cursor: 'pointer',
-        zIndex: 200,
     }))
 
     const CardActionsStyled = styled(CardActions)(({horizontal}) => ({
@@ -104,7 +102,6 @@ function Friend (props) {
         width: '100%', 
         '&>:not(:first-of-type)': {marginLeft: 0}, 
         paddingTop: 0 ,
-        zIndex: 200,
     }))
 
     const ContainerStyled = styled(Box)({
@@ -121,7 +118,7 @@ function Friend (props) {
     return (
         <>
         <CardStyled horizontal={horizontal}>
-            <Link to={referenseForLinks}  onClick={()=>handleLinkClick(friend)}>
+            <Link to={referenseForLinks}  onClick={handleLinkClick}>
                 <CardMediaStyled horizontal={horizontal}
                     image={friend.profilePicture ? friend.profilePicture : userProfileImageDefault}
                     title={friend.fullName}
@@ -130,17 +127,18 @@ function Friend (props) {
             </Link>
             <ContainerStyled>
                 <CardContentStyled>
-                    <Link to={referenseForLinks} onClick={()=>handleLinkClick(friend)} sx={{width: '100%',}}>
+                    <Link to={referenseForLinks} onClick={handleLinkClick} sx={{width: '100%',}}>
                         <FriendName horizontal={horizontal}>{friend.fullName}</FriendName>
                     </Link>
                     <Box sx={{ display: 'flex', gap: 1/2, height: 30}}>
                         <List sx={{ display: 'flex', '&:nth-last-of-type()': {ml: '-15%'}}}>
                             {mutialFriendsAvatars && mutialFriendsAvatars.map(el => 
-                                <Link onClick={()=>handleMutualFriendClick(el)} to={`/Profile`} key={el.id}>
-                                    <Avatar src={el.profilePicture ? el.profilePicture: userProfileImageDefault} sx={{width: 16, height: 16, zIndex: 1000}}/>
+                                <Link onClick={(e) => {e.stopPropagation(); handleMutualFriendClick(el)}} to={`/Profile`} key={el.id}>
+                                    <Avatar src={el.profilePicture ? el.profilePicture: userProfileImageDefault} 
+                                        sx={{width: 16, height: 16, zIndex: 1000, pointerEvents: 'all'}}/>
                                 </Link>)}
                         </List>
-                        {mutualFriends.length>0 && <Tooltip title={listMutualFriends}>
+                        {mutualFriends.length>0 && <Tooltip sx={{pointerEvents: 'all'}} title={listMutualFriends}>
                             <MutualFriendsList>
                                 {countMutualFriends} mutual friends
                             </MutualFriendsList>
