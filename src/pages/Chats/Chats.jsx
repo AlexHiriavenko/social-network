@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from "@mui/material/styles";
-import { useDispatch } from "react-redux";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import UsersList from "../../components/UsersList/UsersList";
 import ChatContent from "./ChatContent/ChatContent";
@@ -17,14 +16,12 @@ function Chats() {
     // const currentUserId = currentUser.id;
 
     const chatParticipants = useSelector((state) => state.chat.chatsParticipants);
-    console.log(chatParticipants);
 
     const currentChat = useSelector((state) => state.chat.currentChat);
-    console.log(currentChat);
 
     useEffect(() => {
         dispatch(getChatsParticipants()); // Здесь уже не нужно оборачивать в then
-        dispatch(getChat(1));
+        // dispatch(getChat(1));
     }, [dispatch]);
 
     const [user1, setUser1] = useState([]);

@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getChat } from "../../redux/chat.slice/chat.slice";
 import { List, ListItem, Typography, Avatar } from "@mui/material/";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 
 function UsersList(props) {
+    const dispatch = useDispatch();
     const theme = useTheme();
     const { usersList } = props;
+
+    function handlerChat(chatId) {
+        dispatch(getChat(chatId));
+    }
 
     return (
         <List>
@@ -17,6 +23,7 @@ function UsersList(props) {
             {usersList.map(({ id: chatId, profilePicture, fullName }) => (
                 <ListItem
                     key={chatId}
+                    onClick={() => handlerChat(chatId)}
                     sx={{
                         gap: 1,
                         "&:hover": {
