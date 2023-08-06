@@ -3,26 +3,29 @@ import { useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import UsersList from "../../components/UsersList/UsersList";
 import ChatContent from "./ChatContent/ChatContent";
 import { mockInfo } from "../../components/Header/HeaderSearch/SeacrhComponents/mockData";
-import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem, Badge, Box } from "@mui/material";
+import { Typography, Avatar, MenuItem, Box } from "@mui/material";
 import { openPageChat } from "../../redux/chat.slice/chat.slice";
-import { getUser1 } from "../../redux/test.slice/test.slice";
-// import { setUser2 } from "../../redux/test.slice/test.slice";
+import { getChatsParticipants, getChat } from "../../redux/chat.slice/chat.slice";
 
 function Chats() {
-    const theme = useTheme();
-    const currentUser = useSelector((state) => state.user.user);
-    const currentUserId = currentUser.id;
-
-    const abc = useSelector((state) => state.test.userTest);
-    console.log(abc);
-
     const dispatch = useDispatch();
+    const theme = useTheme();
+    // const currentUser = useSelector((state) => state.user.user);
+    // const currentUserId = currentUser.id;
+
+    const chatParticipants = useSelector((state) => state.chat.chatsParticipants);
+    console.log(chatParticipants);
+
+    const currentChat = useSelector((state) => state.chat.currentChat);
+    console.log(currentChat);
 
     useEffect(() => {
-        dispatch(getUser1(currentUserId)); // Здесь уже не нужно оборачивать в then
-    }, [dispatch, currentUserId]);
+        dispatch(getChatsParticipants()); // Здесь уже не нужно оборачивать в then
+        dispatch(getChat(1));
+    }, [dispatch]);
 
     const [user1, setUser1] = useState([]);
     const handlerChat = (id) => {
@@ -67,9 +70,7 @@ function Chats() {
                         </MenuItem>
                     );
                 })}
-                {abc.map((el) => {
-                    return <p key={el.id}>{el.fullName}</p>;
-                })}
+                <UsersList usersList={chatParticipants} />
             </Sidebar>
             <ChatContent user={user1}></ChatContent>
         </div>

@@ -8,12 +8,10 @@ export const getChats = createAsyncThunk("chat/getChats", async function () {
 });
 
 ////////////////////
-export const getParticipants = createAsyncThunk("chat/getParticipants", async function (id) {
-    const chatsParticipants = await instance
-        .get(`/chats/${id}/participants`)
-        .then((response) => response.json());
-    console.log(chatsParticipants);
-    return chatsParticipants;
+export const getChatsParticipants = createAsyncThunk("chat/getParticipants", async function () {
+    const { data } = await instance.get(`chats/participants`);
+    console.log(data);
+    return data;
 });
 ////////////////////
 export const getChat = createAsyncThunk("chat/getChat", async function (id) {
@@ -42,6 +40,8 @@ export const addNewUser = createAsyncThunk("chat/addNewUser", async function ({ 
 });
 const initialState = {
     isOpened: false,
+    chatsParticipants: [],
+    currentChat: {},
 };
 
 const chatSlice = createSlice({
@@ -54,6 +54,15 @@ const chatSlice = createSlice({
         closeChat: function (state, action) {
             state.isOpened = false;
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(getChatsParticipants.fulfilled, (state, action) => {
+            state.chatsParticipants = action.payload;
+        });
+        builder.addCase(getChat.fulfilled, (state, action) => {
+            // Обработка успешного выполнения getChat
+            state.currentChat = action.payload; // Например, сохранение данных чата
+        });
     },
 });
 

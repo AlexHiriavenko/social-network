@@ -27,8 +27,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../../instance";
 
-export const getUser1 = createAsyncThunk("Users1/getUser1", async function (id, thunkAPI) {
-    const { data } = await instance.get(`/chats/${id}/participants`);
+export const getUser1 = createAsyncThunk("Users1/getUser1", async function () {
+    const { data } = await instance.get(`chats/participants`);
     console.log(data);
     return data;
 });
