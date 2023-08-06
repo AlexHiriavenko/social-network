@@ -2,32 +2,48 @@ import { useSelector } from "react-redux";
 import PostList from "../../components/Posts/Post/PostList";
 import { useEffect, useState } from "react";
 import CreatePost from "../../components/Posts/CreatePost";
-import {getPosts, setPosts} from "../../redux/post.slice/post.slice.js";
-import {setAuthorizedUser} from "../../redux/user.slice/user.slice.js";
-import {useDispatch} from "react-redux";
+import {
+  getPageblePosts,
+  getPosts,
+  setPosts,
+} from "../../redux/post.slice/post.slice.js";
+import { setAuthorizedUser } from "../../redux/user.slice/user.slice.js";
+import { useDispatch } from "react-redux";
 
 function HomeMain() {
-
-    const dispatch = useDispatch();
-
-    useEffect(()=>{
-     /*   const allPostsResponse = dispatch(getPosts());
-        allPostsResponse
-            .then((result) => {
-                dispatch(setPosts(result.payload));
-            })
-            .catch((error) => alert(error));
-        dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))*/
-
-    },[])
   // State
   const [mainPagePosts, setMainPagePosts] = useState([]);
+  const [fetching, setFetching] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
   // Constants
   const allPosts = useSelector((state) => state.post.allPosts);
+  const dispatch = useDispatch();
+  // Functions
+  function handleScroll(e) {
+    if (
+      e.target.documentElement.scrollHeight -
+        (e.target.documentElement.scrollTop + window.innerHeight) <
+      10
+    ) {
+      setFetching(true);
+    }
+  }
   //   useEffect
   useEffect(() => {
-    setMainPagePosts(allPosts);
-  }, [allPosts]);
+    if (fetching) {
+      // dispatch(getPageblePosts(currentPage, 5))
+      //   .then((data) => {
+      //     console.log(data.payload);
+      //     setCurrentPage(currentPage + 1);
+      //   })
+      //   .catch((error) => console.log(error))
+      //   .finally(() => setFetching(false));
+    }
+  }, [fetching]);
+  useEffect(() => {
+    document.addEventListener("scroll", handleScroll);
+    return () => document.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
     <main className="main-home-content">
       <CreatePost />
