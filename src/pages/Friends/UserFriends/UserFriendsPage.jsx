@@ -8,11 +8,7 @@ import SideBarFriends from "../SideBarForFriends";
 import { Profile } from "../../index";
 import { setCurrentFriend } from "../../../redux/friends/friends.slise";
 import FriendEmptyPage from  "../FriendEmptyPage";
-<<<<<<< HEAD
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
-=======
-import { setUser } from "../../../redux/user.slice/user.slice";
->>>>>>> develop
 
 function UserFriendsPage() {
 
