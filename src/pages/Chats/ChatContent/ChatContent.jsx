@@ -11,34 +11,42 @@ import { useEffect, useRef, useState } from "react";
 import { Label } from "@mui/icons-material";
 import { height } from "@mui/system";
 function ChatContent(props) {
+    const currentChat = useSelector((state) => state.chat.currentChat) || {};
+    console.log(currentChat);
     const messageListRef = useRef(null);
     const theme = useTheme();
-    const { user } = props;
-    const { userName, userPhoto, message, answers } = user || [];
-    const handlerSend = () => {
-        if (sendMessage.trim() !== "") {
-            setSendMessage("");
-            answers.push(sendMessage);
-        }
-    };
+    const { users: chatUsers } = currentChat || {};
+    console.log(chatUsers);
+    const userName = chatUsers[0]?.fullName || "";
+    const userPhoto = chatUsers[0]?.profilePicture || "";
 
-    const handleIconClick = () => {
-        setAnswer((prevState) => [
-            ...prevState,
-            <ThumbUpAltIcon key={Date.now()} sx={{ background: "none" }} />,
-        ]);
-        handlerSend();
-    };
-    useEffect(() => {
-        if (messageListRef.current) {
-            messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
-        }
-    }, [answers]);
-    const dispatch = useDispatch();
-    const [sendMessage, setSendMessage] = useState("");
+    // const { userName, userPhoto, message, answers } = chat || [];
+
+    // const handlerSend = () => {
+    //     if (sendMessage.trim() !== "") {
+    //         setSendMessage("");
+    //         answers.push(sendMessage);
+    //     }
+    // };
+
+    // const handleIconClick = () => {
+    //     setAnswer((prevState) => [
+    //         ...prevState,
+    //         <ThumbUpAltIcon key={Date.now()} sx={{ background: "none" }} />,
+    //     ]);
+    //     handlerSend();
+    // };
+    // useEffect(() => {
+    //     if (messageListRef.current) {
+    //         messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+    //     }
+    // }, [answers]);
+    // const dispatch = useDispatch();
+    // const [sendMessage, setSendMessage] = useState("");
     const open = useSelector((state) => state.chatPage.isOpened);
     if (open && userName) {
         return (
+            // <div>sadasdasd</div>
             <Box
                 sx={{
                     backgroundColor: theme.palette.backgroundColor.card,
@@ -107,7 +115,7 @@ function ChatContent(props) {
                             src={userPhoto}
                             alt={userName}
                         />
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        {/* <Box sx={{ display: "flex", flexDirection: "column" }}>
                             {message?.map((mes, id) => (
                                 <Paper
                                     key={id}
@@ -127,9 +135,9 @@ function ChatContent(props) {
                                     <Typography>{mes}</Typography>
                                 </Paper>
                             ))}
-                        </Box>
+                        </Box> */}
                     </Box>
-                    {answers &&
+                    {/* {answers &&
                         answers?.map((ans, id) => (
                             <Paper
                                 key={id}
@@ -151,7 +159,7 @@ function ChatContent(props) {
                             >
                                 <Typography>{ans}</Typography>
                             </Paper>
-                        ))}
+                        ))} */}
                 </Box>
                 <Box
                     sx={{
@@ -192,7 +200,7 @@ function ChatContent(props) {
                             color: theme.palette.textColor.blueLink,
                         }}
                     />
-                    <TextField
+                    {/* <TextField
                         placeholder="Aa"
                         id="filled-hidden-label-small"
                         InputProps={{
@@ -232,7 +240,7 @@ function ChatContent(props) {
                             }}
                             onClick={handleIconClick}
                         />
-                    )}
+                    )} */}
                 </Box>
             </Box>
         );

@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { getChat } from "../../redux/chat.slice/chat.slice";
+import { openPageChat } from "../../redux/chat.slice/chat.slice";
 import { List, ListItem, Typography, Avatar } from "@mui/material/";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
@@ -9,8 +10,10 @@ function UsersList(props) {
     const theme = useTheme();
     const { usersList } = props;
 
-    function handlerChat(chatId) {
+    function handlerChat(event, chatId) {
+        console.log(event.target);
         dispatch(getChat(chatId));
+        dispatch(openPageChat());
     }
 
     return (
@@ -20,10 +23,10 @@ function UsersList(props) {
                     No history yet
                 </Typography>
             )}
-            {usersList.map(({ id: chatId, profilePicture, fullName }) => (
+            {usersList.map(({ id: chatId, profilePicture, fullName, userId }) => (
                 <ListItem
-                    key={chatId}
-                    onClick={() => handlerChat(chatId)}
+                    key={userId}
+                    onClick={(event) => handlerChat(event, chatId)}
                     sx={{
                         gap: 1,
                         "&:hover": {

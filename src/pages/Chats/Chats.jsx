@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import ChatForm from "./ChatForm/ChatForm";
 import UsersList from "../../components/UsersList/UsersList";
 import ChatContent from "./ChatContent/ChatContent";
 import { mockInfo } from "../../components/Header/HeaderSearch/SeacrhComponents/mockData";
@@ -17,14 +18,12 @@ function Chats() {
 
     const chatParticipants = useSelector((state) => state.chat.chatsParticipants);
 
-    const currentChat = useSelector((state) => state.chat.currentChat);
-
     useEffect(() => {
         dispatch(getChatsParticipants()); // Здесь уже не нужно оборачивать в then
         // dispatch(getChat(1));
     }, [dispatch]);
 
-    const [user1, setUser1] = useState([]);
+    // const [user1, setUser1] = useState([]);
     const handlerChat = (id) => {
         const user = mockInfo.find((users) => users.userID === id);
         dispatch(openPageChat());
@@ -39,7 +38,7 @@ function Chats() {
             }}
         >
             <Sidebar>
-                {mockInfo.map((user) => {
+                {/* {mockInfo.map((user) => {
                     return (
                         <MenuItem
                             key={user.userID}
@@ -66,10 +65,11 @@ function Chats() {
                             </Box>
                         </MenuItem>
                     );
-                })}
+                })} */}
                 <UsersList usersList={chatParticipants} />
             </Sidebar>
-            <ChatContent user={user1}></ChatContent>
+            {/* <ChatContent></ChatContent> */}
+            <ChatForm></ChatForm>
         </div>
     );
 }
