@@ -17,6 +17,14 @@ export const getChat = createAsyncThunk(
       return data;
     }
 )
+export const getUserChats = createAsyncThunk(
+    'chat/getUserChats',
+    async function(id) {
+        const chats   =  await instance.get(`/users/${id}/chats`);
+        console.log(chats)
+        return chats;
+    }
+)
 export const sendMessage = createAsyncThunk(
     'chat/sendMessage',
     async function({sender,chat,content}) {
