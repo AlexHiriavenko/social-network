@@ -2,17 +2,22 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "../../instance.js";
 
 export const getChats = createAsyncThunk("chat/getChats", async function () {
-    const chats = await instance.get("/chats").then((response) => response.json());
+    const chats = await instance
+        .get("/chats")
+        .then((response) => response.json());
     console.log(chats);
     return chats;
 });
 
 ////////////////////
-export const getChatsParticipants = createAsyncThunk("chat/getParticipants", async function () {
-    const { data } = await instance.get(`chats/participants`);
-    console.log(data);
-    return data;
-});
+export const getChatsParticipants = createAsyncThunk(
+    "chat/getParticipants",
+    async function () {
+        const { data } = await instance.get(`chats/participants`);
+        console.log(data);
+        return data;
+    }
+);
 ////////////////////
 export const getChat = createAsyncThunk("chat/getChat", async function (id) {
     const { data } = await instance.get(`/chats/${id}`);
@@ -34,13 +39,20 @@ export const sendMessage = createAsyncThunk(
     }
 );
 
-export const addNewUser = createAsyncThunk("chat/addNewUser", async function ({ chatId, newUser }) {
-    const { status } = await instance.put(`/messages/${chatId}/participants`, newUser);
-    console.log(status);
-});
+export const addNewUser = createAsyncThunk(
+    "chat/addNewUser",
+    async function ({ chatId, newUser }) {
+        const { status } = await instance.put(
+            `/messages/${chatId}/participants`,
+            newUser
+        );
+        console.log(status);
+    }
+);
 const initialState = {
     isOpened: false,
     chatsParticipants: [],
+    currentChatCompanion: {},
     currentChat: {
         id: null,
         messages: [
@@ -79,14 +91,16 @@ const chatSlice = createSlice({
         closeChat: function (state, action) {
             state.isOpened = false;
         },
+        setCurrentChatCompanion: function (state, action) {
+            state.currentChatCompanion = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getChatsParticipants.fulfilled, (state, action) => {
             state.chatsParticipants = action.payload;
         });
         builder.addCase(getChat.fulfilled, (state, action) => {
-            // Обработка успешного выполнения getChat
-            state.currentChat = action.payload; // Например, сохранение данных чата
+            state.currentChat = action.payload;
         });
     },
 });
@@ -104,7 +118,8 @@ const chatPageSlice = createSlice({
     },
 });
 
-export const { openChat, closeChat } = chatSlice.actions;
+export const { openChat, closeChat, setCurrentChatCompanion } =
+    chatSlice.actions;
 export const { openPageChat, closePageChat } = chatPageSlice.actions;
 
 export default chatSlice.reducer;
