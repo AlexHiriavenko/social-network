@@ -8,7 +8,7 @@ import {readCookie} from '../../readCookie.js'
 import {getAccessToken, loginGoogle} from "../../redux/login.slice/login.slice.js";
 import { getUser, getUsers, setAuthorizedUser, setUsers} from "../../redux/user.slice/user.slice.js";
 import {getPosts, setPosts} from "../../redux/post.slice/post.slice.js";
-
+import {getChats, sendMessage} from "../../redux/chat.slice/chat.slice.js";
 
 
 function Home() {
@@ -16,21 +16,22 @@ function Home() {
     const theme = useTheme();
 
     const dispatch = useDispatch();
-
-   const renewToken = async function () {
-       const token = await dispatch(getAccessToken())
-       console.log(token.payload)
-       console.log("Set access token")
-       document.cookie = `token=${token.payload}`
-   }
+    let user = useSelector(state=>state.user.authorizedUser)
+    const renewToken = async function () {
+        const token = await dispatch(getAccessToken())
+        console.log(token.payload)
+        console.log("Set access token")
+        document.cookie = `token=${token.payload}`
+    }
 
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
     useEffect(()=>{
-       if(readCookie('token' ) == '0'){
-        dispatch(loginGoogle())
+        console.log(JSON.parse(localStorage.getItem('token')) == 'out')
+        if(JSON.parse(localStorage.getItem('token')) == 'out'){
+            dispatch(loginGoogle())
 
-    }
-        window.setInterval(renewToken,600000)
+        }
+        //   window.setInterval(renewToken,600000)
         if (
             !localStorage.getItem("authorizedUser") &&
             localStorage.getItem("auth")
@@ -39,7 +40,7 @@ function Home() {
             const authorizedUserResponse = dispatch(getUser(JSON.parse(auth).id));
             authorizedUserResponse
                 .then((result) => {
-                  //  let promiseResult = result
+                    //  let promiseResult = result
 
                     dispatch(
                         setAuthorizedUser({ ...result.payload, isAuthorized: true })
@@ -72,11 +73,31 @@ function Home() {
             })
             .catch((error) => alert(error));
         dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
-        return function () {
 
-           window.clearInterval(renewToken)
-        }
-       },[isLoggedIn])
+        const chats = dispatch(getChats())
+        chats.then(result=>{
+            //console.log(result.payload.data[0])
+
+            let content ="FGyjIiikGDS"
+            //  dispatch(sendMessage({sender:user,chat:result.payload.data[0],content:content}))
+
+        })
+
+
+
+
+     //   return function () {
+
+        //    window.clearInterval(renewToken)
+
+
+
+    //    }
+
+
+
+
+    },[isLoggedIn])
 
     return (
         <div
