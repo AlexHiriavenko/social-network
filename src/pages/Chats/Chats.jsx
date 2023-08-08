@@ -1,17 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ChatForm from "./ChatForm/ChatForm";
-import UsersList from "../../components/UsersList/UsersList";
+import UsersList from "./UsersList/UsersList";
 import ChatContent from "./ChatContent/ChatContent";
 import { mockInfo } from "../../components/Header/HeaderSearch/SeacrhComponents/mockData";
-import { Typography, Avatar, MenuItem, Box } from "@mui/material";
 import { openPageChat } from "../../redux/chat.slice/chat.slice";
-import {
-    getChatsParticipants,
-    getChat,
-} from "../../redux/chat.slice/chat.slice";
+import { getChatsParticipants, getChat } from "../../redux/chat.slice/chat.slice";
 
 function Chats() {
     const dispatch = useDispatch();
@@ -19,9 +15,7 @@ function Chats() {
     // const currentUser = useSelector((state) => state.user.user);
     // const currentUserId = currentUser.id;
 
-    const chatParticipants = useSelector(
-        (state) => state.chat.chatsParticipants
-    );
+    const chatParticipants = useSelector((state) => state.chat.chatsParticipants);
 
     useEffect(() => {
         dispatch(getChatsParticipants());
@@ -40,7 +34,8 @@ function Chats() {
                 display: "flex",
                 backgroundColor: theme.palette.backgroundColor.card,
                 minHeight: "100%",
-            }}>
+            }}
+        >
             <Sidebar>
                 <UsersList usersList={chatParticipants} />
             </Sidebar>
