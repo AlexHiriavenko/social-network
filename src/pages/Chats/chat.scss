@@ -6,3 +6,25 @@
 .messege-text-chatPartner {
     background-color: lightgray;
 }
+
+.chat-body {
+    width: calc(100% - 370px);
+}
+
+.chat-body__list {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-body__item--authUser {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    align-self: flex-end;
+}
+
+.chat-body__item--chatPartner {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+}

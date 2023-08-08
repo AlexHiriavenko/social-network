@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import {
     Typography,
@@ -20,6 +21,7 @@ import {
 const ChatForm = () => {
     const dispatch = useDispatch();
     const inputRef = useRef(null);
+    const theme = useTheme();
 
     useEffect(() => {
         return () => dispatch(resetCurrentChat());
@@ -39,9 +41,6 @@ const ChatForm = () => {
     const newMessage = structuredClone(objForCopy);
 
     const isAuthUser = (authUserId, userId) => {
-        console.log(authUserId);
-        console.log(userId);
-        console.log(authUserId === userId);
         return authUserId === userId;
     };
 
@@ -83,7 +82,7 @@ const ChatForm = () => {
 
     if (messages[0].createdBy) {
         return (
-            <Box sx={{ p: 2, mb: 2 }}>
+            <Box sx={{ p: 2, mb: 2 }} className="chat-body">
                 <Link
                     onClick={() => lookFriendPage(currentChatCompanion.userId)}
                     to="/profile"
@@ -94,18 +93,25 @@ const ChatForm = () => {
                         alt="user icon"
                         src={profilePicture}
                     />
-                    <Typography>{fullName}</Typography>
+                    <Typography sx={{ color: theme.palette.textColor.main }}>
+                        {fullName}
+                    </Typography>
                 </Link>
-                <List>
+                <List className="chat-body__list">
                     {messages.map((message, index) => (
                         <ListItem
-                            key={index}
-                            sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                mb: 1,
-                            }}>
-                            <Typography>
+                            className={
+                                isAuthUser(authUserId, message.sender.id)
+                                    ? "chat-body__item--authUser"
+                                    : "chat-body__item--chatPartner"
+                            }
+                            key={index}>
+                            <Typography
+                                sx={{
+                                    width: "100%",
+                                    textAlign: "center",
+                                    color: theme.palette.textColor.secondary,
+                                }}>
                                 {message.createdDate
                                     ? new Date(
                                           message.createdDate
@@ -145,8 +151,33 @@ const ChatForm = () => {
                     ))}
                 </List>
                 <TextField
-                    sx={{ mt: 8 }}
+                    sx={{
+                        mt: 8,
+                        minWidth: "300px",
+                        "& input": {
+                            color: theme.palette.textColor.main,
+                            border: `1px solid ${theme.palette.textColor.secondary}`,
+                            "&:hover": {
+                                border: `1px solid ${theme.palette.textColor.secondary}`,
+                                outline: `1px solid ${theme.palette.textColor.secondary}`,
+                            },
+                            "&:focus": {
+                                border: "none",
+                                outline: "none",
+                            },
+                        },
+                    }}
+                    inputProps={{
+                        style: {
+                            color: theme.palette.textColor.main,
+                        },
+                    }}
                     label="your message"
+                    InputLabelProps={{
+                        style: {
+                            color: theme.palette.textColor.secondary,
+                        },
+                    }}
                     variant="outlined"
                     inputRef={inputRef}
                     onKeyDown={handleKeyDown}
