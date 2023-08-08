@@ -53,6 +53,16 @@ const navigate = useNavigate()
               style={{ alignSelf: "center" }}>
               Отправить письмо
             </Button></form>
+            <Button
+                onClick={()=>{
+                  navigate('/')
+                }}
+                className="form-btn create--btn"
+                variant="contained"
+                color="grey"
+                style={{ alignSelf: "center" }}>
+              На главную
+            </Button>
           </Box>
         </Box>
 
