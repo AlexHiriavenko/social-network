@@ -1,9 +1,21 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Typography, List, ListItem, TextField, Box, Avatar } from "@mui/material";
+import {
+    Typography,
+    List,
+    ListItem,
+    TextField,
+    Box,
+    Avatar,
+} from "@mui/material";
 import { getChat } from "../../../redux/chat.slice/chat.slice";
-import { getFriends, setFriends, setUser, getUser } from "../../../redux/user.slice/user.slice";
+import {
+    getFriends,
+    setFriends,
+    setUser,
+    getUser,
+} from "../../../redux/user.slice/user.slice";
 
 const ChatForm = () => {
     const dispatch = useDispatch();
@@ -13,12 +25,21 @@ const ChatForm = () => {
     const authUserId = authUser.id;
 
     const currentChat = useSelector((state) => state.chat.currentChat);
-    const currentChatCompanion = useSelector((state) => state.chat.currentChatCompanion);
+    const currentChatCompanion = useSelector(
+        (state) => state.chat.currentChatCompanion
+    );
     const { fullName, profilePicture } = currentChatCompanion;
 
     const messages = currentChat.messages;
     const objForCopy = messages.find((message) => message.id === authUserId);
     const newMessage = structuredClone(objForCopy);
+
+    const isAuthUser = (authUserId, userId) => {
+        console.log(authUserId);
+        console.log(userId);
+        console.log(authUserId === userId);
+        return authUserId === userId;
+    };
 
     function lookFriendPage(id) {
         const userFriendsResponse = dispatch(getFriends(id));
@@ -62,8 +83,7 @@ const ChatForm = () => {
                 <Link
                     onClick={() => lookFriendPage(currentChatCompanion.userId)}
                     to="/profile"
-                    style={{ display: "flex", alignItems: "center", gap: 8 }}
-                >
+                    style={{ display: "flex", alignItems: "center", gap: 8 }}>
                     <Avatar
                         className="search__user-avatar"
                         sx={{ minWidth: "40px", minHeight: "40px" }}
@@ -76,31 +96,52 @@ const ChatForm = () => {
                     {messages.map((message, index) => (
                         <ListItem
                             key={index}
-                            sx={{ display: "flex", flexDirection: "column", mb: 1 }}
-                        >
+                            sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                mb: 1,
+                            }}>
                             <Typography>
                                 {message.createdDate
-                                    ? new Date(message.createdDate).toLocaleString()
+                                    ? new Date(
+                                          message.createdDate
+                                      ).toLocaleString()
                                     : "unknown date"}
                             </Typography>
-                            <Typography>
-                                {message.createdBy ? message.createdBy : "unknown author"}
-                            </Typography>
-                            <img src={message.sender.profilePicture}></img>
-                            <Typography
+                            <Box
                                 sx={{
-                                    p: 2,
-                                    minWidth: "200px",
-                                    backgroundColor: "lightgrey",
-                                    borderRadius: "16px",
-                                }}
-                            >
-                                {message.content ? message.content : ""}
-                            </Typography>
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 1,
+                                }}>
+                                <Avatar
+                                    sx={{ minWidth: "40px", minHeight: "40px" }}
+                                    alt="user icon"
+                                    src={
+                                        message.sender.profilePicture
+                                    }></Avatar>
+                                <Typography
+                                    className={
+                                        isAuthUser(
+                                            authUserId,
+                                            message.sender.id
+                                        )
+                                            ? "message-text-authUser"
+                                            : "messege-text-chatPartner"
+                                    }
+                                    sx={{
+                                        p: 2,
+                                        minWidth: "200px",
+                                        borderRadius: "16px",
+                                    }}>
+                                    {message.content ? message.content : ""}
+                                </Typography>
+                            </Box>
                         </ListItem>
                     ))}
                 </List>
                 <TextField
+                    sx={{ mt: 8 }}
                     label="your message"
                     variant="outlined"
                     inputRef={inputRef}
