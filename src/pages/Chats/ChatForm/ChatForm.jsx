@@ -9,7 +9,7 @@ import {
     Box,
     Avatar,
 } from "@mui/material";
-import { getChat } from "../../../redux/chat.slice/chat.slice";
+import { resetCurrentChat } from "../../../redux/chat.slice/chat.slice";
 import {
     getFriends,
     setFriends,
@@ -20,6 +20,10 @@ import {
 const ChatForm = () => {
     const dispatch = useDispatch();
     const inputRef = useRef(null);
+
+    useEffect(() => {
+        return () => dispatch(resetCurrentChat());
+    }, []);
 
     const authUser = useSelector((state) => state.user.authorizedUser);
     const authUserId = authUser.id;

@@ -49,7 +49,7 @@ export const addNewUser = createAsyncThunk(
         console.log(status);
     }
 );
-const initialState = {
+export const initialState = {
     isOpened: false,
     chatsParticipants: [],
     currentChatCompanion: {},
@@ -94,6 +94,9 @@ const chatSlice = createSlice({
         setCurrentChatCompanion: function (state, action) {
             state.currentChatCompanion = action.payload;
         },
+        resetCurrentChat: function (state, action) {
+            state.currentChat = initialState.currentChat;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getChatsParticipants.fulfilled, (state, action) => {
@@ -118,8 +121,12 @@ const chatPageSlice = createSlice({
     },
 });
 
-export const { openChat, closeChat, setCurrentChatCompanion } =
-    chatSlice.actions;
+export const {
+    openChat,
+    closeChat,
+    setCurrentChatCompanion,
+    resetCurrentChat,
+} = chatSlice.actions;
 export const { openPageChat, closePageChat } = chatPageSlice.actions;
 
 export default chatSlice.reducer;
