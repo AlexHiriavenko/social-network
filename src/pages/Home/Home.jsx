@@ -74,17 +74,6 @@ function Home() {
             .catch((error) => alert(error));
         dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
 
-        const chats = dispatch(getChats())
-        chats.then(result=>{
-            //console.log(result.payload.data[0])
-
-            let content ="FGyjIiikGDS"
-            //  dispatch(sendMessage({sender:user,chat:result.payload.data[0],content:content}))
-
-        })
-
-
-
 
      //   return function () {
 
