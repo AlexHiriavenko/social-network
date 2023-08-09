@@ -14,30 +14,14 @@ export const getChatsParticipants = createAsyncThunk(
     "chat/getParticipants",
     async function () {
         const { data } = await instance.get(`chats/participants`);
-        console.log(data);
         return data;
     }
 );
 ////////////////////
 export const getChat = createAsyncThunk("chat/getChat", async function (id) {
     const { data } = await instance.get(`/chats/${id}`);
-    console.log(data);
     return data;
 });
-
-export const sendMessage = createAsyncThunk(
-    "chat/sendMessage",
-    async function ({ sender, chat, content }) {
-        let message = {
-            id: 0,
-            content: content,
-            sender: sender,
-            chat: chat,
-        };
-        const { status } = await instance.post(`/messages`, message);
-        console.log(status);
-    }
-);
 
 export const addNewUser = createAsyncThunk(
     "chat/addNewUser",
@@ -127,6 +111,7 @@ export const {
     setCurrentChatCompanion,
     resetCurrentChat,
 } = chatSlice.actions;
+
 export const { openPageChat, closePageChat } = chatPageSlice.actions;
 
 export default chatSlice.reducer;

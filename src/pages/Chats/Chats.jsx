@@ -4,10 +4,9 @@ import { useTheme } from "@mui/material/styles";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ChatForm from "./ChatForm/ChatForm";
 import UsersList from "./UsersList/UsersList";
-import ChatContent from "./ChatContent/ChatContent";
 import { mockInfo } from "../../components/Header/HeaderSearch/SeacrhComponents/mockData";
 import { openPageChat } from "../../redux/chat.slice/chat.slice";
-import { getChatsParticipants, getChat } from "../../redux/chat.slice/chat.slice";
+import { getChatsParticipants } from "../../redux/chat.slice/chat.slice";
 
 function Chats() {
     const dispatch = useDispatch();
@@ -15,7 +14,9 @@ function Chats() {
     // const currentUser = useSelector((state) => state.user.user);
     // const currentUserId = currentUser.id;
 
-    const chatParticipants = useSelector((state) => state.chat.chatsParticipants);
+    const chatParticipants = useSelector(
+        (state) => state.chat.chatsParticipants
+    );
 
     useEffect(() => {
         dispatch(getChatsParticipants());
@@ -33,9 +34,8 @@ function Chats() {
             style={{
                 display: "flex",
                 backgroundColor: theme.palette.backgroundColor.card,
-                minHeight: "100%",
-            }}
-        >
+                minHeight: "93.2%",
+            }}>
             <Sidebar>
                 <UsersList usersList={chatParticipants} />
             </Sidebar>

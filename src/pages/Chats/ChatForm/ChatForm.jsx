@@ -10,7 +10,14 @@ import {
     Box,
     Avatar,
 } from "@mui/material";
-import { resetCurrentChat } from "../../../redux/chat.slice/chat.slice";
+import CloseIcon from "@mui/icons-material/Close";
+import SendIcon from "@mui/icons-material/Send";
+import {
+    resetCurrentChat,
+    getChat,
+} from "../../../redux/chat.slice/chat.slice";
+// import { setNewMessage } from "../../../redux/message.slice/message.slice";
+import { sendMessage } from "../../../redux/message.slice/message.slice";
 import {
     getFriends,
     setFriends,
@@ -31,14 +38,13 @@ const ChatForm = () => {
     const authUserId = authUser.id;
 
     const currentChat = useSelector((state) => state.chat.currentChat);
+
     const currentChatCompanion = useSelector(
         (state) => state.chat.currentChatCompanion
     );
     const { fullName, profilePicture } = currentChatCompanion;
 
     const messages = currentChat.messages;
-    const objForCopy = messages.find((message) => message.id === authUserId);
-    const newMessage = structuredClone(objForCopy);
 
     const isAuthUser = (authUserId, userId) => {
         return authUserId === userId;
@@ -69,34 +75,90 @@ const ChatForm = () => {
         }
     }
 
-    console.log(newMessage);
-
     const handleKeyDown = (event) => {
-        if (event.key === "Enter" && inputRef.current) {
-            const inputValue = inputRef.current.value;
-            newMessage.content = inputValue;
-            console.log(newMessage);
-            console.log("Input value:", inputValue);
+        if (event.key === "Enter" && inputRef.current.value.trim()) {
+            const inputValue = inputRef.current.value.trim();
+            const newMessage = {
+                id: 0,
+                content: inputValue,
+                sender: authUser,
+                chat: currentChat,
+            };
+            inputRef.current.value = "";
+            dispatch(sendMessage(newMessage))
+                .then(() => dispatch(getChat(currentChat.id)))
+                .catch((error) => {
+                    console.error("Error sending message:", error);
+                });
+        }
+    };
+
+    const handleClickSend = (event) => {
+        if (inputRef.current.value.trim()) {
+            const inputValue = inputRef.current.value.trim();
+            const newMessage = {
+                id: 0,
+                content: inputValue,
+                sender: authUser,
+                chat: currentChat,
+            };
+            inputRef.current.value = "";
+            dispatch(sendMessage(newMessage))
+                .then(() => dispatch(getChat(currentChat.id)))
+                .catch((error) => {
+                    console.error("Error sending message:", error);
+                });
         }
     };
 
     if (messages[0].createdBy) {
         return (
             <Box sx={{ p: 2, mb: 2 }} className="chat-body">
-                <Link
-                    onClick={() => lookFriendPage(currentChatCompanion.userId)}
-                    to="/profile"
-                    style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        position: "sticky",
+                        top: 0,
+                        zIndex: 2,
+                        backgroundColor: theme.palette.backgroundColor.section,
+                        paddingTop: "10px",
+                        paddingBottom: "10px",
+                    }}>
+                    <Link
+                        onClick={() =>
+                            lookFriendPage(currentChatCompanion.userId)
+                        }
+                        to="/profile"
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 8,
+                        }}>
+                        <Avatar
+                            className="search__user-avatar"
+                            sx={{ minWidth: "40px", minHeight: "40px" }}
+                            alt="user icon"
+                            src={profilePicture}
+                        />
+                        <Typography
+                            sx={{ color: theme.palette.textColor.main }}>
+                            {fullName}
+                        </Typography>
+                    </Link>
                     <Avatar
-                        className="search__user-avatar"
-                        sx={{ minWidth: "40px", minHeight: "40px" }}
-                        alt="user icon"
-                        src={profilePicture}
-                    />
-                    <Typography sx={{ color: theme.palette.textColor.main }}>
-                        {fullName}
-                    </Typography>
-                </Link>
+                        sx={{
+                            bgcolor: theme.palette.hoverColor.dark,
+                            minWidth: "40px",
+                            minHeight: "40px",
+                            cursor: "pointer",
+                        }}
+                        onClick={() => dispatch(resetCurrentChat())}>
+                        <CloseIcon
+                            sx={{ color: theme.palette.textColor.content }}
+                        />
+                    </Avatar>
+                </Box>
                 <List className="chat-body__list">
                     {messages.map((message, index) => (
                         <ListItem
@@ -150,38 +212,57 @@ const ChatForm = () => {
                         </ListItem>
                     ))}
                 </List>
-                <TextField
+                <Box
                     sx={{
-                        mt: 8,
-                        minWidth: "300px",
-                        "& input": {
-                            color: theme.palette.textColor.main,
-                            border: `1px solid ${theme.palette.textColor.secondary}`,
-                            "&:hover": {
+                        display: "flex",
+                        gap: 2,
+                        alignItems: "center",
+                        mt: 2,
+                    }}>
+                    <TextField
+                        sx={{
+                            minWidth: "300px",
+                            "& input": {
+                                color: theme.palette.textColor.main,
                                 border: `1px solid ${theme.palette.textColor.secondary}`,
-                                outline: `1px solid ${theme.palette.textColor.secondary}`,
+                                "&:hover": {
+                                    border: `1px solid ${theme.palette.textColor.secondary}`,
+                                    outline: `1px solid ${theme.palette.textColor.secondary}`,
+                                },
+                                "&:focus": {
+                                    border: "none",
+                                    outline: "none",
+                                },
                             },
-                            "&:focus": {
-                                border: "none",
-                                outline: "none",
+                        }}
+                        inputProps={{
+                            style: {
+                                color: theme.palette.textColor.main,
                             },
-                        },
-                    }}
-                    inputProps={{
-                        style: {
-                            color: theme.palette.textColor.main,
-                        },
-                    }}
-                    label="your message"
-                    InputLabelProps={{
-                        style: {
-                            color: theme.palette.textColor.secondary,
-                        },
-                    }}
-                    variant="outlined"
-                    inputRef={inputRef}
-                    onKeyDown={handleKeyDown}
-                />
+                        }}
+                        label="your message"
+                        InputLabelProps={{
+                            style: {
+                                color: theme.palette.textColor.secondary,
+                            },
+                        }}
+                        variant="outlined"
+                        inputRef={inputRef}
+                        onKeyDown={handleKeyDown}
+                    />
+                    <Avatar
+                        sx={{
+                            bgcolor: theme.palette.hoverColor.secondary,
+                            minWidth: "40px",
+                            minHeight: "40px",
+                            cursor: "pointer",
+                            p: 1,
+                            boxSizing: "content-box",
+                        }}
+                        onClick={handleClickSend}>
+                        <SendIcon fontSize="large" color="primary" />
+                    </Avatar>
+                </Box>
             </Box>
         );
     }

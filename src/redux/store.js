@@ -3,6 +3,7 @@ import loginReducer from "./login.slice/login.slice";
 import searchDrawerReducer from "./searchDrawer.slice/headerSearch.slice";
 import postReducer from "./post.slice/post.slice";
 import chatReducer, { chatPageReducer } from "./chat.slice/chat.slice";
+import messageReducer from "./message.slice/message.slice";
 import friendReducer from "./friends/friends.slise";
 import userReducer from "./user.slice/user.slice.js";
 import darkModeSReducer from "./darkMode.slice/darkMode.slice";
@@ -15,6 +16,7 @@ export const store = configureStore({
         post: postReducer,
         chat: chatReducer,
         chatPage: chatPageReducer,
+        message: messageReducer,
         darkMode: darkModeSReducer,
         friends: friendReducer,
         modal: modalReducer,
