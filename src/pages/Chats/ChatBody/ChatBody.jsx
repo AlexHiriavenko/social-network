@@ -6,7 +6,6 @@ import { Typography, List, ListItem, TextField, Box, Avatar } from "@mui/materia
 import CloseIcon from "@mui/icons-material/Close";
 import SendIcon from "@mui/icons-material/Send";
 import { resetCurrentChat, getChat } from "../../../redux/chat.slice/chat.slice";
-// import { setNewMessage } from "../../../redux/message.slice/message.slice";
 import { sendMessage } from "../../../redux/message.slice/message.slice";
 import { getFriends, setFriends, setUser, getUser } from "../../../redux/user.slice/user.slice";
 
@@ -18,6 +17,10 @@ const ChatBody = () => {
 
     const currentChat = useSelector((state) => state.chat.currentChat);
     const messages = currentChat.messages || [];
+    const authUser = useSelector((state) => state.user.authorizedUser);
+    const authUserId = authUser.id;
+    const currentChatCompanion = useSelector((state) => state.chat.currentChatCompanion);
+    const { fullName, profilePicture } = currentChatCompanion;
 
     // в конец чата
     useEffect(() => {
@@ -32,12 +35,6 @@ const ChatBody = () => {
             dispatch(resetCurrentChat());
         };
     }, []);
-
-    const authUser = useSelector((state) => state.user.authorizedUser);
-    const authUserId = authUser.id;
-
-    const currentChatCompanion = useSelector((state) => state.chat.currentChatCompanion);
-    const { fullName, profilePicture } = currentChatCompanion;
 
     const isAuthUser = (authUserId, userId) => {
         return authUserId === userId;
