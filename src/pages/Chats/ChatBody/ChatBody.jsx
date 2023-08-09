@@ -2,49 +2,42 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
-import {
-    Typography,
-    List,
-    ListItem,
-    TextField,
-    Box,
-    Avatar,
-} from "@mui/material";
+import { Typography, List, ListItem, TextField, Box, Avatar } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SendIcon from "@mui/icons-material/Send";
-import {
-    resetCurrentChat,
-    getChat,
-} from "../../../redux/chat.slice/chat.slice";
+import { resetCurrentChat, getChat } from "../../../redux/chat.slice/chat.slice";
 // import { setNewMessage } from "../../../redux/message.slice/message.slice";
 import { sendMessage } from "../../../redux/message.slice/message.slice";
-import {
-    getFriends,
-    setFriends,
-    setUser,
-    getUser,
-} from "../../../redux/user.slice/user.slice";
+import { getFriends, setFriends, setUser, getUser } from "../../../redux/user.slice/user.slice";
 
-const ChatForm = () => {
+const ChatBody = () => {
     const dispatch = useDispatch();
-    const inputRef = useRef(null);
     const theme = useTheme();
+    const inputRef = useRef(null);
+    const chatFormRef = useRef(null);
 
+    const currentChat = useSelector((state) => state.chat.currentChat);
+    const messages = currentChat.messages || [];
+
+    // в конец чата
     useEffect(() => {
-        return () => dispatch(resetCurrentChat());
+        if (chatFormRef.current) {
+            chatFormRef.current.scrollTop = chatFormRef.current.scrollHeight;
+        }
+    }, [messages]);
+
+    // обнуление стейта текущего чата при размонтировании
+    useEffect(() => {
+        return () => {
+            dispatch(resetCurrentChat());
+        };
     }, []);
 
     const authUser = useSelector((state) => state.user.authorizedUser);
     const authUserId = authUser.id;
 
-    const currentChat = useSelector((state) => state.chat.currentChat);
-
-    const currentChatCompanion = useSelector(
-        (state) => state.chat.currentChatCompanion
-    );
+    const currentChatCompanion = useSelector((state) => state.chat.currentChatCompanion);
     const { fullName, profilePicture } = currentChatCompanion;
-
-    const messages = currentChat.messages;
 
     const isAuthUser = (authUserId, userId) => {
         return authUserId === userId;
@@ -113,7 +106,7 @@ const ChatForm = () => {
 
     if (messages[0].createdBy) {
         return (
-            <Box sx={{ p: 2, mb: 2 }} className="chat-body">
+            <Box ref={chatFormRef} sx={{ pl: 2, pr: 2 }} className="chat-body">
                 <Box
                     sx={{
                         display: "flex",
@@ -124,25 +117,24 @@ const ChatForm = () => {
                         backgroundColor: theme.palette.backgroundColor.section,
                         paddingTop: "10px",
                         paddingBottom: "10px",
-                    }}>
+                    }}
+                >
                     <Link
-                        onClick={() =>
-                            lookFriendPage(currentChatCompanion.userId)
-                        }
+                        onClick={() => lookFriendPage(currentChatCompanion.userId)}
                         to="/profile"
                         style={{
                             display: "flex",
                             alignItems: "center",
                             gap: 8,
-                        }}>
+                        }}
+                    >
                         <Avatar
                             className="search__user-avatar"
                             sx={{ minWidth: "40px", minHeight: "40px" }}
                             alt="user icon"
                             src={profilePicture}
                         />
-                        <Typography
-                            sx={{ color: theme.palette.textColor.main }}>
+                        <Typography sx={{ color: theme.palette.textColor.main }}>
                             {fullName}
                         </Typography>
                     </Link>
@@ -153,10 +145,9 @@ const ChatForm = () => {
                             minHeight: "40px",
                             cursor: "pointer",
                         }}
-                        onClick={() => dispatch(resetCurrentChat())}>
-                        <CloseIcon
-                            sx={{ color: theme.palette.textColor.content }}
-                        />
+                        onClick={() => dispatch(resetCurrentChat())}
+                    >
+                        <CloseIcon sx={{ color: theme.palette.textColor.content }} />
                     </Avatar>
                 </Box>
                 <List className="chat-body__list">
@@ -167,17 +158,17 @@ const ChatForm = () => {
                                     ? "chat-body__item--authUser"
                                     : "chat-body__item--chatPartner"
                             }
-                            key={index}>
+                            key={index}
+                        >
                             <Typography
                                 sx={{
                                     width: "100%",
                                     textAlign: "center",
                                     color: theme.palette.textColor.secondary,
-                                }}>
+                                }}
+                            >
                                 {message.createdDate
-                                    ? new Date(
-                                          message.createdDate
-                                      ).toLocaleString()
+                                    ? new Date(message.createdDate).toLocaleString()
                                     : "unknown date"}
                             </Typography>
                             <Box
@@ -185,19 +176,16 @@ const ChatForm = () => {
                                     display: "flex",
                                     alignItems: "center",
                                     gap: 1,
-                                }}>
+                                }}
+                            >
                                 <Avatar
                                     sx={{ minWidth: "40px", minHeight: "40px" }}
                                     alt="user icon"
-                                    src={
-                                        message.sender.profilePicture
-                                    }></Avatar>
+                                    src={message.sender.profilePicture}
+                                ></Avatar>
                                 <Typography
                                     className={
-                                        isAuthUser(
-                                            authUserId,
-                                            message.sender.id
-                                        )
+                                        isAuthUser(authUserId, message.sender.id)
                                             ? "message-text-authUser"
                                             : "messege-text-chatPartner"
                                     }
@@ -205,7 +193,8 @@ const ChatForm = () => {
                                         p: 2,
                                         minWidth: "200px",
                                         borderRadius: "16px",
-                                    }}>
+                                    }}
+                                >
                                     {message.content ? message.content : ""}
                                 </Typography>
                             </Box>
@@ -218,10 +207,12 @@ const ChatForm = () => {
                         gap: 2,
                         alignItems: "center",
                         mt: 2,
-                    }}>
+                    }}
+                >
                     <TextField
                         sx={{
-                            minWidth: "300px",
+                            width: "300px",
+                            maxWidth: "98%",
                             "& input": {
                                 color: theme.palette.textColor.main,
                                 border: `1px solid ${theme.palette.textColor.secondary}`,
@@ -259,7 +250,8 @@ const ChatForm = () => {
                             p: 1,
                             boxSizing: "content-box",
                         }}
-                        onClick={handleClickSend}>
+                        onClick={handleClickSend}
+                    >
                         <SendIcon fontSize="large" color="primary" />
                     </Avatar>
                 </Box>
@@ -268,4 +260,4 @@ const ChatForm = () => {
     }
 };
 
-export default ChatForm;
+export default ChatBody;

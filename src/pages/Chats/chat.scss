@@ -25,6 +25,10 @@
         background-color: lightgray; /* цвет бегунка */
         border-radius: 20px; /* округлось бегунка */
     }
+@media (max-width: 1100px) {
+    max-width: none;
+    width: 80%;
+}
 }
 
 .chat-body__list {
