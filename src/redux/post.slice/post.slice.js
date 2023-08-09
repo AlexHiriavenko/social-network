@@ -9,14 +9,11 @@ export const getPosts = createAsyncThunk("Posts/getPosts", async function () {
 });
 
 //Получение всех постов частями
-export const getPageblePosts = createAsyncThunk(
-  "Posts/getPageblePosts",
-  async function (page, size) {
-    const { data } = await instance.get(`/posts/${page}/${size}`);
-    console.log(data);
-    return data;
-  }
-);
+export const getPageblePosts = createAsyncThunk("Posts/getPageblePosts", async function (page, size) {
+  const { data } = await instance.get(`/posts/${page}/${size}`);
+  console.log(data);
+  return data;
+});
 
 //Получение поста по айди
 export const getPost = createAsyncThunk("Posts/getPost", async function (id) {
@@ -94,6 +91,7 @@ const postSlice = createSlice({
   name: "posts",
   initialState: {
     allPosts: [],
+    allUserPosts: [],
     post: {},
   },
   reducers: {
@@ -103,12 +101,15 @@ const postSlice = createSlice({
     setPosts: (state, action) => {
       state.allPosts = action.payload;
     },
+    setUserPosts: (state, action) => {
+      state.allUserPosts = action.payload;
+    },
     setPost: (state, action) => {
       state.post = action.payload;
-    },
+    }
   },
 });
 
-export const { setPosts, setPost } = postSlice.actions;
+export const { createPost, deletePost, setPosts, setUserPosts } = postSlice.actions;
 
 export default postSlice.reducer;

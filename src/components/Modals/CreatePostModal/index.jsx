@@ -6,7 +6,13 @@ import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateModal } from "../../../redux/modal.slice/modal.slice";
 import { BlockUserImage } from "../../UserProfile/StyledComponents/ContentBlock/StyledComponents";
-import { StyledModalBlock, StyledModalCloseButton, StyledModalCloseButtonLine, StyledModalSeparator, StyledModalTitle } from "../StyledModalComponents";
+import {
+  StyledModalBlock,
+  StyledModalCloseButton,
+  StyledModalCloseButtonLine,
+  StyledModalSeparator,
+  StyledModalTitle,
+} from "../StyledModalComponents";
 
 const mockUser = {
   image:
@@ -95,12 +101,16 @@ const StyledPostModalButton = styled(Button)({
 });
 
 export default function CreatePostModal() {
+  // Constants
   const dispatch = useDispatch();
   const createModalIsOpen = useSelector(
     (state) => state.modal.createPost.isOpen
   );
   const fileRef = useRef(null);
+  const authUser = useSelector((state) => state.user.authorizedUser);
+  // State
   const [imgUrl, setImgUrl] = useState("");
+  // Functions
   const handleClose = () => dispatch(closeCreateModal());
 
   function showChoosingPicture() {
@@ -109,7 +119,7 @@ export default function CreatePostModal() {
     formData.append("file", file);
     setImgUrl(URL.createObjectURL(file));
   }
-
+  // Formik
   const formik = useFormik({
     initialValues: {
       content: "",
@@ -121,8 +131,7 @@ export default function CreatePostModal() {
       handleClose();
     },
   });
-
-  
+  if (!authUser) return;
   return (
     <Modal
       open={createModalIsOpen}
@@ -139,15 +148,15 @@ export default function CreatePostModal() {
         <StyledModalSeparator></StyledModalSeparator>
         <StyledPostModalUser>
           <BlockUserImage
-            src={mockUser.image}
+            src={
+              authUser.profilePicture ||
+              "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
+            }
             alt=""
             width={40}
             height={40}
           />
-          <StyledPostModalUserName>
-            {" "}
-            {mockUser.firstName} {mockUser.lastName}
-          </StyledPostModalUserName>
+          <StyledPostModalUserName>{authUser.fullName}</StyledPostModalUserName>
         </StyledPostModalUser>
         <StyledPostModalCreateArea onSubmit={formik.handleSubmit}>
           <StyledPostModalTextArea

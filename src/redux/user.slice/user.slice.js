@@ -14,6 +14,11 @@ export const getUser = createAsyncThunk("Users/getUser", async function (id) {
   console.log(data);
   return data;
 });
+export const getProfile = createAsyncThunk("Users/getProfile", async function () {
+  const { data } = await instance.get(`/users/profile`);
+  console.log(data);
+  return data;
+});
 //Редактирование юзера
 export const updateUser = createAsyncThunk(
   "Users/updateUser",
@@ -36,7 +41,7 @@ const UserSlice = createSlice({
     allUsers: [],
     user: JSON.parse(localStorage.getItem("user")) || null,
     authorizedUser: JSON.parse(localStorage.getItem("authorizedUser")) || null,
-    friends: [],
+    friends: JSON.parse(localStorage.getItem("friends")) || [],
     isLoading: true,
   },
 

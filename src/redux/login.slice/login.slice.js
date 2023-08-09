@@ -7,6 +7,7 @@ import instance from "../../instance.js";
 
 export const logIn = createAsyncThunk(
     'Login/logIn',
+
     async function({email,password}) {
         const token   =  await axios.post(`https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/login`,{email:email,password:password});
         document.cookie = `token=${token.data.accessToken}`;
@@ -31,10 +32,31 @@ export const getAccessToken = createAsyncThunk(
     }
 
 )
+export const sendEmail = createAsyncThunk(
+    'Login/sendEmail',
+    async function(email) {
+
+
+         await axios.post(`https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/passwordLetter`,{email:email})
+
+
+    }
+
+)
+export const changePassword = createAsyncThunk(
+    'Login/changePassword',
+    async function({code,newPassword}) {
+
+      const{status} =   await axios.put(`https://social-network-backend-2782464b9c31.herokuapp.com/api/auth`,{code:code,newPassword:newPassword})
+     return status;
+
+    }
+
+)
 export const register = createAsyncThunk(
     'Login/register',
     async function({emailOrPhone,password,name,surname,gender,mounth,day,year}) {
-         await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/auth/registration`,{email:emailOrPhone,password:password,name:name,surname:surname,gender:gender,month:mounth,day:day,year:year});
+         await axios.post(`https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/registration`,{email:emailOrPhone,password:password,name:name,surname:surname,gender:gender,month:mounth,day:day,year:year});
 
     }
 )
@@ -43,12 +65,12 @@ export const loginGoogle = createAsyncThunk(
     'Login/loginGoogle',
 async function() {
 
-        let token = await axios.get("http://localhost:9000/api/oauth2/authorization/google")
+        let token = await axios.get("https://social-network-backend-2782464b9c31.herokuapp.com/api/oauth2/authorization/google")
         document.cookie = `token=${token.data.accessToken}`;
         document.cookie = `refresh=${token.data.refreshToken}`;
         let auth = parseJwt(token.data.accessToken)
         localStorage.setItem('auth',JSON.stringify(auth))
-        const { data } = await instance.get(`/users/${auth.id}`);
+        const { data } = await instance.get(`/users/profile`);
         localStorage.setItem("authorizedUser",JSON.stringify(data))
         localStorage.setItem("user",JSON.stringify(data))
 
