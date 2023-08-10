@@ -10,7 +10,9 @@ function Chats() {
     const dispatch = useDispatch();
     const theme = useTheme();
 
-    const chatParticipants = useSelector((state) => state.chat.chatsParticipants);
+    const chatParticipants = useSelector(
+        (state) => state.chat.chatsParticipants
+    );
 
     useEffect(() => {
         dispatch(getChatsParticipants());
@@ -21,9 +23,8 @@ function Chats() {
             style={{
                 display: "flex",
                 backgroundColor: theme.palette.backgroundColor.card,
-                minHeight: "90.7%",
-            }}
-        >
+                minHeight: "93.2%",
+            }}>
             <Sidebar>
                 <UsersList usersList={chatParticipants} />
             </Sidebar>

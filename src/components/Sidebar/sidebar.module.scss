@@ -4,4 +4,10 @@
     max-width: 20%;
     box-sizing: content-box;
     padding: 10px;
+    @media (max-width: 700px) {
+        padding: 0;
+        min-width: max-content;
+        width: max-content;
+        max-width: 80px;
+    }
 }
