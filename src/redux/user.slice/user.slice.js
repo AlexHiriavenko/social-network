@@ -13,9 +13,6 @@ export const getUser = createAsyncThunk("Users/getUser", async function (id) {
     const { data } = await instance.get(`users/${id}`);
     console.log(data);
     return data;
-    const { data } = await instance.get(`users/${id}`);
-    console.log(data);
-    return data;
 });
 export const getProfile = createAsyncThunk(
     "Users/getProfile",

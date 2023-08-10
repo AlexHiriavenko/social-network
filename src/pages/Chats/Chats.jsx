@@ -14,6 +14,8 @@ function Chats() {
         (state) => state.chat.chatsParticipants
     );
 
+    console.log(chatParticipants);
+
     useEffect(() => {
         dispatch(getChatsParticipants());
     }, [dispatch]);
