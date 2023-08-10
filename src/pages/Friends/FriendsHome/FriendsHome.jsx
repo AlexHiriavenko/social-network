@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import Friend from "../../../components/Friends/Friend/Friend";
 import { Box, Divider, Typography } from "@mui/material";
 import { ButtonStyled } from '../../../components/StyledComponents/Buttons';
@@ -8,19 +8,22 @@ import { getFriendList, getFriendshipRequests, getFriendSuggestions,  createFrie
 import { removeSuggestions, setCurrentFriend, } from '../../../redux/friends/friends.slise';
 import styled from "@emotion/styled";
 import SideBarList from '../SideBarList'
-import Sidebar from "../../../components/Sidebar/Sidebar";
+//import Sidebar from "../../../components/Sidebar/Sidebar";
 import SideBarHeader from '../../../components/Friends/SideBar/SideBarHeader';
 import { NavLink } from "react-router-dom";
 import { setUser } from "../../../redux/user.slice/user.slice";
 import { useTheme } from '@mui/material/styles';
+import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
+import {SidebarStyled} from '../../../components/StyledComponents/SideBarFriends'
+
 
 function FriendsHome() {
 
-    const user = useSelector((store)=>store.user.authorizedUser);
+    const user = useSelector((store)=>store.user.authorizedUser, shallowEqual);
 
     const dispatch = useDispatch();
-    const friendsRequests = useSelector((store)=>store.friends.friendsRequests);
-    const friendSuggestions = useSelector((store)=>store.friends.friendSuggestions);
+    const friendsRequests = useSelector((store)=>store.friends.friendsRequests, shallowEqual);
+    const friendSuggestions = useSelector((store)=>store.friends.friendSuggestions, shallowEqual);
     const friendsRequestsToUser = (friendsRequests.length > 0 
                                 ? friendsRequests.filter((elem) => elem.status==='pending' && elem.user.id !== user.id)
                                 : []);
@@ -41,7 +44,6 @@ function FriendsHome() {
         dispatch(updateFriendship(payload));
     }
     const handleClickAdd = (friendId) => {
-        console.log(friendId);
         dispatch(createFriendship({friendId: friendId}));
     }
 
@@ -80,8 +82,18 @@ function FriendsHome() {
         width: '100%', 
         display: 'flex', 
         flexDirection: 'column', 
-        padding: 20, 
-        backgroundColor: theme.palette.backgroundColor.page/* '#F0F2F5' */,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingBottom: 0,
+        paddingTop: 0,
+        height: '100%',
+        boxSizing: 'content-box',
+        overflowY: 'scroll',
+        overflowX: 'hidden',
+        backgroundColor: theme.palette.backgroundColor.page,
+        "&::-webkit-scrollbar": {
+            width: 0,
+          },
     }))
 
     const H1Styled = styled('h1')(({theme}) => ({
@@ -104,13 +116,14 @@ function FriendsHome() {
     const theme = useTheme();
 
     return (<>
-        <Box sx={{ width: '100%', display: 'flex', minHeight: '93vh'}}>
-            <Sidebar>
+    <PageBoxFriendsWrapper>
+        <PageBoxFriends>
+            <SidebarStyled >
                 <SideBarHeader>
                     <H1Styled>Friends</H1Styled>
                 </SideBarHeader>
                 <SideBarList  activeItem={"Home"}/>
-            </Sidebar>         
+            </SidebarStyled>         
             <SectionWraper>
             {friendsRequestsToUser.length > 0 && <Box sx={{px: '16px'}}>
                     <SectorHeader>
@@ -152,8 +165,6 @@ function FriendsHome() {
                             mutualFriends={fr.mutualFriends}
                             isAvatarMutualFriend={true}
                             friend={fr.friend} 
-                            /* addButton={<Button sx={{bgcolor: 'secondary.main', width: 1, '&:hover': {bgcolor: 'secondary.light'}, textTransform: 'none'}} 
-                                                    onClick={handleClickConfirm}>Add friend</Button>} */
                             addButton={<ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.blueLight,
                                 '&:hover': {backgroundColor: theme.palette.buttonColor.blueLightHover,},
                                 color: theme.palette.textColor.blueLink}} onClick={() => handleClickAdd( fr.friend.id)}>Add friend</ButtonStyled>}
@@ -165,7 +176,8 @@ function FriendsHome() {
                     </FriendsContainer>
                 </Box>}
             </SectionWraper>
-        </Box>
+        </PageBoxFriends>
+    </PageBoxFriendsWrapper>
     </>
     );
 }

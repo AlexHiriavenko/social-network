@@ -13,28 +13,49 @@ export const getUser = createAsyncThunk("Users/getUser", async function (id) {
     const { data } = await instance.get(`users/${id}`);
     console.log(data);
     return data;
-});
-export const getProfile = createAsyncThunk("Users/getProfile", async function () {
-    const { data } = await instance.get(`/users/profile`);
+    const { data } = await instance.get(`users/${id}`);
     console.log(data);
     return data;
 });
+export const getProfile = createAsyncThunk(
+    "Users/getProfile",
+    async function () {
+        const { data } = await instance.get(`/users/profile`);
+        console.log(data);
+        return data;
+    }
+);
 //Редактирование юзера
-export const updateUser = createAsyncThunk("Users/updateUser", async function (updatedUser) {
-    await instance.put("/users", updatedUser);
-});
+export const updateUser = createAsyncThunk(
+    "Users/updateUser",
+    async function (updatedUser) {
+        await instance.put("/users", updatedUser);
+    }
+);
+export const getMyChats = createAsyncThunk(
+    "Users/getMyChats",
+    async function (id) {
+        const chats = await instance.get(`/users/${id}/chats`);
+        console.log(chats);
+        return chats;
+    }
+);
 //Получение всех друзей по айди юзера
-export const getFriends = createAsyncThunk("Users/getFriends", async function (id) {
-    const { data } = await instance.get(`/friends/${id}/friends`);
-    console.log(data);
-    return data;
-});
+export const getFriends = createAsyncThunk(
+    "Users/getFriends",
+    async function (id) {
+        const { data } = await instance.get(`/friends/${id}/friends`);
+        console.log(data);
+        return data;
+    }
+);
 const UserSlice = createSlice({
     name: "Users",
     initialState: {
         allUsers: [],
         user: JSON.parse(localStorage.getItem("user")) || null,
-        authorizedUser: JSON.parse(localStorage.getItem("authorizedUser")) || null,
+        authorizedUser:
+            JSON.parse(localStorage.getItem("authorizedUser")) || null,
         friends: JSON.parse(localStorage.getItem("friends")) || [],
         isLoading: true,
     },
@@ -69,6 +90,7 @@ const UserSlice = createSlice({
     },
 });
 
-export const { setUsers, setUser, setFriends, setAuthorizedUser } = UserSlice.actions;
+export const { setUsers, setUser, setFriends, setAuthorizedUser } =
+    UserSlice.actions;
 
 export default UserSlice.reducer;

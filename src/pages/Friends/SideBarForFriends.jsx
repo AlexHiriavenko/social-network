@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Sidebar from "../../components/Sidebar/Sidebar";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+//import Sidebar from "../../components/Sidebar/Sidebar";
 import SideBarHeader from '../../components/Friends/SideBar/SideBarHeader';
 import styled from "@emotion/styled";
 import { Box, Typography, List, Divider, ListItemButton } from "@mui/material";
@@ -13,7 +13,8 @@ import { setCurrentFriend } from '../../redux/friends/friends.slise';
 import { setFriends, setUser, getUser, getFriends } from "../../redux/user.slice/user.slice";
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
-import { useNavigate } from "react-router-dom";
+import {SidebarStyled} from '../../components/StyledComponents/SideBarFriends';
+
 
 
 function SideBarFriends(props) {
@@ -34,20 +35,22 @@ function SideBarFriends(props) {
 
     const theme = useTheme();
     const dispatch = useDispatch(); 
-    const navigate = useNavigate();
-    const authUser = useSelector((store)=>store.user.authorizedUser);
-    const currentFriend = useSelector((store)=>store.friends.currentFriend);
+    const authUser = useSelector((store)=>store.user.authorizedUser, shallowEqual);
+    const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
     
 
     const handleLinkClick = (friend) => {
         const id  = friend.id;
+        dispatch(setCurrentFriend({}));
+        dispatch(setUser({}));
 
         // get user friends
     const userFriendsResponse = dispatch(getFriends(id));
         userFriendsResponse
             .then((data) => {
-                dispatch(setFriends(data.payload));
-                localStorage.setItem("friends", JSON.stringify(data.payload));
+                const friends = data.payload.filter(el => el.status === 'accepted');
+                dispatch(setFriends(friends));
+                localStorage.setItem("friends", JSON.stringify(friends));
             })
             .catch((error) => console.log(error.message));
 
@@ -55,7 +58,6 @@ function SideBarFriends(props) {
         if (id === authUser.id) {
             dispatch(setUser(authUser));
             localStorage.setItem("user", JSON.stringify(authUser));
-            navigate("/profile");
             window.scrollTo({ top: 0, behavior: "smooth" });
         } else {
             const userResponse = dispatch(getUser(id));
@@ -63,18 +65,13 @@ function SideBarFriends(props) {
             .then((data) => {
                 dispatch(setUser(data.payload));
                 localStorage.setItem("user", JSON.stringify(data.payload));
-                navigate("/profile");
                 window.scrollTo({ top: 0, behavior: "smooth" });
             })
             .catch((error) => error.message);
         }
         
-        dispatch(setCurrentFriend(id));
+        dispatch(setCurrentFriend(friend));
     }
-
-    const SidebarStyled = styled(Sidebar)({
-        width: 500,
-    })
 
     const TitleStyled = styled('h1')(({theme}) => ({
         fontWeight: 900,
@@ -138,7 +135,7 @@ function SideBarFriends(props) {
                         <TitleStyled>{ headerTitle }</TitleStyled>
                     </Box>
                 </Box>
-                <Divider sx={{my: '12px', borderColor: theme.palette.border.card}}/>
+                <Divider sx={{my: '12px', borderColor: theme.palette.border.card,}}/>
                 <Box>
                     <SubTitleStyled>{ subTitle }</SubTitleStyled>
                     { additionItems }
@@ -151,29 +148,32 @@ function SideBarFriends(props) {
             <List sx={{padding: 0}}>
                 {
                     sideBarItems && sideBarItems.map(fr =>
-                    <MenuItem onClick={() => handleLinkClick(fr.user ? fr.user : fr.friend)} 
+                    <MenuItem onClick={(e) => {e.stopPropagation(); handleLinkClick(fr.user ? fr.user : fr.friend)}}
                             key={fr.user ? fr.user.id : fr.friend.id} 
                             selected={currentFriend.id === (fr.user ? fr.user.id : fr.friend.id)}>
                         <Friend horizontal = 'true'
                             key={fr.id}
                             mutualFriends={fr.mutualFriends} 
-                            handleLinkClick={() => handleLinkClick(fr.user ? fr.user : fr.friend)}
+                            handleLinkClick={(e) => {e.stopPropagation(); handleLinkClick(fr.user ? fr.user : fr.friend)}}
                             friend={fr.user ? fr.user : fr.friend}
                             isAvatarMutualFriend={isAvatarMutualFriend}
                             addButton={isConfirmButton 
                                 ? <ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.primary}}
-                                        variant="contained" onClick={() => handleClickConfirm(fr)}>Confirm</ButtonStyled> 
+                                        variant="contained" 
+                                        onClick={(e) => {e.stopPropagation(); handleClickConfirm(fr)}}>
+                                            Confirm
+                                    </ButtonStyled> 
                                 :  isAddButton
                                     ? <ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.blueLight,
                                             '&:hover': {backgroundColor: theme.palette.buttonColor.blueLightHover,},
                                             color: theme.palette.textColor.blueLink}}
-                                            onClick={() => handleClickConfirm(fr)}>Add friend</ButtonStyled> 
+                                            onClick={(e) => {e.stopPropagation(); handleClickConfirm(fr)}}>Add friend</ButtonStyled> 
                                     : null}
                             removeButton={isRemoveButton 
                                 ? <ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.background,
                                         '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},
                                         color: theme.palette.textColor.content}}
-                                        onClick={() => handleClickRemove(fr)}>Remove</ButtonStyled>
+                                        onClick={(e) => {e.stopPropagation(); handleClickRemove(fr)}}>Remove</ButtonStyled>
                                 : null}
                             />
                     </MenuItem>)

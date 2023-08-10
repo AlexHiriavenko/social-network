@@ -33,36 +33,8 @@ export const addNewUser = createAsyncThunk(
         console.log(status);
     }
 );
-export const initialState = {
+const initialState = {
     isOpened: false,
-    chatsParticipants: [],
-    currentChatCompanion: {},
-    currentChat: {
-        id: null,
-        messages: [
-            {
-                createdBy: "",
-                createdDate: "",
-                updatedBy: "",
-                updatedDate: "",
-                id: null,
-                content: "",
-                chatId: null,
-            },
-        ],
-        users: [
-            {
-                createdBy: null,
-                createdDate: "",
-                updatedBy: null,
-                updatedDate: "",
-                id: null,
-                fullName: "",
-                email: "",
-                profilePicture: "",
-            },
-        ],
-    },
 };
 
 const chatSlice = createSlice({

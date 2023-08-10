@@ -12,4 +12,5 @@ export const ButtonStyled = styled(Button)({
     paddingLeft: '8px',
     paddingRight: '8px',
     '&:hover': {boxShadow: 'none'},
+    pointerEvents: 'all',
 })

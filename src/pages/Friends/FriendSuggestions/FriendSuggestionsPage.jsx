@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import { getFriendshipRequests, createFriendship } from "../../../redux/friends/actionCreators";
@@ -8,12 +8,13 @@ import { setCurrentFriend, removeSuggestions } from "../../../redux/friends/frie
 import { Profile } from "../../index";
 import SideBarFriends from "../SideBarForFriends";
 import FriendEmptyPage from  "../FriendEmptyPage";
+import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 
 function FriendSuggestionsPage() {
 
     const dispatch = useDispatch(); 
-    const friendSuggestions = useSelector((store)=>store.friends.friendSuggestions);
-    const currentFriend = useSelector((store)=>store.friends.currentFriend);
+    const friendSuggestions = useSelector((store)=>store.friends.friendSuggestions, shallowEqual);
+    const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
 
     useEffect(()=>{
         if(friendSuggestions.length === 0) {
@@ -30,13 +31,10 @@ function FriendSuggestionsPage() {
 
 
     const handleClickAdd = (friend) => {
-        console.log(friend);
-        console.log("handleClickAdd");
         dispatch(createFriendship({friendId: friend.friend.id}));
     }
 
     const handleClickRemoveSuggestion = (payload) => {
-        console.log("handleClickRemoveSuggestion")
         dispatch(removeSuggestions(payload));
     }
     
@@ -46,7 +44,16 @@ function FriendSuggestionsPage() {
         display: 'flex', 
         flexDirection: 'column', 
         padding: 20, 
-        backgroundColor: theme.palette.backgroundColor.page/* '#F0F2F5' */,
+        backgroundColor: theme.palette.backgroundColor.page,
+        height: '100%',
+        boxSizing: 'content-box',
+        overflowY: 'scroll',
+        overflowX: 'hidden',
+        paddingBottom: 0,
+        paddingTop: 0,
+        "&::-webkit-scrollbar": {
+            width: "0",
+          },
     }))
 
     const textMessage = friendSuggestions.length > 0 
@@ -56,25 +63,27 @@ function FriendSuggestionsPage() {
     const noItemMessage = "No new suggestions";
 
     return(
-        <Box sx={{ width: '100%', display: 'flex', }}>
-            <SideBarFriends sideBarItems={friendSuggestions}
-                                headerTitle={"Friend suggestions"}
-                                subTitle={"People You May Know"}
-                                noItemMessage={noItemMessage}
-                                handleClickConfirm={handleClickAdd}
-                                handleClickRemove={handleClickRemoveSuggestion}
-                                isAvatarMutualFriend={true}
-                                isRemoveButton={true}
-                                isAddButton={true}/>
-            <SectionWraper sx={{minHeight: '93vh'}}>
-                { 
-                    currentFriend.id === undefined && <FriendEmptyPage>{textMessage}</FriendEmptyPage>
-                }
-                {
-                    !(currentFriend.id === undefined) && <Profile/>
-                }
-            </SectionWraper>
-        </Box>
+        <PageBoxFriendsWrapper>
+            <PageBoxFriends>
+                <SideBarFriends sideBarItems={friendSuggestions}
+                                    headerTitle={"Friend suggestions"}
+                                    subTitle={"People You May Know"}
+                                    noItemMessage={noItemMessage}
+                                    handleClickConfirm={handleClickAdd}
+                                    handleClickRemove={handleClickRemoveSuggestion}
+                                    isAvatarMutualFriend={true}
+                                    isRemoveButton={true}
+                                    isAddButton={true}/>
+                <SectionWraper>
+                    { 
+                        currentFriend.id === undefined && <FriendEmptyPage>{textMessage}</FriendEmptyPage>
+                    }
+                    {
+                        !(currentFriend.id === undefined) && <Profile/>
+                    }
+                </SectionWraper>
+            </PageBoxFriends>
+        </PageBoxFriendsWrapper>
     )
 }
 
