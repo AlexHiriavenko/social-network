@@ -14,11 +14,11 @@ function Chats() {
         (state) => state.chat.chatsParticipants
     );
 
-    console.log(chatParticipants);
+    const currentChat = useSelector((state) => state.chat.currentChat);
 
     useEffect(() => {
         dispatch(getChatsParticipants());
-    }, [dispatch]);
+    }, [dispatch, currentChat]);
 
     return (
         <div

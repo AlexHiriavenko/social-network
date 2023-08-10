@@ -9,6 +9,14 @@ export const sendMessage = createAsyncThunk(
     }
 );
 
+export const deleteMessage = createAsyncThunk(
+    "chat/deleteMessage",
+    async function (id) {
+        const { status } = await instance.delete(`/messages/${id}`);
+        console.log(status);
+    }
+);
+
 const initialState = {
     newMessage: {
         id: 0,
@@ -30,6 +38,7 @@ const initialState = {
             users: [{}],
         },
     },
+    deleteMessageId: 0,
 };
 
 const messageSlice = createSlice({
@@ -39,10 +48,20 @@ const messageSlice = createSlice({
         setNewMessage: function (state, action) {
             state.newMessage = action.payload;
         },
+        setDeleteMessageId: function (state, action) {
+            state.deleteMessageId = action.payload;
+        },
     },
-    extraReducers: (builder) => {},
+    extraReducers: (builder) => {
+        builder.addCase(sendMessage.fulfilled, (state, action) => {
+            state.newMessage = initialState.newMessage;
+        });
+        builder.addCase(deleteMessage.fulfilled, (state, action) => {
+            state.deleteMessageId = initialState.deleteMessageId;
+        });
+    },
 });
 
-export const { setNewMessage } = messageSlice.actions;
+export const { setNewMessage, setDeleteMessageId } = messageSlice.actions;
 
 export default messageSlice.reducer;

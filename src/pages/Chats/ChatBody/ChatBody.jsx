@@ -12,17 +12,21 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SendIcon from "@mui/icons-material/Send";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EditIcon from "@mui/icons-material/Edit";
 import {
     resetCurrentChat,
     getChat,
 } from "../../../redux/chat.slice/chat.slice";
 import { sendMessage } from "../../../redux/message.slice/message.slice";
+import { setDeleteMessageId } from "../../../redux/message.slice/message.slice";
 import {
     getFriends,
     setFriends,
     setUser,
     getUser,
 } from "../../../redux/user.slice/user.slice";
+import { openDeleteMessageModal } from "../../../redux/modal.slice/modal.slice";
 
 const ChatBody = () => {
     const dispatch = useDispatch();
@@ -118,6 +122,11 @@ const ChatBody = () => {
         }
     };
 
+    const handleOpen = (event, messageId) => {
+        dispatch(setDeleteMessageId(messageId));
+        dispatch(openDeleteMessageModal());
+    };
+
     if (messages[0].createdBy) {
         return (
             <Box ref={chatFormRef} sx={{ pl: 2, pr: 2 }} className="chat-body">
@@ -198,22 +207,62 @@ const ChatBody = () => {
                                     src={
                                         message.sender.profilePicture
                                     }></Avatar>
-                                <Typography
-                                    className={
-                                        isAuthUser(
-                                            authUserId,
-                                            message.sender.id
-                                        )
-                                            ? "message-text-authUser"
-                                            : "messege-text-chatPartner"
-                                    }
-                                    sx={{
-                                        p: 2,
-                                        minWidth: "200px",
-                                        borderRadius: "16px",
-                                    }}>
-                                    {message.content ? message.content : ""}
-                                </Typography>
+                                <Box
+                                    id={"message" + message.id}
+                                    sx={{ display: "flex", gap: 1 }}>
+                                    <Typography
+                                        className={
+                                            isAuthUser(
+                                                authUserId,
+                                                message.sender.id
+                                            )
+                                                ? "message-text-authUser"
+                                                : "messege-text-chatPartner"
+                                        }
+                                        sx={{
+                                            p: 2,
+                                            minWidth: "200px",
+                                            maxWidth: "300px",
+                                            borderRadius: "16px",
+                                        }}>
+                                        {message.content ? message.content : ""}
+                                    </Typography>
+                                    {isAuthUser(
+                                        authUserId,
+                                        message.sender.id
+                                    ) ? (
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                justifyContent: "center",
+                                                gap: 2,
+                                            }}>
+                                            <EditIcon
+                                                color="primary"
+                                                sx={{
+                                                    minWidth: "24px",
+                                                    minHeight: "24px",
+                                                    cursor: "pointer",
+                                                }}
+                                            />
+                                            <DeleteOutlineIcon
+                                                onClick={(event) =>
+                                                    handleOpen(
+                                                        event,
+                                                        message.id
+                                                    )
+                                                }
+                                                color="primary"
+                                                sx={{
+                                                    minWidth: "24px",
+                                                    minHeight: "24px",
+                                                    cursor: "pointer",
+                                                }}
+                                            />
+                                        </Box>
+                                    ) : null}
+                                </Box>
                             </Box>
                         </ListItem>
                     ))}
