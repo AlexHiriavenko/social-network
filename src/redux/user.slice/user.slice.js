@@ -43,6 +43,28 @@ export const uploadAvatar = createAsyncThunk(
     }
 
 );
+
+export const uploadCoverPhoto = createAsyncThunk(
+    "Users/uploadCoverPhoto",
+    async function ({multipartFile,id}) {
+
+        console.log(multipartFile)
+        let accessToken = JSON.parse(localStorage.getItem('token'))
+        await axios.post(`https://social-network-backend-2782464b9c31.herokuapp.com/users/${id}/header`,multipartFile,
+            {
+
+                headers:
+                    { 'Content-Type': 'multipart/form-data',
+                        'AUTHORIZATION':`Bearer ${accessToken}`
+                    }
+            }
+        )
+
+    }
+
+);
+
+
 export const updateUser = createAsyncThunk(
     "Users/updateUser",
     async function (updatedUser) {
