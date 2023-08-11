@@ -13,6 +13,9 @@ const initialState = {
     deleteMessage: {
         isOpen: false,
     },
+    editMessage: {
+        isOpen: false,
+    },
 };
 
 const modalSlice = createSlice({
@@ -43,6 +46,12 @@ const modalSlice = createSlice({
         closeDeleteMessageModal: function (state) {
             state.deleteMessage.isOpen = false;
         },
+        openEditMessageModal: function (state) {
+            state.editMessage.isOpen = true;
+        },
+        closeEditMessageModal: function (state) {
+            state.editMessage.isOpen = false;
+        },
     },
 });
 
@@ -55,6 +64,8 @@ export const {
     closeSentFriendRequests,
     openDeleteMessageModal,
     closeDeleteMessageModal,
+    openEditMessageModal,
+    closeEditMessageModal,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

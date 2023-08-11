@@ -19,14 +19,20 @@ import {
     getChat,
 } from "../../../redux/chat.slice/chat.slice";
 import { sendMessage } from "../../../redux/message.slice/message.slice";
-import { setDeleteMessageId } from "../../../redux/message.slice/message.slice";
+import {
+    setMessageId,
+    setMessageContent,
+} from "../../../redux/message.slice/message.slice";
 import {
     getFriends,
     setFriends,
     setUser,
     getUser,
 } from "../../../redux/user.slice/user.slice";
-import { openDeleteMessageModal } from "../../../redux/modal.slice/modal.slice";
+import {
+    openDeleteMessageModal,
+    openEditMessageModal,
+} from "../../../redux/modal.slice/modal.slice";
 
 const ChatBody = () => {
     const dispatch = useDispatch();
@@ -35,14 +41,21 @@ const ChatBody = () => {
     const chatFormRef = useRef(null);
 
     const currentChat = useSelector((state) => state.chat.currentChat);
-    const messages = currentChat.messages || [];
+
+    let messages = currentChat.messages || [];
+    ////////////////
+    const sortMessages = messages.toSorted((a, b) => {
+        return new Date(a.createdDate) - new Date(b.createdDate);
+    });
+    ////////////////
+    console.log(sortMessages);
     const authUser = useSelector((state) => state.user.authorizedUser);
     const authUserId = authUser.id;
     const currentChatCompanion = useSelector(
         (state) => state.chat.currentChatCompanion
     );
     const { fullName, profilePicture } = currentChatCompanion;
-
+    console.log(messages);
     // в конец чата
     useEffect(() => {
         if (chatFormRef.current) {
@@ -86,11 +99,11 @@ const ChatBody = () => {
         }
     }
 
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event, id = 0) => {
         if (event.key === "Enter" && inputRef.current.value.trim()) {
             const inputValue = inputRef.current.value.trim();
             const newMessage = {
-                id: 0,
+                id: id,
                 content: inputValue,
                 sender: authUser,
                 chat: currentChat,
@@ -104,11 +117,11 @@ const ChatBody = () => {
         }
     };
 
-    const handleClickSend = (event) => {
+    const handleClickSend = (event, id = 0) => {
         if (inputRef.current.value.trim()) {
             const inputValue = inputRef.current.value.trim();
             const newMessage = {
-                id: 0,
+                id: id,
                 content: inputValue,
                 sender: authUser,
                 chat: currentChat,
@@ -122,9 +135,15 @@ const ChatBody = () => {
         }
     };
 
-    const handleOpen = (event, messageId) => {
-        dispatch(setDeleteMessageId(messageId));
+    const handleOpenDelete = (event, messageId) => {
+        dispatch(setMessageId(messageId));
         dispatch(openDeleteMessageModal());
+    };
+
+    const handleOpenEdit = (event, messageId, messageContent) => {
+        dispatch(setMessageId(messageId));
+        dispatch(setMessageContent(messageContent));
+        dispatch(openEditMessageModal());
     };
 
     if (messages[0].createdBy) {
@@ -175,7 +194,7 @@ const ChatBody = () => {
                     </Avatar>
                 </Box>
                 <List className="chat-body__list">
-                    {messages.map((message, index) => (
+                    {sortMessages.map((message, index) => (
                         <ListItem
                             className={
                                 isAuthUser(authUserId, message.sender.id)
@@ -239,6 +258,13 @@ const ChatBody = () => {
                                                 gap: 2,
                                             }}>
                                             <EditIcon
+                                                onClick={(event) =>
+                                                    handleOpenEdit(
+                                                        event,
+                                                        message.id,
+                                                        message.content
+                                                    )
+                                                }
                                                 color="primary"
                                                 sx={{
                                                     minWidth: "24px",
@@ -248,7 +274,7 @@ const ChatBody = () => {
                                             />
                                             <DeleteOutlineIcon
                                                 onClick={(event) =>
-                                                    handleOpen(
+                                                    handleOpenDelete(
                                                         event,
                                                         message.id
                                                     )

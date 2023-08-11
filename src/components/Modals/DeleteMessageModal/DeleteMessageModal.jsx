@@ -1,52 +1,19 @@
-import { Box, Modal, Typography } from "@mui/material";
+import { Modal } from "@mui/material";
 import {
-    StyledModalBlock,
+    StyledWrapModal,
+    StyledContentWrapper,
     StyledModalCloseButton,
     StyledModalCloseButtonLine,
     StyledModalSeparator,
     StyledModalTitle,
+    StyledBtnGroup,
+    StyledButton,
+    StyledQuestionModal,
 } from "../StyledModalComponents";
 import { useDispatch, useSelector } from "react-redux";
 import { closeDeleteMessageModal } from "../../../redux/modal.slice/modal.slice";
 import { deleteMessage } from "../../../redux/message.slice/message.slice";
 import { getChat } from "../../../redux/chat.slice/chat.slice";
-import styled from "@emotion/styled";
-import ProfilePageButton from "../../UserProfile/ProfilePageButton/ProfilePageButton";
-
-const StyledEditProfileModal = styled(StyledModalBlock)({
-    maxWidth: "710px",
-});
-
-const StyledEditedContentWrapper = styled(Box)({
-    display: "flex",
-    justifyContent: "center",
-    width: "100%",
-});
-
-const StyledEditedBio = styled(Typography)(({ theme }) => ({
-    color: theme.palette.textColor.secondary,
-    fontSize: "17px",
-    textAlign: "center",
-    marginTop: "16px",
-}));
-const StyledButton = styled(ProfilePageButton)(({ theme }) => ({
-    width: "100px",
-    marginTop: "16px",
-    marginBottom: "16px",
-    color: theme.palette.accentColor.main,
-    backgroundColor: theme.palette.accentColor.secondary,
-    transitionDuration: "300ms",
-    "&:hover": {
-        backgroundColor: theme.palette.accentColor.secondary,
-    },
-}));
-
-const StyledBtnGroup = styled(Box)({
-    display: "flex",
-    justifyContent: "center",
-    width: "100%",
-    gap: "16px",
-});
 
 export default function DeleteMessageModal() {
     const dispatch = useDispatch();
@@ -54,7 +21,7 @@ export default function DeleteMessageModal() {
         (state) => state.modal.deleteMessage.isOpen
     );
     const deleteMessageId = useSelector(
-        (state) => state.message.deleteMessageId
+        (state) => state.message.currentMessageId
     );
     const currentChat = useSelector((state) => state.chat.currentChat);
 
@@ -77,23 +44,23 @@ export default function DeleteMessageModal() {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
             sx={{ paddingLeft: "5px", paddingRight: "5px" }}>
-            <StyledEditProfileModal>
+            <StyledWrapModal>
                 <StyledModalCloseButton onClick={handleClose}>
                     <StyledModalCloseButtonLine></StyledModalCloseButtonLine>
                 </StyledModalCloseButton>
                 <StyledModalTitle>Delete mesage</StyledModalTitle>
                 <StyledModalSeparator></StyledModalSeparator>
 
-                <StyledEditedContentWrapper>
-                    <StyledEditedBio>
+                <StyledContentWrapper>
+                    <StyledQuestionModal>
                         Do you really want to delete this message ?
-                    </StyledEditedBio>
-                </StyledEditedContentWrapper>
+                    </StyledQuestionModal>
+                </StyledContentWrapper>
                 <StyledBtnGroup>
                     <StyledButton text={"Yes"} clickAction={handleDelete} />
                     <StyledButton text={"No"} clickAction={handleClose} />
                 </StyledBtnGroup>
-            </StyledEditProfileModal>
+            </StyledWrapModal>
         </Modal>
     );
 }
