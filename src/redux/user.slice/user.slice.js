@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../../instance";
+import axios from "axios";
 
 //Получение всех пользователей
 export const getUsers = createAsyncThunk("Users/getUsers", async function () {
@@ -23,6 +24,25 @@ export const getProfile = createAsyncThunk(
     }
 );
 //Редактирование юзера
+export const uploadAvatar = createAsyncThunk(
+    "Users/uploadAvatar",
+    async function ({multipartFile,id}) {
+
+        console.log(multipartFile)
+        let accessToken = JSON.parse(localStorage.getItem('token'))
+        await axios.post(`https://social-network-backend-2782464b9c31.herokuapp.com/users/${id}/avatar`,multipartFile,
+            {
+
+                headers:
+                    { 'Content-Type': 'multipart/form-data',
+                        'AUTHORIZATION':`Bearer ${accessToken}`
+                    }
+            }
+        )
+
+    }
+
+);
 export const updateUser = createAsyncThunk(
     "Users/updateUser",
     async function (updatedUser) {

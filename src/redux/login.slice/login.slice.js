@@ -96,7 +96,7 @@ export const loginGoogle = createAsyncThunk(
         let auth = parseJwt(token.data.accessToken);
         localStorage.setItem("auth", JSON.stringify(auth));
         const { data } = await instance.get(`/users/profile`);
-        localStorage.setItem("authorizedUser", JSON.stringify(data));
+        localStorage.setItem("authorizedUser", JSON.stringify({...data,isAuthorized:true}));
         localStorage.setItem("user", JSON.stringify(data));
 
         console.log(token);
