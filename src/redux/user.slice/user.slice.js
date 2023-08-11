@@ -43,6 +43,7 @@ export const uploadAvatar = createAsyncThunk(
     }
 
 );
+
 export const uploadCoverPhoto = createAsyncThunk(
     "Users/uploadCoverPhoto",
     async function ({multipartFile,id}) {
@@ -62,6 +63,8 @@ export const uploadCoverPhoto = createAsyncThunk(
     }
 
 );
+
+
 export const updateUser = createAsyncThunk(
     "Users/updateUser",
     async function (updatedUser) {
