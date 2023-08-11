@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import {setAuthorizedUser, uploadAvatar} from '../../../redux/user.slice/user.slice.js'
+import {setAuthorizedUser, uploadAvatar,uploadCoverPhoto} from '../../../redux/user.slice/user.slice.js'
 import {
   StyledEditedPartButton,
   StyledModalBlock,
@@ -76,7 +76,13 @@ export default function EditChildModal(props) {
   }
   function savePicture() {
     let id = JSON.parse(localStorage.getItem('authorizedUser')).id
-    dispatch(uploadAvatar({multipartFile: multipartFile, id:id}))
+    if(title === "Select profile picture"){
+      dispatch(uploadAvatar({multipartFile: multipartFile, id:id}))
+    }
+    else if(title === "Select cover picture"){
+      dispatch(uploadCoverPhoto({multipartFile: multipartFile, id:id}))
+    }
+
   }
   return (
     <>
