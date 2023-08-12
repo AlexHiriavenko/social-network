@@ -26,7 +26,7 @@ function Home() {
         const token = await dispatch(getAccessToken());
         console.log(token.payload);
         console.log("Set access token");
-        document.cookie = `token=${token.payload}`;
+        localStorage.setItem("token",JSON.stringify(token.payload))
     };
 
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
@@ -35,7 +35,8 @@ function Home() {
         if (JSON.parse(localStorage.getItem("token")) == "out") {
             dispatch(loginGoogle());
         }
-        //   window.setInterval(renewToken,600000)
+
+           window.setInterval(renewToken,600000)
         if (
             !localStorage.getItem("authorizedUser") &&
             localStorage.getItem("auth")
@@ -92,11 +93,11 @@ function Home() {
             )
         );
 
-        //   return function () {
+           return function () {
 
-        //    window.clearInterval(renewToken)
+            window.clearInterval(renewToken)
 
-        //    }
+            }
     }, [isLoggedIn]);
 
     return (
