@@ -35,6 +35,7 @@ function Home() {
         if (JSON.parse(localStorage.getItem("token")) == "out") {
             dispatch(loginGoogle());
         }
+
         //   window.setInterval(renewToken,600000)
         if (
             !localStorage.getItem("authorizedUser") &&
