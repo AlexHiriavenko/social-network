@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import { Typography, Box, Avatar } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { resetCurrentChat } from "../../../redux/chat.slice/chat.slice";
 import {
     getFriends,
     setFriends,
