@@ -84,7 +84,11 @@ const chatSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getChatsParticipants.fulfilled, (state, action) => {
-            state.chatsParticipants = action.payload;
+            if (typeof action.payload === "object") {
+                state.chatsParticipants = action.payload;
+            } else {
+                state.chatsParticipants = [];
+            }
         });
         builder.addCase(getChat.fulfilled, (state, action) => {
             state.currentChat = action.payload;

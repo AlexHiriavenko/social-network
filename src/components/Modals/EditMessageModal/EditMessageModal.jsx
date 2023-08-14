@@ -11,6 +11,7 @@ import {
     StyledBtnGroup,
     StyledButton,
 } from "../StyledModalComponents";
+import { StyledTextField } from "../../../pages/Chats/styledChatComponents";
 import { useDispatch, useSelector } from "react-redux";
 import { closeEditMessageModal } from "../../../redux/modal.slice/modal.slice";
 import { editMessage } from "../../../redux/message.slice/message.slice";
@@ -92,35 +93,8 @@ export default function EditMessageModal() {
                 <StyledModalTitle>Change message content</StyledModalTitle>
                 <StyledModalSeparator />
                 <StyledContentWrapper>
-                    <TextField
-                        sx={{
-                            width: "300px",
-                            maxWidth: "98%",
-                            "& input": {
-                                color: theme.palette.textColor.main,
-                                border: `1px solid ${theme.palette.textColor.secondary}`,
-                                "&:hover": {
-                                    border: `1px solid ${theme.palette.textColor.secondary}`,
-                                    outline: `1px solid ${theme.palette.textColor.secondary}`,
-                                },
-                                "&:focus": {
-                                    border: "none",
-                                    outline: "none",
-                                },
-                            },
-                        }}
-                        inputProps={{
-                            style: {
-                                color: theme.palette.textColor.main,
-                            },
-                        }}
+                    <StyledTextField
                         label="your message"
-                        InputLabelProps={{
-                            style: {
-                                color: theme.palette.textColor.secondary,
-                            },
-                            shrink: true,
-                        }}
                         variant="outlined"
                         inputRef={inputRef}
                         onFocus={(e) =>

@@ -28,7 +28,7 @@ function Chats() {
                 minHeight: "93.2%",
             }}>
             <Sidebar>
-                <UsersList usersList={chatParticipants} />
+                <UsersList />
             </Sidebar>
             <ChatBody />
         </div>
