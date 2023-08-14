@@ -1,6 +1,9 @@
 import styled from "@emotion/styled";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import {setAuthorizedUser,setUser,uploadAvatar,uploadCoverPhoto,getProfile} from '../../../redux/user.slice/user.slice.js'
+
 import {
   StyledEditedPartButton,
   StyledModalBlock,
@@ -50,10 +53,12 @@ const StyledSelectButtons = styled(Box)({
 });
 export default function EditChildModal(props) {
   // Constants
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const { title } = props;
   const fileRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [multipartFile,setMultipartFile] = useState(null)
   const theme = useTheme();
   //   Functions
   const handleOpen = () => {
@@ -66,10 +71,29 @@ export default function EditChildModal(props) {
   function showChoosingPicture() {
     let file = fileRef.current.files[0];
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("multipartFile", file);
+    setMultipartFile(formData)
     setSelectedImage(URL.createObjectURL(file));
   }
-  function savePicture() {}
+  function savePicture() {
+    let id = JSON.parse(localStorage.getItem('authorizedUser')).id
+
+    if(title === "Select profile picture"){
+      dispatch(uploadAvatar({multipartFile: multipartFile, id:id}))
+    }
+    else if(title === "Select cover picture"){
+      dispatch(uploadCoverPhoto({multipartFile: multipartFile, id:id}))
+    }
+    const editUser =  dispatch(getProfile())
+    editUser.then(result =>{
+      console.log(result.payload)
+      localStorage.setItem("authorizedUser",JSON.stringify(result.payload))
+      localStorage.setItem("user",JSON.stringify(result.payload))
+      dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
+      dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
+
+    })
+  }
   return (
     <>
       <StyledEditedPartButton onClick={handleOpen}>Edit</StyledEditedPartButton>

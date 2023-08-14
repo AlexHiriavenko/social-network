@@ -4,13 +4,14 @@ import HomeAsideRight from "./HomeAsideRight";
 import { useTheme } from "@mui/material/styles";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { readCookie } from "../../readCookie.js";
+
 import {
     getAccessToken,
     loginGoogle,
 } from "../../redux/login.slice/login.slice.js";
 import {
     getUser,
+    getProfile,
     getUsers,
     setAuthorizedUser,
     setUsers,
@@ -26,7 +27,7 @@ function Home() {
         const token = await dispatch(getAccessToken());
         console.log(token.payload);
         console.log("Set access token");
-        document.cookie = `token=${token.payload}`;
+        localStorage.setItem("token",JSON.stringify(token.payload))
     };
 
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
@@ -35,14 +36,16 @@ function Home() {
         if (JSON.parse(localStorage.getItem("token")) == "out") {
             dispatch(loginGoogle());
         }
-        //   window.setInterval(renewToken,600000)
+
+           window.setInterval(renewToken,600000)
         if (
             !localStorage.getItem("authorizedUser") &&
             localStorage.getItem("auth")
         ) {
             const auth = localStorage.getItem("auth");
             const authorizedUserResponse = dispatch(
-                getUser(JSON.parse(auth).id)
+              //  getUser(JSON.parse(auth).id)
+                getProfile()
             );
             authorizedUserResponse
                 .then((result) => {
@@ -92,11 +95,11 @@ function Home() {
             )
         );
 
-        //   return function () {
+           return function () {
 
-        //    window.clearInterval(renewToken)
+            window.clearInterval(renewToken)
 
-        //    }
+            }
     }, [isLoggedIn]);
 
     return (
