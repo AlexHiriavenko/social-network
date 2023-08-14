@@ -4,13 +4,14 @@ import HomeAsideRight from "./HomeAsideRight";
 import { useTheme } from "@mui/material/styles";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { readCookie } from "../../readCookie.js";
+
 import {
     getAccessToken,
     loginGoogle,
 } from "../../redux/login.slice/login.slice.js";
 import {
     getUser,
+    getProfile,
     getUsers,
     setAuthorizedUser,
     setUsers,
@@ -43,7 +44,8 @@ function Home() {
         ) {
             const auth = localStorage.getItem("auth");
             const authorizedUserResponse = dispatch(
-                getUser(JSON.parse(auth).id)
+              //  getUser(JSON.parse(auth).id)
+                getProfile()
             );
             authorizedUserResponse
                 .then((result) => {
