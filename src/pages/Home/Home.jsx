@@ -11,6 +11,7 @@ import {
 } from "../../redux/login.slice/login.slice.js";
 import {
     getUser,
+    getProfile,
     getUsers,
     setAuthorizedUser,
     setUsers,
@@ -43,7 +44,8 @@ function Home() {
         ) {
             const auth = localStorage.getItem("auth");
             const authorizedUserResponse = dispatch(
-                getUser(JSON.parse(auth).id)
+              //  getUser(JSON.parse(auth).id)
+                getProfile()
             );
             authorizedUserResponse
                 .then((result) => {
