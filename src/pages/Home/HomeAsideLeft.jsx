@@ -49,6 +49,7 @@ function HomeAsideLeft() {
                 <ListItem
                     className="search__list-item home__list-item"
                     sx={{
+                        mb: 1,
                         "&:hover": {
                             backgroundColor: theme.palette.hoverColor.secondary,
                         },
@@ -82,6 +83,7 @@ function HomeAsideLeft() {
                 <ListItem
                     className="search__list-item home__list-item"
                     sx={{
+                        mb: 1,
                         "&:hover": {
                             backgroundColor: theme.palette.hoverColor.secondary,
                         },
@@ -109,17 +111,11 @@ function HomeAsideLeft() {
                         </Typography>
                     </Link>
                 </ListItem>
-                <ListItem
-                    className="search__list-item home__list-item"
-                    sx={{
-                        "&:hover": {
-                            backgroundColor: theme.palette.hoverColor.secondary,
-                        },
-                    }}></ListItem>
 
                 <ListItem
                     className="search__list-item home__list-item"
                     sx={{
+                        mb: 1,
                         "&:hover": {
                             backgroundColor: theme.palette.hoverColor.secondary,
                         },

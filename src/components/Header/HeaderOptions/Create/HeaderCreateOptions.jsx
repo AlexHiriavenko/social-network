@@ -1,5 +1,13 @@
 import React from "react";
-import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem, Box } from "@mui/material";
+import {
+    IconButton,
+    Typography,
+    Menu,
+    Avatar,
+    Tooltip,
+    MenuItem,
+    Box,
+} from "@mui/material";
 import { default as AddOption } from "@mui/icons-material/Add";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -23,9 +31,10 @@ function HeaderCreateOptions() {
                             bgcolor: theme.palette.hoverColor.dark,
                             minWidth: "40px",
                             minHeight: "40px",
-                        }}
-                    >
-                        <AddOption style={{ color: theme.palette.textColor.content }} />
+                        }}>
+                        <AddOption
+                            style={{ color: theme.palette.textColor.content }}
+                        />
                     </Avatar>
                 </IconButton>
             </Tooltip>
@@ -47,17 +56,18 @@ function HeaderCreateOptions() {
                 slotProps={{
                     paper: {
                         className: "header__options-drop-menu",
-                        style: { backgroundColor: theme.palette.backgroundColor.section },
+                        style: {
+                            backgroundColor:
+                                theme.palette.backgroundColor.section,
+                        },
                     },
-                }}
-            >
+                }}>
                 <Typography
                     variant="h5"
                     component={"h4"}
                     p={2}
                     fontWeight={600}
-                    sx={{ color: theme.palette.textColor.content }}
-                >
+                    sx={{ color: theme.palette.textColor.content }}>
                     Create
                 </Typography>
                 <MenuItem
@@ -65,39 +75,23 @@ function HeaderCreateOptions() {
                     sx={{
                         gap: 2,
                         mb: 1,
-                        "&:hover": { backgroundColor: theme.palette.hoverColor.main },
-                    }}
-                >
+                        "&:hover": {
+                            backgroundColor: theme.palette.hoverColor.main,
+                        },
+                    }}>
                     <IconButton
                         sx={{
                             backgroundColor: "rgb(230, 228, 228)",
-                            "&:hover": { backgroundColor: "rgb(230, 228, 228)" },
-                        }}
-                    >
+                            "&:hover": {
+                                backgroundColor: "rgb(230, 228, 228)",
+                            },
+                        }}>
                         <PostAddIcon />
                     </IconButton>
-                    <Typography fontWeight={600} sx={{ color: theme.palette.textColor.content }}>
+                    <Typography
+                        fontWeight={600}
+                        sx={{ color: theme.palette.textColor.content }}>
                         Post
-                    </Typography>
-                </MenuItem>
-                <MenuItem
-                    onClick={toggleMenu}
-                    sx={{
-                        gap: 2,
-                        mb: 1,
-                        "&:hover": { backgroundColor: theme.palette.hoverColor.main },
-                    }}
-                >
-                    <IconButton
-                        sx={{
-                            backgroundColor: "rgb(230, 228, 228)",
-                            "&:hover": { backgroundColor: "rgb(230, 228, 228)" },
-                        }}
-                    >
-                        <GroupsIcon />
-                    </IconButton>
-                    <Typography fontWeight={600} sx={{ color: theme.palette.textColor.content }}>
-                        Group
                     </Typography>
                 </MenuItem>
             </Menu>

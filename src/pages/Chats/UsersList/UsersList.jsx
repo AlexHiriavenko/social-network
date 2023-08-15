@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
     getChat,
@@ -8,10 +9,15 @@ import {
 import { List, ListItem, Typography, Avatar, Box } from "@mui/material/";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
+import { getChatsParticipants } from "../../../redux/chat.slice/chat.slice";
 
 function UsersList(props) {
     const dispatch = useDispatch();
     const theme = useTheme();
+
+    useEffect(() => {
+        dispatch(getChatsParticipants());
+    }, [dispatch]);
 
     const chatParticipants = useSelector(
         (state) => state.chat.chatsParticipants
@@ -56,7 +62,7 @@ function UsersList(props) {
                                 gap: 1,
                                 "&:hover": {
                                     backgroundColor:
-                                        theme.palette.hoverColor.main,
+                                        theme.palette.hoverColor.secondary,
                                 },
                             }}
                             className="search__list-item chats__list-item">
