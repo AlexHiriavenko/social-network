@@ -13,6 +13,7 @@ import FriendEmptyPage from  '../FriendEmptyPage';
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 import { openSentFriendRequests, closeSentFriendRequests } from  '../../../redux/modal.slice/modal.slice';
 import SentFriendRequestsModal from '../../../components/Modals/SentFriendRequestsModal/SentFriendRequestsModal';
+import { setUser } from "../../../redux/user.slice/user.slice";
 
 function FriendRequests(){
 
@@ -20,12 +21,13 @@ function FriendRequests(){
     const dispatch = useDispatch(); 
     //const theme = useTheme();
 
+    const userAuth = useSelector((store)=>store.user.authorizedUser, shallowEqual);
     const user = useSelector((store)=>store.user.authorizedUser, shallowEqual);
     const friendsRequests = useSelector((store)=>store.friends.friendsRequests, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
 
     const friendsRequestsToUser = (friendsRequests.length > 0 
-        ? friendsRequests.filter((elem) => elem.status==='pending' && elem.user.id !== user.id)
+        ? friendsRequests.filter((elem) => elem.status==='pending' && elem.user.id !== userAuth.id)
         : []);
 
     const requestsCount = friendsRequestsToUser.length === 0 ? '' : friendsRequestsToUser.length;
@@ -45,12 +47,20 @@ function FriendRequests(){
     },[dispatch])
 
     const handleClickConfirm = (friend) => {
-        const payload = {id: friend.id, status: "accepted", userID: user.id,  friendID: friend.friend.id}
+        if(user.id === friend.id) {
+            dispatch(setCurrentFriend({}));
+            dispatch(setUser({}))
+        }
+        const payload = {id: friend.id, status: "accepted"}
         dispatch(updateFriendship(payload));
     }
 
     const handleClickRemove = (friend) => {
-        const payload = {id: friend.id, status: "rejected", userID: user.id,  friendID: friend.friend.id}
+        if(user.id === friend.id) {
+            dispatch(setCurrentFriend({}));
+            dispatch(setUser({}))
+        }
+        const payload = {id: friend.id, status: "rejected"}
         dispatch(updateFriendship(payload));
     }
 
@@ -91,7 +101,7 @@ function FriendRequests(){
 
     const noItemMessage = "No new requests";
 
-    const additionItems = (
+    const addItemsSubHead = (
         <LinkStyled to="#" onClick={hadleOpenModal}>View sent requests</LinkStyled>
     )
 
@@ -101,7 +111,7 @@ function FriendRequests(){
                 <SideBarFriends sideBarItems={friendsRequestsToUser}
                                     headerTitle={"Friend requests"}
                                     subTitle={`${requestsCount} Friend requests`}
-                                    additionItems={additionItems}
+                                    addItemsSubHead={addItemsSubHead}
                                     noItemMessage={noItemMessage}
                                     handleClickConfirm={handleClickConfirm}
                                     handleClickRemove={handleClickRemove}

@@ -9,10 +9,13 @@ import { Profile } from "../../index";
 import SideBarFriends from "../SideBarForFriends";
 import FriendEmptyPage from  "../FriendEmptyPage";
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
+import { setUser } from "../../../redux/user.slice/user.slice";
 
 function FriendSuggestionsPage() {
 
     const dispatch = useDispatch(); 
+
+    const user = useSelector((store)=>store.user.authorizedUser, shallowEqual);
     const friendSuggestions = useSelector((store)=>store.friends.friendSuggestions, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
 
@@ -31,10 +34,18 @@ function FriendSuggestionsPage() {
 
 
     const handleClickAdd = (friend) => {
+        if(user.id === friend.id) {
+            dispatch(setCurrentFriend({}));
+            dispatch(setUser({}));
+        }
         dispatch(createFriendship({friendId: friend.friend.id}));
     }
 
     const handleClickRemoveSuggestion = (payload) => {
+        if(user.id === payload.friend.id) {
+            dispatch(setCurrentFriend({}));
+            dispatch(setUser({}))
+        }
         dispatch(removeSuggestions(payload));
     }
     

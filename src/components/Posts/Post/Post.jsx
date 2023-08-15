@@ -277,7 +277,7 @@ export default function Post(props) {
       <StyledPostAuthor>
         <BlockUserImage
           src={
-            user.profilePicture ||
+            user?.profilePicture ||
             "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
           }
           alt="Author image"
@@ -287,7 +287,7 @@ export default function Post(props) {
         />
         <Box>
           <StyledPostAuthorName onClick={() => lookUser(user.id)}>
-            {user.fullName}
+            {user?.fullName}
           </StyledPostAuthorName>
           <StyledPostDate>{getPostDate(createdDate)}</StyledPostDate>
         </Box>

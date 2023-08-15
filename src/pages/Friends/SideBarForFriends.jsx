@@ -1,7 +1,7 @@
+/* eslint-disable react-refresh/only-export-components */
 // eslint-disable-next-line no-unused-vars
-import React from "react";
+import React, {memo, useCallback} from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-//import Sidebar from "../../components/Sidebar/Sidebar";
 import SideBarHeader from '../../components/Friends/SideBar/SideBarHeader';
 import styled from "@emotion/styled";
 import { Box, Typography, List, Divider, ListItemButton } from "@mui/material";
@@ -14,7 +14,7 @@ import { setFriends, setUser, getUser, getFriends } from "../../redux/user.slice
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import {SidebarStyled} from '../../components/StyledComponents/SideBarFriends';
-
+import PopupMenuFriends from './UserFriends/PopupMenuFriends';
 
 
 function SideBarFriends(props) {
@@ -22,7 +22,8 @@ function SideBarFriends(props) {
     const {
         headerTitle,
         subTitle,
-        additionItems,
+        addlItemsHead,
+        addItemsSubHead,
         noItemMessage,
         sideBarItems,
         handleClickConfirm,
@@ -31,13 +32,15 @@ function SideBarFriends(props) {
         isRemoveButton,
         isConfirmButton,
         isAvatarMutualFriend,
+        additionalButtons,
+        isMoreMenuButton,
+        handleClickUnfriend,
     } = props;
 
     const theme = useTheme();
     const dispatch = useDispatch(); 
     const authUser = useSelector((store)=>store.user.authorizedUser, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
-    
 
     const handleLinkClick = (friend) => {
         const id  = friend.id;
@@ -69,9 +72,10 @@ function SideBarFriends(props) {
             })
             .catch((error) => error.message);
         }
-        
         dispatch(setCurrentFriend(friend));
     }
+
+    const callBackHandleLinkClick = useCallback(handleLinkClick, [authUser, dispatch]);
 
     const TitleStyled = styled('h1')(({theme}) => ({
         fontWeight: 900,
@@ -107,10 +111,12 @@ function SideBarFriends(props) {
         color: theme.palette.textColor.main,
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderRadius: 4,
+        borderRadius: 8,
         padding: 0,
-        '&:hover': {backgroundColor: theme.palette.backgroundColor.hover,},
-        '&:active': {backgroundColor: theme.palette.backgroundColor.hover}, 
+        '&.Mui-hover': {backgroundColor: theme.palette.backgroundColor.hover,},
+        '&.Mui-active': {backgroundColor: theme.palette.backgroundColor.hover},
+        '&.Mui-selected': {backgroundColor: theme.palette.backgroundColor.hover, opacity: 1},
+        '&.Mui-selected:hover': {backgroundColor: theme.palette.backgroundColor.hover,}
     }))
 
     const ArrowBackStyled = styled(NavLink)(({theme}) => ({
@@ -135,10 +141,11 @@ function SideBarFriends(props) {
                         <TitleStyled>{ headerTitle }</TitleStyled>
                     </Box>
                 </Box>
+                { addlItemsHead }
                 <Divider sx={{my: '12px', borderColor: theme.palette.border.card,}}/>
                 <Box>
                     <SubTitleStyled>{ subTitle }</SubTitleStyled>
-                    { additionItems }
+                    { addItemsSubHead }
                     { sideBarItems.length === 0 
                 && <Typography sx={{py: 2, fontSize: 12, color: theme.palette.textColor.secondary}}>
                         { noItemMessage }
@@ -148,13 +155,13 @@ function SideBarFriends(props) {
             <List sx={{padding: 0}}>
                 {
                     sideBarItems && sideBarItems.map(fr =>
-                    <MenuItem onClick={(e) => {e.stopPropagation(); handleLinkClick(fr.user ? fr.user : fr.friend)}}
+                    <MenuItem onClick={(e) => {e.stopPropagation(); callBackHandleLinkClick(fr.user ? fr.user : fr.friend)}}
                             key={fr.user ? fr.user.id : fr.friend.id} 
                             selected={currentFriend.id === (fr.user ? fr.user.id : fr.friend.id)}>
                         <Friend horizontal = 'true'
                             key={fr.id}
                             mutualFriends={fr.mutualFriends} 
-                            handleLinkClick={(e) => {e.stopPropagation(); handleLinkClick(fr.user ? fr.user : fr.friend)}}
+                            handleLinkClick={(e) => {e.stopPropagation(); callBackHandleLinkClick(fr.user ? fr.user : fr.friend)}}
                             friend={fr.user ? fr.user : fr.friend}
                             isAvatarMutualFriend={isAvatarMutualFriend}
                             addButton={isConfirmButton 
@@ -175,6 +182,10 @@ function SideBarFriends(props) {
                                         color: theme.palette.textColor.content}}
                                         onClick={(e) => {e.stopPropagation(); handleClickRemove(fr)}}>Remove</ButtonStyled>
                                 : null}
+                            moreMenuButton={isMoreMenuButton 
+                                ? <PopupMenuFriends handleClickUnfriend={(e) => {e.stopPropagation(); handleClickUnfriend(fr)}}/>
+                                : null}
+                            additionalButtons={additionalButtons}
                             />
                     </MenuItem>)
                 }
@@ -186,7 +197,8 @@ function SideBarFriends(props) {
 SideBarFriends.propTypes  = {
     headerTitle: PropTypes.string,
     subTitle: PropTypes.string,
-    additionItems: PropTypes.node,
+    addlItemsHead: PropTypes.node,
+    addItemsSubHead: PropTypes.node,
     noItemMessage: PropTypes.string,
     sideBarItems: PropTypes.arrayOf(PropTypes.object),
     handleClickConfirm: PropTypes.func,
@@ -195,6 +207,9 @@ SideBarFriends.propTypes  = {
     isRemoveButton: PropTypes.bool,
     isConfirmButton: PropTypes.bool,
     isAvatarMutualFriend: PropTypes.bool,
+    additionalButtons: PropTypes.node,
+    isMoreMenuButton: PropTypes.bool,
+    handleClickUnfriend: PropTypes.func,
   };
   
   SideBarFriends.defaultProps = {
@@ -209,6 +224,9 @@ SideBarFriends.propTypes  = {
     isRemoveButton: false,
     isConfirmButton: false,
     isAvatarMutualFriend: false,
+    additionalButtons: <></>,
+    isMoreMenuButton: false,
+    handleClickUnfriend: () => {},
   };
 
-export default SideBarFriends;
+export default memo(SideBarFriends);

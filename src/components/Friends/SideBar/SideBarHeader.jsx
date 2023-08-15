@@ -1,3 +1,4 @@
+import React, {memo} from "react";
 import { Box } from "@mui/material";
 import styled from "@emotion/styled";
 
@@ -9,8 +10,6 @@ function SideBarHeader(props) {
         justifyContent: 'space-between',
         marginTop: 20,
         marginBottom: 12,
-        marginLeft: 16,
-        marginRight: 16,
         flexDirection: 'column',
     })
 
@@ -21,4 +20,5 @@ function SideBarHeader(props) {
     )
 }
 
-export default SideBarHeader;
+// eslint-disable-next-line react-refresh/only-export-components
+export default memo(SideBarHeader);
