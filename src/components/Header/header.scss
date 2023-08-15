@@ -60,7 +60,7 @@
 }
 
 .header__search-icon-wrap {
-        border-radius: 50px;
+    border-radius: 50px;
     @media (max-width: 1100px) {
         justify-content: center;
         border-radius: 50%;
@@ -68,9 +68,25 @@
 }
 
 .drawer__search-icon-wrap {
-       border-radius: 50px;
+    border-radius: 50px;
 }
 
+.users-list {
+    width: 100%;
+    min-width: 100%;
+    @media (max-width: 700px) {
+        min-width: none;
+        max-width: max-content;
+    }
+}
+
+.search__list-item {
+    width: 100%;
+    max-width: 100%;
+    @media (max-width: 700px) {
+        max-width: max-content;
+    }
+}
 
 .search__user-link {
     display: flex;
@@ -78,6 +94,15 @@
     align-items: center;
     width: 100%;
     gap: 16px;
+    @media (max-width: 700px) {
+        max-width: max-content;
+    }
+}
+
+.searh__user-text {
+    @media (max-width: 700px) {
+        display: none;
+    }
 }
 
 .search__user-remove {
