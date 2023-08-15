@@ -94,6 +94,7 @@ function UserMenu(props) {
             <MenuItem
                 onClick={toggleMenu}
                 sx={{
+                    mt: 1,
                     "&:hover": {
                         backgroundColor: theme.palette.hoverColor.main,
                     },
@@ -111,7 +112,7 @@ function UserMenu(props) {
                 onClick={toggleDisplayModeMenu}
                 className="header__menu-item"
                 sx={{
-                    mt: "10px",
+                    mt: 1,
                     "&:hover": {
                         backgroundColor: theme.palette.hoverColor.main,
                     },
@@ -130,7 +131,7 @@ function UserMenu(props) {
                 onClick={logOut}
                 className="header__menu-item"
                 sx={{
-                    mt: "10px",
+                    mt: 1,
                     "&:hover": {
                         backgroundColor: theme.palette.hoverColor.main,
                     },
