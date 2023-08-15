@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import Post from "./Post";
+import { useEffect, useState } from "react";
 const StyledPostsList = styled("ul")({
   display: "flex",
   flexDirection: "column",

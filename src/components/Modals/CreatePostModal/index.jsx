@@ -4,7 +4,10 @@ import { useRef, useState } from "react";
 import { useFormik } from "formik";
 import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
-import { closeCreateModal } from "../../../redux/modal.slice/modal.slice";
+import {
+  closeCreateModal,
+  resetRepostToModal,
+} from "../../../redux/modal.slice/modal.slice";
 import { BlockUserImage } from "../../UserProfile/StyledComponents/ContentBlock/StyledComponents";
 import {
   StyledModalBlock,
@@ -13,13 +16,8 @@ import {
   StyledModalSeparator,
   StyledModalTitle,
 } from "../StyledModalComponents";
-
-const mockUser = {
-  image:
-    "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg",
-  firstName: "Viktor",
-  lastName: "Ostapenko",
-};
+import Post from "../../Posts/Post/Post";
+import { repostPost } from "../../../redux/post.slice/post.slice";
 
 const StyledPostModalUser = styled(Box)({
   display: "flex",
@@ -106,29 +104,51 @@ export default function CreatePostModal() {
   const createModalIsOpen = useSelector(
     (state) => state.modal.createPost.isOpen
   );
+  const repost = useSelector((state) => state.modal.createPost.repost);
   const fileRef = useRef(null);
   const authUser = useSelector((state) => state.user.authorizedUser);
   // State
-  const [imgUrl, setImgUrl] = useState("");
+  const [imgUrls, setImgUrls] = useState([]);
   // Functions
-  const handleClose = () => dispatch(closeCreateModal());
+  const handleClose = () => {
+    dispatch(closeCreateModal());
+    dispatch(resetRepostToModal());
+    formik.values.content = "";
+    setImgUrls([]);
+  };
 
   function showChoosingPicture() {
-    let file = fileRef.current.files[0];
+    let filesList = fileRef.current.files;
+    const files = [];
+    for (let i = 0; i < filesList.length; i++) {
+      files.push(filesList[i]);
+    }
     const formData = new FormData();
-    formData.append("file", file);
-    setImgUrl(URL.createObjectURL(file));
+    formData.append("file", files);
+    setImgUrls(files.map((file) => URL.createObjectURL(file)));
   }
   // Formik
   const formik = useFormik({
     initialValues: {
       content: "",
-      userName: `${mockUser.firstName} ${mockUser.lastName}`,
+      userName: `${authUser && authUser.fullName} `,
     },
     onSubmit: (values) => {
-      values.content = "";
-      setImgUrl("");
-      handleClose();
+      if (repost) {
+        const repostResponse = dispatch(repostPost(repost.id, values.content));
+        repostResponse
+          .then((response) => {
+            console.log(response);
+            values.content = "";
+            setImgUrls([]);
+            handleClose();
+          })
+          .catch((error) => console.log(error));
+      } else {
+        values.content = "";
+        setImgUrls([]);
+        handleClose();
+      }
     },
   });
   if (!authUser) return;
@@ -168,23 +188,33 @@ export default function CreatePostModal() {
             name="content"
             id="content"
           ></StyledPostModalTextArea>
-          <StyledPostModalImage src={imgUrl} alt="" width={450} />
-          <StyledPostModalAddFiles>
-            <StyledPostModalAddFilesText>
-              Add to your post
-            </StyledPostModalAddFilesText>
-            <StyledPostModalAddFilesButton>
-              <input
-                type="file"
-                ref={fileRef}
-                onChange={showChoosingPicture}
-                style={{ display: "none" }}
-              />
-              <AddPhotoAlternateIcon
-                sx={{ color: "#45bd62", width: "36px", height: "36px" }}
-              />
-            </StyledPostModalAddFilesButton>
-          </StyledPostModalAddFiles>
+
+          {imgUrls.map((url, index) => (
+            <StyledPostModalImage src={url} alt="" width={450} key={index} />
+          ))}
+
+          {!repost ? (
+            <StyledPostModalAddFiles>
+              <StyledPostModalAddFilesText>
+                Add to your post
+              </StyledPostModalAddFilesText>
+              <StyledPostModalAddFilesButton>
+                <input
+                  type="file"
+                  ref={fileRef}
+                  onChange={showChoosingPicture}
+                  style={{ display: "none" }}
+                  multiple
+                />
+                <AddPhotoAlternateIcon
+                  sx={{ color: "#45bd62", width: "36px", height: "36px" }}
+                />
+              </StyledPostModalAddFilesButton>
+            </StyledPostModalAddFiles>
+          ) : (
+            <Post {...repost} inModal={true} />
+          )}
+
           <StyledPostModalButton onClick={formik.handleSubmit}>
             POST
           </StyledPostModalButton>

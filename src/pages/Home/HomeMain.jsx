@@ -31,13 +31,14 @@ function HomeMain() {
   //   useEffect
   useEffect(() => {
     if (fetching) {
-      // dispatch(getPageblePosts(currentPage, 5))
-      //   .then((data) => {
-      //     console.log(data.payload);
-      //     setCurrentPage(currentPage + 1);
-      //   })
-      //   .catch((error) => console.log(error))
-      //   .finally(() => setFetching(false));
+      dispatch(getPageblePosts({ page: currentPage, size: 3 }))
+        .then((data) => {
+          console.log(data.payload);
+          setCurrentPage(currentPage + 1);
+          setMainPagePosts([...mainPagePosts, ...data.payload]);
+        })
+        .catch((error) => console.log(error))
+        .finally(() => setFetching(false));
     }
   }, [fetching]);
   useEffect(() => {
