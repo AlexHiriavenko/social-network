@@ -93,7 +93,7 @@ export default function RegisterModal(props) {
               />
 
               <TextField
-                label="Номер мобильного телефона или эл.адрес"
+                label=" Электронный адрес"
                 required
                 error={!!registerForm.errors.emailOrPhone}
                 variant="outlined"

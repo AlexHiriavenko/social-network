@@ -1,8 +1,18 @@
 .page-sidebar {
+    min-width: 200px;
     width: 360px;
-    min-width: 360px;
+    max-width: 20%;
+    box-sizing: content-box;
     padding: 10px;
-    @media (max-width: 900px) {
-        display: none;
+    @media (max-width: 700px) {
+        padding: 0;
+        min-width: max-content;
+        width: max-content;
+        max-width: 80px;
+    }
+    @media (max-width: 480px) {
+        box-sizing: border-box;
+        min-width: 54px;
+        width: 54px;
     }
 }

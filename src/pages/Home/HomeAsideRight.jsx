@@ -2,6 +2,7 @@ import { Typography, List, ListItem, Divider } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import SvgDanIT from "../../components/SVG/DanIT";
 import ContactsList from "./ContactsList";
+import UsersList from "../Chats/UsersList/UsersList";
 
 function HomeAsideRight() {
     const theme = useTheme();
@@ -11,8 +12,7 @@ function HomeAsideRight() {
             style={{
                 backgroundColor: theme.palette.backgroundColor.page,
                 borderLeft: theme.palette.border.transp,
-            }}
-        >
+            }}>
             <Typography
                 id="ad"
                 component="h3"
@@ -22,8 +22,7 @@ function HomeAsideRight() {
                     color: (theme) => theme.palette.textColor.secondary,
                     fontWeight: 600,
                     fontSize: "17px",
-                }}
-            >
+                }}>
                 Advertisement
             </Typography>
             <List>
@@ -32,14 +31,16 @@ function HomeAsideRight() {
                         ":hover": {
                             backgroundColor: theme.palette.hoverColor.secondary,
                         },
-                    }}
-                >
+                    }}>
                     <a
                         className="sidebar-home__advertisement-link"
                         href="https://dan-it.com.ua/uk/"
-                        target="_blank"
-                    >
-                        <div style={{ paddingTop: "12px", paddingBottom: "12px" }}>
+                        target="_blank">
+                        <div
+                            style={{
+                                paddingTop: "12px",
+                                paddingBottom: "12px",
+                            }}>
                             <SvgDanIT />
                         </div>
                         <Typography
@@ -48,9 +49,9 @@ function HomeAsideRight() {
                                 fontSize: "15px",
                                 lineHeight: "1",
                                 m: 0,
-                                color: (theme) => theme.palette.textColor.content,
-                            }}
-                        >
+                                color: (theme) =>
+                                    theme.palette.textColor.content,
+                            }}>
                             Master modern IT-profession
                         </Typography>
                     </a>
@@ -60,8 +61,7 @@ function HomeAsideRight() {
                         ":hover": {
                             backgroundColor: theme.palette.hoverColor.secondary,
                         },
-                    }}
-                >
+                    }}>
                     <a className="sidebar-home__advertisement-link" href="#ad">
                         <img
                             style={{
@@ -77,9 +77,9 @@ function HomeAsideRight() {
                                 fontSize: "15px",
                                 lineHeight: "1",
                                 m: 0,
-                                color: (theme) => theme.palette.textColor.content,
-                            }}
-                        >
+                                color: (theme) =>
+                                    theme.palette.textColor.content,
+                            }}>
                             Here can be your advertising
                         </Typography>
                     </a>
@@ -98,11 +98,10 @@ function HomeAsideRight() {
                     color: theme.palette.textColor.secondary,
                     fontWeight: 600,
                     fontSize: "17px",
-                }}
-            >
+                }}>
                 Contacts
             </Typography>
-            <ContactsList />
+            <UsersList />
         </aside>
     );
 }

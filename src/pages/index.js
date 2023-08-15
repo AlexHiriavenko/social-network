@@ -18,13 +18,15 @@ import Employment from "./UserProfile/About/Employment";
 import Places from "./UserProfile/About/Places";
 import Contacts from "./UserProfile/About/Contacts";
 import UserPage from "./UserPage/UserPage";
+import Chats from "./Chats/Chats";
+
 export {
     Home,
     Watch,
     Marketplace,
     Groups,
     LogIn,
-    NotFound, 
+    NotFound,
     FriendsHome,
     FriendRequests,
     Profile,
@@ -39,4 +41,5 @@ export {
     UserPage,
     FriendSuggestions,
     UserFriendsPage,
+    Chats,
 };
