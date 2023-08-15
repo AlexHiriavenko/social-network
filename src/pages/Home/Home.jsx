@@ -27,7 +27,7 @@ function Home() {
         const token = await dispatch(getAccessToken());
         console.log(token.payload);
         console.log("Set access token");
-        localStorage.setItem("token",JSON.stringify(token.payload))
+      //  localStorage.setItem("token",JSON.stringify(token.payload))
     };
 
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
@@ -37,7 +37,7 @@ function Home() {
             dispatch(loginGoogle());
         }
 
-           window.setInterval(renewToken,600000)
+           window.setInterval(renewToken,1000000)
         if (
             !localStorage.getItem("authorizedUser") &&
             localStorage.getItem("auth")

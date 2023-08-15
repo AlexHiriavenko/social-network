@@ -19,11 +19,12 @@ instance.interceptors.response.use((r)=>r,
 
 
             return   await axios.post(
-                `https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/token`,
+                `https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/refresh`,
                 { refreshToken: refresh }
             ).then(({data}) => {
                 console.log(data)
                 localStorage.setItem("token",JSON.stringify(data.accessToken))
+                localStorage.setItem("refresh",JSON.stringify(data.refreshToken))
 
             })
                 .catch(err => {
