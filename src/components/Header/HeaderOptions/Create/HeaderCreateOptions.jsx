@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import {
     IconButton,
     Typography,
@@ -6,14 +7,14 @@ import {
     Avatar,
     Tooltip,
     MenuItem,
-    Box,
 } from "@mui/material";
 import { default as AddOption } from "@mui/icons-material/Add";
 import PostAddIcon from "@mui/icons-material/PostAdd";
-import GroupsIcon from "@mui/icons-material/Groups";
 import { useTheme } from "@mui/material/styles";
+import { openCreateModal } from "../../../../redux/modal.slice/modal.slice";
 
 function HeaderCreateOptions() {
+    const dispatch = useDispatch();
     const theme = useTheme();
     const [anchorCreateMenu, setAnchorCreateMenu] = React.useState(null);
 
@@ -21,6 +22,11 @@ function HeaderCreateOptions() {
         anchorCreateMenu
             ? setAnchorCreateMenu(null)
             : setAnchorCreateMenu(document.querySelector(".anchor-menu"));
+
+    const handleOpen = () => {
+        toggleMenu();
+        dispatch(openCreateModal());
+    };
 
     return (
         <>
@@ -71,7 +77,7 @@ function HeaderCreateOptions() {
                     Create
                 </Typography>
                 <MenuItem
-                    onClick={toggleMenu}
+                    onClick={handleOpen}
                     sx={{
                         gap: 2,
                         mb: 1,
