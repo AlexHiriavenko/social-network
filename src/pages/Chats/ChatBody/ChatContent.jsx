@@ -11,6 +11,7 @@ import {
     openDeleteMessageModal,
     openEditMessageModal,
 } from "../../../redux/modal.slice/modal.slice";
+import { StyledMessageBtnGroup } from "../styledChatComponents";
 
 function ChatContent({ sortedMessages }) {
     const dispatch = useDispatch();
@@ -52,6 +53,7 @@ function ChatContent({ sortedMessages }) {
                             : "unknown date"}
                     </Typography>
                     <Box
+                        className="wrap-message"
                         sx={{
                             display: "flex",
                             alignItems: "center",
@@ -63,6 +65,7 @@ function ChatContent({ sortedMessages }) {
                             src={message.sender.profilePicture}></Avatar>
                         <Box
                             id={"message" + message.id}
+                            className="wrap-btns"
                             sx={{ display: "flex", gap: 1 }}>
                             <Typography
                                 className={
@@ -79,13 +82,7 @@ function ChatContent({ sortedMessages }) {
                                 {message.content ? message.content : ""}
                             </Typography>
                             {isAuthUser(authUserId, message.sender.id) ? (
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        justifyContent: "center",
-                                        gap: 2,
-                                    }}>
+                                <StyledMessageBtnGroup>
                                     <EditIcon
                                         onClick={(event) =>
                                             handleOpenEdit(
@@ -112,7 +109,7 @@ function ChatContent({ sortedMessages }) {
                                             cursor: "pointer",
                                         }}
                                     />
-                                </Box>
+                                </StyledMessageBtnGroup>
                             ) : null}
                         </Box>
                     </Box>

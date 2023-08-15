@@ -31,9 +31,7 @@ function UsersList(props) {
     }
 
     return (
-        <List
-            className="users-list"
-            sx={{ width: { md: "max-content", m: 0 } }}>
+        <List className="users-list">
             {!chatParticipants.length && (
                 <Typography
                     sx={{ p: 2 }}
@@ -61,7 +59,7 @@ function UsersList(props) {
                                         theme.palette.hoverColor.main,
                                 },
                             }}
-                            className="search__list-item">
+                            className="search__list-item chats__list-item">
                             <Link className="search__user-link">
                                 <Avatar
                                     className="search__user-avatar"

@@ -10,10 +10,6 @@ function Chats() {
     const dispatch = useDispatch();
     const theme = useTheme();
 
-    const chatParticipants = useSelector(
-        (state) => state.chat.chatsParticipants
-    );
-
     const currentChat = useSelector((state) => state.chat.currentChat);
 
     useEffect(() => {

@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { TextField } from "@mui/material";
+import { TextField, Box } from "@mui/material";
 
 export const StyledTextField = styled(TextField)(({ theme }) => ({
     width: "300px",
@@ -32,5 +32,20 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
         "& textarea": {
             color: theme.palette.textColor.main,
         },
+    },
+}));
+
+export const StyledMessageBtnGroup = styled(Box)(({ theme }) => ({
+    display: "flex",
+    gap: "16px",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+
+    "@media (max-width: 480px)": {
+        flexDirection: "row",
+        justifyContent: "end",
+        alignItems: "start",
+        gap: "4px",
     },
 }));

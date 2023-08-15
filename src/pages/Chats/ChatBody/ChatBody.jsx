@@ -5,16 +5,20 @@ import { resetCurrentChat } from "../../../redux/chat.slice/chat.slice";
 import ChatHeader from "./ChatHeader";
 import ChatContent from "./ChatContent";
 import ChatFooter from "./ChatFooter";
+import { useTheme } from "@mui/material/styles";
 
 const ChatBody = () => {
     const dispatch = useDispatch();
+    const theme = useTheme();
 
     const chatFormRef = useRef(null);
     const { messages } = useSelector((state) => state.chat.currentChat);
 
-    const sortedMessages = messages.toSorted((a, b) => {
-        return new Date(a.createdDate) - new Date(b.createdDate);
-    });
+    const sortedMessages = messages
+        ? messages.toSorted((a, b) => {
+              return new Date(a.createdDate) - new Date(b.createdDate);
+          })
+        : [];
 
     // в конец чата
     useEffect(() => {
@@ -37,6 +41,14 @@ const ChatBody = () => {
                 <ChatContent sortedMessages={sortedMessages} />
                 <ChatFooter />
             </Box>
+        );
+    } else {
+        return (
+            <div
+                className="empty-chat-page"
+                style={{ color: theme.palette.textColor.secondary }}>
+                Select a chat or start a new conversation
+            </div>
         );
     }
 };
