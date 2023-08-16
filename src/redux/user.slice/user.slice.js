@@ -26,17 +26,18 @@ export const getProfile = createAsyncThunk(
 //Редактирование юзера
 export const uploadAvatar = createAsyncThunk(
     "Users/uploadAvatar",
-    async function ({multipartFile,id}) {
+    async function ({ multipartFile, id }) {
 
         console.log(multipartFile)
         let accessToken = JSON.parse(localStorage.getItem('token'))
-        await axios.post(`https://social-network-backend-2782464b9c31.herokuapp.com/users/${id}/avatar`,multipartFile,
+        await axios.post(`https://social-network-backend-2782464b9c31.herokuapp.com/users/${id}/avatar`, multipartFile,
             {
 
                 headers:
-                    { 'Content-Type': 'multipart/form-data',
-                        'AUTHORIZATION':`Bearer ${accessToken}`
-                    }
+                {
+                    'Content-Type': 'multipart/form-data',
+                    'AUTHORIZATION': `Bearer ${accessToken}`
+                }
             }
         )
 
@@ -46,17 +47,18 @@ export const uploadAvatar = createAsyncThunk(
 
 export const uploadCoverPhoto = createAsyncThunk(
     "Users/uploadCoverPhoto",
-    async function ({multipartFile,id}) {
+    async function ({ multipartFile, id }) {
 
         console.log(multipartFile)
         let accessToken = JSON.parse(localStorage.getItem('token'))
-        await axios.post(`https://social-network-backend-2782464b9c31.herokuapp.com/users/${id}/header`,multipartFile,
+        await axios.post(`https://social-network-backend-2782464b9c31.herokuapp.com/users/${id}/header`, multipartFile,
             {
 
                 headers:
-                    { 'Content-Type': 'multipart/form-data',
-                        'AUTHORIZATION':`Bearer ${accessToken}`
-                    }
+                {
+                    'Content-Type': 'multipart/form-data',
+                    'AUTHORIZATION': `Bearer ${accessToken}`
+                }
             }
         )
 
@@ -125,7 +127,7 @@ const UserSlice = createSlice({
             state.isLoading = false;
             state.value = action.payload;
         },
-        [getUsers.rejected]: (state) => {},
+        [getUsers.rejected]: (state) => { },
     },
 });
 

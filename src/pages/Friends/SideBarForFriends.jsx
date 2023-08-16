@@ -43,12 +43,12 @@ function SideBarFriends(props) {
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
 
     const handleLinkClick = (friend) => {
-        const id  = friend.id;
+        const id = friend.id;
         dispatch(setCurrentFriend({}));
         dispatch(setUser({}));
 
         // get user friends
-    const userFriendsResponse = dispatch(getFriends(id));
+        const userFriendsResponse = dispatch(getFriends(id));
         userFriendsResponse
             .then((data) => {
                 const friends = data.payload.filter(el => el.status === 'accepted');
@@ -65,12 +65,12 @@ function SideBarFriends(props) {
         } else {
             const userResponse = dispatch(getUser(id));
             userResponse
-            .then((data) => {
-                dispatch(setUser(data.payload));
-                localStorage.setItem("user", JSON.stringify(data.payload));
-                window.scrollTo({ top: 0, behavior: "smooth" });
-            })
-            .catch((error) => error.message);
+                .then((data) => {
+                    dispatch(setUser(data.payload));
+                    localStorage.setItem("user", JSON.stringify(data.payload));
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                })
+                .catch((error) => error.message);
         }
         dispatch(setCurrentFriend(friend));
     }
@@ -84,7 +84,7 @@ function SideBarFriends(props) {
         color: theme.palette.textColor.content,
     }))
 
-    const LinkStyled = styled(NavLink)(({theme}) => ({
+    const LinkStyled = styled(NavLink)(({ theme }) => ({
         fontFamily: 'inherit',
         fontSize: '.8125rem',
         fontWeight: 400,
@@ -92,11 +92,11 @@ function SideBarFriends(props) {
         paddingBottom: 1,
         color: theme.palette.textColor.secondary,
         textDecoration: 'none',
-        '&:visited': {color: theme.palette.textColor.secondary},
-        '&:hover': {textDecoration: 'underline'},
+        '&:visited': { color: theme.palette.textColor.secondary },
+        '&:hover': { textDecoration: 'underline' },
     }))
 
-    const SubTitleStyled = styled(Typography)(({theme}) => ({
+    const SubTitleStyled = styled(Typography)(({ theme }) => ({
         paddingBottom: 10,
         fontWeight: 600,
         textAlign: 'left',
@@ -105,7 +105,7 @@ function SideBarFriends(props) {
         color: theme.palette.textColor.content,
     }))
 
-    const MenuItem = styled(ListItemButton)(({theme}) => ({
+    const MenuItem = styled(ListItemButton)(({ theme }) => ({
         display: 'flex',
         width: '100%',
         color: theme.palette.textColor.main,
@@ -119,26 +119,26 @@ function SideBarFriends(props) {
         '&.Mui-selected:hover': {backgroundColor: theme.palette.backgroundColor.hover,}
     }))
 
-    const ArrowBackStyled = styled(NavLink)(({theme}) => ({
+    const ArrowBackStyled = styled(NavLink)(({ theme }) => ({
         borderRadius: '50%',
-        padding:  '6px 8px' ,
-        '&:hover': {backgroundColor: theme.palette.backgroundColor.hover,},
+        padding: '6px 8px',
+        '&:hover': { backgroundColor: theme.palette.backgroundColor.hover, },
         width: '35px',
         height: '35px',
     }))
 
-    return(
+    return (
         <SidebarStyled>
             <SideBarHeader>
-                <Box sx={{display: 'flex', gap: 2, alignItems: 'center'}}>
+                <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
                     <ArrowBackStyled to="/friends/home">
-                        <SVGArrowBack/>
+                        <SVGArrowBack />
                     </ArrowBackStyled>
-                    <Box sx={{display: 'flex', gap: 1/2, flexDirection: 'column'}}>
+                    <Box sx={{ display: 'flex', gap: 1 / 2, flexDirection: 'column' }}>
                         <LinkStyled to="/friends/home">
                             Friends
                         </LinkStyled>
-                        <TitleStyled>{ headerTitle }</TitleStyled>
+                        <TitleStyled>{headerTitle}</TitleStyled>
                     </Box>
                 </Box>
                 { addlItemsHead }
@@ -152,7 +152,7 @@ function SideBarFriends(props) {
                     </Typography>}
                 </Box>                
             </SideBarHeader>
-            <List sx={{padding: 0}}>
+            <List sx={{ padding: 0 }}>
                 {
                     sideBarItems && sideBarItems.map(fr =>
                     <MenuItem onClick={(e) => {e.stopPropagation(); callBackHandleLinkClick(fr.user ? fr.user : fr.friend)}}
@@ -187,14 +187,14 @@ function SideBarFriends(props) {
                                 : null}
                             additionalButtons={additionalButtons}
                             />
-                    </MenuItem>)
+                        </MenuItem>)
                 }
             </List>
         </SidebarStyled>
     )
 }
 
-SideBarFriends.propTypes  = {
+SideBarFriends.propTypes = {
     headerTitle: PropTypes.string,
     subTitle: PropTypes.string,
     addlItemsHead: PropTypes.node,
@@ -218,15 +218,19 @@ SideBarFriends.propTypes  = {
     additionItems: null,
     noItemMessage: '',
     sideBarItems: [],
-    handleClickConfirm: () => {},
-    handleClickRemove: () => {},
+    handleClickConfirm: () => { },
+    handleClickRemove: () => { },
     isAddButton: false,
     isRemoveButton: false,
     isConfirmButton: false,
     isAvatarMutualFriend: false,
+<<<<<<< HEAD
     additionalButtons: <></>,
     isMoreMenuButton: false,
     handleClickUnfriend: () => {},
   };
+=======
+};
+>>>>>>> develop
 
 export default memo(SideBarFriends);

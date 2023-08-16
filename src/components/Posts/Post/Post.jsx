@@ -14,6 +14,7 @@ import {
 } from "../../../redux/post.slice/post.slice";
 import { useNavigate } from "react-router-dom";
 import { getUser, setUser } from "../../../redux/user.slice/user.slice";
+import { openCreateCommentModal } from "../../../redux/modal.slice/modal.slice";
 
 // Post Styles
 const StyledPost = styled("li")(({ theme }) => ({
@@ -174,6 +175,10 @@ export default function Post(props) {
   const [isLiked, setLikedStatus] = useState(false);
   const [likesAmount, setLikesAmount] = useState(likes.length);
   // Functions
+  const handleOpenComment = () => {
+    dispatch(openCreateCommentModal(props));
+    // dispatch(setPost(props));
+  }
   function getPostDate(postDate) {
     const date = new Date(postDate);
     let month;
@@ -253,6 +258,7 @@ export default function Post(props) {
       if (photosRef.current) setPhotoHeight(photosRef.current.width);
     });
   }, [photosRef]);
+
   useEffect(() => {
     if (photosRef.current) setPhotoHeight(photosRef.current.width);
   }, []);
@@ -432,10 +438,12 @@ export default function Post(props) {
           )}
           Like
         </StyledPostButton>
-        <StyledPostButton>
+        <StyledPostButton onClick={handleOpenComment}>
           <ChatBubbleOutlineIcon sx={{ color: "#65676b" }} /> Comment
         </StyledPostButton>
-        <StyledPostButton>
+        <StyledPostButton onClick={() => {
+
+        }}>
           <ReplyIcon sx={{ color: "#65676b" }} /> Share
         </StyledPostButton>
       </StyledPostButtons>
