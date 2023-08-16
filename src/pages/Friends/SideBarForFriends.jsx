@@ -1,7 +1,7 @@
+/* eslint-disable react-refresh/only-export-components */
 // eslint-disable-next-line no-unused-vars
-import React from "react";
+import React, {memo, useCallback} from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-//import Sidebar from "../../components/Sidebar/Sidebar";
 import SideBarHeader from '../../components/Friends/SideBar/SideBarHeader';
 import styled from "@emotion/styled";
 import { Box, Typography, List, Divider, ListItemButton } from "@mui/material";
@@ -14,7 +14,8 @@ import { setFriends, setUser, getUser, getFriends } from "../../redux/user.slice
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import {SidebarStyled} from '../../components/StyledComponents/SideBarFriends';
-
+import PopupMenuFriends from './UserFriends/PopupMenuFriends';
+import Search from '../../components/Search/Search';
 
 
 function SideBarFriends(props) {
@@ -22,7 +23,8 @@ function SideBarFriends(props) {
     const {
         headerTitle,
         subTitle,
-        additionItems,
+        addlItemsHead,
+        addItemsSubHead,
         noItemMessage,
         sideBarItems,
         handleClickConfirm,
@@ -31,21 +33,27 @@ function SideBarFriends(props) {
         isRemoveButton,
         isConfirmButton,
         isAvatarMutualFriend,
+        additionalButtons,
+        isMoreMenuButton,
+        handleClickUnfriend,
+        search,
+        handleChangeValue,
+        placeholderText,
+        initialValue,
     } = props;
 
     const theme = useTheme();
     const dispatch = useDispatch(); 
     const authUser = useSelector((store)=>store.user.authorizedUser, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
-    
 
     const handleLinkClick = (friend) => {
-        const id  = friend.id;
+        const id = friend.id;
         dispatch(setCurrentFriend({}));
         dispatch(setUser({}));
 
         // get user friends
-    const userFriendsResponse = dispatch(getFriends(id));
+        const userFriendsResponse = dispatch(getFriends(id));
         userFriendsResponse
             .then((data) => {
                 const friends = data.payload.filter(el => el.status === 'accepted');
@@ -62,16 +70,17 @@ function SideBarFriends(props) {
         } else {
             const userResponse = dispatch(getUser(id));
             userResponse
-            .then((data) => {
-                dispatch(setUser(data.payload));
-                localStorage.setItem("user", JSON.stringify(data.payload));
-                window.scrollTo({ top: 0, behavior: "smooth" });
-            })
-            .catch((error) => error.message);
+                .then((data) => {
+                    dispatch(setUser(data.payload));
+                    localStorage.setItem("user", JSON.stringify(data.payload));
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                })
+                .catch((error) => error.message);
         }
-        
         dispatch(setCurrentFriend(friend));
     }
+
+    const callBackHandleLinkClick = useCallback(handleLinkClick, [authUser, dispatch]);
 
     const TitleStyled = styled('h1')(({theme}) => ({
         fontWeight: 900,
@@ -80,7 +89,7 @@ function SideBarFriends(props) {
         color: theme.palette.textColor.content,
     }))
 
-    const LinkStyled = styled(NavLink)(({theme}) => ({
+    const LinkStyled = styled(NavLink)(({ theme }) => ({
         fontFamily: 'inherit',
         fontSize: '.8125rem',
         fontWeight: 400,
@@ -88,11 +97,11 @@ function SideBarFriends(props) {
         paddingBottom: 1,
         color: theme.palette.textColor.secondary,
         textDecoration: 'none',
-        '&:visited': {color: theme.palette.textColor.secondary},
-        '&:hover': {textDecoration: 'underline'},
+        '&:visited': { color: theme.palette.textColor.secondary },
+        '&:hover': { textDecoration: 'underline' },
     }))
 
-    const SubTitleStyled = styled(Typography)(({theme}) => ({
+    const SubTitleStyled = styled(Typography)(({ theme }) => ({
         paddingBottom: 10,
         fontWeight: 600,
         textAlign: 'left',
@@ -101,60 +110,67 @@ function SideBarFriends(props) {
         color: theme.palette.textColor.content,
     }))
 
-    const MenuItem = styled(ListItemButton)(({theme}) => ({
+    const MenuItem = styled(ListItemButton)(({ theme }) => ({
         display: 'flex',
         width: '100%',
         color: theme.palette.textColor.main,
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderRadius: 4,
+        borderRadius: 8,
         padding: 0,
-        '&:hover': {backgroundColor: theme.palette.backgroundColor.hover,},
-        '&:active': {backgroundColor: theme.palette.backgroundColor.hover}, 
+        '&.Mui-hover': {backgroundColor: theme.palette.backgroundColor.hover,},
+        '&.Mui-active': {backgroundColor: theme.palette.backgroundColor.hover},
+        '&.Mui-selected': {backgroundColor: theme.palette.backgroundColor.hover, opacity: 1},
+        '&.Mui-selected:hover': {backgroundColor: theme.palette.backgroundColor.hover,}
     }))
 
-    const ArrowBackStyled = styled(NavLink)(({theme}) => ({
+    const ArrowBackStyled = styled(NavLink)(({ theme }) => ({
         borderRadius: '50%',
-        padding:  '6px 8px' ,
-        '&:hover': {backgroundColor: theme.palette.backgroundColor.hover,},
+        padding: '6px 8px',
+        '&:hover': { backgroundColor: theme.palette.backgroundColor.hover, },
         width: '35px',
         height: '35px',
     }))
 
-    return(
+    return (
         <SidebarStyled>
             <SideBarHeader>
-                <Box sx={{display: 'flex', gap: 2, alignItems: 'center'}}>
+                <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
                     <ArrowBackStyled to="/friends/home">
-                        <SVGArrowBack/>
+                        <SVGArrowBack />
                     </ArrowBackStyled>
-                    <Box sx={{display: 'flex', gap: 1/2, flexDirection: 'column'}}>
+                    <Box sx={{ display: 'flex', gap: 1 / 2, flexDirection: 'column' }}>
                         <LinkStyled to="/friends/home">
                             Friends
                         </LinkStyled>
-                        <TitleStyled>{ headerTitle }</TitleStyled>
+                        <TitleStyled>{headerTitle}</TitleStyled>
                     </Box>
                 </Box>
+                {search && <Search sx={{m:0}} 
+                                handleChangeValue={handleChangeValue} 
+                                placeholderText={placeholderText}
+                                initialValue={initialValue}/>}
+                { addlItemsHead }
                 <Divider sx={{my: '12px', borderColor: theme.palette.border.card,}}/>
                 <Box>
                     <SubTitleStyled>{ subTitle }</SubTitleStyled>
-                    { additionItems }
+                    { addItemsSubHead }
                     { sideBarItems.length === 0 
                 && <Typography sx={{py: 2, fontSize: 12, color: theme.palette.textColor.secondary}}>
                         { noItemMessage }
                     </Typography>}
                 </Box>                
             </SideBarHeader>
-            <List sx={{padding: 0}}>
+            <List sx={{ padding: 0 }}>
                 {
                     sideBarItems && sideBarItems.map(fr =>
-                    <MenuItem onClick={(e) => {e.stopPropagation(); handleLinkClick(fr.user ? fr.user : fr.friend)}}
+                    <MenuItem onClick={(e) => {e.stopPropagation(); callBackHandleLinkClick(fr.user ? fr.user : fr.friend)}}
                             key={fr.user ? fr.user.id : fr.friend.id} 
                             selected={currentFriend.id === (fr.user ? fr.user.id : fr.friend.id)}>
                         <Friend horizontal = 'true'
                             key={fr.id}
                             mutualFriends={fr.mutualFriends} 
-                            handleLinkClick={(e) => {e.stopPropagation(); handleLinkClick(fr.user ? fr.user : fr.friend)}}
+                            handleLinkClick={(e) => {e.stopPropagation(); callBackHandleLinkClick(fr.user ? fr.user : fr.friend)}}
                             friend={fr.user ? fr.user : fr.friend}
                             isAvatarMutualFriend={isAvatarMutualFriend}
                             addButton={isConfirmButton 
@@ -175,18 +191,23 @@ function SideBarFriends(props) {
                                         color: theme.palette.textColor.content}}
                                         onClick={(e) => {e.stopPropagation(); handleClickRemove(fr)}}>Remove</ButtonStyled>
                                 : null}
+                            moreMenuButton={isMoreMenuButton 
+                                ? <PopupMenuFriends handleClickUnfriend={(e) => {e.stopPropagation(); handleClickUnfriend(fr)}}/>
+                                : null}
+                            additionalButtons={additionalButtons}
                             />
-                    </MenuItem>)
+                        </MenuItem>)
                 }
             </List>
         </SidebarStyled>
     )
 }
 
-SideBarFriends.propTypes  = {
+SideBarFriends.propTypes = {
     headerTitle: PropTypes.string,
     subTitle: PropTypes.string,
-    additionItems: PropTypes.node,
+    addlItemsHead: PropTypes.node,
+    addItemsSubHead: PropTypes.node,
     noItemMessage: PropTypes.string,
     sideBarItems: PropTypes.arrayOf(PropTypes.object),
     handleClickConfirm: PropTypes.func,
@@ -195,6 +216,13 @@ SideBarFriends.propTypes  = {
     isRemoveButton: PropTypes.bool,
     isConfirmButton: PropTypes.bool,
     isAvatarMutualFriend: PropTypes.bool,
+    additionalButtons: PropTypes.node,
+    isMoreMenuButton: PropTypes.bool,
+    handleClickUnfriend: PropTypes.func,
+    search: PropTypes.bool,
+    handleChangeValue: PropTypes.func,
+    placeholderText: PropTypes.string,
+    initialValue: PropTypes.string,
   };
   
   SideBarFriends.defaultProps = {
@@ -203,12 +231,19 @@ SideBarFriends.propTypes  = {
     additionItems: null,
     noItemMessage: '',
     sideBarItems: [],
-    handleClickConfirm: () => {},
-    handleClickRemove: () => {},
+    handleClickConfirm: () => { },
+    handleClickRemove: () => { },
     isAddButton: false,
     isRemoveButton: false,
     isConfirmButton: false,
     isAvatarMutualFriend: false,
+    additionalButtons: <></>,
+    isMoreMenuButton: false,
+    handleClickUnfriend: () => {},
+    search: false,
+    handleChangeValue: () => {},
+    placeholderText: '',
+    initialValue: '',
   };
 
-export default SideBarFriends;
+export default memo(SideBarFriends);

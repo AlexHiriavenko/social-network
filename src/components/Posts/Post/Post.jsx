@@ -14,10 +14,14 @@ import {
 } from "../../../redux/post.slice/post.slice";
 import { useNavigate } from "react-router-dom";
 import { getUser, setUser } from "../../../redux/user.slice/user.slice";
+<<<<<<< HEAD
 import {
   openCreateModal,
   setRepostToModal,
 } from "../../../redux/modal.slice/modal.slice";
+=======
+import { openCreateCommentModal } from "../../../redux/modal.slice/modal.slice";
+>>>>>>> develop
 
 // Post Styles
 const StyledPost = styled("li")(({ theme }) => ({
@@ -187,6 +191,10 @@ export default function Post(props) {
   const [isLiked, setLikedStatus] = useState(false);
   const [likesAmount, setLikesAmount] = useState(likes.length);
   // Functions
+  const handleOpenComment = () => {
+    dispatch(openCreateCommentModal(props));
+    // dispatch(setPost(props));
+  }
   function getPostDate(postDate) {
     const date = new Date(postDate);
     let month;
@@ -270,6 +278,7 @@ export default function Post(props) {
       if (photosRef.current) setPhotoHeight(photosRef.current.width);
     });
   }, [photosRef]);
+
   useEffect(() => {
     if (photosRef.current) setPhotoHeight(photosRef.current.width);
   }, []);
@@ -294,7 +303,7 @@ export default function Post(props) {
       <StyledPostAuthor>
         <BlockUserImage
           src={
-            user.profilePicture ||
+            user?.profilePicture ||
             "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
           }
           alt="Author image"
@@ -304,7 +313,7 @@ export default function Post(props) {
         />
         <Box>
           <StyledPostAuthorName onClick={() => lookUser(user.id)}>
-            {user.fullName}
+            {user?.fullName}
           </StyledPostAuthorName>
           <StyledPostDate>{getPostDate(createdDate)}</StyledPostDate>
         </Box>

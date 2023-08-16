@@ -1,5 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { createAsyncThunk } from "@reduxjs/toolkit/dist";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../../instance";
 
 //Получение всех постов
@@ -69,7 +68,7 @@ export const removeLikePost = createAsyncThunk(
 
 export const repostPost = createAsyncThunk(
   "Posts/repostPost",
-  async function ({id, content}) {
+  async function (id, content) {
     const { data } = await instance.post(`/posts/repost/${id}`, {
       content: content,
     });
@@ -80,7 +79,9 @@ export const repostPost = createAsyncThunk(
 
 export const commentPost = createAsyncThunk(
   "Posts/commentPost",
-  async function (id, content) {
+  async function ({ id, content }) {
+    console.log(id);
+    console.log(content);
     const { data } = await instance.post(`/posts/comment/${id}`, {
       content: content,
     });
@@ -116,7 +117,7 @@ const postSlice = createSlice({
   },
 });
 
-export const { createPost, deletePost, setPosts, setUserPosts } =
+export const { createPost, deletePost, setPosts, setUserPosts, setPost } =
   postSlice.actions;
 
 export default postSlice.reducer;

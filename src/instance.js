@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import {readCookie} from "./readCookie.js";
+import { readCookie } from "./readCookie.js";
 
 
 
@@ -8,22 +8,23 @@ const instance = axios.create({
 
     // baseURL:`${import.meta.env.VITE_APP_API_URL}`
     baseURL: "https://social-network-backend-2782464b9c31.herokuapp.com"
-     // baseURL: "http://localhost:9000"
+    //baseURL: "http://localhost:9000"
 
 })
-instance.interceptors.response.use((r)=>r,
+instance.interceptors.response.use((r) => r,
     async function (error) {
         console.log(error.response.status === 400)
         const refresh = JSON.parse(localStorage.getItem("refresh"))
         if (error.response.status === 400) {
 
 
-            return   await axios.post(
-                `https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/token`,
+            return await axios.post(
+                `https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/refresh`,
                 { refreshToken: refresh }
-            ).then(({data}) => {
+            ).then(({ data }) => {
                 console.log(data)
-                localStorage.setItem("token",JSON.stringify(data.accessToken))
+                localStorage.setItem("token", JSON.stringify(data.accessToken))
+                localStorage.setItem("refresh", JSON.stringify(data.refreshToken))
 
             })
                 .catch(err => {
@@ -38,12 +39,12 @@ instance.interceptors.response.use((r)=>r,
 
     }
 )
-instance.interceptors.request.use(config =>{
+instance.interceptors.request.use(config => {
     let accessToken = JSON.parse(localStorage.getItem('token'))
-    if(accessToken){
+    if (accessToken) {
         config.headers = {
             'Content-Type': 'application/json',
-            'AUTHORIZATION':`Bearer ${accessToken}`
+            'AUTHORIZATION': `Bearer ${accessToken}`
         }
 
     }

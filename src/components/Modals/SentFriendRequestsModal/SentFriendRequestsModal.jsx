@@ -30,13 +30,8 @@ function SentFriendRequestsModal() {
     const sentRequests = (requests.length > 0 
         ? requests.filter((elem) => elem.status==='pending' && elem.user.id === authUser.id)
         : []);
-        console.log(sentRequests);
 
     const sentRequestsCount = sentRequests.length > 0 ? sentRequests.length : '';
-
-    useEffect(() => {
-        console.log(refItemWrapper);
-    }, [refItemWrapper])
 
     const handleClose = () => {
         dispatch(closeSentFriendRequests());
@@ -103,7 +98,7 @@ function SentFriendRequestsModal() {
         marginRight: '4px',
     })
 
-    const ItemWraper = styled(Link)(({theme})=>({
+    const ItemWraper = styled(Box)(({theme})=>({
         display: 'flex', 
         paddingLeft: '8px',
         paddingRight: '8px', 
@@ -113,7 +108,8 @@ function SentFriendRequestsModal() {
         justifyContent: 'space-between', 
         '&:hover': {backgroundColor: theme.palette.backgroundColor.hover,
                     cursor: 'pointer',
-                textDecoration: 'none',}
+                textDecoration: 'none',},
+        textDecoration: 'none',
     }))
 
     return(

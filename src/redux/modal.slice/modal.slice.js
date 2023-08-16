@@ -8,6 +8,10 @@ const initialState = {
   editProfile: {
     isOpen: false,
   },
+  commentPost: {
+    isOpen: false,
+    openedPostId: null,
+  },
   sentFriendRequests: {
     isOpen: false,
   },
@@ -41,6 +45,14 @@ const modalSlice = createSlice({
     closeEditProfileModal: function (state) {
       state.editProfile.isOpen = false;
     },
+    openCreateCommentModal: function (state, action) {
+      state.commentPost.isOpen = true;
+      state.commentPost.post = action.payload;
+    },
+    closeCreateCommentModal: function (state) {
+      state.commentPost.isOpen = false;
+      state.commentPost.post = null;
+    },
     openSentFriendRequests: function (state) {
       state.sentFriendRequests.isOpen = true;
     },
@@ -67,6 +79,8 @@ export const {
   closeCreateModal,
   openEditProfileModal,
   closeEditProfileModal,
+  openCreateCommentModal,
+  closeCreateCommentModal,
   openSentFriendRequests,
   closeSentFriendRequests,
   openDeleteMessageModal,

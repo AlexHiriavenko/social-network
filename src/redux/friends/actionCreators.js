@@ -9,6 +9,14 @@ export const getFriendsById = createAsyncThunk(
     }
   );
 
+  export const getFriendsByName = createAsyncThunk(
+    'friends/getFriendsByName',
+    async function(payload) {
+      const { data } = await instance.post("/friends/search", payload);
+      return data;
+    }
+  );
+
   export const getFriendList = createAsyncThunk(
     'friends/getFriendList',
     async function() {
@@ -36,9 +44,6 @@ export const getFriendsById = createAsyncThunk(
   export const createFriendship = createAsyncThunk(
     'friends/createFriendship',
     async function(payload) {
-      console.log("payload");
-      console.log(payload);
-
       const { data } = await instance.post("/friends", payload);
       return data;
     }
@@ -47,6 +52,7 @@ export const getFriendsById = createAsyncThunk(
   export const updateFriendship = createAsyncThunk(
     'friends/updateFriendship',
     async function(payload) {
+      console.log(payload);
       const { data } = await instance.put("/friends", payload);
       return data;
     }

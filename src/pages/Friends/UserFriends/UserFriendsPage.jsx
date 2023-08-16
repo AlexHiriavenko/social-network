@@ -1,26 +1,28 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useCallback, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
-import { getFriendList } from "../../../redux/friends/actionCreators";
+import { getFriendList, getFriendsByName } from "../../../redux/friends/actionCreators";
 import SideBarFriends from "../SideBarForFriends";
 import { Profile } from "../../index";
-import { setCurrentFriend } from "../../../redux/friends/friends.slise";
+import { setCurrentFriend, setSearchValue, removeFriend } from "../../../redux/friends/friends.slise";
 import FriendEmptyPage from  "../FriendEmptyPage";
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
+import Search from '../../../components/Search/Search';
+import { updateFriendship } from '../../../redux/friends/actionCreators';
+
 
 function UserFriendsPage() {
 
-    const dispatch = useDispatch(); 
-    //const user = useSelector((store)=>store.user.authorizedUser);
+    const dispatch = useDispatch();
+    const inputValue = useSelector((store)=>store.friends.searchValue, shallowEqual);
     const friends = useSelector((store)=>store.friends.friendsList, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
     const userFriends = (friends.length > 0 
         ? friends.filter((elem) => elem.status==='accepted')
         : []);
 
-        console.log(friends);
     const friendsCount = userFriends.length === 0 ? '' : userFriends.length;
 
     useEffect(()=>{
@@ -33,8 +35,23 @@ function UserFriendsPage() {
         dispatch(getFriendList());
         return () => {
             dispatch(setCurrentFriend({}));
+            dispatch(setSearchValue(''));
           };
     },[dispatch])
+
+    const handleChangeValue = useCallback((value) => {
+        if(inputValue === value){
+            return;
+        }
+        dispatch(setSearchValue(value));
+        dispatch(getFriendsByName({friendName: value}));
+    }, [dispatch, inputValue])
+
+    const handleClickUnfriend = useCallback((friend) => {
+        const payload = {id: friend.id, status: "unfriended"}
+        dispatch(updateFriendship(payload));
+        dispatch(removeFriend(friend.friend.id));
+    }, [dispatch])
 
     const SectionWraper = styled(Box)(({theme}) => ({
         width: '100%', 
@@ -66,7 +83,13 @@ function UserFriendsPage() {
                                     headerTitle={"All Friends"}
                                     subTitle={`${friendsCount} Friends`}
                                     noItemMessage={noItemMessage}
-                                    isAvatarMutualFriend={false}/>
+                                    isAvatarMutualFriend={false}
+                                    search={true}
+                                    handleChangeValue={handleChangeValue} 
+                                    placeholderText='Search Friends'
+                                    initialValue={inputValue}
+                                    isMoreMenuButton={true}
+                                    handleClickUnfriend={handleClickUnfriend}/>
                 <SectionWraper>
                     { 
                         currentFriend.id === undefined && <FriendEmptyPage>{textMessage}</FriendEmptyPage>
