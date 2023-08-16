@@ -283,7 +283,7 @@ export default function ProfileHeader() {
               {user ? user.fullName : ""}
             </StyledProfileUserName>
             <StyledProfileUserFriends href="#">
-              Friends: {userFriends.length}
+              Friends: {userFriends && userFriends.length}
             </StyledProfileUserFriends>
             <AvatarGroup
               max={6}

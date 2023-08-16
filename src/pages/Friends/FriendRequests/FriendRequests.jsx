@@ -1,30 +1,34 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { getFriendshipRequests, updateFriendship } from '../../../redux/friends/actionCreators';
-import { useTheme } from '@mui/material/styles';
+//import { useTheme } from '@mui/material/styles';
 import SideBarFriends from "../SideBarForFriends";
 import { Profile } from '../../index';
 import { setCurrentFriend, } from '../../../redux/friends/friends.slise';
 import FriendEmptyPage from  '../FriendEmptyPage';
-
+import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
+import { openSentFriendRequests, closeSentFriendRequests } from  '../../../redux/modal.slice/modal.slice';
+import SentFriendRequestsModal from '../../../components/Modals/SentFriendRequestsModal/SentFriendRequestsModal';
 
 function FriendRequests(){
-    const user = useSelector((store)=>store.user.authorizedUser);
-    const theme = useTheme();
 
+    
     const dispatch = useDispatch(); 
-    const friendsRequests = useSelector((store)=>store.friends.friendsRequests);
-    const currentFriend = useSelector((store)=>store.friends.currentFriend);
+    //const theme = useTheme();
+
+    const user = useSelector((store)=>store.user.authorizedUser, shallowEqual);
+    const friendsRequests = useSelector((store)=>store.friends.friendsRequests, shallowEqual);
+    const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
 
     const friendsRequestsToUser = (friendsRequests.length > 0 
         ? friendsRequests.filter((elem) => elem.status==='pending' && elem.user.id !== user.id)
         : []);
 
-    const requestsCount = friendsRequestsToUser.length === 0 ? null : friendsRequestsToUser.length;
+    const requestsCount = friendsRequestsToUser.length === 0 ? '' : friendsRequestsToUser.length;
 
     useEffect(()=>{
         if(friendsRequestsToUser.length === 0) {
@@ -36,6 +40,7 @@ function FriendRequests(){
         dispatch(getFriendshipRequests());
         return () => {
             dispatch(setCurrentFriend({}));
+            dispatch(closeSentFriendRequests());
           };
     },[dispatch])
 
@@ -48,23 +53,36 @@ function FriendRequests(){
         const payload = {id: friend.id, status: "rejected", userID: user.id,  friendID: friend.friend.id}
         dispatch(updateFriendship(payload));
     }
+
+    const hadleOpenModal = () => {
+        dispatch(openSentFriendRequests());
+    }
     
     const SectionWraper = styled(Box)(({theme}) => ({
         width: '100%', 
         display: 'flex', 
         flexDirection: 'column', 
         padding: 20, 
-        backgroundColor: theme.palette.backgroundColor.page/* '#F0F2F5' */,
+        backgroundColor: theme.palette.backgroundColor.page,
+        height: '100%',
+        boxSizing: 'content-box',
+        overflowY: 'scroll',
+        overflowX: 'hidden',
+        paddingBottom: 0,
+        paddingTop: 0,
+        "&::-webkit-scrollbar": {
+            width: "0",
+          },
     }))
 
-    const LinkStyled = styled(NavLink)(({color}) => ({
+    const LinkStyled = styled(NavLink)(({theme}) => ({
         fontFamily: 'inherit',
         fontSize: '.8125rem',
         fontWeight: 400,
         lineHeight: 1.2308,
         paddingBottom: 1,
-        color: {color},
         textDecoration: 'none',
+        color: theme.palette.textColor.blueLink,
     }))
 
     const textMessage = friendsRequestsToUser.length > 0 
@@ -74,30 +92,33 @@ function FriendRequests(){
     const noItemMessage = "No new requests";
 
     const additionItems = (
-        <LinkStyled color={theme.palette.textColor.blueLink} to="#">View sent requests</LinkStyled>
+        <LinkStyled to="#" onClick={hadleOpenModal}>View sent requests</LinkStyled>
     )
 
     return(
-        <Box sx={{ width: '100%', display: 'flex', }}>
-            <SideBarFriends sideBarItems={friendsRequestsToUser}
-                                headerTitle={"Friend requests"}
-                                subTitle={`${requestsCount} Friend requests`}
-                                additionItems={additionItems}
-                                noItemMessage={noItemMessage}
-                                handleClickConfirm={handleClickConfirm}
-                                handleClickRemove={handleClickRemove}
-                                isAvatarMutualFriend={true}
-                                isRemoveButton={true}
-                                isConfirmButton={true}/>
-            <SectionWraper sx={{minHeight: '93vh'}}>
-                { 
-                    currentFriend.id === undefined && <FriendEmptyPage>{textMessage}</FriendEmptyPage>
-                }
-                {
-                    !(currentFriend.id === undefined) && <Profile/>
-                }
-            </SectionWraper>
-        </Box>
+        <PageBoxFriendsWrapper>
+            <PageBoxFriends>
+                <SideBarFriends sideBarItems={friendsRequestsToUser}
+                                    headerTitle={"Friend requests"}
+                                    subTitle={`${requestsCount} Friend requests`}
+                                    additionItems={additionItems}
+                                    noItemMessage={noItemMessage}
+                                    handleClickConfirm={handleClickConfirm}
+                                    handleClickRemove={handleClickRemove}
+                                    isAvatarMutualFriend={true}
+                                    isRemoveButton={true}
+                                    isConfirmButton={true}/>
+                <SectionWraper>
+                    { 
+                        currentFriend.id === undefined && <FriendEmptyPage>{textMessage}</FriendEmptyPage>
+                    }
+                    {
+                        !(currentFriend.id === undefined) && <Profile/>
+                    }
+                </SectionWraper>
+            </PageBoxFriends>
+            <SentFriendRequestsModal/>
+        </PageBoxFriendsWrapper>
     )
 }
 

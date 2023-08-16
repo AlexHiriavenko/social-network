@@ -57,6 +57,7 @@ const StyledTitle = styled(Typography)(({ theme }) => ({
 const StyledModalBlock = styled("div")(({ theme }) => ({
   position: "absolute",
   maxWidth: "680px",
+  minWidth: "320px",
   maxHeight: "95vh",
 
   backgroundColor: theme.palette.backgroundColor.section,

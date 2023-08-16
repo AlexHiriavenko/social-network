@@ -11,7 +11,6 @@ import {
   getPost,
   likePost,
   removeLikePost,
-  setPost,
 } from "../../../redux/post.slice/post.slice";
 import { useNavigate } from "react-router-dom";
 import { getUser, setUser } from "../../../redux/user.slice/user.slice";
@@ -278,7 +277,7 @@ export default function Post(props) {
     } else {
       setLikedStatus(false);
     }
-  }, [repost]);
+  }, [likes]);
   return (
     <StyledPost>
       <StyledPostAuthor>

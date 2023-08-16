@@ -3,9 +3,7 @@ import { NavLink, useMatch } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { useTheme } from "@mui/material/styles";
 import { Tooltip, Box } from "@mui/material";
-import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 import HomeIcon from "@mui/icons-material/Home";
-import StorefrontIcon from "@mui/icons-material/Storefront";
 import GroupsIcon from "@mui/icons-material/Groups";
 
 const WrapLink = styled(Box)(({ theme }) => ({
@@ -18,13 +16,12 @@ const WrapLink = styled(Box)(({ theme }) => ({
     "&:hover": { backgroundColor: theme.palette.hoverColor.main },
 }));
 
-const setActive = ({ isActive }) => (isActive ? "header__nav-link--active" : "header__nav-link");
+const setActive = ({ isActive }) =>
+    isActive ? "header__nav-link--active" : "header__nav-link";
 
 function HeaderNavigation() {
     const theme = useTheme();
     const matchHome = useMatch("/");
-    const matchWatch = useMatch("/watch");
-    const matchMarket = useMatch("/marketplace");
     const matchGroups = useMatch("/groups");
 
     return (
@@ -43,37 +40,9 @@ function HeaderNavigation() {
                     </Tooltip>
                 </WrapLink>
             </NavLink>
-            <NavLink to="/watch" className={setActive}>
+            <NavLink to="/friends/home" className={setActive}>
                 <WrapLink>
-                    <Tooltip title="Watch">
-                        <OndemandVideoIcon
-                            fontSize="large"
-                            sx={{
-                                color: matchWatch?.pathname
-                                    ? theme.palette.textColor.primary
-                                    : theme.palette.textColor.secondary,
-                            }}
-                        />
-                    </Tooltip>
-                </WrapLink>
-            </NavLink>
-            <NavLink to="/marketplace" className={setActive}>
-                <WrapLink>
-                    <Tooltip title="Marketplace">
-                        <StorefrontIcon
-                            fontSize="large"
-                            sx={{
-                                color: matchMarket?.pathname
-                                    ? theme.palette.textColor.primary
-                                    : theme.palette.textColor.secondary,
-                            }}
-                        />
-                    </Tooltip>
-                </WrapLink>
-            </NavLink>
-            <NavLink to="/groups" className={setActive}>
-                <WrapLink>
-                    <Tooltip title="Groups">
+                    <Tooltip title="Friends">
                         <GroupsIcon
                             sx={{
                                 fontSize: "34px",

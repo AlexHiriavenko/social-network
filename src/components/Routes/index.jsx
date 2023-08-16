@@ -21,6 +21,7 @@ import {
   Groups,
   Home,
   Watch,
+  Chats,
 } from "../../pages";
 import ChangePasswordForm from "../../pages/LogIn/ChangePasswordForm";
 import { useSelector } from "react-redux";
@@ -45,24 +46,47 @@ export default function AllRoutes() {
           <Route path="/profile/" element={<ProfilePosts />} />
           <Route path="/profile/about" element={<ProfileAbout />}>
             <Route path="/profile/about/" element={<Overview />} />
-            <Route path="/profile/about/employment" element={<Employment />} />
-            <Route path="/profile/about/places" element={<Places />} />
-            <Route path="/profile/about/contacts" element={<Contacts />} />
+            <Route
+              path="/profile/about/employment"
+              element={<Employment />}
+            />
+            <Route
+              path="/profile/about/places"
+              element={<Places />}
+            />
+            <Route
+              path="/profile/about/contacts"
+              element={<Contacts />}
+            />
           </Route>
-          <Route path="/profile/friends" element={<ProfileFriends />} />
+          <Route
+            path="/profile/friends"
+            element={<ProfileFriends />}
+          />
           <Route path="/profile/photos" element={<ProfilePhotos />} />
         </Route>
         <Route path="/user-page/:id" element={<UserPage />} />
         <Route path="/friends/home" element={<FriendsHome />} />
         <Route path="/friends/requests/" element={<FriendRequests />}>
-          <Route path="/friends/requests/" element={<ProfilePosts />} />
-          <Route path="/friends/requests/about" element={<ProfileAbout />}>
-            <Route path="/friends/requests/about/" element={<Overview />} />
+          <Route
+            path="/friends/requests/"
+            element={<ProfilePosts />}
+          />
+          <Route
+            path="/friends/requests/about"
+            element={<ProfileAbout />}>
+            <Route
+              path="/friends/requests/about/"
+              element={<Overview />}
+            />
             <Route
               path="/friends/requests/about/employment"
               element={<Employment />}
             />
-            <Route path="/friends/requests/about/places" element={<Places />} />
+            <Route
+              path="/friends/requests/about/places"
+              element={<Places />}
+            />
             <Route
               path="/friends/requests/about/contacts"
               element={<Contacts />}
@@ -72,12 +96,25 @@ export default function AllRoutes() {
             path="/friends/requests/friends"
             element={<ProfileFriends />}
           />
-          <Route path="/friends/requests/photos" element={<ProfilePhotos />} />
+          <Route
+            path="/friends/requests/photos"
+            element={<ProfilePhotos />}
+          />
         </Route>
-        <Route path="/friends/suggestions/" element={<FriendSuggestions />}>
-          <Route path="/friends/suggestions/" element={<ProfilePosts />} />
-          <Route path="/friends/suggestions/about" element={<ProfileAbout />}>
-            <Route path="/friends/suggestions/about/" element={<Overview />} />
+        <Route
+          path="/friends/suggestions/"
+          element={<FriendSuggestions />}>
+          <Route
+            path="/friends/suggestions/"
+            element={<ProfilePosts />}
+          />
+          <Route
+            path="/friends/suggestions/about"
+            element={<ProfileAbout />}>
+            <Route
+              path="/friends/suggestions/about/"
+              element={<Overview />}
+            />
             <Route
               path="/friends/suggestions/about/employment"
               element={<Employment />}
@@ -100,10 +137,20 @@ export default function AllRoutes() {
             element={<ProfilePhotos />}
           />
         </Route>
-        <Route path="//friends/allfriends" element={<UserFriendsPage />}>
-          <Route path="/friends/allfriends/" element={<ProfilePosts />} />
-          <Route path="/friends/allfriends/about" element={<ProfileAbout />}>
-            <Route path="/friends/allfriends/about/" element={<Overview />} />
+        <Route
+          path="//friends/allfriends"
+          element={<UserFriendsPage />}>
+          <Route
+            path="/friends/allfriends/"
+            element={<ProfilePosts />}
+          />
+          <Route
+            path="/friends/allfriends/about"
+            element={<ProfileAbout />}>
+            <Route
+              path="/friends/allfriends/about/"
+              element={<Overview />}
+            />
             <Route
               path="/friends/allfriends/about/employment"
               element={<Employment />}
@@ -126,11 +173,14 @@ export default function AllRoutes() {
             element={<ProfilePhotos />}
           />
         </Route>
+        <Route path="/chats" element={<Chats />} />
         <Route path="*" element={<NotFound />} />
       </Route>
       <Route
         path="/login"
-        element={<LogIn isLoggedIn={isLoggedIn} onClick={handleLogIn} />}
+        element={
+          <LogIn isLoggedIn={isLoggedIn} onClick={handleLogIn} />
+        }
       />
       <Route path="/password" element={<ChangePasswordForm />} />
       <Route path="/forgot" element={<ForgotForm />} />

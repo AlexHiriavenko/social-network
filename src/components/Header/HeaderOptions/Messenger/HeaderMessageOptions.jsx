@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import { useTheme } from "@mui/material/styles";
 import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem, Badge, Box } from "@mui/material";
 import ForumIcon from "@mui/icons-material/Forum";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { mockInfo } from "../../HeaderSearch/SeacrhComponents/mockData";
-import { useTheme } from "@mui/material/styles";
+import Chat from "./Chat";
+import { openChat } from "../../../../redux/chat.slice/chat.slice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function HeaderMessageOptions() {
     const theme = useTheme();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const [anchorMessageMenu, setAnchorMessageMenu] = React.useState(null);
+    const [user, setUser] = useState([]);
+    const handlerChat = (id) => {
+        const user = mockInfo.find((users) => users.userID === id);
+        dispatch(openChat());
+        setUser(user);
+        toggleMenu();
+    };
+
     const toggleMenu = () =>
         anchorMessageMenu
             ? setAnchorMessageMenu(null)
@@ -51,7 +66,6 @@ function HeaderMessageOptions() {
                 slotProps={{
                     paper: {
                         className: "header__options-drop-menu",
-                        style: { backgroundColor: theme.palette.backgroundColor.section },
                     },
                 }}
             >
@@ -63,31 +77,25 @@ function HeaderMessageOptions() {
                         p: 2,
                     }}
                 >
-                    <Typography
-                        variant="h5"
-                        component={"h4"}
-                        fontWeight={600}
-                        sx={{ color: theme.palette.textColor.content }}
-                    >
+                    <Typography variant="h5" component={"h4"} fontWeight={600}>
                         Chats
                     </Typography>
                     <Box>
                         <Tooltip title="See all in Messenger">
                             <IconButton
-                                sx={{
-                                    "&:hover": { backgroundColor: theme.palette.hoverColor.main },
+                                onClick={(event) => {
+                                    if (event.target.closest("button")) {
+                                        navigate("/chats");
+                                        toggleMenu();
+                                    }
                                 }}
                             >
-                                <ZoomOutMapIcon sx={{ color: theme.palette.textColor.content }} />
+                                <ZoomOutMapIcon />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="New Message" sx={{ ml: 0.5 }}>
-                            <IconButton
-                                sx={{
-                                    "&:hover": { backgroundColor: theme.palette.hoverColor.main },
-                                }}
-                            >
-                                <EditNoteIcon sx={{ color: theme.palette.textColor.content }} />
+                            <IconButton>
+                                <EditNoteIcon />
                             </IconButton>
                         </Tooltip>
                     </Box>
@@ -96,13 +104,12 @@ function HeaderMessageOptions() {
                     return (
                         <MenuItem
                             key={user.userID}
-                            onClick={toggleMenu}
+                            onClick={() => handlerChat(user.userID)}
                             sx={{
                                 display: "flex",
                                 gap: 1,
                                 whiteSpace: "normal",
                                 mb: 1,
-                                "&:hover": { backgroundColor: theme.palette.hoverColor.main },
                             }}
                         >
                             <Avatar
@@ -111,18 +118,10 @@ function HeaderMessageOptions() {
                                 src={user.userPhoto}
                             ></Avatar>
                             <Box>
-                                <Typography
-                                    fontSize={15}
-                                    fontWeight={600}
-                                    sx={{ color: theme.palette.textColor.content }}
-                                >
+                                <Typography fontSize={15} fontWeight={600}>
                                     {user.userName}
                                 </Typography>
-                                <Typography
-                                    fontSize={14}
-                                    noWrap
-                                    sx={{ color: theme.palette.textColor.content }}
-                                >
+                                <Typography fontSize={14} noWrap>
                                     {user.message}
                                 </Typography>
                             </Box>
@@ -130,8 +129,8 @@ function HeaderMessageOptions() {
                     );
                 })}
             </Menu>
+            <Chat user={user} />
         </>
     );
 }
-
 export default HeaderMessageOptions;

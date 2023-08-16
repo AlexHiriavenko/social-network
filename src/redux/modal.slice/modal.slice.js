@@ -11,6 +11,15 @@ const initialState = {
     isOpen: false,
     openedPostId: null,
   },
+  sentFriendRequests: {
+    isOpen: false,
+  },
+  deleteMessage: {
+    isOpen: false,
+  },
+  editMessage: {
+    isOpen: false,
+  },
 };
 
 const modalSlice = createSlice({
@@ -37,6 +46,24 @@ const modalSlice = createSlice({
       state.commentPost.isOpen = false;
       state.commentPost.post = null;
     },
+    openSentFriendRequests: function (state) {
+      state.sentFriendRequests.isOpen = true;
+    },
+    closeSentFriendRequests: function (state) {
+      state.sentFriendRequests.isOpen = false;
+    },
+    openDeleteMessageModal: function (state) {
+      state.deleteMessage.isOpen = true;
+    },
+    closeDeleteMessageModal: function (state) {
+      state.deleteMessage.isOpen = false;
+    },
+    openEditMessageModal: function (state) {
+      state.editMessage.isOpen = true;
+    },
+    closeEditMessageModal: function (state) {
+      state.editMessage.isOpen = false;
+    },
   },
 });
 
@@ -47,6 +74,12 @@ export const {
   closeEditProfileModal,
   openCreateCommentModal,
   closeCreateCommentModal,
+  openSentFriendRequests,
+  closeSentFriendRequests,
+  openDeleteMessageModal,
+  closeDeleteMessageModal,
+  openEditMessageModal,
+  closeEditMessageModal,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;
