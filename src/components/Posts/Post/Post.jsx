@@ -185,7 +185,7 @@ export default function Post(props) {
   const [photoHeight, setPhotoHeight] = useState(195);
   const [repost, setRepost] = useState({});
   const [isLiked, setLikedStatus] = useState(false);
-  const [likesAmount, setLikesAmount] = useState(likes.length);
+  const [likesAmount, setLikesAmount] = useState(likes?.length);
   // Functions
   const handleOpenComment = () => {
     dispatch(openCreateCommentModal(props));
