@@ -19,6 +19,10 @@ const StyledPostDate = styled(Typography)(({ theme }) => ({
 }));
 
 const StyledCommentName = styled(Typography)(({ theme }) => ({
+    display: "flex",
+    gap: "10px",
+    color: theme.palette.textColor.main,
+    fontWeight: 600,
     fontFamily: "sans-serif",
 }));
 
@@ -88,9 +92,9 @@ export default function Comment(props) {
                 width={40}
                 height={40} />
             <StyledCommentContent>
-                <StyledPostDate>{getPostDate(createdDate)}</StyledPostDate>
                 <StyledCommentName>
                     {user?.fullName}
+                    <StyledPostDate>{getPostDate(createdDate)}</StyledPostDate>
                 </StyledCommentName>
                 <StyledCommentText>
                     {content}
