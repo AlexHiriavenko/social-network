@@ -253,7 +253,7 @@ export default function Post(props) {
     dispatch(openCreateModal());
   }
   function lookUser(id) {
-    if (id === authUser.id) {
+    if (id === authUser?.id) {
       dispatch(setUser(authUser));
       navigate("/profile");
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -288,7 +288,7 @@ export default function Post(props) {
   useEffect(() => {
     if (!authUser) return;
 
-    if (likes.find((like) => like.id === authUser.id)) {
+    if (likes.find((like) => like.id === authUser?.id)) {
       setLikedStatus(true);
     } else {
       setLikedStatus(false);
@@ -305,10 +305,10 @@ export default function Post(props) {
           alt="Author image"
           width={40}
           height={40}
-          onClick={() => lookUser(user.id)}
+          onClick={() => lookUser(user?.id)}
         />
         <Box>
-          <StyledPostAuthorName onClick={() => lookUser(user.id)}>
+          <StyledPostAuthorName onClick={() => lookUser(user?.id)}>
             {user?.fullName}
           </StyledPostAuthorName>
           <StyledPostDate>{getPostDate(createdDate)}</StyledPostDate>
@@ -367,20 +367,20 @@ export default function Post(props) {
             <StyledPostAuthor style={{ paddingTop: "16px" }}>
               <BlockUserImage
                 src={
-                  (repost?.user && repost.user.profilePicture) ||
+                  (repost?.user && repost?.user.profilePicture) ||
                   "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
                 }
                 alt="Author image"
                 width={40}
                 height={40}
-                onClick={() => lookUser(repost.user.id)}
+                onClick={() => lookUser(repost?.user.id)}
               />
               <Box>
                 <StyledPostAuthorName onClick={() => lookUser(repost.user.id)}>
-                  {repost?.user && repost.user.fullName}
+                  {repost?.user && repost?.user.fullName}
                 </StyledPostAuthorName>
                 <StyledPostDate>
-                  {getPostDate(repost && repost.createdDate)}
+                  {getPostDate(repost && repost?.createdDate)}
                 </StyledPostDate>
               </Box>
             </StyledPostAuthor>
@@ -436,13 +436,13 @@ export default function Post(props) {
 
       <StyledPostReach>
         <StyledPostReachItem>
-          {likes.length > 0 ? `${likesAmount} likes` : null}
+          {likes?.length > 0 ? `${likesAmount} likes` : null}
         </StyledPostReachItem>
         <StyledPostReachItem>
-          {comments.length > 0 ? `${comments.length} comments` : null}
+          {comments.length > 0 ? `${comments?.length} comments` : null}
         </StyledPostReachItem>
         <StyledPostReachItem>
-          {reposts.length > 0 ? `${reposts.length} shares` : null}
+          {reposts.length > 0 ? `${reposts?.length} shares` : null}
         </StyledPostReachItem>
       </StyledPostReach>
       {!inModal && (

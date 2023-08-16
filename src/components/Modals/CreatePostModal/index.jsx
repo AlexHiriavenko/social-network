@@ -131,7 +131,7 @@ export default function CreatePostModal() {
   const formik = useFormik({
     initialValues: {
       content: "",
-      userName: `${authUser && authUser.fullName} `,
+      userName: `${authUser && authUser?.fullName} `,
     },
     onSubmit: (values) => {
       if (repost) {
