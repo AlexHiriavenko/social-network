@@ -135,7 +135,9 @@ export default function CreatePostModal() {
     },
     onSubmit: (values) => {
       if (repost) {
-        const repostResponse = dispatch(repostPost(repost.id, values.content));
+        const repostResponse = dispatch(
+          repostPost({ id: repost.id, content: values.content })
+        );
         repostResponse
           .then((response) => {
             console.log(response);

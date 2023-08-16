@@ -316,14 +316,14 @@ export default function Post(props) {
         {parentId && (
           <StyledRePostWrapper>
             <StyledPostImages>
-              {repost.postImages && repost.postImages.length > 0 && (
+              {repost?.postImages && repost.postImages.length > 0 && (
                 <StyledPostImage
                   src={repost.postImages[0].imgUrl}
                   alt="post image"
                 />
               )}
               <StyledPostExtraImages>
-                {repost.postImages &&
+                {repost?.postImages &&
                   repost.postImages.length > 0 &&
                   repost.postImages.map((postImage, index) => {
                     if (index === 0) return;
@@ -362,7 +362,7 @@ export default function Post(props) {
             <StyledPostAuthor style={{ paddingTop: "16px" }}>
               <BlockUserImage
                 src={
-                  (repost.user && repost.user.profilePicture) ||
+                  (repost?.user && repost.user.profilePicture) ||
                   "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
                 }
                 alt="Author image"
@@ -372,7 +372,7 @@ export default function Post(props) {
               />
               <Box>
                 <StyledPostAuthorName onClick={() => lookUser(repost.user.id)}>
-                  {repost.user && repost.user.fullName}
+                  {repost?.user && repost.user.fullName}
                 </StyledPostAuthorName>
                 <StyledPostDate>
                   {getPostDate(repost && repost.createdDate)}
