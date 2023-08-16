@@ -95,8 +95,6 @@ export const loginGoogle = createAsyncThunk(
         document.cookie = `refresh=${token.data.refreshToken}`;
         localStorage.setItem("token", JSON.stringify(token.data.accessToken));
         localStorage.setItem("refresh", JSON.stringify(token.data.refreshToken));
-        let auth = parseJwt(token.data.accessToken);
-        localStorage.setItem("auth", JSON.stringify(auth));
         const { data } = await instance.get(`/users/profile`);
         localStorage.setItem("authorizedUser", JSON.stringify({...data,isAuthorized:true}));
         localStorage.setItem("user", JSON.stringify(data));
