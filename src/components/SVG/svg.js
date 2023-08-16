@@ -8,6 +8,7 @@ import SVGBirthdays from "./Birthdays";
 import SVGNext from "./Next";
 import SVGNoFrienSelected from "./NoFriendSelected";
 import SVGArrowBack from "./ArrowBack";
+import SVGThreeDots from "./ThreeDots";
 
 export { SvgFacebook, 
             SvgHome, 
@@ -18,4 +19,5 @@ export { SvgFacebook,
             SVGBirthdays, 
             SVGNext, 
             SVGNoFrienSelected,
-            SVGArrowBack, };
+            SVGArrowBack,
+            SVGThreeDots, };

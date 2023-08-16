@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getFriendList, getFriendshipRequests, getFriendSuggestions, createFriendship, updateFriendship } from './actionCreators';
+import { getFriendList, getFriendshipRequests, getFriendSuggestions, createFriendship, updateFriendship, getFriendsByName } from './actionCreators';
 
 
 const initialState = {
@@ -8,8 +8,7 @@ const initialState = {
   friendsRequests: [],
   friendSuggestions: [],
   currentFriend: {},
-  status: null,
-  error: null,
+  searchValue: '',
 };
 
 const friendsSlice = createSlice({
@@ -21,7 +20,13 @@ const friendsSlice = createSlice({
     },
     setCurrentFriend: function(state, action) {
       state.currentFriend = action.payload;
-    }
+    },
+    setSearchValue: function(state, action) {
+      state.searchValue = action.payload;
+    },
+    removeFriend: function(state, action) {
+      state.friendsList = state.friendsList.filter(el => el.friend.id != action.payload);
+    },
   },
   extraReducers: {
 /*     [getFriendList.pending]: (state)=>{
@@ -29,40 +34,33 @@ const friendsSlice = createSlice({
       state.error = null;
     }, */
     [getFriendList.fulfilled]: (state, action)=>{
-      state.status = 'resolved';
-      state.error = null;
       state.friendsList = action.payload;
       state.isNeedToRefreshFriends = false;
     },
     [getFriendshipRequests.fulfilled]: (state, action)=>{
-      state.status = 'resolved';
-      state.error = null;
       state.friendsRequests = action.payload;
       state.isNeedToRefreshRequests = false;
     },
     [getFriendSuggestions.fulfilled]: (state, action)=>{
-      state.status = 'resolved';
-      state.error = null;
       state.friendSuggestions = action.payload;
       state.isNeedToRefreshSuggestions = false;
     },
     [createFriendship.fulfilled]: (state, action)=>{
-      state.status = 'resolved';
-      state.error = null;
       state.friendsRequests.push(action.payload);
       state.friendSuggestions = state.friendSuggestions.filter(el => el.friend.id !== action.payload.friend.id);
     },
     [updateFriendship.fulfilled]: (state, action)=>{
-      state.status = 'resolved';
-      state.error = null;
       if(action.payload.status === 'accepted'){
         state.isNeedToRefreshFriends = true;
       }
       state.friendsRequests = state.friendsRequests.filter(el => el.id !== action.payload.id);
     },
+    [getFriendsByName.fulfilled]: (state, action)=>{
+      state.friendsList = action.payload;
+    },
   }
 });
 
-export const {removeSuggestions, setCurrentFriend} = friendsSlice.actions;
+export const {removeSuggestions, setCurrentFriend, setSearchValue, removeFriend} = friendsSlice.actions;
 
 export default friendsSlice.reducer;

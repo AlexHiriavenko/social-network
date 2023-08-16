@@ -21,6 +21,8 @@ function Friend (props) {
         referenseForLinks,
         handleLinkClick,
         isAvatarMutualFriend,
+        additionalButtons,
+        moreMenuButton,
     } = props;
 
     const dispatch = useDispatch(); 
@@ -150,6 +152,8 @@ function Friend (props) {
                     {removeButton}
                 </CardActionsStyled>
             </ContainerStyled>
+            {moreMenuButton}
+            {additionalButtons}
         </CardStyled>
         </>
     )
