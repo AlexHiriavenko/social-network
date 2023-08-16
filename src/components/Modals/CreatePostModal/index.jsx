@@ -118,9 +118,9 @@ export default function CreatePostModal() {
   };
 
   function showChoosingPicture() {
-    let filesList = fileRef.current.files;
+    let filesList = fileRef?.current.files;
     const files = [];
-    for (let i = 0; i < filesList.length; i++) {
+    for (let i = 0; i < filesList?.length; i++) {
       files.push(filesList[i]);
     }
     const formData = new FormData();
@@ -171,14 +171,14 @@ export default function CreatePostModal() {
         <StyledPostModalUser>
           <BlockUserImage
             src={
-              authUser.profilePicture ||
+              authUser?.profilePicture ||
               "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
             }
             alt=""
             width={40}
             height={40}
           />
-          <StyledPostModalUserName>{authUser.fullName}</StyledPostModalUserName>
+          <StyledPostModalUserName>{authUser?.fullName}</StyledPostModalUserName>
         </StyledPostModalUser>
         <StyledPostModalCreateArea onSubmit={formik.handleSubmit}>
           <StyledPostModalTextArea
