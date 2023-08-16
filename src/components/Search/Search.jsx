@@ -3,6 +3,7 @@ import React, { useEffect, useState, memo, useRef } from "react";
 import { SearchDiv, SearchIconWrapper, StyledInputBase } from "../Header/HeaderSearch/SeacrhComponents/searhStyles";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTheme } from '@mui/material/styles';
+import PropTypes from 'prop-types';
 
 function Search(props) {
 
@@ -41,5 +42,17 @@ function Search(props) {
         </>
     )
 }
+
+Search.propTypes = {
+    handleChangeValue: PropTypes.func,
+    placeholderText: PropTypes.string,
+    initialValue: PropTypes.string,
+  };
+  
+  Search.defaultProps = {
+    handleChangeValue: () => {},
+    placeholderText: '',
+    initialValue: '',
+  };
 
 export default memo(Search);

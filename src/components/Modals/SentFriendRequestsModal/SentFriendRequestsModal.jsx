@@ -98,7 +98,7 @@ function SentFriendRequestsModal() {
         marginRight: '4px',
     })
 
-    const ItemWraper = styled(Link)(({theme})=>({
+    const ItemWraper = styled(Box)(({theme})=>({
         display: 'flex', 
         paddingLeft: '8px',
         paddingRight: '8px', 

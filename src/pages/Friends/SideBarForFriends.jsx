@@ -15,6 +15,7 @@ import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import {SidebarStyled} from '../../components/StyledComponents/SideBarFriends';
 import PopupMenuFriends from './UserFriends/PopupMenuFriends';
+import Search from '../../components/Search/Search';
 
 
 function SideBarFriends(props) {
@@ -35,6 +36,10 @@ function SideBarFriends(props) {
         additionalButtons,
         isMoreMenuButton,
         handleClickUnfriend,
+        search,
+        handleChangeValue,
+        placeholderText,
+        initialValue,
     } = props;
 
     const theme = useTheme();
@@ -141,6 +146,10 @@ function SideBarFriends(props) {
                         <TitleStyled>{headerTitle}</TitleStyled>
                     </Box>
                 </Box>
+                {search && <Search sx={{m:0}} 
+                                handleChangeValue={handleChangeValue} 
+                                placeholderText={placeholderText}
+                                initialValue={initialValue}/>}
                 { addlItemsHead }
                 <Divider sx={{my: '12px', borderColor: theme.palette.border.card,}}/>
                 <Box>
@@ -210,6 +219,10 @@ SideBarFriends.propTypes = {
     additionalButtons: PropTypes.node,
     isMoreMenuButton: PropTypes.bool,
     handleClickUnfriend: PropTypes.func,
+    search: PropTypes.bool,
+    handleChangeValue: PropTypes.func,
+    placeholderText: PropTypes.string,
+    initialValue: PropTypes.string,
   };
   
   SideBarFriends.defaultProps = {
@@ -224,13 +237,13 @@ SideBarFriends.propTypes = {
     isRemoveButton: false,
     isConfirmButton: false,
     isAvatarMutualFriend: false,
-<<<<<<< HEAD
     additionalButtons: <></>,
     isMoreMenuButton: false,
     handleClickUnfriend: () => {},
+    search: false,
+    handleChangeValue: () => {},
+    placeholderText: '',
+    initialValue: '',
   };
-=======
-};
->>>>>>> develop
 
 export default memo(SideBarFriends);

@@ -51,10 +51,6 @@ function FriendsHome() {
         dispatch(removeSuggestions(payload));
     }
 
-/*     const handleLinkClick = (payload) => {
-        dispatch(setUser(payload));
-        dispatch(setCurrentFriend(payload));
-    } */
     const handleLinkClick = (friend) => {
         const id  = friend.id;
         dispatch(setCurrentFriend({}));
@@ -167,7 +163,7 @@ function FriendsHome() {
                         friendsRequestsToUser.map(fr => <Friend 
                             key={fr.id}
                             referenseForLinks={"/friends/requests/"}
-                            handleLinkClick={handleLinkClick}
+                            handleLinkClick={() => handleLinkClick(fr.user)}
                             mutualFriends={fr.mutualFriends}
                             isAvatarMutualFriend={true}
                             friend={fr.user} 

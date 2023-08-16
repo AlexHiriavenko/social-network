@@ -76,11 +76,6 @@ function UserFriendsPage() {
 
     const noItemMessage = "No friends yet.";
 
-    const addlItemsHead = useMemo(() => <Search sx={{m:0}} 
-                                handleChangeValue={handleChangeValue} 
-                                placeholderText='Search Friends'
-                                initialValue={inputValue}/>, [handleChangeValue, inputValue]);
-
     return(
         <PageBoxFriendsWrapper>
             <PageBoxFriends>
@@ -89,7 +84,10 @@ function UserFriendsPage() {
                                     subTitle={`${friendsCount} Friends`}
                                     noItemMessage={noItemMessage}
                                     isAvatarMutualFriend={false}
-                                    addlItemsHead={addlItemsHead}
+                                    search={true}
+                                    handleChangeValue={handleChangeValue} 
+                                    placeholderText='Search Friends'
+                                    initialValue={inputValue}
                                     isMoreMenuButton={true}
                                     handleClickUnfriend={handleClickUnfriend}/>
                 <SectionWraper>

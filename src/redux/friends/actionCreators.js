@@ -52,6 +52,7 @@ export const getFriendsById = createAsyncThunk(
   export const updateFriendship = createAsyncThunk(
     'friends/updateFriendship',
     async function(payload) {
+      console.log(payload);
       const { data } = await instance.put("/friends", payload);
       return data;
     }
