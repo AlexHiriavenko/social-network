@@ -14,14 +14,10 @@ import {
 } from "../../../redux/post.slice/post.slice";
 import { useNavigate } from "react-router-dom";
 import { getUser, setUser } from "../../../redux/user.slice/user.slice";
-<<<<<<< HEAD
 import {
   openCreateModal,
   setRepostToModal,
 } from "../../../redux/modal.slice/modal.slice";
-=======
-import { openCreateCommentModal } from "../../../redux/modal.slice/modal.slice";
->>>>>>> develop
 
 // Post Styles
 const StyledPost = styled("li")(({ theme }) => ({
