@@ -18,7 +18,6 @@ export const getPageblePosts = createAsyncThunk("Posts/getPageblePosts", async f
 //Получение поста по айди
 export const getPost = createAsyncThunk("Posts/getPost", async function (id) {
   const { data } = await instance.get(`/posts/${id}`);
-  console.log(data);
   return data;
 });
 
@@ -63,7 +62,7 @@ export const removeLikePost = createAsyncThunk(
 );
 
 export const repostPost = createAsyncThunk(
-  "Posts/repostPost", async function (id, content) {
+  "Posts/repostPost", async function ({ id, content }) {
     const { data } = await instance.post(`/posts/repost/${id}`, {
       content: content,
     });
@@ -73,7 +72,9 @@ export const repostPost = createAsyncThunk(
 );
 
 export const commentPost = createAsyncThunk(
-  "Posts/commentPost", async function (id, content) {
+  "Posts/commentPost", async function ({ id, content }) {
+    console.log(id);
+    console.log(content);
     const { data } = await instance.post(`/posts/comment/${id}`, {
       content: content,
     });
@@ -83,9 +84,6 @@ export const commentPost = createAsyncThunk(
 );
 
 
-const initialState = {
-  isCreated: false,
-};
 
 const postSlice = createSlice({
   name: "posts",
@@ -106,10 +104,12 @@ const postSlice = createSlice({
     },
     setPost: (state, action) => {
       state.post = action.payload;
-    }
+      console.log(action.payload);
+    },
   },
+
 });
 
-export const { createPost, deletePost, setPosts, setUserPosts } = postSlice.actions;
+export const { createPost, deletePost, setPosts, setUserPosts, setPost } = postSlice.actions;
 
 export default postSlice.reducer;

@@ -11,6 +11,7 @@ import {
   getPost,
   likePost,
   removeLikePost,
+  setPost,
 } from "../../../redux/post.slice/post.slice";
 import { useNavigate } from "react-router-dom";
 import { getUser, setUser } from "../../../redux/user.slice/user.slice";
@@ -177,6 +178,7 @@ export default function Post(props) {
   // Functions
   const handleOpenComment = () => {
     dispatch(openCreateCommentModal(props));
+    // dispatch(setPost(props));
   }
   function getPostDate(postDate) {
     const date = new Date(postDate);

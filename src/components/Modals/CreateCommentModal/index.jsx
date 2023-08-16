@@ -8,7 +8,8 @@ import { BlockUserImage } from "../../UserProfile/StyledComponents/ContentBlock/
 import { useFormik } from "formik";
 import SendIcon from '@mui/icons-material/Send';
 import Comment from "../../Comment";
-import { commentPost } from "../../../redux/post.slice/post.slice";
+import { commentPost, getPost, setPost, setPosts } from "../../../redux/post.slice/post.slice";
+import { useEffect, useState } from "react";
 
 const mockUser = {
   image:
@@ -123,80 +124,114 @@ export default function CreateCommentModal() {
   const dispatch = useDispatch();
   const modalIsOpen = useSelector((state) => state.modal.commentPost.isOpen);
   const post = useSelector((state) => state.modal.commentPost.post);
+  const [comments, setComments] = useState([]);
+
+  //   useEffect
+  useEffect(() => {
+    if (post && post.comments) {
+      setComments(post.comments);
+    }
+  }, [post]);
 
   // const postId = useSelector((state) => state.modal.commentPost.openedPostId);
   const authUser = useSelector((state) => state.user.authorizedUser);
   const handleClose = () => dispatch(closeCreateCommentModal());
+  const allPosts = useSelector((state) => state.post.allPosts);
 
-  function comment(id, content) {
-    dispatch(commentPost(id, content));
+
+
+  function createComment(content) {
+    return { user: authUser, content: content, createdDate: new Date() };
   }
 
 
-  console.log(post);
   //Formik
   const formik = useFormik({
     initialValues: {
       content: "",
       userName: `${mockUser.firstName} ${mockUser.lastName}`,
     },
-    onSubmit: (values) => {
-      values.content = "";
-      //Comment
-      comment(post.id, values.content)
-      handleClose();
+    onSubmit: ({ content }) => {
+      const id = post.id;
+      const isCreatedResponse = dispatch(commentPost({ id, content }));
+      isCreatedResponse.then(data => {
+        console.log(data.payload);
+        if (data.payload) {
+          setComments([...comments, createComment(content)])
+          const postIndex = allPosts.findIndex(p => p.id === post.id);
+          if (postIndex !== -1) {
+            const updatedPost = {
+              ...allPosts[postIndex],
+              comments: [
+                ...allPosts[postIndex].comments,
+                createComment(content),
+              ],
+            };
+
+            const updatedAllPosts = [...allPosts];
+            updatedAllPosts[postIndex] = updatedPost;
+            dispatch(setPosts(updatedAllPosts));
+          }
+          formik.setFieldValue("content", "");
+        }
+      });
+
+
     },
   });
-
   if (!post) {
-    return (<Loader />)
-  }
-  return (
-    <Modal
+    return (<Modal
       open={modalIsOpen}
       onClose={handleClose}
     >
-      <StyledModalBlock>
-        <StyledModalCloseButton onClick={handleClose}>
-          <StyledModalCloseButtonLine></StyledModalCloseButtonLine>
-        </StyledModalCloseButton>
-        <StyledTitleWrraper>
-          <StyledTitle>{post.user.fullName}`s post</StyledTitle>
-        </StyledTitleWrraper>
-        <StyledPostWrraper>
-          <Post {...post} />
-          <StyledPostCommentsWrraper>
-            {
-              post.comments.map((comment, index) => (
-                <Comment {...comment} key={index} />
-              ))}
-          </StyledPostCommentsWrraper>
-        </StyledPostWrraper>
-        <StyledPostCommentWrraper>
-          <BlockUserImage src={
-            authUser.profilePicture ||
-            "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
-          }
-            alt=""
-            width={40}
-            height={40} />
-          <StyledPostModalCreateCommentArea onSubmit={formik.handleSubmit}>
-            <StyledPostModalTextArea
-              cols="80"
-              rows="3"
-              placeholder="Write a comment..."
-              onChange={formik.handleChange}
-              value={formik.values.content}
-              name="content"
-              id="content"
-            >
-            </StyledPostModalTextArea>
-            <StyledPostModalButton onClick={formik.handleSubmit}>
-              <SendIcon sx={{ color: "#65676b", }} />
-            </StyledPostModalButton>
-          </StyledPostModalCreateCommentArea>
-        </StyledPostCommentWrraper>
-      </StyledModalBlock>
-    </Modal>
+      <Loader />
+    </Modal>)
+  }
+  return (<Modal
+    open={modalIsOpen}
+    onClose={handleClose}
+  >
+    <StyledModalBlock>
+      <StyledModalCloseButton onClick={handleClose}>
+        <StyledModalCloseButtonLine></StyledModalCloseButtonLine>
+      </StyledModalCloseButton>
+      <StyledTitleWrraper>
+        <StyledTitle>{post?.user.fullName}`s post</StyledTitle>
+      </StyledTitleWrraper>
+      <StyledPostWrraper>
+        <Post {...post} />
+        <StyledPostCommentsWrraper>
+          {
+            comments.map((comment, index) => (
+              <Comment {...comment} key={index} />
+            ))}
+        </StyledPostCommentsWrraper>
+      </StyledPostWrraper>
+      <StyledPostCommentWrraper>
+        <BlockUserImage src={
+          authUser.profilePicture ||
+          "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
+        }
+          alt=""
+          width={40}
+          height={40} />
+        <StyledPostModalCreateCommentArea onSubmit={formik.handleSubmit}>
+          <StyledPostModalTextArea
+            cols="80"
+            rows="3"
+            placeholder="Write a comment..."
+            onChange={formik.handleChange}
+            value={formik.values.content}
+            name="content"
+            id="content"
+          >
+          </StyledPostModalTextArea>
+          <StyledPostModalButton onClick={formik.handleSubmit}>
+            <SendIcon sx={{ color: "#65676b", }} />
+          </StyledPostModalButton>
+        </StyledPostModalCreateCommentArea>
+      </StyledPostCommentWrraper>
+    </StyledModalBlock>
+  </Modal>
   );
 }

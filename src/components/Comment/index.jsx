@@ -19,11 +19,11 @@ const StyledPostDate = styled(Typography)(({ theme }) => ({
 }));
 
 const StyledCommentName = styled(Typography)(({ theme }) => ({
-    fontFamily: theme.typography.fontFamily,
+    fontFamily: "sans-serif",
 }));
 
 const StyledCommentText = styled(Typography)(({ theme }) => ({
-    fontFamily: theme.typography.fontFamily,
+    fontFamily: "sans-serif",
     color: theme.palette.textColor.main,
 }));
 
