@@ -81,7 +81,10 @@ export default function FriendItem({ friend, mutualFriends }) {
   return (
     <StyledFriendItem>
       <StyledFriendImage
-        src={friend.profilePicture}
+        src={
+          friend.profilePicture ||
+          "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
+        }
         alt="userImage"
         width={80}
         height={80}

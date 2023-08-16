@@ -55,7 +55,14 @@ export default function ProfilePosts() {
   const allUserPosts = useSelector((state) => state.post.allUserPosts);
   // State
   const [userInfoHeight, setUserInfoHeight] = useState(0);
+  const [reversePosts, setReversePosts] = useState([]);
   // UseEffect
+
+  useEffect(() => {
+    const copyPosts = [...allUserPosts];
+    copyPosts.reverse();
+    setReversePosts(copyPosts);
+  }, [allUserPosts]);
   useEffect(() => {
     setTimeout(() => {
       if (userInfoRef.current !== null) {
@@ -84,7 +91,7 @@ export default function ProfilePosts() {
           }}
         >
           {user && user.isAuthorized && <CreatePost />}
-          <PostList posts={allUserPosts} />
+          <PostList posts={reversePosts} />
         </StyledPostsPublications>
       </StyledPostsContainer>
     </StyledPostsPage>

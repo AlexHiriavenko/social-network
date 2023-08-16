@@ -14,7 +14,10 @@ import {
 } from "../../../redux/post.slice/post.slice";
 import { useNavigate } from "react-router-dom";
 import { getUser, setUser } from "../../../redux/user.slice/user.slice";
-import { openCreateCommentModal } from "../../../redux/modal.slice/modal.slice";
+import {
+  openCreateModal,
+  setRepostToModal,
+} from "../../../redux/modal.slice/modal.slice";
 
 // Post Styles
 const StyledPost = styled("li")(({ theme }) => ({
@@ -145,6 +148,14 @@ const StyledPostButton = styled(Button)(({ theme }) => ({
     backgroundColor: theme.palette.buttonColor.backgroundColor,
   },
 }));
+const StyledPostButtonText = styled(Typography)(({ theme }) => ({
+  color: theme.palette.textColor.secondary,
+  fontSize: "15px",
+  fontWeight: 600,
+  "@media (max-width: 450px)": {
+    display: "none",
+  },
+}));
 // Repost
 const StyledRePostWrapper = styled(Box)(({ theme }) => ({
   borderRadius: "12px",
@@ -164,6 +175,7 @@ export default function Post(props) {
     createdDate,
     parentId,
     id,
+    inModal,
   } = props;
   const photosRef = useRef(null);
   const dispatch = useDispatch();
@@ -236,6 +248,10 @@ export default function Post(props) {
     setLikedStatus(false);
     setLikesAmount(likesAmount - 1);
   }
+  function repostPost() {
+    dispatch(setRepostToModal(props));
+    dispatch(openCreateModal());
+  }
   function lookUser(id) {
     if (id === authUser.id) {
       dispatch(setUser(authUser));
@@ -305,14 +321,14 @@ export default function Post(props) {
         {parentId && (
           <StyledRePostWrapper>
             <StyledPostImages>
-              {repost.postImages && repost.postImages.length > 0 && (
+              {repost?.postImages && repost.postImages.length > 0 && (
                 <StyledPostImage
                   src={repost.postImages[0].imgUrl}
                   alt="post image"
                 />
               )}
               <StyledPostExtraImages>
-                {repost.postImages &&
+                {repost?.postImages &&
                   repost.postImages.length > 0 &&
                   repost.postImages.map((postImage, index) => {
                     if (index === 0) return;
@@ -351,7 +367,7 @@ export default function Post(props) {
             <StyledPostAuthor style={{ paddingTop: "16px" }}>
               <BlockUserImage
                 src={
-                  (repost.user && repost.user.profilePicture) ||
+                  (repost?.user && repost.user.profilePicture) ||
                   "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
                 }
                 alt="Author image"
@@ -361,7 +377,7 @@ export default function Post(props) {
               />
               <Box>
                 <StyledPostAuthorName onClick={() => lookUser(repost.user.id)}>
-                  {repost.user && repost.user.fullName}
+                  {repost?.user && repost.user.fullName}
                 </StyledPostAuthorName>
                 <StyledPostDate>
                   {getPostDate(repost && repost.createdDate)}
@@ -429,24 +445,30 @@ export default function Post(props) {
           {reposts.length > 0 ? `${reposts.length} shares` : null}
         </StyledPostReachItem>
       </StyledPostReach>
-      <StyledPostButtons>
-        <StyledPostButton onClick={isLiked ? removeLike : like}>
-          {isLiked ? (
-            <ThumbUpAltIcon sx={{ color: "#65676b" }} />
-          ) : (
-            <ThumbUpOffAltIcon sx={{ color: "#65676b" }} />
-          )}
-          Like
-        </StyledPostButton>
-        <StyledPostButton onClick={handleOpenComment}>
-          <ChatBubbleOutlineIcon sx={{ color: "#65676b" }} /> Comment
-        </StyledPostButton>
-        <StyledPostButton onClick={() => {
-
-        }}>
-          <ReplyIcon sx={{ color: "#65676b" }} /> Share
-        </StyledPostButton>
-      </StyledPostButtons>
+      {!inModal && (
+        <StyledPostButtons>
+          <StyledPostButton onClick={isLiked ? removeLike : like}>
+            {isLiked ? (
+              <ThumbUpAltIcon sx={{ color: "#65676b" }} />
+            ) : (
+              <ThumbUpOffAltIcon sx={{ color: "#65676b" }} />
+            )}
+            <StyledPostButtonText>Like</StyledPostButtonText>
+          </StyledPostButton>
+          <StyledPostButton>
+            <ChatBubbleOutlineIcon sx={{ color: "#65676b" }} />{" "}
+            <StyledPostButtonText>Comment</StyledPostButtonText>
+          </StyledPostButton>
+          <StyledPostButton onClick={repostPost}>
+            <ReplyIcon sx={{ color: "#65676b" }} />{" "}
+            <StyledPostButtonText>Share</StyledPostButtonText>
+          </StyledPostButton>
+        </StyledPostButtons>
+      )}
     </StyledPost>
   );
 }
+
+Post.defaultProps = {
+  inModal: false,
+};

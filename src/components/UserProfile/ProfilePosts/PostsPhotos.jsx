@@ -31,16 +31,21 @@ export default function ProfilePostsPhotos() {
   const [photoHeight, setPhotoHeight] = useState(213);
 
   useEffect(() => {
-    window.addEventListener("resize", () => {
-      if (photosRef.current) setPhotoHeight(photosRef.current.width);
-    });
+    window.addEventListener("resize", resizePhotoHeigh);
+    return function () {
+      window.removeEventListener("resize", resizePhotoHeigh);
+    };
   }, [photosRef]);
 
   useEffect(() => {
     if (photosRef.current) setPhotoHeight(photosRef.current.width);
   }, []);
+
+  function resizePhotoHeigh() {
+    if (photosRef.current) setPhotoHeight(photosRef.current.width);
+  }
   return (
-    <ContentBlock style={{maxWidth: "680px"}}>
+    <ContentBlock style={{ maxWidth: "680px" }}>
       <ContentBlockHeader>
         <ContentBlockTitel>Photos</ContentBlockTitel>
         <ContentBlockLink to={"/profile/photos"}>
