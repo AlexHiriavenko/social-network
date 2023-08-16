@@ -288,7 +288,9 @@ export default function Post(props) {
   useEffect(() => {
     if (!authUser) return;
 
+
     if (likes.find((like) => like?.id === authUser?.id)) {
+
       setLikedStatus(true);
     } else {
       setLikedStatus(false);
@@ -376,8 +378,10 @@ export default function Post(props) {
                 onClick={() => lookUser(repost?.user.id)}
               />
               <Box>
+
                 <StyledPostAuthorName onClick={() => lookUser(repost?.user?.id)}>
                   {repost?.user && repost?.user?.fullName}
+
                 </StyledPostAuthorName>
                 <StyledPostDate>
                   {getPostDate(repost && repost?.createdDate)}
@@ -439,10 +443,12 @@ export default function Post(props) {
           {likes?.length > 0 ? `${likesAmount} likes` : null}
         </StyledPostReachItem>
         <StyledPostReachItem>
+
           {comments?.length > 0 ? `${comments?.length} comments` : null}
         </StyledPostReachItem>
         <StyledPostReachItem>
           {reposts?.length > 0 ? `${reposts?.length} shares` : null}
+
         </StyledPostReachItem>
       </StyledPostReach>
       {!inModal && (
