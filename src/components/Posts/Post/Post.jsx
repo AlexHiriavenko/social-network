@@ -179,7 +179,7 @@ export default function Post(props) {
   } = props;
   const photosRef = useRef(null);
   const dispatch = useDispatch();
-  const authUser = useSelector((state) => state.user.authorizedUser);
+  const authUser = useSelector((state) => state.user?.authorizedUser);
   const navigate = useNavigate();
   // State
   const [photoHeight, setPhotoHeight] = useState(195);
@@ -280,7 +280,7 @@ export default function Post(props) {
   }, []);
   useEffect(() => {
     if (!parentId) return;
-    const parentPostResponse = dispatch(getPost(parentId.id));
+    const parentPostResponse = dispatch(getPost(parentId?.id));
     parentPostResponse
       .then((data) => setRepost(data.payload))
       .catch((error) => console.log(error.message));
@@ -288,7 +288,9 @@ export default function Post(props) {
   useEffect(() => {
     if (!authUser) return;
 
-    if (likes.find((like) => like.id === authUser?.id)) {
+
+    if (likes.find((like) => like?.id === authUser?.id)) {
+
       setLikedStatus(true);
     } else {
       setLikedStatus(false);
@@ -321,26 +323,26 @@ export default function Post(props) {
         {parentId && (
           <StyledRePostWrapper>
             <StyledPostImages>
-              {repost?.postImages && repost.postImages.length > 0 && (
+              {repost?.postImages && repost?.postImages?.length > 0 && (
                 <StyledPostImage
-                  src={repost.postImages[0].imgUrl}
+                  src={repost?.postImages[0]?.imgUrl}
                   alt="post image"
                 />
               )}
               <StyledPostExtraImages>
                 {repost?.postImages &&
-                  repost.postImages.length > 0 &&
-                  repost.postImages.map((postImage, index) => {
+                  repost?.postImages?.length > 0 &&
+                  repost?.postImages?.map((postImage, index) => {
                     if (index === 0) return;
                     if (index > 3) return;
                     if (index === 3) {
                       return (
                         <StyledPostImageItem key={index}>
                           <StyledPostLastShowedItem>
-                            +{repost.postImages.length - 3}
+                            +{repost?.postImages?.length - 3}
                           </StyledPostLastShowedItem>
                           <StyledPostImage
-                            src={postImage.imgUrl}
+                            src={postImage?.imgUrl}
                             alt="post image"
                             ref={photosRef}
                             width={195}
@@ -352,7 +354,7 @@ export default function Post(props) {
                       return (
                         <StyledPostImageItem key={index}>
                           <StyledPostImage
-                            src={postImage.imgUrl}
+                            src={postImage?.imgUrl}
                             alt="post image"
                             ref={photosRef}
                             width={195}
@@ -376,8 +378,10 @@ export default function Post(props) {
                 onClick={() => lookUser(repost?.user.id)}
               />
               <Box>
-                <StyledPostAuthorName onClick={() => lookUser(repost.user.id)}>
-                  {repost?.user && repost?.user.fullName}
+
+                <StyledPostAuthorName onClick={() => lookUser(repost?.user?.id)}>
+                  {repost?.user && repost?.user?.fullName}
+
                 </StyledPostAuthorName>
                 <StyledPostDate>
                   {getPostDate(repost && repost?.createdDate)}
@@ -385,7 +389,7 @@ export default function Post(props) {
               </Box>
             </StyledPostAuthor>
             <StyledPostContentText style={{ paddingLeft: "16px" }}>
-              {repost && repost.content}
+              {repost && repost?.content}
             </StyledPostContentText>
           </StyledRePostWrapper>
         )}
@@ -393,22 +397,22 @@ export default function Post(props) {
 
       {!parentId && (
         <StyledPostImages>
-          {postImages.length > 0 && (
+          {postImages?.length > 0 && (
             <StyledPostImage src={postImages[0].imgUrl} alt="post image" />
           )}
           <StyledPostExtraImages>
-            {postImages.length > 0 &&
-              postImages.map((postImage, index) => {
+            {postImages?.length > 0 &&
+              postImages?.map((postImage, index) => {
                 if (index === 0) return;
                 if (index > 3) return;
                 if (index === 3) {
                   return (
                     <StyledPostImageItem key={index}>
                       <StyledPostLastShowedItem>
-                        +{postImages.length - 3}
+                        +{postImages?.length - 3}
                       </StyledPostLastShowedItem>
                       <StyledPostImage
-                        src={postImage.imgUrl}
+                        src={postImage?.imgUrl}
                         alt="post image"
                         ref={photosRef}
                         width={195}
@@ -420,7 +424,7 @@ export default function Post(props) {
                   return (
                     <StyledPostImageItem key={index}>
                       <StyledPostImage
-                        src={postImage.imgUrl}
+                        src={postImage?.imgUrl}
                         alt="post image"
                         ref={photosRef}
                         width={195}
@@ -439,10 +443,12 @@ export default function Post(props) {
           {likes?.length > 0 ? `${likesAmount} likes` : null}
         </StyledPostReachItem>
         <StyledPostReachItem>
-          {comments.length > 0 ? `${comments?.length} comments` : null}
+
+          {comments?.length > 0 ? `${comments?.length} comments` : null}
         </StyledPostReachItem>
         <StyledPostReachItem>
-          {reposts.length > 0 ? `${reposts?.length} shares` : null}
+          {reposts?.length > 0 ? `${reposts?.length} shares` : null}
+
         </StyledPostReachItem>
       </StyledPostReach>
       {!inModal && (
