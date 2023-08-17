@@ -19,6 +19,7 @@ import Places from "./UserProfile/About/Places";
 import Contacts from "./UserProfile/About/Contacts";
 import UserPage from "./UserPage/UserPage";
 import Chats from "./Chats/Chats";
+import FriendBirthdays from './Friends/FriendBirthdays/FriendBirthdays';
 
 export {
     Home,
@@ -42,4 +43,5 @@ export {
     FriendSuggestions,
     UserFriendsPage,
     Chats,
+    FriendBirthdays,
 };

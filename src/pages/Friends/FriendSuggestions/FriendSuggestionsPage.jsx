@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
-import { getFriendshipRequests, createFriendship } from "../../../redux/friends/actionCreators";
+import { getFriendSuggestions, createFriendship } from "../../../redux/friends/actionCreators";
 import { setCurrentFriend, removeSuggestions } from "../../../redux/friends/friends.slise";
 import { Profile } from "../../index";
 import SideBarFriends from "../SideBarForFriends";
@@ -15,7 +15,7 @@ function FriendSuggestionsPage() {
 
     const dispatch = useDispatch(); 
 
-    const user = useSelector((store)=>store.user.authorizedUser, shallowEqual);
+    const user = useSelector((store)=>store.user.user, shallowEqual);
     const friendSuggestions = useSelector((store)=>store.friends.friendSuggestions, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
 
@@ -26,7 +26,7 @@ function FriendSuggestionsPage() {
     },[friendSuggestions, dispatch])
 
     useEffect(()=>{
-        dispatch(getFriendshipRequests());
+        dispatch(getFriendSuggestions());
         return () => {
             dispatch(setCurrentFriend({}));
           };

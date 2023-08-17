@@ -22,6 +22,7 @@ import {
   Home,
   Watch,
   Chats,
+  FriendBirthdays,
 } from "../../pages";
 import ChangePasswordForm from "../../pages/LogIn/ChangePasswordForm";
 import { useSelector } from "react-redux";
@@ -173,6 +174,9 @@ export default function AllRoutes() {
             element={<ProfilePhotos />}
           />
         </Route>
+        <Route 
+          path="/friends/birthdays"
+          element={<FriendBirthdays/>}/>
         <Route path="/chats" element={<Chats />} />
         <Route path="*" element={<NotFound />} />
       </Route>
