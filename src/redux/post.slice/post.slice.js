@@ -99,6 +99,7 @@ const postSlice = createSlice({
   initialState: {
     allPosts: [],
     allUserPosts: [],
+    visiblePosts: [],
     post: {},
   },
   reducers: {
@@ -111,13 +112,16 @@ const postSlice = createSlice({
     setUserPosts: (state, action) => {
       state.allUserPosts = action.payload;
     },
+    setVisiblePosts: (state, action) => {
+      state.visiblePosts = action.payload;
+    },
     setPost: (state, action) => {
       state.post = action.payload;
     },
   },
 });
 
-export const { createPost, deletePost, setPosts, setUserPosts, setPost } =
+export const { createPost, deletePost, setPosts, setUserPosts, setPost, setVisiblePosts } =
   postSlice.actions;
 
 export default postSlice.reducer;

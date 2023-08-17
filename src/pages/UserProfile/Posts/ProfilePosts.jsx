@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getPostsByUserId,
   setUserPosts,
+  setVisiblePosts,
 } from "../../../redux/post.slice/post.slice";
 
 const StyledPostsContainer = styled(ProfileContainer)({
@@ -53,14 +54,16 @@ export default function ProfilePosts() {
   const userInfoRef = useRef(null);
   const user = useSelector((state) => state.user.user);
   const allUserPosts = useSelector((state) => state.post.allUserPosts);
+  const visiblePosts = useSelector((state) => state.post.visiblePosts);
   // State
   const [userInfoHeight, setUserInfoHeight] = useState(0);
   const [reversePosts, setReversePosts] = useState([]);
   // UseEffect
 
   useEffect(() => {
-    const copyPosts = allUserPosts?.length >0? [...allUserPosts] : [];
+    const copyPosts = allUserPosts?.length > 0 ? [...allUserPosts] : [];
     copyPosts.reverse();
+    dispatch(setVisiblePosts(copyPosts));
     setReversePosts(copyPosts);
   }, [allUserPosts]);
   useEffect(() => {
