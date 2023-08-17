@@ -59,7 +59,7 @@ export default function ProfilePosts() {
   // UseEffect
 
   useEffect(() => {
-    const copyPosts = [...allUserPosts];
+    const copyPosts = allUserPosts?.length >0? [...allUserPosts] : [];
     copyPosts.reverse();
     setReversePosts(copyPosts);
   }, [allUserPosts]);
