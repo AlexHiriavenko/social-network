@@ -29,12 +29,12 @@ export const getAccessToken = createAsyncThunk(
     async function () {
         const refresh = JSON.parse(localStorage.getItem("refresh"))
         let token = await axios.post(
-            `https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/refresh`,
+            `https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/token`,
             { refreshToken: refresh }
         );
         //document.cookie = `token=${token.data.accessToken}`;
-        localStorage.setItem("token",JSON.stringify(token.data.accessToken))
-        localStorage.setItem("refresh",JSON.stringify(token.data.refreshToken))
+       // localStorage.setItem("token",JSON.stringify(token.data.accessToken))
+       // localStorage.setItem("refresh",JSON.stringify(token.data.refreshToken))
         return token.data.accessToken;
     }
 );

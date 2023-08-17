@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
     getAccessToken,
-    loginGoogle,
+    loginGoogle, logOut,
 } from "../../redux/login.slice/login.slice.js";
 import {
     getUser,
@@ -27,7 +27,10 @@ function Home() {
         const token = await dispatch(getAccessToken());
         console.log(token.payload);
         console.log("Set access token");
-        //  localStorage.setItem("token",JSON.stringify(token.payload))
+        if(token.payload){
+          localStorage.setItem("token",JSON.stringify(token.payload))}else{
+            dispatch(logOut())
+        }
     };
 
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
