@@ -4,6 +4,7 @@ import {SVGpersonGo, SVGpersonPlus, SVGPeople, SVGFriendsList, SVGBirthdays, SVG
 import { NavLink } from "react-router-dom";
 import { ListItem, Typography, Box, List } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
+import PropTypes from 'prop-types';
 
 function SideBarList({activeItem}) {
 
@@ -151,5 +152,15 @@ function SideBarList({activeItem}) {
         </List>
     )
 }
+
+SideBarList.propTypes = {
+    activeItem: PropTypes.string,
+
+  };
+  
+  SideBarList.defaultProps = {
+    activeItem: '',
+
+  };
 
 export default SideBarList;
