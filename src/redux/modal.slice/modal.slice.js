@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   createPost: {
     isOpen: false,
+    repost: false,
   },
   editProfile: {
     isOpen: false,
@@ -31,6 +32,12 @@ const modalSlice = createSlice({
     },
     closeCreateModal: function (state) {
       state.createPost.isOpen = false;
+    },
+    setRepostToModal: function (state, action) {
+      state.createPost.repost = action.payload;
+    },
+    resetRepostToModal: function (state) {
+      state.createPost.repost = false;
     },
     openEditProfileModal: function (state) {
       state.editProfile.isOpen = true;
@@ -80,6 +87,8 @@ export const {
   closeDeleteMessageModal,
   openEditMessageModal,
   closeEditMessageModal,
+  setRepostToModal,
+  resetRepostToModal
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

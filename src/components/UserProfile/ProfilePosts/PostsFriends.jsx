@@ -58,15 +58,20 @@ export default function ProfilePostsFriends() {
   // UseEffect
   // Photo size
   useEffect(() => {
-    window.addEventListener("resize", () => {
-      if (photosRef.current) setPhotoHeight(photosRef.current.width);
-    });
+    window.addEventListener("resize", resizePhotoHeigh);
+    return function () {
+      window.removeEventListener("resize", resizePhotoHeigh);
+    };
   }, [photosRef]);
   useEffect(() => {
     if (photosRef.current) setPhotoHeight(photosRef.current.width);
   }, [photosRef.current]);
 
   // Functions
+  function resizePhotoHeigh() {
+    if (photosRef.current) setPhotoHeight(photosRef.current.width);
+  }
+
   function lookFriendPage(friend) {
     // get user friends
     const userFriendsResponse = dispatch(getFriends(friend.id));

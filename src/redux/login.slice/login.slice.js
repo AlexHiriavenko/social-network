@@ -29,12 +29,12 @@ export const getAccessToken = createAsyncThunk(
     async function () {
         const refresh = JSON.parse(localStorage.getItem("refresh"))
         let token = await axios.post(
-            `https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/refresh`,
+            `https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/token`,
             { refreshToken: refresh }
         );
         //document.cookie = `token=${token.data.accessToken}`;
-        localStorage.setItem("token",JSON.stringify(token.data.accessToken))
-        localStorage.setItem("refresh",JSON.stringify(token.data.refreshToken))
+       // localStorage.setItem("token",JSON.stringify(token.data.accessToken))
+       // localStorage.setItem("refresh",JSON.stringify(token.data.refreshToken))
         return token.data.accessToken;
     }
 );
@@ -95,8 +95,6 @@ export const loginGoogle = createAsyncThunk(
         document.cookie = `refresh=${token.data.refreshToken}`;
         localStorage.setItem("token", JSON.stringify(token.data.accessToken));
         localStorage.setItem("refresh", JSON.stringify(token.data.refreshToken));
-        let auth = parseJwt(token.data.accessToken);
-        localStorage.setItem("auth", JSON.stringify(auth));
         const { data } = await instance.get(`/users/profile`);
         localStorage.setItem("authorizedUser", JSON.stringify({...data,isAuthorized:true}));
         localStorage.setItem("user", JSON.stringify(data));
