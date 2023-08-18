@@ -25,7 +25,7 @@ export default function LogIn() {
    // if (!readCookie("token")) {
     //  document.cookie = `token=${0}`;
     if(!localStorage.getItem("token")){
-      localStorage.setItem("token","out")
+      localStorage.setItem("token",JSON.stringify("out"))
     }
   }, []);
   const dispatch = useDispatch();

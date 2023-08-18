@@ -20,7 +20,7 @@ export const logIn = createAsyncThunk(
         localStorage.setItem("loggedIn", login);
         let auth = parseJwt(token.data.accessToken);
         localStorage.setItem("auth", JSON.stringify(auth));
-        console.log(token);
+
         return token;
     }
 );
@@ -42,7 +42,7 @@ export const sendEmail = createAsyncThunk(
     "Login/sendEmail",
     async function (email) {
         await axios.post(
-            `https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/passwordLetter`,
+            `${import.meta.env.VITE_APP_API_URL}/api/auth/passwordLetter`,
             { email: email }
         );
     }
@@ -99,7 +99,7 @@ export const loginGoogle = createAsyncThunk(
         localStorage.setItem("authorizedUser", JSON.stringify({...data,isAuthorized:true}));
         localStorage.setItem("user", JSON.stringify(data));
 
-        console.log(token);
+
     }
 );
 const LoginSlice = createSlice({
