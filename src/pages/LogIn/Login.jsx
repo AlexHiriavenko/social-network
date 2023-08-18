@@ -22,8 +22,10 @@ export default function LogIn() {
   let url = window.location.href.slice(0, -6);
 
   useEffect(() => {
-    if (!readCookie("token")) {
-      document.cookie = `token=${0}`;
+   // if (!readCookie("token")) {
+    //  document.cookie = `token=${0}`;
+    if(!localStorage.getItem("token")){
+      localStorage.setItem("token",JSON.stringify("out"))
     }
   }, []);
   const dispatch = useDispatch();
