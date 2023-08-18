@@ -5,7 +5,6 @@ import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { getFriendshipRequests, updateFriendship } from '../../../redux/friends/actionCreators';
-//import { useTheme } from '@mui/material/styles';
 import SideBarFriends from "../SideBarForFriends";
 import { Profile } from '../../index';
 import { setCurrentFriend, } from '../../../redux/friends/friends.slise';
@@ -17,9 +16,7 @@ import { setUser } from "../../../redux/user.slice/user.slice";
 
 function FriendRequests(){
 
-    
     const dispatch = useDispatch(); 
-    //const theme = useTheme();
 
     const userAuth = useSelector((store)=>store.user.authorizedUser, shallowEqual);
     const user = useSelector((store)=>store.user.authorizedUser, shallowEqual);

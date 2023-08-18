@@ -76,7 +76,7 @@ function SentFriendRequestsModal() {
     }
 
     const handleCancelRequest = (friend) => {
-        const payload = {id: friend.id, status: "canceled", userID: friend.user.id,  friendID: friend.friend.id}
+        const payload = {id: friend.id, status: "canceled"}
         dispatch(updateFriendship(payload));
     }
 

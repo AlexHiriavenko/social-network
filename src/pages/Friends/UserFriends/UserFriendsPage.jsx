@@ -9,8 +9,8 @@ import { Profile } from "../../index";
 import { setCurrentFriend, setSearchValue, removeFriend } from "../../../redux/friends/friends.slise";
 import FriendEmptyPage from  "../FriendEmptyPage";
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
-import Search from '../../../components/Search/Search';
 import { updateFriendship } from '../../../redux/friends/actionCreators';
+import { setUser } from "../../../redux/user.slice/user.slice";
 
 
 function UserFriendsPage() {
@@ -51,6 +51,8 @@ function UserFriendsPage() {
         const payload = {id: friend.id, status: "unfriended"}
         dispatch(updateFriendship(payload));
         dispatch(removeFriend(friend.friend.id));
+        dispatch(setCurrentFriend({}));
+        dispatch(setUser({}));
     }, [dispatch])
 
     const SectionWraper = styled(Box)(({theme}) => ({

@@ -13,6 +13,7 @@ function Search(props) {
 
     const [inputValue, setInputValue] = useState('');
     const timeoutRef = useRef(null);
+    
 
     function debounce(f, t) {
         clearTimeout(timeoutRef.current);
@@ -21,12 +22,12 @@ function Search(props) {
 
     const handleSearchImput = (event) => {
         setInputValue(event.target.value);
-        debounce(() => handleChangeValue(event.target.value), 2000);
+        debounce(() => handleChangeValue(event.target.value), 800);
     }
 
     useEffect(() => {
         setInputValue(initialValue);
-    }, [])
+    }, [initialValue])
 
     return(
         <>
