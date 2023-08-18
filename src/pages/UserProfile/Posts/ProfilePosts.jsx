@@ -58,7 +58,6 @@ export default function ProfilePosts() {
   // State
   const [userInfoHeight, setUserInfoHeight] = useState(0);
   // UseEffect
-  console.log(allUserPosts);
   useEffect(() => {
     const copyPosts = allUserPosts?.length > 0 ? [...allUserPosts] : [];
     copyPosts.reverse();

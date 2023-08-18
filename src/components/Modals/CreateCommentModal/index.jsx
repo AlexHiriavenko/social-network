@@ -153,12 +153,10 @@ export default function CreateCommentModal() {
       userName: `${mockUser.firstName} ${mockUser.lastName}`,
     },
     onSubmit: ({ content }) => {
-      console.log(visiblePosts);
 
       const id = post.id;
       const isCreatedResponse = dispatch(commentPost({ id, content }));
       isCreatedResponse.then(data => {
-        console.log(data.payload);
         if (data.payload) {
           setComments([...comments, createComment(content)])
           const postIndex = visiblePosts.findIndex(p => p.id === post.id);

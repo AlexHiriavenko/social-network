@@ -34,7 +34,6 @@ function HomeMain() {
     if (fetching) {
       dispatch(getPageblePosts({ page: currentPage, size: 3 }))
         .then((data) => {
-          console.log(data.payload);
           setCurrentPage(currentPage + 1);
           setMainPagePosts([...mainPagePosts, ...data.payload]);
           dispatch(setVisiblePosts([...mainPagePosts, ...data.payload]));
