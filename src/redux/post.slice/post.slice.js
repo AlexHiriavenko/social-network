@@ -68,7 +68,7 @@ export const removeLikePost = createAsyncThunk(
 
 export const repostPost = createAsyncThunk(
   "Posts/repostPost",
-  async function (id, content) {
+  async function ({ id, content }) {
     const { data } = await instance.post(`/posts/repost/${id}`, {
       content: content,
     });

@@ -13,7 +13,7 @@ const StyledCommentContent = styled("div")(({ theme }) => ({
     borderRadius: "18px",
 }));
 
-const StyledPostDate = styled(Typography)(({ theme }) => ({
+const StyledPostDate = styled("span")(({ theme }) => ({
     fontSize: "12px",
     color: theme.palette.textColor.secondary,
 }));
