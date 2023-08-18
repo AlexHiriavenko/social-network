@@ -24,7 +24,7 @@ function HomeMain() {
     if (
       e.target.documentElement.scrollHeight -
         (e.target.documentElement.scrollTop + window.innerHeight) <
-      10
+      250
     ) {
       setFetching(true);
     }
@@ -52,7 +52,7 @@ function HomeMain() {
   return (
     <main className="main-home-content">
       <CreatePost />
-      <PostList posts={mainPagePosts} />
+      <PostList posts={visiblePosts} />
     </main>
   );
 }

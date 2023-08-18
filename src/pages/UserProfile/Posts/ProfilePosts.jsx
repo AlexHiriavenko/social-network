@@ -64,7 +64,7 @@ export default function ProfilePosts() {
     const copyPosts = allUserPosts?.length > 0 ? [...allUserPosts] : [];
     copyPosts.reverse();
     dispatch(setVisiblePosts(copyPosts));
-    setReversePosts(copyPosts);
+    // setReversePosts(copyPosts);
   }, [allUserPosts]);
   useEffect(() => {
     setTimeout(() => {
@@ -94,7 +94,7 @@ export default function ProfilePosts() {
           }}
         >
           {user && user.isAuthorized && <CreatePost />}
-          <PostList posts={reversePosts} />
+          <PostList posts={visiblePosts} />
         </StyledPostsPublications>
       </StyledPostsContainer>
     </StyledPostsPage>
