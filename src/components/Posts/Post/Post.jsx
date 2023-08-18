@@ -281,10 +281,7 @@ export default function Post(props) {
   }, []);
   useEffect(() => {
     if (!parentId) return;
-    const parentPostResponse = dispatch(getPost(parentId?.id));
-    parentPostResponse
-      .then((data) => setRepost(data.payload))
-      .catch((error) => console.log(error.message));
+    setRepost(parentId);
   }, [parentId]);
   useEffect(() => {
     if (!authUser) return;
