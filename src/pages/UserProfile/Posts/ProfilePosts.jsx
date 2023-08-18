@@ -30,13 +30,13 @@ const StyledPostsContainer = styled(ProfileContainer)({
 const StyledPostsPage = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.backgroundColor.page,
   paddingTop: "20px",
-  paddingBottom: "20px",
 }));
 
 const StyledPostsLeftSide = styled(Box)({
   display: "flex",
   flexDirection: "column",
   rowGap: "11px",
+  paddingBottom: "20px",
 });
 
 const StyledPostsPublications = styled(Box)({
@@ -57,7 +57,6 @@ export default function ProfilePosts() {
   const visiblePosts = useSelector((state) => state.post.visiblePosts);
   // State
   const [userInfoHeight, setUserInfoHeight] = useState(0);
-  const [reversePosts, setReversePosts] = useState([]);
   // UseEffect
 
   useEffect(() => {
