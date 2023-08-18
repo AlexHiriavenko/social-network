@@ -11,7 +11,7 @@ export default function PostList({ posts }) {
   return (
     <StyledPostsList>
       {posts?.map((post, index) => {
-        return <Post {...post} key={index} />;
+        if (post.postType == "post") return <Post {...post} key={index} />;
       })}
     </StyledPostsList>
   );

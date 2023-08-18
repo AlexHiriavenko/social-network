@@ -178,6 +178,7 @@ export default function Post(props) {
     id,
     inModal,
   } = props;
+  console.log(likes);
   const photosRef = useRef(null);
   const dispatch = useDispatch();
   const authUser = useSelector((state) => state.user?.authorizedUser);

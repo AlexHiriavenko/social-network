@@ -100,9 +100,10 @@ export default function FriendsList() {
       {filtredFriends &&
         (filtredFriends.length > 0 ? (
           <StyledFriendsList>
-            {filtredFriends.map((friendItem, index) => (
-              <FriendItem {...friendItem} key={index} />
-            ))}
+            {filtredFriends.map((friendItem, index) => {
+              if (friendItem?.status !== "accepted") return;
+              return <FriendItem {...friendItem} key={index} />;
+            })}
           </StyledFriendsList>
         ) : (
           <StyledFriendsNoResult>

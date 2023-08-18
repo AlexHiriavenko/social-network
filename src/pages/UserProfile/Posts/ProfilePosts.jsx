@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getPostsByUserId,
   setUserPosts,
+  setVisiblePosts,
 } from "../../../redux/post.slice/post.slice";
 
 const StyledPostsContainer = styled(ProfileContainer)({
@@ -29,13 +30,13 @@ const StyledPostsContainer = styled(ProfileContainer)({
 const StyledPostsPage = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.backgroundColor.page,
   paddingTop: "20px",
-  paddingBottom: "20px",
 }));
 
 const StyledPostsLeftSide = styled(Box)({
   display: "flex",
   flexDirection: "column",
   rowGap: "11px",
+  paddingBottom: "20px",
 });
 
 const StyledPostsPublications = styled(Box)({
@@ -53,15 +54,16 @@ export default function ProfilePosts() {
   const userInfoRef = useRef(null);
   const user = useSelector((state) => state.user.user);
   const allUserPosts = useSelector((state) => state.post.allUserPosts);
+  const visiblePosts = useSelector((state) => state.post.visiblePosts);
   // State
   const [userInfoHeight, setUserInfoHeight] = useState(0);
-  const [reversePosts, setReversePosts] = useState([]);
   // UseEffect
-
+  console.log(allUserPosts);
   useEffect(() => {
-    const copyPosts = allUserPosts?.length >0? [...allUserPosts] : [];
+    const copyPosts = allUserPosts?.length > 0 ? [...allUserPosts] : [];
     copyPosts.reverse();
-    setReversePosts(copyPosts);
+    dispatch(setVisiblePosts(copyPosts));
+    // setReversePosts(copyPosts);
   }, [allUserPosts]);
   useEffect(() => {
     setTimeout(() => {
@@ -91,7 +93,7 @@ export default function ProfilePosts() {
           }}
         >
           {user && user.isAuthorized && <CreatePost />}
-          <PostList posts={reversePosts} />
+          <PostList posts={visiblePosts} />
         </StyledPostsPublications>
       </StyledPostsContainer>
     </StyledPostsPage>
