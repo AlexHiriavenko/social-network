@@ -15,6 +15,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { getUser, setUser } from "../../../redux/user.slice/user.slice";
 import {
+  openCreateCommentModal,
   openCreateModal,
   setRepostToModal,
 } from "../../../redux/modal.slice/modal.slice";
@@ -461,7 +462,7 @@ export default function Post(props) {
             )}
             <StyledPostButtonText>Like</StyledPostButtonText>
           </StyledPostButton>
-          <StyledPostButton>
+          <StyledPostButton onClick={handleOpenComment}>
             <ChatBubbleOutlineIcon sx={{ color: "#65676b" }} />{" "}
             <StyledPostButtonText>Comment</StyledPostButtonText>
           </StyledPostButton>

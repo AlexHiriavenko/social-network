@@ -53,9 +53,10 @@ export default function ProfilePostsFriends() {
   const dispatch = useDispatch();
 
   // State
-  const [photoHeight, setPhotoHeight] = useState(204);
+  const [photoHeight, setPhotoHeight] = useState(204);  
+  const [acceptedFriends, setAcceptedFriends] = useState([]);
 
-  // UseEffect
+ 
   // Photo size
   useEffect(() => {
     window.addEventListener("resize", resizePhotoHeigh);
@@ -96,7 +97,14 @@ export default function ProfilePostsFriends() {
         })
         .catch((error) => console.log(error.message));
     }
-  }
+  } 
+  // UseEffect
+  useEffect(() => {
+    const acceptedFriendsArray = userFriends.filter(
+      (friendItem) => friendItem?.status === "accepted"
+    );
+    setAcceptedFriends(acceptedFriendsArray);
+  }, [userFriends]);
   return (
     <ContentBlock style={{ maxWidth: "680px" }}>
       <ContentBlockHeader>
@@ -106,10 +114,10 @@ export default function ProfilePostsFriends() {
         </ContentBlockLink>
       </ContentBlockHeader>
       <StyledPostFriendsSubtitle>
-        {userFriends.length} friends
+        {acceptedFriends.length} friends
       </StyledPostFriendsSubtitle>
       <StyledPostFriendsList>
-        {userFriends.map((friend, index) => {
+        {acceptedFriends.map((friend, index) => {
           return (
             <StyledPostFriendItem
               key={index}
