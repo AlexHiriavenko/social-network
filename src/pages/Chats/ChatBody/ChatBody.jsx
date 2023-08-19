@@ -10,15 +10,8 @@ import { useTheme } from "@mui/material/styles";
 const ChatBody = () => {
     const dispatch = useDispatch();
     const theme = useTheme();
-
-    const chatFormRef = useRef(null);
     const { messages } = useSelector((state) => state.chat.currentChat);
-
-    const sortedMessages = messages
-        ? messages.toSorted((a, b) => {
-              return new Date(a.createdDate) - new Date(b.createdDate);
-          })
-        : [];
+    const chatFormRef = useRef(null);
 
     // в конец чата
     useEffect(() => {
@@ -38,15 +31,13 @@ const ChatBody = () => {
         return (
             <Box ref={chatFormRef} sx={{ pl: 2, pr: 2 }} className="chat-body">
                 <ChatHeader />
-                <ChatContent sortedMessages={sortedMessages} />
+                <ChatContent />
                 <ChatFooter />
             </Box>
         );
     } else {
         return (
-            <div
-                className="empty-chat-page"
-                style={{ color: theme.palette.textColor.secondary }}>
+            <div className="empty-chat-page" style={{ color: theme.palette.textColor.secondary }}>
                 Select a chat or start a new conversation
             </div>
         );

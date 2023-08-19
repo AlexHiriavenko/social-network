@@ -57,7 +57,10 @@ function ChatFooter() {
                 gap: 2,
                 alignItems: "center",
                 mt: 2,
-            }}>
+                pl: 1,
+                pr: 1,
+            }}
+        >
             <StyledTextField
                 label="your message"
                 variant="outlined"
@@ -74,11 +77,11 @@ function ChatFooter() {
                     boxSizing: "content-box",
                     transitionDuration: "0.5s",
                     "&:hover": {
-                        backgroundColor:
-                            theme.palette.buttonColor.backgroundHover,
+                        backgroundColor: theme.palette.buttonColor.backgroundHover,
                     },
                 }}
-                onClick={handleClickSend}>
+                onClick={handleClickSend}
+            >
                 <SendIcon fontSize="large" color="primary" />
             </Avatar>
         </Box>
