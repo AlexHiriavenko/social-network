@@ -40,7 +40,7 @@ function Home() {
             dispatch(loginGoogle());
         }
 
-        window.setInterval(renewToken, 1000000)
+      //  window.setInterval(renewToken, 1000000)
         if (
             !localStorage.getItem("authorizedUser") &&
             localStorage.getItem("auth")
@@ -98,11 +98,11 @@ function Home() {
             )
         );
 
-        return function () {
+     //   return function () {
 
-            window.clearInterval(renewToken)
+        //    window.clearInterval(renewToken)
 
-        }
+       // }
     }, [isLoggedIn]);
 
     return (
