@@ -22,7 +22,6 @@ function HeaderMessageOptions() {
     const chatRef = useRef(null);
 
     useEffect(() => {
-        console.log(chatRef.current);
         if (chatRef.current) {
             chatRef.current.scrollTop = chatRef.current.scrollHeight;
         }
