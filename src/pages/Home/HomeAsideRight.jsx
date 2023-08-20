@@ -12,7 +12,8 @@ function HomeAsideRight() {
             style={{
                 backgroundColor: theme.palette.backgroundColor.page,
                 borderLeft: theme.palette.border.transp,
-            }}>
+            }}
+        >
             <Typography
                 id="ad"
                 component="h3"
@@ -22,7 +23,8 @@ function HomeAsideRight() {
                     color: (theme) => theme.palette.textColor.secondary,
                     fontWeight: 600,
                     fontSize: "17px",
-                }}>
+                }}
+            >
                 Advertisement
             </Typography>
             <List>
@@ -31,16 +33,19 @@ function HomeAsideRight() {
                         ":hover": {
                             backgroundColor: theme.palette.hoverColor.secondary,
                         },
-                    }}>
+                    }}
+                >
                     <a
                         className="sidebar-home__advertisement-link"
                         href="https://dan-it.com.ua/uk/"
-                        target="_blank">
+                        target="_blank"
+                    >
                         <div
                             style={{
                                 paddingTop: "12px",
                                 paddingBottom: "12px",
-                            }}>
+                            }}
+                        >
                             <SvgDanIT />
                         </div>
                         <Typography
@@ -49,9 +54,9 @@ function HomeAsideRight() {
                                 fontSize: "15px",
                                 lineHeight: "1",
                                 m: 0,
-                                color: (theme) =>
-                                    theme.palette.textColor.content,
-                            }}>
+                                color: (theme) => theme.palette.textColor.content,
+                            }}
+                        >
                             Master modern IT-profession
                         </Typography>
                     </a>
@@ -61,7 +66,8 @@ function HomeAsideRight() {
                         ":hover": {
                             backgroundColor: theme.palette.hoverColor.secondary,
                         },
-                    }}>
+                    }}
+                >
                     <a className="sidebar-home__advertisement-link" href="#ad">
                         <img
                             style={{
@@ -77,15 +83,15 @@ function HomeAsideRight() {
                                 fontSize: "15px",
                                 lineHeight: "1",
                                 m: 0,
-                                color: (theme) =>
-                                    theme.palette.textColor.content,
-                            }}>
+                                color: (theme) => theme.palette.textColor.content,
+                            }}
+                        >
                             Here can be your advertising
                         </Typography>
                     </a>
                 </ListItem>
             </List>
-            <Divider
+            {/* <Divider
                 sx={{
                     backgroundColor: theme.palette.border.simpleTransp,
                 }}
@@ -101,7 +107,7 @@ function HomeAsideRight() {
                 }}>
                 Contacts
             </Typography>
-            <UsersList />
+            <UsersList /> */}
         </aside>
     );
 }

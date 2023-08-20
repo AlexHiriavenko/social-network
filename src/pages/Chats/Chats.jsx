@@ -21,8 +21,9 @@ function Chats() {
             style={{
                 display: "flex",
                 backgroundColor: theme.palette.backgroundColor.card,
-                minHeight: "93.2%",
-            }}>
+                minHeight: "93vh",
+            }}
+        >
             <Sidebar>
                 <UsersList />
             </Sidebar>

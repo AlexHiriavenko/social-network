@@ -59,6 +59,7 @@ function ChatFooter() {
                 mt: 2,
                 pl: 1,
                 pr: 1,
+                mb: 1,
             }}
         >
             <StyledTextField

@@ -42,6 +42,7 @@ function ChatContent() {
         <List className="chat-body__list">
             {sortedMessages.map((message, index) => (
                 <ListItem
+                    sx={{ p: 0 }}
                     className={
                         isAuthUser(authUserId, message.sender.id)
                             ? "chat-body__item--authUser"

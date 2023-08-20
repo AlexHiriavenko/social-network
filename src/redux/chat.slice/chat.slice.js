@@ -2,37 +2,26 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "../../instance.js";
 
 export const getChats = createAsyncThunk("chat/getChats", async function () {
-    const chats = await instance
-        .get("/chats")
-        .then((response) => response.json());
+    const chats = await instance.get("/chats").then((response) => response.json());
     console.log(chats);
     return chats;
 });
 
 ////////////////////
-export const getChatsParticipants = createAsyncThunk(
-    "chat/getParticipants",
-    async function () {
-        const { data } = await instance.get(`chats/participants`);
-        return data;
-    }
-);
+export const getChatsParticipants = createAsyncThunk("chat/getParticipants", async function () {
+    const { data } = await instance.get(`chats/participants`);
+    return data;
+});
 ////////////////////
 export const getChat = createAsyncThunk("chat/getChat", async function (id) {
     const { data } = await instance.get(`/chats/${id}`);
     return data;
 });
 
-export const addNewUser = createAsyncThunk(
-    "chat/addNewUser",
-    async function ({ chatId, newUser }) {
-        const { status } = await instance.put(
-            `/messages/${chatId}/participants`,
-            newUser
-        );
-        console.log(status);
-    }
-);
+export const addNewUser = createAsyncThunk("chat/addNewUser", async function ({ chatId, newUser }) {
+    const { status } = await instance.put(`/messages/${chatId}/participants`, newUser);
+    console.log(status);
+});
 export const initialState = {
     isOpened: false,
     chatsParticipants: [],
@@ -80,6 +69,7 @@ const chatSlice = createSlice({
         },
         resetCurrentChat: function (state, action) {
             state.currentChat = initialState.currentChat;
+            state.isOpened = false;
         },
     },
     extraReducers: (builder) => {
@@ -109,12 +99,7 @@ const chatPageSlice = createSlice({
     },
 });
 
-export const {
-    openChat,
-    closeChat,
-    setCurrentChatCompanion,
-    resetCurrentChat,
-} = chatSlice.actions;
+export const { openChat, closeChat, setCurrentChatCompanion, resetCurrentChat } = chatSlice.actions;
 
 export const { openPageChat, closePageChat } = chatPageSlice.actions;
 

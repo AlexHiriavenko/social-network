@@ -29,7 +29,7 @@ const ChatBody = () => {
 
     if (messages[0].createdBy) {
         return (
-            <Box ref={chatFormRef} sx={{ pl: 2, pr: 2 }} className="chat-body">
+            <Box ref={chatFormRef} sx={{ pb: 2, pr: 2, pl: 1 }} className="chat-body">
                 <ChatHeader />
                 <ChatContent />
                 <ChatFooter />
@@ -37,7 +37,10 @@ const ChatBody = () => {
         );
     } else {
         return (
-            <div className="empty-chat-page" style={{ color: theme.palette.textColor.secondary }}>
+            <div
+                className="empty-chat-page"
+                style={{ color: theme.palette.textColor.secondary, marginTop: "22px" }}
+            >
                 Select a chat or start a new conversation
             </div>
         );

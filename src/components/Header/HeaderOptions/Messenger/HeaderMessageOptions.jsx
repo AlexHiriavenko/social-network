@@ -1,54 +1,26 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
-import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem, Badge, Box } from "@mui/material";
-import ForumIcon from "@mui/icons-material/Forum";
-import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
-import EditNoteIcon from "@mui/icons-material/EditNote";
-import { mockInfo } from "../../HeaderSearch/SeacrhComponents/mockData";
+import { Menu } from "@mui/material";
+import HeaderChatIcon from "./HeaderChatIcon";
+import MessengerHeader from "./MessengerHeader";
+import ChatsList from "./ChatsList";
 import Chat from "./Chat";
-import { openChat } from "../../../../redux/chat.slice/chat.slice";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 function HeaderMessageOptions() {
     const theme = useTheme();
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    const [anchorMessageMenu, setAnchorMessageMenu] = React.useState(null);
-    const [user, setUser] = useState([]);
-    const handlerChat = (id) => {
-        const user = mockInfo.find((users) => users.userID === id);
-        dispatch(openChat());
-        setUser(user);
-        toggleMenu();
-    };
+    const [anchorMessageMenu, setAnchorMessageMenu] = useState(null);
 
     const toggleMenu = () =>
         anchorMessageMenu
             ? setAnchorMessageMenu(null)
             : setAnchorMessageMenu(document.querySelector(".anchor-menu"));
 
+    const open = useSelector((state) => state.chat.isOpened);
+
     return (
         <>
-            <Tooltip title="Messenger" sx={{ p: { xs: "4px", sm: 1 } }}>
-                <IconButton
-                    onClick={toggleMenu}
-                    sx={({ pt: 1, pb: 1 }, { pl: { xs: 0.5, sm: 1 }, pr: { xs: 0.5, sm: 1 } })}
-                >
-                    <Badge badgeContent={4} color="secondary">
-                        <Avatar
-                            sx={{
-                                bgcolor: theme.palette.hoverColor.dark,
-                                minWidth: "40px",
-                                minHeight: "40px",
-                            }}
-                        >
-                            <ForumIcon style={{ color: theme.palette.textColor.content }} />
-                        </Avatar>
-                    </Badge>
-                </IconButton>
-            </Tooltip>
+            <HeaderChatIcon toggleMenu={toggleMenu} />
             <Menu
                 sx={{ mt: "45px" }}
                 anchorEl={anchorMessageMenu}
@@ -66,71 +38,19 @@ function HeaderMessageOptions() {
                 slotProps={{
                     paper: {
                         className: "header__options-drop-menu",
+                        style: {
+                            minHeight: "160px",
+                            backgroundColor: theme.palette.backgroundColor.section,
+                        },
                     },
                 }}
             >
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        p: 2,
-                    }}
-                >
-                    <Typography variant="h5" component={"h4"} fontWeight={600}>
-                        Chats
-                    </Typography>
-                    <Box>
-                        <Tooltip title="See all in Messenger">
-                            <IconButton
-                                onClick={(event) => {
-                                    if (event.target.closest("button")) {
-                                        navigate("/chats");
-                                        toggleMenu();
-                                    }
-                                }}
-                            >
-                                <ZoomOutMapIcon />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="New Message" sx={{ ml: 0.5 }}>
-                            <IconButton>
-                                <EditNoteIcon />
-                            </IconButton>
-                        </Tooltip>
-                    </Box>
-                </Box>
-                {mockInfo.map((user) => {
-                    return (
-                        <MenuItem
-                            key={user.userID}
-                            onClick={() => handlerChat(user.userID)}
-                            sx={{
-                                display: "flex",
-                                gap: 1,
-                                whiteSpace: "normal",
-                                mb: 1,
-                            }}
-                        >
-                            <Avatar
-                                sx={{ minWidth: "40px", minHeight: "40px" }}
-                                alt="user icon"
-                                src={user.userPhoto}
-                            ></Avatar>
-                            <Box>
-                                <Typography fontSize={15} fontWeight={600}>
-                                    {user.userName}
-                                </Typography>
-                                <Typography fontSize={14} noWrap>
-                                    {user.message}
-                                </Typography>
-                            </Box>
-                        </MenuItem>
-                    );
-                })}
+                <MessengerHeader toggleMenu={toggleMenu} />
+                {!open && <ChatsList />}
+                {open && <Chat />}
             </Menu>
-            <Chat user={user} />
         </>
     );
 }
+
 export default HeaderMessageOptions;
