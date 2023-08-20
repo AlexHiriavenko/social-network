@@ -12,7 +12,7 @@ import loginValidation from "./Validation/loginValidation";
 import RegisterModal from "./RegisterModal";
 import ForgotForm from "./ForgotForm";
 import { useDispatch, useSelector } from "react-redux";
-import { logIn, setLogin } from "../../redux/login.slice/login.slice";
+import {logIn, loginGoogle, setLogin} from "../../redux/login.slice/login.slice";
 import { useNavigate } from "react-router-dom";
 import { readCookie } from "../../readCookie.js";
 import axios from "axios";
@@ -158,13 +158,14 @@ export default function LogIn() {
                     <a
                         className="google_link"
                         href={
-                          "https://social-network-backend-2782464b9c31.herokuapp.com/oauth2/authorization/google"
+                          `${import.meta.env.VITE_APP_API_URL}/oauth2/authorization/google`
                         }
                         onClick={async () => {
                           await axios.post(
-                              `https://social-network-backend-2782464b9c31.herokuapp.com/api/auth`,
+                              `${import.meta.env.VITE_APP_API_URL}/api/auth`,
                               { email: url }
                           );
+                          await  dispatch(loginGoogle());
                           dispatch(setLogin());
                         }}>
                       Login with Google
