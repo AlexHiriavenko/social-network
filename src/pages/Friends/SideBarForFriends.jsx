@@ -13,7 +13,7 @@ import { setCurrentFriend } from '../../redux/friends/friends.slise';
 import { setFriends, setUser, getUser, getFriends } from "../../redux/user.slice/user.slice";
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
-import {SidebarStyled} from '../../components/StyledComponents/SideBarFriends';
+import {SidebarStyled, } from '../../components/StyledComponents/SideBarFriends';
 import PopupMenuFriends from './UserFriends/PopupMenuFriends';
 import Search from '../../components/Search/Search';
 
