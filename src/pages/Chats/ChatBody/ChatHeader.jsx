@@ -47,7 +47,6 @@ function ChatHeader() {
                 top: 0,
                 zIndex: 2,
                 backgroundColor: theme.palette.backgroundColor.page,
-                borderRadius: "16px",
                 width: "100%",
                 p: 2,
             }}

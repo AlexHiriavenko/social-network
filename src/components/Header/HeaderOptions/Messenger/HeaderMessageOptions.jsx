@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import { Menu } from "@mui/material";
 import HeaderChatIcon from "./HeaderChatIcon";
 import MessengerHeader from "./MessengerHeader";
 import ChatsList from "./ChatsList";
+import ChatHeader from "../../../../pages/Chats/ChatBody/ChatHeader";
 import Chat from "./Chat";
 
 function HeaderMessageOptions() {
@@ -17,6 +18,15 @@ function HeaderMessageOptions() {
             : setAnchorMessageMenu(document.querySelector(".anchor-menu"));
 
     const open = useSelector((state) => state.chat.isOpened);
+    const { messages } = useSelector((state) => state.chat.currentChat);
+    const chatRef = useRef(null);
+
+    useEffect(() => {
+        console.log(chatRef.current);
+        if (chatRef.current) {
+            chatRef.current.scrollTop = chatRef.current.scrollHeight;
+        }
+    }, [messages]);
 
     return (
         <>
@@ -37,16 +47,18 @@ function HeaderMessageOptions() {
                 onClose={toggleMenu}
                 slotProps={{
                     paper: {
+                        ref: chatRef,
                         className: "header__options-drop-menu",
                         style: {
-                            minHeight: "160px",
                             backgroundColor: theme.palette.backgroundColor.section,
+                            maxHeight: "500px",
                         },
                     },
                 }}
             >
-                <MessengerHeader toggleMenu={toggleMenu} />
+                {!open && <MessengerHeader toggleMenu={toggleMenu} />}
                 {!open && <ChatsList />}
+                {open && <ChatHeader />}
                 {open && <Chat />}
             </Menu>
         </>

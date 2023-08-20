@@ -39,18 +39,7 @@ export const initialState = {
                 chatId: null,
             },
         ],
-        users: [
-            {
-                createdBy: null,
-                createdDate: "",
-                updatedBy: null,
-                updatedDate: "",
-                id: null,
-                fullName: "",
-                email: "",
-                profilePicture: "",
-            },
-        ],
+        users: [],
     },
 };
 
