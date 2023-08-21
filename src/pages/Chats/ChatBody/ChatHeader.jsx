@@ -1,26 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import { Typography, Box, Avatar } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { resetCurrentChat } from "../../../redux/chat.slice/chat.slice";
-import {
-    getFriends,
-    setFriends,
-    setUser,
-    getUser,
-} from "../../../redux/user.slice/user.slice";
+import { getFriends, setFriends, setUser, getUser } from "../../../redux/user.slice/user.slice";
 
-function ChatHeader() {
+function ChatHeader({ closeMenu }) {
+    const location = useLocation();
     const dispatch = useDispatch();
     const theme = useTheme();
-    const { fullName, profilePicture } = useSelector(
-        (state) => state.chat.currentChatCompanion
-    );
+    const { fullName, profilePicture } = useSelector((state) => state.chat.currentChatCompanion);
     const authUser = useSelector((state) => state.user.authorizedUser);
-    const currentChatCompanion = useSelector(
-        (state) => state.chat.currentChatCompanion
-    );
+    const currentChatCompanion = useSelector((state) => state.chat.currentChatCompanion);
 
     function lookFriendPage(id) {
         const userFriendsResponse = dispatch(getFriends(id));
@@ -45,6 +37,10 @@ function ChatHeader() {
                 })
                 .catch((error) => console.log(error.message));
         }
+        dispatch(resetCurrentChat());
+        if (location.pathname !== "/chats") {
+            closeMenu();
+        }
     }
 
     return (
@@ -56,8 +52,10 @@ function ChatHeader() {
                 top: 0,
                 zIndex: 2,
                 backgroundColor: theme.palette.backgroundColor.section,
+                width: "100%",
                 p: 2,
-            }}>
+            }}
+        >
             <Link
                 onClick={() => lookFriendPage(currentChatCompanion.userId)}
                 to="/profile"
@@ -65,16 +63,15 @@ function ChatHeader() {
                     display: "flex",
                     alignItems: "center",
                     gap: 8,
-                }}>
+                }}
+            >
                 <Avatar
                     className="search__user-avatar"
                     sx={{ minWidth: "40px", minHeight: "40px" }}
                     alt="user icon"
                     src={profilePicture}
                 />
-                <Typography sx={{ color: theme.palette.textColor.main }}>
-                    {fullName}
-                </Typography>
+                <Typography sx={{ color: theme.palette.textColor.main }}>{fullName}</Typography>
             </Link>
             <Avatar
                 sx={{
@@ -84,11 +81,11 @@ function ChatHeader() {
                     cursor: "pointer",
                     transitionDuration: "0.5s",
                     "&:hover": {
-                        backgroundColor:
-                            theme.palette.buttonColor.backgroundHover,
+                        backgroundColor: theme.palette.buttonColor.backgroundHover,
                     },
                 }}
-                onClick={() => dispatch(resetCurrentChat())}>
+                onClick={() => dispatch(resetCurrentChat())}
+            >
                 <CloseIcon
                     sx={{
                         color: theme.palette.textColor.content,
