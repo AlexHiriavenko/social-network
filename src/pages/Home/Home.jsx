@@ -43,7 +43,7 @@ function Home() {
 
         }
 
-      //  window.setInterval(renewToken, 1000000)
+       // window.setInterval(renewToken, 60000)
         if (
             !localStorage.getItem("authorizedUser") &&
             localStorage.getItem("auth")
@@ -101,11 +101,11 @@ function Home() {
             )
         );
 
-     //   return function () {
+       //   return function () {
 
-        //    window.clearInterval(renewToken)
+        //      window.clearInterval(renewToken)
 
-       // }
+       //   }
     }, [isLoggedIn]);
 
     return (

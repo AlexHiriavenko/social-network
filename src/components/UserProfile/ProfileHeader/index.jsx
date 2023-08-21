@@ -212,12 +212,15 @@ export default function ProfileHeader() {
     const userFriendsResponse = dispatch(getFriends(id));
     userFriendsResponse
       .then((data) => {
-        dispatch(setFriends(data.payload));
-        localStorage.setItem("friends", JSON.stringify(data.payload));
+        if(data.payload){
+          dispatch(setFriends(data.payload));
+          localStorage.setItem("friends", JSON.stringify(data.payload));
+        }
+
       })
       .catch((error) => console.log(error.message));
     // checking if the user is authorized
-    if (id === authUser.id) {
+    if (id === authUser?.id) {
       dispatch(setUser(authUser));
       localStorage.setItem("user", JSON.stringify(authUser));
       navigate("/profile");
@@ -226,8 +229,11 @@ export default function ProfileHeader() {
       const userResponse = dispatch(getUser(id));
       userResponse
         .then((data) => {
-          dispatch(setUser(data.payload));
-          localStorage.setItem("user", JSON.stringify(data.payload));
+          if(data.payload){
+            dispatch(setUser(data.payload));
+            localStorage.setItem("user", JSON.stringify(data.payload));
+          }
+
           navigate("/profile");
           window.scrollTo({ top: 0, behavior: "smooth" });
         })
@@ -236,21 +242,24 @@ export default function ProfileHeader() {
   }
   // UseEffect
   useEffect(() => {
-    setAuthorized(user.isAuthorized);
+    if(user){
+      setAuthorized(user?.isAuthorized);
+    }
+
   }, [user]);
   useEffect(() => {
-    const acceptedFriendsArray = userFriends.filter(
+    const acceptedFriendsArray =  userFriends.length>0 ? userFriends.filter(
       (friendItem) => friendItem?.status === "accepted"
-    );
+    ) :[];
     setAcceptedFriends(acceptedFriendsArray);
   }, [userFriends]);
   return (
     <StyledProfileHeader>
       <ProfileContainer>
         <StyledProfileBackgroundWrapper>
-          {user && user.profileBackgroundPicture && (
+          {user && user?.profileBackgroundPicture && (
             <StyledProfileBackgroundPicture
-              src={user.profileBackgroundPicture}
+              src={user?.profileBackgroundPicture}
               alt="profile_background_picture"
             />
           )}
@@ -271,8 +280,8 @@ export default function ProfileHeader() {
           <StyledProfileUserPictureWrapper>
             <StyledProfileUserPicture
               src={
-                user && user.profilePicture
-                  ? user.profilePicture
+                user && user?.profilePicture
+                  ? user?.profilePicture
                   : "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
               }
               alt="profile_picture"
@@ -287,7 +296,7 @@ export default function ProfileHeader() {
           </StyledProfileUserPictureWrapper>
           <StyledProfileUserInfo>
             <StyledProfileUserName>
-              {user ? user.fullName : ""}
+              {user ? user?.fullName : ""}
             </StyledProfileUserName>
             <StyledProfileUserFriends href="#">
               Friends: {acceptedFriends.length}
@@ -299,11 +308,11 @@ export default function ProfileHeader() {
               {acceptedFriends.map((friendItem, index) => {
                 return (
                   <Avatar
-                    alt={friendItem.friend.fullName}
-                    src={friendItem.friend.profilePicture}
+                    alt={friendItem?.friend?.fullName}
+                    src={friendItem?.friend?.profilePicture}
                     key={index}
-                    title={friendItem.friend.fullName}
-                    onClick={() => lookUser(friendItem.friend.id)}
+                    title={friendItem?.friend?.fullName}
+                    onClick={() => lookUser(friendItem?.friend?.id)}
                   />
                 );
               })}
