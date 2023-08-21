@@ -18,6 +18,7 @@ import {
 } from "../../redux/user.slice/user.slice.js";
 import { getPosts, setPosts } from "../../redux/post.slice/post.slice.js";
 
+
 function Home() {
     const theme = useTheme();
 
@@ -37,10 +38,12 @@ function Home() {
     useEffect(() => {
         console.log(JSON.parse(localStorage.getItem("token")) == "out");
         if (JSON.parse(localStorage.getItem("token")) == "out") {
-            dispatch(loginGoogle());
+            (async()=>{await  dispatch(loginGoogle());} )()
+
+
         }
 
-        window.setInterval(renewToken, 1000000)
+      //  window.setInterval(renewToken, 1000000)
         if (
             !localStorage.getItem("authorizedUser") &&
             localStorage.getItem("auth")
@@ -98,11 +101,11 @@ function Home() {
             )
         );
 
-        return function () {
+     //   return function () {
 
-            window.clearInterval(renewToken)
+        //    window.clearInterval(renewToken)
 
-        }
+       // }
     }, [isLoggedIn]);
 
     return (

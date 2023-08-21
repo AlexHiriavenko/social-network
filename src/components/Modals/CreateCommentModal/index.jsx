@@ -8,7 +8,7 @@ import { BlockUserImage } from "../../UserProfile/StyledComponents/ContentBlock/
 import { useFormik } from "formik";
 import SendIcon from '@mui/icons-material/Send';
 import Comment from "../../Comment";
-import { commentPost, getPost, setPost, setPosts } from "../../../redux/post.slice/post.slice";
+import { commentPost, getPost, setPost, setPosts, setVisiblePosts } from "../../../redux/post.slice/post.slice";
 import { useEffect, useState } from "react";
 
 const mockUser = {
@@ -137,7 +137,7 @@ export default function CreateCommentModal() {
   // const postId = useSelector((state) => state.modal.commentPost.openedPostId);
   const authUser = useSelector((state) => state.user.authorizedUser);
   const handleClose = () => dispatch(closeCreateCommentModal());
-  const allPosts = useSelector((state) => state.post.allPosts);
+  const visiblePosts = useSelector((state) => state.post.visiblePosts);
 
 
 
@@ -153,25 +153,25 @@ export default function CreateCommentModal() {
       userName: `${mockUser.firstName} ${mockUser.lastName}`,
     },
     onSubmit: ({ content }) => {
+
       const id = post.id;
       const isCreatedResponse = dispatch(commentPost({ id, content }));
       isCreatedResponse.then(data => {
-        console.log(data.payload);
         if (data.payload) {
           setComments([...comments, createComment(content)])
-          const postIndex = allPosts.findIndex(p => p.id === post.id);
+          const postIndex = visiblePosts.findIndex(p => p.id === post.id);
           if (postIndex !== -1) {
             const updatedPost = {
-              ...allPosts[postIndex],
+              ...visiblePosts[postIndex],
               comments: [
-                ...allPosts[postIndex].comments,
+                ...visiblePosts[postIndex].comments,
                 createComment(content),
               ],
             };
 
-            const updatedAllPosts = [...allPosts];
+            const updatedAllPosts = [...visiblePosts];
             updatedAllPosts[postIndex] = updatedPost;
-            dispatch(setPosts(updatedAllPosts));
+            dispatch(setVisiblePosts(updatedAllPosts));
           }
           formik.setFieldValue("content", "");
         }

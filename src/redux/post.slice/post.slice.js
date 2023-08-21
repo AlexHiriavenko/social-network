@@ -4,7 +4,6 @@ import instance from "../../instance";
 //Получение всех постов
 export const getPosts = createAsyncThunk("Posts/getPosts", async function () {
   const { data } = await instance.get("/posts");
-  // console.log(data);
   return data;
 });
 
@@ -13,7 +12,6 @@ export const getPageblePosts = createAsyncThunk(
   "Posts/getPageblePosts",
   async function ({ page, size }) {
     const { data } = await instance.get(`/posts/${page}/${size}`);
-    console.log(data);
     return data;
   }
 );
@@ -21,7 +19,6 @@ export const getPageblePosts = createAsyncThunk(
 //Получение поста по айди
 export const getPost = createAsyncThunk("Posts/getPost", async function (id) {
   const { data } = await instance.get(`/posts/${id}`);
-  // console.log(data);
   return data;
 });
 
@@ -46,14 +43,12 @@ export const getPostsByUserId = createAsyncThunk(
   "Posts/getPostsByUserId",
   async function (id) {
     const { data } = await instance.get(`/users/${id}/posts`);
-    console.log(data);
     return data;
   }
 );
 
 export const likePost = createAsyncThunk("Posts/likePost", async function (id) {
   const { data } = await instance.put(`/posts/like-post/${id}`);
-  console.log(data);
   return data;
 });
 
@@ -61,18 +56,16 @@ export const removeLikePost = createAsyncThunk(
   "Posts/likePost",
   async function (id) {
     const { data } = await instance.put(`/posts/remove-like-post/${id}`);
-    console.log(data);
     return data;
   }
 );
 
 export const repostPost = createAsyncThunk(
   "Posts/repostPost",
-  async function (id, content) {
+  async function ({ id, content }) {
     const { data } = await instance.post(`/posts/repost/${id}`, {
       content: content,
     });
-    console.log(data);
     return data;
   }
 );
@@ -80,12 +73,9 @@ export const repostPost = createAsyncThunk(
 export const commentPost = createAsyncThunk(
   "Posts/commentPost",
   async function ({ id, content }) {
-    console.log(id);
-    console.log(content);
     const { data } = await instance.post(`/posts/comment/${id}`, {
       content: content,
     });
-    console.log(data);
     return data;
   }
 );
@@ -99,6 +89,7 @@ const postSlice = createSlice({
   initialState: {
     allPosts: [],
     allUserPosts: [],
+    visiblePosts: [],
     post: {},
   },
   reducers: {
@@ -111,13 +102,16 @@ const postSlice = createSlice({
     setUserPosts: (state, action) => {
       state.allUserPosts = action.payload;
     },
+    setVisiblePosts: (state, action) => {
+      state.visiblePosts = action.payload;
+    },
     setPost: (state, action) => {
       state.post = action.payload;
     },
   },
 });
 
-export const { createPost, deletePost, setPosts, setUserPosts, setPost } =
+export const { createPost, deletePost, setPosts, setUserPosts, setPost, setVisiblePosts } =
   postSlice.actions;
 
 export default postSlice.reducer;

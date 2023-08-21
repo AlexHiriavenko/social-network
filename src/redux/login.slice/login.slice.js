@@ -10,7 +10,7 @@ export const logIn = createAsyncThunk(
 
     async function ({ email, password }) {
         const token = await axios.post(
-            `https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/login`,
+            `${import.meta.env.VITE_APP_API_URL}/api/auth/login`,
             { email: email, password: password }
         );
         localStorage.setItem("token", JSON.stringify(token.data.accessToken));
@@ -20,7 +20,7 @@ export const logIn = createAsyncThunk(
         localStorage.setItem("loggedIn", login);
         let auth = parseJwt(token.data.accessToken);
         localStorage.setItem("auth", JSON.stringify(auth));
-        console.log(token);
+
         return token;
     }
 );
@@ -29,7 +29,7 @@ export const getAccessToken = createAsyncThunk(
     async function () {
         const refresh = JSON.parse(localStorage.getItem("refresh"))
         let token = await axios.post(
-            `https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/token`,
+            `${import.meta.env.VITE_APP_API_URL}/api/auth/token`,
             { refreshToken: refresh }
         );
         //document.cookie = `token=${token.data.accessToken}`;
@@ -42,7 +42,7 @@ export const sendEmail = createAsyncThunk(
     "Login/sendEmail",
     async function (email) {
         await axios.post(
-            `https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/passwordLetter`,
+            `${import.meta.env.VITE_APP_API_URL}/api/auth/passwordLetter`,
             { email: email }
         );
     }
@@ -51,7 +51,7 @@ export const changePassword = createAsyncThunk(
     "Login/changePassword",
     async function ({ code, newPassword }) {
         const { status } = await axios.put(
-            `https://social-network-backend-2782464b9c31.herokuapp.com/api/auth`,
+            `${import.meta.env.VITE_APP_API_URL}/api/auth`,
             { code: code, newPassword: newPassword }
         );
         return status;
@@ -89,7 +89,7 @@ export const loginGoogle = createAsyncThunk(
     "Login/loginGoogle",
     async function () {
         let token = await axios.get(
-            "https://social-network-backend-2782464b9c31.herokuapp.com/api/oauth2/authorization/google"
+            `${import.meta.env.VITE_APP_API_URL}/api/oauth2/authorization/google`
         );
         document.cookie = `token=${token.data.accessToken}`;
         document.cookie = `refresh=${token.data.refreshToken}`;
@@ -99,7 +99,7 @@ export const loginGoogle = createAsyncThunk(
         localStorage.setItem("authorizedUser", JSON.stringify({...data,isAuthorized:true}));
         localStorage.setItem("user", JSON.stringify(data));
 
-        console.log(token);
+
     }
 );
 const LoginSlice = createSlice({
