@@ -77,7 +77,7 @@ export default function EditChildModal(props) {
   }
   function savePicture() {
     let id = JSON.parse(localStorage.getItem('authorizedUser')).id
-
+       console.log(multipartFile.get("multipartFile"))
     if(title === "Select profile picture"){
       dispatch(uploadAvatar({multipartFile: multipartFile, id:id}))
     }
