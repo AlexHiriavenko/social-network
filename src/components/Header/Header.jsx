@@ -14,7 +14,11 @@ function Header() {
             position="sticky"
             color="inherit"
             sx={{
-                minHeight: "10vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "65px",
+                minHeight: "5%",
                 backgroundColor: theme.palette.backgroundColor.section,
                 boxShadow: theme.palette.shadow.down,
             }}

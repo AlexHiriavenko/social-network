@@ -17,6 +17,8 @@ function HeaderMessageOptions() {
             ? setAnchorMessageMenu(null)
             : setAnchorMessageMenu(document.querySelector(".anchor-menu"));
 
+    const closeMenu = () => setAnchorMessageMenu(null);
+
     const open = useSelector((state) => state.chat.isOpened);
     const { messages } = useSelector((state) => state.chat.currentChat);
     const chatRef = useRef(null);
@@ -57,7 +59,7 @@ function HeaderMessageOptions() {
             >
                 {!open && <MessengerHeader toggleMenu={toggleMenu} />}
                 {!open && <ChatsList />}
-                {open && <ChatHeader />}
+                {open && <ChatHeader closeMenu={closeMenu} />}
                 {open && <Chat />}
             </Menu>
         </>

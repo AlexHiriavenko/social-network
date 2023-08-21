@@ -29,10 +29,14 @@ const ChatBody = () => {
 
     if (messages[0].createdBy) {
         return (
-            <Box ref={chatFormRef} sx={{ pb: 2, pr: 2, pl: 1 }} className="chat-body">
-                <ChatHeader />
-                <ChatContent />
-                <ChatFooter />
+            <Box ref={chatFormRef} sx={{ pb: 2 }} className="chat-body">
+                <ChatHeader closeMenu={() => null} />
+                <Box sx={{ maxWidth: "1000px" }}>
+                    <Box sx={{ pl: 2, pr: 2 }}>
+                        <ChatContent />
+                        <ChatFooter />
+                    </Box>
+                </Box>
             </Box>
         );
     } else {

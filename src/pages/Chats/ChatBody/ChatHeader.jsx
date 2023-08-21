@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import { Typography, Box, Avatar } from "@mui/material";
@@ -6,7 +6,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { resetCurrentChat } from "../../../redux/chat.slice/chat.slice";
 import { getFriends, setFriends, setUser, getUser } from "../../../redux/user.slice/user.slice";
 
-function ChatHeader() {
+function ChatHeader({ closeMenu }) {
+    const location = useLocation();
     const dispatch = useDispatch();
     const theme = useTheme();
     const { fullName, profilePicture } = useSelector((state) => state.chat.currentChatCompanion);
@@ -36,6 +37,10 @@ function ChatHeader() {
                 })
                 .catch((error) => console.log(error.message));
         }
+        dispatch(resetCurrentChat());
+        if (location.pathname !== "/chats") {
+            closeMenu();
+        }
     }
 
     return (
@@ -46,7 +51,7 @@ function ChatHeader() {
                 position: "sticky",
                 top: 0,
                 zIndex: 2,
-                backgroundColor: theme.palette.backgroundColor.page,
+                backgroundColor: theme.palette.backgroundColor.section,
                 width: "100%",
                 p: 2,
             }}

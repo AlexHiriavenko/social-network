@@ -85,7 +85,7 @@ export default function EditMessageModal() {
                 <StyledModalCloseButton onClick={handleClose}>
                     <StyledModalCloseButtonLine></StyledModalCloseButtonLine>
                 </StyledModalCloseButton>
-                <StyledModalTitle>Change message content</StyledModalTitle>
+                <StyledModalTitle>Change message</StyledModalTitle>
                 <StyledModalSeparator />
                 <StyledContentWrapper>
                     <StyledTextField

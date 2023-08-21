@@ -57,14 +57,13 @@ function ChatFooter() {
                 gap: 2,
                 alignItems: "center",
                 mt: 2,
-                pl: 1,
-                pr: 1,
                 mb: 1,
             }}
         >
             <StyledTextField
                 label="your message"
                 variant="outlined"
+                multiline
                 inputRef={inputRef}
                 onKeyDown={handleKeyDown}
             />

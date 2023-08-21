@@ -30,6 +30,7 @@ function HomeAsideRight() {
             <List>
                 <ListItem
                     sx={{
+                        mt: 2,
                         ":hover": {
                             backgroundColor: theme.palette.hoverColor.secondary,
                         },
@@ -63,6 +64,7 @@ function HomeAsideRight() {
                 </ListItem>
                 <ListItem
                     sx={{
+                        mt: 2,
                         ":hover": {
                             backgroundColor: theme.palette.hoverColor.secondary,
                         },

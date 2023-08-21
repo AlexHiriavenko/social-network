@@ -20,7 +20,7 @@ function Chats() {
         <div
             style={{
                 backgroundColor: theme.palette.backgroundColor.card,
-                height: "90vh",
+                height: "calc(100% - 65px)",
                 overflow: "hidden",
             }}
         >
@@ -29,7 +29,7 @@ function Chats() {
                 style={{
                     display: "flex",
                     backgroundColor: theme.palette.backgroundColor.card,
-                    minHeight: "89vh",
+                    height: "calc(100% - 65px)",
                 }}
             >
                 <Sidebar>
