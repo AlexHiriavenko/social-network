@@ -161,12 +161,13 @@ export default function LogIn() {
                           `${import.meta.env.VITE_APP_API_URL}/oauth2/authorization/google`
                         }
                         onClick={async () => {
+                          dispatch(setLogin());
                           await axios.post(
                               `${import.meta.env.VITE_APP_API_URL}/api/auth`,
                               { email: url }
                           );
                           await  dispatch(loginGoogle());
-                          dispatch(setLogin());
+
                         }}>
                       Login with Google
                     </a>
