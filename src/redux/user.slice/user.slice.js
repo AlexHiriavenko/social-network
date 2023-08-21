@@ -23,14 +23,7 @@ export const getProfile = createAsyncThunk(
         return data;
     }
 );
-export const baseFunc = createAsyncThunk(
-    "Users/baseFunc",
-    async function () {
-        const result = await instance.get(`/users/profile`);
 
-        return result;
-    }
-);
 //Редактирование юзера
 export const uploadAvatar = createAsyncThunk(
     "Users/uploadAvatar",

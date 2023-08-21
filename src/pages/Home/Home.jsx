@@ -14,7 +14,7 @@ import {
     getProfile,
     getUsers,
     setAuthorizedUser,
-    setUsers, baseFunc,
+    setUsers,
 } from "../../redux/user.slice/user.slice.js";
 import { getPosts, setPosts } from "../../redux/post.slice/post.slice.js";
 
@@ -33,17 +33,7 @@ function Home() {
             dispatch(logOut())
         }
     };
-    useEffect(() => {
-        const authorizedUserResponse = dispatch(
-            //  getUser(JSON.parse(auth).id)
-            baseFunc()
-        );
-        authorizedUserResponse
-            .then(result =>{
 
-               console.log(result)
-            })
-    },[])
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
     useEffect(() => {
         console.log(JSON.parse(localStorage.getItem("token")) == "out");
