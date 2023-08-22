@@ -23,6 +23,7 @@ instance.interceptors.response.use((r) => r,
                 {refreshToken: refresh}
             ).then(({data}) => {
                 console.log(data)
+
                 if(data.accessToken) {
                     localStorage.setItem("token", JSON.stringify(data.accessToken))
                 }
