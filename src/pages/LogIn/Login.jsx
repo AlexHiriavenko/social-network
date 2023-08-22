@@ -162,7 +162,9 @@ export default function LogIn() {
                         }
                         onClick={async () => {
                           dispatch(setLogin());
+
                           dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
+
                           await axios.post(
                               `${import.meta.env.VITE_APP_API_URL}/api/auth`,
                               { email: url }
