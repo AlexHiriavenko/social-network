@@ -14,8 +14,8 @@ import ForgotForm from "./ForgotForm";
 import { useDispatch, useSelector } from "react-redux";
 import {logIn, loginGoogle, setLogin} from "../../redux/login.slice/login.slice";
 import { useNavigate } from "react-router-dom";
-import { readCookie } from "../../readCookie.js";
 import axios from "axios";
+import {setAuthorizedUser} from "../../redux/user.slice/user.slice.js";
 export default function LogIn() {
   const navigate = useNavigate();
   // const token = useSelector(store => store.login.token)
@@ -162,6 +162,9 @@ export default function LogIn() {
                         }
                         onClick={async () => {
                           dispatch(setLogin());
+
+                          dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
+
                           await axios.post(
                               `${import.meta.env.VITE_APP_API_URL}/api/auth`,
                               { email: url }
