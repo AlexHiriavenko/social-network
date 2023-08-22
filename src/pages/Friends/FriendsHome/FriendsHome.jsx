@@ -5,14 +5,14 @@ import Friend from "../../../components/Friends/Friend/Friend";
 import { Box, Divider } from "@mui/material";
 import { ButtonStyled } from '../../../components/StyledComponents/Buttons';
 import { getFriendList, getFriendshipRequests, getFriendSuggestions,  createFriendship, updateFriendship } from '../../../redux/friends/actionCreators';
-import { removeSuggestions, setCurrentFriend, } from '../../../redux/friends/friends.slise';
+import { removeSuggestions, } from '../../../redux/friends/friends.slise';
 import SideBarList from '../SideBarList'
 import SideBarHeader from '../../../components/Friends/SideBar/SideBarHeader';
 import { useTheme } from '@mui/material/styles';
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 import {SidebarStyled} from '../../../components/StyledComponents/SideBarFriends'
-import { setFriends, setUser, getUser, getFriends } from "../../../redux/user.slice/user.slice";
 import { SectorTitle, SectorHeader, FriendsContainer, SectionWraper, H1Styled, LinkStyled, SideBarWrapper } from '../../../components/StyledComponents/FriendPageComponents';
+import { handleLinkClick } from '../handleClickLink';
 
 
 function FriendsHome() {
@@ -50,37 +50,8 @@ function FriendsHome() {
         dispatch(removeSuggestions(payload));
     }
 
-    const handleLinkClick = (friend) => {
-        const id  = friend.id;
-        dispatch(setCurrentFriend({}));
-        dispatch(setUser({}));
-
-        // get user friends
-    const userFriendsResponse = dispatch(getFriends(id));
-        userFriendsResponse
-            .then((data) => {
-                const friends = data.payload.filter(el => el.status === 'accepted');
-                dispatch(setFriends(friends));
-                localStorage.setItem("friends", JSON.stringify(friends));
-            })
-            .catch((error) => console.log(error.message));
-
-        // checking if the user is authorized
-        if (id === authUser.id) {
-            dispatch(setUser(authUser));
-            localStorage.setItem("user", JSON.stringify(authUser));
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        } else {
-            const userResponse = dispatch(getUser(id));
-            userResponse
-            .then((data) => {
-                dispatch(setUser(data.payload));
-                localStorage.setItem("user", JSON.stringify(data.payload));
-                window.scrollTo({ top: 0, behavior: "smooth" });
-            })
-            .catch((error) => error.message);
-        }
-        dispatch(setCurrentFriend(friend));
+    const handleClickLinklocal = (friend) => {
+        handleLinkClick(dispatch, friend, authUser);
     }
     
 
@@ -108,7 +79,7 @@ function FriendsHome() {
                         friendsRequestsToUser.map(fr => <Friend 
                             key={fr.id}
                             referenseForLinks={"/friends/requests/"}
-                            handleLinkClick={() => handleLinkClick(fr.user)}
+                            handleLinkClick={() => handleClickLinklocal(fr.user)}
                             mutualFriends={fr.mutualFriends}
                             isAvatarMutualFriend={true}
                             friend={fr.user} 
@@ -134,7 +105,7 @@ function FriendsHome() {
                         friendSuggestions &&  friendSuggestions.map(fr => <Friend 
                             key={fr.friend.id}
                             referenseForLinks={"/friends/suggestions/"}
-                            handleLinkClick={() => handleLinkClick(fr.friend)}
+                            handleLinkClick={() => handleClickLinklocal(fr.friend)}
                             mutualFriends={fr.mutualFriends}
                             isAvatarMutualFriend={true}
                             friend={fr.friend} 

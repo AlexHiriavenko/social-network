@@ -9,10 +9,11 @@ function Search(props) {
 
     const theme = useTheme();
 
-    const { placeholderText, initialValue, handleChangeValue } = props;
+    const { placeholderText, handleChangeValue } = props;
 
     const [inputValue, setInputValue] = useState('');
-    const timeoutRef = useRef(null);    
+    const timeoutRef = useRef(null);  
+    const valueRef = useRef(null);  
 
     function debounce(f, t) {
         clearTimeout(timeoutRef.current);
@@ -21,12 +22,13 @@ function Search(props) {
 
     const handleSearchImput = (event) => {
         setInputValue(event.target.value);
+        useRef.current = event.target.value;  
         debounce(() => handleChangeValue(event.target.value), 800);
     }
 
     useEffect(() => {
-        setInputValue(initialValue);
-    }, [initialValue])
+            setInputValue(valueRef.current);
+    }, [])
 
     return(
         <>

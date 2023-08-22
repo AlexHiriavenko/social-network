@@ -2,10 +2,10 @@
 import styled from "@emotion/styled";
 
 export const SidebarStyled = styled('aside')(({theme})=>({
-    height: 'calc(100vh - 64px)',
+    height: 'calc(100vh - 69px)',
     boxSizing: 'content-box',
-    overflowY: 'scroll',
-    overflowX: 'hidden',
+/*     overflowY: 'scroll',
+    overflowX: 'hidden', */
     width: '360px',
     minWidth: '360px',
     backgroundColor: theme.palette.backgroundColor.section,

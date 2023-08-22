@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 import { getFriendList, getFriendsByName } from "../../../redux/friends/actionCreators";
 import SideBarFriends from "../SideBarForFriends";
 import { Profile } from "../../index";
-import { setCurrentFriend, setSearchValue, removeFriend } from "../../../redux/friends/friends.slise";
+import { setCurrentFriend, removeFriend } from "../../../redux/friends/friends.slise";
 import FriendEmptyPage from  "../FriendEmptyPage";
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 import { updateFriendship } from '../../../redux/friends/actionCreators';
@@ -16,7 +16,6 @@ import { setUser } from "../../../redux/user.slice/user.slice";
 function UserFriendsPage() {
 
     const dispatch = useDispatch();
-    const inputValue = useSelector((store)=>store.friends.searchValue, shallowEqual);
     const friends = useSelector((store)=>store.friends.friendsList, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
     const userFriends = (friends.length > 0 
@@ -35,17 +34,12 @@ function UserFriendsPage() {
         dispatch(getFriendList());
         return () => {
             dispatch(setCurrentFriend({}));
-            dispatch(setSearchValue(''));
           };
     },[dispatch])
 
     const handleChangeValue = useCallback((value) => {
-        if(inputValue === value){
-            return;
-        }
-        dispatch(setSearchValue(value));
         dispatch(getFriendsByName({friendName: value}));
-    }, [dispatch, inputValue])
+    }, [dispatch])
 
     const handleClickUnfriend = useCallback((friend) => {
         const payload = {id: friend.id, status: "unfriended"}
@@ -89,7 +83,6 @@ function UserFriendsPage() {
                                     search={true}
                                     handleChangeValue={handleChangeValue} 
                                     placeholderText='Search Friends'
-                                    initialValue={inputValue}
                                     isMoreMenuButton={true}
                                     handleClickUnfriend={handleClickUnfriend}/>
                 <SectionWraper>
