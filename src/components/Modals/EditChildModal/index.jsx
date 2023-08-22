@@ -87,8 +87,7 @@ export default function EditChildModal(props) {
     const editUser =  dispatch(getProfile())
     editUser.then(result =>{
       console.log(result.payload)
-        if(result.payload
-        ) {
+        if(result.payload) {
             localStorage.setItem("authorizedUser", JSON.stringify({...result.payload, isAuthorized: true}))
             localStorage.setItem("user", JSON.stringify({...result.payload, isAuthorized: true}))
             dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
