@@ -58,6 +58,8 @@ function HomeAsideLeft() {
                         className="header__menu-item-link"
                         to={"/profile"}
                         onClick={showAuthorizedUser}>
+                        {
+                            authorizedUser&&
                         <Avatar
                             sx={{ minWidth: "40px", minHeight: "40px" }}
                             alt="user icon"
@@ -66,7 +68,7 @@ function HomeAsideLeft() {
                                     ? authorizedUser.profilePicture
                                     : ""
                             }
-                        />
+                        /> }
                         <Typography
                             fontWeight={700}
                             fontSize={15}
@@ -76,7 +78,7 @@ function HomeAsideLeft() {
                             }}>
                             {authorizedUser
                                 ? authorizedUser.fullName
-                                : "uknown person"}
+                                : null}
                         </Typography>
                     </Link>
                 </ListItem>

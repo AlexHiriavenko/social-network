@@ -19,14 +19,24 @@ function Chats() {
     return (
         <div
             style={{
-                display: "flex",
                 backgroundColor: theme.palette.backgroundColor.card,
-                minHeight: "93.2%",
-            }}>
-            <Sidebar>
-                <UsersList />
-            </Sidebar>
-            <ChatBody />
+                height: "calc(100% - 65px)",
+                overflow: "hidden",
+            }}
+        >
+            <div
+                className="container-page"
+                style={{
+                    display: "flex",
+                    backgroundColor: theme.palette.backgroundColor.card,
+                    height: "calc(100% - 65px)",
+                }}
+            >
+                <Sidebar>
+                    <UsersList />
+                </Sidebar>
+                <ChatBody />
+            </div>
         </div>
     );
 }

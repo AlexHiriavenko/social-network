@@ -3,6 +3,7 @@
     display: flex;
     justify-content: center;
     height: 100%;
+
     @media (max-width: 700px) {
         display: none;
     }
@@ -15,6 +16,7 @@
     padding-top: 5px;
     padding-bottom: 5px;
     border-radius: 10px;
+
     &--active {
         @include center-flex;
         width: 25%;
@@ -22,6 +24,7 @@
         position: relative;
         padding-top: 0;
         padding-bottom: 0;
+
         &::after {
             content: "";
             position: absolute;
@@ -39,11 +42,28 @@
 .header__options-drop-menu {
     width: 360px;
     max-width: 90%;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: darkgray;
+        /* цвет зоны отслеживания */
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: lightgray;
+        /* цвет бегунка */
+        border-radius: 20px;
+        /* округлось бегунка */
+    }
 }
 
 .header__input {
     height: 40px;
     width: 240px;
+
     @media (max-width: 1100px) {
         width: 40px;
         height: 40px;
@@ -54,6 +74,7 @@
     border-radius: 50px;
     height: 40px;
     width: 280px;
+
     @media (max-width: 600px) {
         width: 240px;
     }
@@ -61,6 +82,7 @@
 
 .header__search-icon-wrap {
     border-radius: 50px;
+
     @media (max-width: 1100px) {
         justify-content: center;
         border-radius: 50%;
@@ -74,6 +96,7 @@
 .users-list {
     width: 100%;
     min-width: 100%;
+
     @media (max-width: 700px) {
         min-width: none;
         max-width: max-content;
@@ -83,6 +106,7 @@
 .search__list-item {
     width: 100%;
     max-width: 100%;
+
     @media (max-width: 700px) {
         max-width: max-content;
     }
@@ -94,6 +118,7 @@
     align-items: center;
     width: 100%;
     gap: 16px;
+
     @media (max-width: 700px) {
         max-width: max-content;
     }
@@ -123,6 +148,7 @@
     gap: 16px;
     align-items: center;
     width: 100%;
+
     &:visited {
         color: inherit;
     }

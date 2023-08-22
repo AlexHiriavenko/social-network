@@ -30,15 +30,17 @@ function UserMenu(props) {
             );
             authorizedUser = JSON.parse(localStorage.getItem("authorizedUser"));
         }
+        if(authorizedUser){
         dispatch(setUser(authorizedUser));
-        localStorage.setItem("user", JSON.stringify(authorizedUser));
+        localStorage.setItem("user", JSON.stringify(authorizedUser));}
         window.scrollTo({ top: 0, behavior: "smooth" });
         // get user friends
         const userFriendsResponse = dispatch(getFriends(authorizedUser.id));
         userFriendsResponse
             .then((data) => {
+                if(data.payload){
                 dispatch(setFriends(data.payload));
-                localStorage.setItem("friends", JSON.stringify(data.payload));
+                localStorage.setItem("friends", JSON.stringify(data.payload));}
             })
             .catch((error) => console.log(error.message));
     }

@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
-import { Modal, TextField } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Modal } from "@mui/material";
 import {
     StyledWrapModal,
     StyledContentWrapper,
@@ -19,7 +18,6 @@ import { getChat } from "../../../redux/chat.slice/chat.slice";
 
 export default function EditMessageModal() {
     const dispatch = useDispatch();
-    const theme = useTheme();
     const inputRef = useRef(null);
     const editMessageModalIsOpen = useSelector(
         (state) => state.modal.editMessage.isOpen
@@ -44,10 +42,10 @@ export default function EditMessageModal() {
             };
             inputRef.current.value = "";
             dispatch(editMessage(message))
-                .then(() => dispatch(getChat(currentChat.id)))
                 .then(() => {
                     dispatch(closeEditMessageModal());
-                });
+                })
+                .then(() => dispatch(getChat(currentChat.id)));
         }
     };
 
@@ -90,7 +88,7 @@ export default function EditMessageModal() {
                 <StyledModalCloseButton onClick={handleClose}>
                     <StyledModalCloseButtonLine></StyledModalCloseButtonLine>
                 </StyledModalCloseButton>
-                <StyledModalTitle>Change message content</StyledModalTitle>
+                <StyledModalTitle>Change message</StyledModalTitle>
                 <StyledModalSeparator />
                 <StyledContentWrapper>
                     <StyledTextField
