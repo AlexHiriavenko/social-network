@@ -1,4 +1,4 @@
-import { Typography, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { useEffect } from "react";
 import { getBirthdays } from '../../../redux/friends/actionCreators';
 import { shallowEqual, useDispatch, useSelector } from "react-redux";

@@ -12,8 +12,7 @@ function Search(props) {
     const { placeholderText, initialValue, handleChangeValue } = props;
 
     const [inputValue, setInputValue] = useState('');
-    const timeoutRef = useRef(null);
-    
+    const timeoutRef = useRef(null);    
 
     function debounce(f, t) {
         clearTimeout(timeoutRef.current);
