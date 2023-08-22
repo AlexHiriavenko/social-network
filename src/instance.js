@@ -24,9 +24,8 @@ instance.interceptors.response.use((r) => r,
             ).then(({data}) => {
                 console.log(data)
 
-                if(data.accessToken) {
                     localStorage.setItem("token", JSON.stringify(data.accessToken))
-                }
+
 
             })
                 .catch(err => {
