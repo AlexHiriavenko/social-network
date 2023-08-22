@@ -33,14 +33,15 @@ function SideBarList({activeItem}) {
         alignItems: 'center',
     })
 
-    const IconContainer = styled(Box)({
+    const IconContainer = styled(Box)(({activeelem}) => ({
         width: 36,
         height: 36,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: '50%'
-    })
+        borderRadius: '50%',
+        backgroundColor: activeelem === "true" ? theme.palette.backgroundColor.activeIcon : theme.palette.buttonColor.background,
+    }))
 
     const MenuItemName = styled(Typography)(({theme}) => ({
         fontWeight: 600,
@@ -61,7 +62,7 @@ function SideBarList({activeItem}) {
                         ? theme.palette.backgroundColor.hover 
                         : null}}}>
                     <MenuItemContent>
-                        <IconContainer data-path="Home" sx={{bgcolor: theme.palette.backgroundColor.activeIcon}}>
+                        <IconContainer data-path="Home" activeelem={activeItem ==="Home"? "true" : "false"}>
                             <SVGPeople color={activeItem ==="Home"? colorActiveSvg: colorBaseSvg} sx={{height: 36}}/>
                         </IconContainer>
                         <MenuItemName>
@@ -76,7 +77,7 @@ function SideBarList({activeItem}) {
                         ? theme.palette.backgroundColor.page 
                         : null}}}>
                     <MenuItemContent>
-                        <IconContainer data-path="requests" sx={{bgcolor: theme.palette.buttonColor.background}}>
+                        <IconContainer data-path="requests" activeelem={activeItem ==="requests"? "true" : "false"}>
                             <SVGpersonGo color={activeItem ==="requests" ? colorActiveSvg: colorBaseSvg}/>
                         </IconContainer>
                         <MenuItemName>
@@ -92,7 +93,7 @@ function SideBarList({activeItem}) {
                         ? theme.palette.backgroundColor.page 
                         : null}}}>
                     <MenuItemContent>
-                        <IconContainer data-path="suggestions" sx={{bgcolor: theme.palette.buttonColor.background}}>
+                        <IconContainer data-path="suggestions" activeelem={activeItem ==="suggestions"? "true" : "false"}>
                             <SVGpersonPlus color={activeItem ==="suggestions" ? colorActiveSvg: colorBaseSvg}/>
                         </IconContainer>
                         <MenuItemName>
@@ -108,7 +109,7 @@ function SideBarList({activeItem}) {
                         ? theme.palette.backgroundColor.page
                         : null}}}>
                     <MenuItemContent>
-                        <IconContainer data-path="allfriends" sx={{bgcolor: theme.palette.buttonColor.background}}>
+                        <IconContainer data-path="allfriends" activeelem={activeItem ==="allfriends"? "true" : "false"}>
                             <SVGFriendsList color={activeItem ==="allfriends" ? colorActiveSvg: colorBaseSvg}/>
                         </IconContainer>
                         <MenuItemName>
@@ -124,7 +125,7 @@ function SideBarList({activeItem}) {
                         ? theme.palette.backgroundColor.page 
                         : null}}}>
                     <MenuItemContent>
-                        <IconContainer data-path="birthdays" sx={{bgcolor: theme.palette.buttonColor.background}}>
+                        <IconContainer data-path="birthdays" activeelem={activeItem ==="birthdays"? "true" : "false"}>
                             <SVGBirthdays color={activeItem ==="birthdays"? colorActiveSvg: colorBaseSvg}/>
                         </IconContainer>
                         <MenuItemName>
