@@ -124,7 +124,8 @@ function SentFriendRequestsModal() {
             onClose={handleClose} 
             sx={{p:1, minWidth: '500px', 
                 backgroundColor: theme.palette.backgroundColor.section,
-                color: theme.palette.textColor.content, py: '12px'}}>
+                color: theme.palette.textColor.content, py: '12px',
+                position: 'fix'}}>
             <StyledModalTitle>Sent requests</StyledModalTitle>
                 <StyledModalCloseButton onClick={handleClose}>
                     <StyledModalCloseButtonLine/>
@@ -134,7 +135,13 @@ function SentFriendRequestsModal() {
         <DialogContent 
             sx={{backgroundColor: theme.palette.backgroundColor.section,
                 color: theme.palette.textColor.secondary,
-                px: 0}}>
+                px: 0,
+                maxHeight: '500px',
+                overflowY: 'scroll',
+                overflowX: 'hidden',
+                "&::-webkit-scrollbar": {
+                    width: "0",
+                  },}}>
             <>
             {sentRequests.length === 0 
                 && <Typography sx={{fontSize: '.9375rem', textAlign: 'center', lineHeight: 1.3333, py: '40px'}}>
