@@ -3,7 +3,7 @@ import { Box, Button, Modal, Typography } from "@mui/material";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import {setAuthorizedUser,setUser,uploadAvatar,uploadCoverPhoto,getProfile} from '../../../redux/user.slice/user.slice.js'
-
+import { closeEditProfileModal } from "../../../redux/modal.slice/modal.slice";
 import {
   StyledEditedPartButton,
   StyledModalBlock,
@@ -75,24 +75,27 @@ export default function EditChildModal(props) {
     setMultipartFile(formData)
     setSelectedImage(URL.createObjectURL(file));
   }
-  function savePicture() {
+ async  function savePicture() {
     let id = JSON.parse(localStorage.getItem('authorizedUser')).id
        console.log(multipartFile.get("multipartFile"))
     if(title === "Select profile picture"){
-      dispatch(uploadAvatar({multipartFile: multipartFile, id:id}))
+     await dispatch(uploadAvatar({multipartFile: multipartFile, id:id}))
     }
     else if(title === "Select cover picture"){
-      dispatch(uploadCoverPhoto({multipartFile: multipartFile, id:id}))
+     await dispatch(uploadCoverPhoto({multipartFile: multipartFile, id:id}))
     }
     const editUser =  dispatch(getProfile())
     editUser.then(result =>{
       console.log(result.payload)
-      localStorage.setItem("authorizedUser",JSON.stringify(result.payload))
-      localStorage.setItem("user",JSON.stringify(result.payload))
-      dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
-      dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
-
+        if(result.payload
+        ) {
+            localStorage.setItem("authorizedUser", JSON.stringify({...result.payload, isAuthorized: true}))
+            localStorage.setItem("user", JSON.stringify({...result.payload, isAuthorized: true}))
+            dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
+            dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
+        }
     })
+     dispatch(closeEditProfileModal())
   }
   return (
     <>
