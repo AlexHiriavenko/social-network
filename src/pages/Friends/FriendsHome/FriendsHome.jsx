@@ -2,18 +2,17 @@
 import React, {useEffect} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import Friend from "../../../components/Friends/Friend/Friend";
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import { ButtonStyled } from '../../../components/StyledComponents/Buttons';
 import { getFriendList, getFriendshipRequests, getFriendSuggestions,  createFriendship, updateFriendship } from '../../../redux/friends/actionCreators';
 import { removeSuggestions, setCurrentFriend, } from '../../../redux/friends/friends.slise';
-import styled from "@emotion/styled";
 import SideBarList from '../SideBarList'
 import SideBarHeader from '../../../components/Friends/SideBar/SideBarHeader';
-import { NavLink } from "react-router-dom";
 import { useTheme } from '@mui/material/styles';
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 import {SidebarStyled} from '../../../components/StyledComponents/SideBarFriends'
 import { setFriends, setUser, getUser, getFriends } from "../../../redux/user.slice/user.slice";
+import { SectorTitle, SectorHeader, FriendsContainer, SectionWraper, H1Styled, LinkStyled, SideBarWrapper } from '../../../components/StyledComponents/FriendPageComponents';
 
 
 function FriendsHome() {
@@ -83,63 +82,7 @@ function FriendsHome() {
         }
         dispatch(setCurrentFriend(friend));
     }
-
-    const SectorTitle = styled(Typography)(({theme}) => ({
-        padding: '16px 4px',
-        fontWeight: 700,
-        fontSize: '1.25rem',
-        lineHeight: 1.2,
-        textAlign: 'left',
-        color: theme.palette.textColor.content
-    }))
-
-    const SectorHeader = styled(Box)({
-        width:'100%',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    })
-
-    const FriendsContainer = styled(Box)({
-        width: '100%',
-        display: 'flex',
-        flexWrap: 'wrap',
-    }) 
-
-    const SectionWraper = styled(Box)(({theme}) => ({
-        width: '100%', 
-        display: 'flex', 
-        flexDirection: 'column', 
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingBottom: 0,
-        paddingTop: 0,
-        height: '100%',
-        boxSizing: 'content-box',
-        overflowY: 'scroll',
-        overflowX: 'hidden',
-        backgroundColor: theme.palette.backgroundColor.page,
-        "&::-webkit-scrollbar": {
-            width: 0,
-          },
-    }))
-
-    const H1Styled = styled('h1')(({theme}) => ({
-        fontWeight: 900,
-        fontSize: '1.5rem',
-        fontFamily: 'inherit',
-        color: theme.palette.textColor.content,
-    }))
-
-    const LinkStyled = styled(NavLink)(({theme}) => ({
-        fontFamily: 'inherit',
-        fontSize: '1.0625rem',
-        fontWeight: 400,
-        lineHeight: 1.1765,
-        paddingBottom: 1,
-        color: theme.palette.textColor.blueLink,
-        textDecoration: 'none'
-    }))
+    
 
     const theme = useTheme();
 
@@ -147,10 +90,12 @@ function FriendsHome() {
     <PageBoxFriendsWrapper>
         <PageBoxFriends>
             <SidebarStyled >
-                <SideBarHeader>
-                    <H1Styled>Friends</H1Styled>
-                </SideBarHeader>
-                <SideBarList  activeItem={"Home"}/>
+                <SideBarWrapper>
+                    <SideBarHeader>
+                        <H1Styled>Friends</H1Styled>
+                    </SideBarHeader>
+                    <SideBarList  activeItem={"Home"}/>
+                </SideBarWrapper>
             </SidebarStyled>         
             <SectionWraper>
             {friendsRequestsToUser.length > 0 && <Box sx={{px: '16px'}}>
