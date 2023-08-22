@@ -23,6 +23,7 @@ export const getProfile = createAsyncThunk(
         return data;
     }
 );
+
 //Редактирование юзера
 export const uploadAvatar = createAsyncThunk(
     "Users/uploadAvatar",

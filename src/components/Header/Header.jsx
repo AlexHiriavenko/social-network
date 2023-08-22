@@ -14,22 +14,24 @@ function Header() {
             position="sticky"
             color="inherit"
             sx={{
-                minHeight: "6.8%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "65px",
+                minHeight: "5%",
                 backgroundColor: theme.palette.backgroundColor.section,
                 boxShadow: theme.palette.shadow.down,
-            }}>
-            <Container
-                maxWidth="xl"
-                sx={{ pl: { xs: 1, sm: 2 }, pr: { xs: 1, sm: 2 } }}>
-                <Toolbar
-                    sx={{ display: "flex", justifyContent: "space-between" }}
-                    disableGutters>
+            }}
+        >
+            <Container maxWidth="xl" sx={{ pl: { xs: 1, sm: 2 }, pr: { xs: 1, sm: 2 } }}>
+                <Toolbar sx={{ display: "flex", justifyContent: "space-between" }} disableGutters>
                     <Box
                         sx={{
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                        }}>
+                        }}
+                    >
                         <HeaderLogo />
                         <Box sx={isDrawerOpen ? { visibility: "hidden" } : {}}>
                             <HeaderSearch />

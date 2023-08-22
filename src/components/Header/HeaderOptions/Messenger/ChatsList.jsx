@@ -3,15 +3,15 @@ import { useSelector, useDispatch } from "react-redux";
 import {
     getChat,
     setCurrentChatCompanion,
-    openPageChat,
-} from "../../../redux/chat.slice/chat.slice";
+    openChat,
+    getChatsParticipants,
+} from "../../../../redux/chat.slice/chat.slice";
 
 import { List, ListItem, Typography, Avatar, Box } from "@mui/material/";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-import { getChatsParticipants } from "../../../redux/chat.slice/chat.slice";
 
-function UsersList() {
+function ChatsList(props) {
     const dispatch = useDispatch();
     const theme = useTheme();
 
@@ -29,7 +29,7 @@ function UsersList() {
         const userId = +closestLi.id.slice(8);
         dispatch(setCurrentChatCompanion(chatParticipant(chatParticipants, userId)));
         dispatch(getChat(chatId));
-        dispatch(openPageChat());
+        dispatch(openChat());
     }
 
     return (
@@ -52,16 +52,22 @@ function UsersList() {
                                     backgroundColor: theme.palette.hoverColor.secondary,
                                 },
                             }}
-                            className="chats__list-item"
                         >
-                            <Link className="search__user-link">
+                            <Link
+                                style={{
+                                    display: "flex",
+                                    gap: "16px",
+                                    width: "100%",
+                                    alignItems: "center",
+                                }}
+                            >
                                 <Avatar
                                     className="search__user-avatar"
                                     sx={{ minWidth: "40px", minHeight: "40px" }}
                                     alt="user icon"
                                     src={profilePicture}
                                 ></Avatar>
-                                <Box className="searh__user-text">
+                                <Box>
                                     <Typography
                                         className="search__user-name"
                                         color={theme.palette.textColor.content}
@@ -90,4 +96,4 @@ function UsersList() {
     );
 }
 
-export default UsersList;
+export default ChatsList;

@@ -14,24 +14,25 @@ const instance = axios.create({
 instance.interceptors.response.use((r) => r,
     async function (error) {
         console.log(error.response.status === 400)
-        const refresh = JSON.parse(localStorage.getItem("refresh"))
-        if (error.response.status === 400) {
+        if(error.response.status === 401) {
+            const refresh = JSON.parse(localStorage.getItem("refresh"))
 
 
             return await axios.post(
                 `${import.meta.env.VITE_APP_API_URL}/api/auth/token`,
-                { refreshToken: refresh }
-            ).then(({ data }) => {
+                {refreshToken: refresh}
+            ).then(({data}) => {
                 console.log(data)
-                localStorage.setItem("token", JSON.stringify(data.accessToken))
+
+                    localStorage.setItem("token", JSON.stringify(data.accessToken))
 
 
             })
                 .catch(err => {
                     console.log(err)
                 });
-        }
 
+        }
         return Promise.reject(error);
 
 
