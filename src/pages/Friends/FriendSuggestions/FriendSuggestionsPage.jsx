@@ -42,6 +42,7 @@ function FriendSuggestionsPage() {
     }
 
     const handleClickRemoveSuggestion = (payload) => {
+        console.log(payload);
         if(user.id === payload.friend.id) {
             dispatch(setCurrentFriend({}));
             dispatch(setUser({}))

@@ -112,7 +112,6 @@ function Friend (props) {
         flexDirection: 'column',
         flexShrink: 1,
         justifyContent: 'center',
-
     })
 
     const handleMutualFriendClick = (payload) => {
