@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getFriendList, getFriendshipRequests, getFriendSuggestions, createFriendship, updateFriendship, getFriendsByName } from './actionCreators';
+import { getFriendList, getFriendshipRequests, getFriendSuggestions, createFriendship, updateFriendship, getFriendsByName, getBirthdays } from './actionCreators';
 
 
 const initialState = {
@@ -9,6 +9,7 @@ const initialState = {
   friendSuggestions: [],
   currentFriend: {},
   searchValue: '',
+  birthdays: [[]]
 };
 
 const friendsSlice = createSlice({
@@ -60,6 +61,9 @@ const friendsSlice = createSlice({
       if(action.payload.filter(el => el.id === state.currentFriend.id).length === 0) {
         state.currentFriend = {};
       }
+    },
+    [getBirthdays.fulfilled]: (state, action)=>{
+      state.birthdays = action.payload;
     },
   }
 });

@@ -204,6 +204,7 @@ export default function ProfileHeader() {
   // State
   const [mutualFriendsIsOpen, setMutualFriendsStatus] = useState(true);
   const [isAuthorized, setAuthorized] = useState(false);
+  const [acceptedFriends, setAcceptedFriends] = useState([]);
   // Functions
   const handleOpen = () => dispatch(openEditProfileModal());
   function lookUser(id) {
@@ -237,6 +238,12 @@ export default function ProfileHeader() {
   useEffect(() => {
     setAuthorized(user.isAuthorized);
   }, [user]);
+  useEffect(() => {
+    const acceptedFriendsArray = userFriends.filter(
+      (friendItem) => friendItem?.status === "accepted"
+    );
+    setAcceptedFriends(acceptedFriendsArray);
+  }, [userFriends]);
   return (
     <StyledProfileHeader>
       <ProfileContainer>
@@ -283,13 +290,13 @@ export default function ProfileHeader() {
               {user ? user.fullName : ""}
             </StyledProfileUserName>
             <StyledProfileUserFriends href="#">
-              Friends: {userFriends && userFriends.length}
+              Friends: {acceptedFriends.length}
             </StyledProfileUserFriends>
             <AvatarGroup
               max={6}
               sx={{ cursor: "pointer", justifyContent: "flex-end" }}
             >
-              {userFriends.map((friendItem, index) => {
+              {acceptedFriends.map((friendItem, index) => {
                 return (
                   <Avatar
                     alt={friendItem.friend.fullName}

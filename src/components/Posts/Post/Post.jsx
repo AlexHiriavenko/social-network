@@ -15,6 +15,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { getUser, setUser } from "../../../redux/user.slice/user.slice";
 import {
+  openCreateCommentModal,
   openCreateModal,
   setRepostToModal,
 } from "../../../redux/modal.slice/modal.slice";
@@ -280,10 +281,7 @@ export default function Post(props) {
   }, []);
   useEffect(() => {
     if (!parentId) return;
-    const parentPostResponse = dispatch(getPost(parentId?.id));
-    parentPostResponse
-      .then((data) => setRepost(data.payload))
-      .catch((error) => console.log(error.message));
+    setRepost(parentId);
   }, [parentId]);
   useEffect(() => {
     if (!authUser) return;
@@ -461,7 +459,7 @@ export default function Post(props) {
             )}
             <StyledPostButtonText>Like</StyledPostButtonText>
           </StyledPostButton>
-          <StyledPostButton>
+          <StyledPostButton onClick={handleOpenComment}>
             <ChatBubbleOutlineIcon sx={{ color: "#65676b" }} />{" "}
             <StyledPostButtonText>Comment</StyledPostButtonText>
           </StyledPostButton>

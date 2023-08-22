@@ -6,6 +6,7 @@ import {
   getPageblePosts,
   getPosts,
   setPosts,
+  setVisiblePosts,
 } from "../../redux/post.slice/post.slice.js";
 import { setAuthorizedUser } from "../../redux/user.slice/user.slice.js";
 import { useDispatch } from "react-redux";
@@ -16,14 +17,14 @@ function HomeMain() {
   const [fetching, setFetching] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   // Constants
-  const allPosts = useSelector((state) => state.post.allPosts);
+  const visiblePosts = useSelector((state) => state.post.visiblePosts);
   const dispatch = useDispatch();
   // Functions
   function handleScroll(e) {
     if (
       e.target.documentElement.scrollHeight -
-        (e.target.documentElement.scrollTop + window.innerHeight) <
-      10
+      (e.target.documentElement.scrollTop + window.innerHeight) <
+      250
     ) {
       setFetching(true);
     }
@@ -33,9 +34,9 @@ function HomeMain() {
     if (fetching) {
       dispatch(getPageblePosts({ page: currentPage, size: 3 }))
         .then((data) => {
-          console.log(data.payload);
           setCurrentPage(currentPage + 1);
           setMainPagePosts([...mainPagePosts, ...data.payload]);
+          dispatch(setVisiblePosts([...mainPagePosts, ...data.payload]));
         })
         .catch((error) => console.log(error))
         .finally(() => setFetching(false));
@@ -43,12 +44,14 @@ function HomeMain() {
   }, [fetching]);
   useEffect(() => {
     document.addEventListener("scroll", handleScroll);
-    return () => document.removeEventListener("scroll", handleScroll);
+    return () => {
+      document.removeEventListener("scroll", handleScroll);
+    };
   }, []);
   return (
     <main className="main-home-content">
       <CreatePost />
-      <PostList posts={mainPagePosts} />
+      <PostList posts={visiblePosts} />
     </main>
   );
 }

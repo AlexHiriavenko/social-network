@@ -25,7 +25,7 @@ function Search(props) {
     }
 
     useEffect(() => {
-            setInputValue(initialValue);
+        setInputValue(initialValue);
     }, [initialValue])
 
     return(

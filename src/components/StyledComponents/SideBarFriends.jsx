@@ -8,8 +8,6 @@ export const SidebarStyled = styled('aside')(({theme})=>({
     overflowX: 'hidden',
     width: '360px',
     minWidth: '360px',
-    paddingLeft: 16,
-    paddingRight: 16,
     backgroundColor: theme.palette.backgroundColor.section,
     borderRight: theme.palette.border.transp,
     "&::-webkit-scrollbar": {

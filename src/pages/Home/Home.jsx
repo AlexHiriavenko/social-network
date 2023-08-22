@@ -40,7 +40,7 @@ function Home() {
             dispatch(loginGoogle());
         }
 
-        window.setInterval(renewToken, 1000000)
+      //  window.setInterval(renewToken, 1000000)
         if (
             !localStorage.getItem("authorizedUser") &&
             localStorage.getItem("auth")
@@ -78,15 +78,15 @@ function Home() {
         }
 
         // get all users
-        const allUsersResponse = dispatch(getUsers());
+/*         const allUsersResponse = dispatch(getUsers());
         allUsersResponse
             .then((result) => {
                 dispatch(setUsers(result.payload));
             })
-            .catch((error) => alert(error));
+            .catch((error) => alert(error)); */
 
         // get all posts
-        const allPostsResponse = dispatch(getPosts());
+/*         const allPostsResponse = dispatch(getPosts());
         allPostsResponse
             .then((result) => {
                 dispatch(setPosts(result.payload));
@@ -96,13 +96,13 @@ function Home() {
             setAuthorizedUser(
                 JSON.parse(localStorage.getItem("authorizedUser"))
             )
-        );
+        ); */
 
-        return function () {
+     //   return function () {
 
-            window.clearInterval(renewToken)
+        //    window.clearInterval(renewToken)
 
-        }
+       // }
     }, [isLoggedIn]);
 
     return (
