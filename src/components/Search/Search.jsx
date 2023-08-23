@@ -12,7 +12,9 @@ function Search(props) {
     const { placeholderText, handleChangeValue } = props;
 
     const timeoutRef = useRef(null);  
-    const valueRef = useRef(null);  
+    const valueRef = useRef(null);
+
+    const placeholderCurrent = valueRef.current ? valueRef.current : placeholderText;
 
     function debounce(f, t) {
         clearTimeout(timeoutRef.current);
@@ -30,7 +32,7 @@ function Search(props) {
                 <SearchIconWrapper sx={{px: 1.5,}}>
                     <SearchIcon sx={{color: theme.palette.textColor.secondary}}/>
                 </SearchIconWrapper>
-                <StyledInputBase placeholder={placeholderText} inputRef={input => input && input.focus()}
+                <StyledInputBase placeholder={placeholderCurrent} inputRef={input => input && input.focus()}
                     sx={{width: '100%', px: 1, color: theme.palette.textColor.main}}
                     onChange={handleSearchImput}
                     value={valueRef.current}/>
