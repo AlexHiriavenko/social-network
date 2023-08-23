@@ -136,7 +136,7 @@ const UserSlice = createSlice({
         setFriends: (state, action) => {
             state.friends = action.payload;
         },
-        //Set autorized user to State
+        // Set autorized user to State
         setAuthorizedUser: (state, action) => {
             state.authorizedUser = action.payload;
         },
