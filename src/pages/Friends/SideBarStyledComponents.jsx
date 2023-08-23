@@ -29,6 +29,7 @@ export const SubTitleStyled = styled(Typography)(({ theme }) => ({
     lineHeight: 1.1765,
     fontSize: '1.0625rem',
     color: theme.palette.textColor.content,
+    paddingTop: 20,
 }))
 
 export const MenuItem = styled(ListItemButton)(({ theme }) => ({
@@ -57,13 +58,18 @@ export const SideBarWrapper = styled(Box)({
     width: '100%',
     paddingLeft: '8px',
     paddingRight: '8px',
+    height: '100%',
+    paddingTop: 0,
+    marginTop: 0,
+    position: 'relative',
+    top:0
 })
 
 export const SideBarContentWrapper = styled(Box)({
     width: '100%',
     paddingLeft: '8px',
     paddingRight: '8px',
-    height: 'calc(100vh - 140px)',
+    height: 'calc(100vh - 65px - 92px)',
     overflowY: 'scroll',
     overflowX: 'hidden',
     "&::-webkit-scrollbar": {
