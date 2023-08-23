@@ -110,7 +110,9 @@ function Home() {
         let nameByPart = dispatch(findByPartOfName(part))
         nameByPart.then(result =>console.log(result.payload))
 
-    }, [isLoggedIn]);
+
+    }, []);
+
 
     return (
         <div

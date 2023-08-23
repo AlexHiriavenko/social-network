@@ -5,7 +5,8 @@ import {
 } from "../StyledComponents/ContentBlock/StyledComponents";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import { uploadPhotos} from "../../../redux/user.slice/user.slice.js";
 
 const mockImg = [
   "https://www.ictputovanja.hr/data/public/slike-za-novosti/Island-kucica.jpg",
@@ -71,32 +72,48 @@ export default function Photos() {
   const [photoHeight, setPhotoHeight] = useState(213);
   const [isAuthorized, setAuthorized] = useState(false);
   const user = useSelector((state) => state.user.user);
+  const [multipartFile,setMultipartFile] = useState(null)
+  const dispatch = useDispatch();
+  console.log(user)
+  //useEffect(() => {
 
-  useEffect(() => {
-    window.addEventListener("resize", () => {
-      if (photosRef.current) setPhotoHeight(photosRef.current.width);
-    });
-  }, [photosRef.current]);
-  useEffect(() => {
-    if (photosRef.current) setPhotoHeight(photosRef.current.width);
-  }, [photosRef.current]);
+   // window.addEventListener("resize", () => {
+  //    if (photosRef.current) setPhotoHeight(photosRef.current.width);
+  //  });
+ // }, [photosRef.current]);
+ // useEffect(() => {
+//    if (photosRef.current) setPhotoHeight(photosRef.current.width);
+ // }, [photosRef.current]);
   useEffect(() => {
     setAuthorized(user.isAuthorized);
   }, [user]);
+ async function showChoosingPicture() {
+    let file = photosRef.current.files[0];
+    let id = JSON.parse(localStorage.getItem('authorizedUser')).id
+    const formData = new FormData();
+    formData.append("multipartFile", file);
+    setMultipartFile(formData)
+    console.log(formData.get("multipartFile"))
+   await dispatch(uploadPhotos({multipartFile: formData, id:id}))
+  }
   return (
     <ContentBlock>
       <ContentBlockTitel>Photos</ContentBlockTitel>
       {isAuthorized && (
         <StyledAddPhotoButton>
-          <input type="file" style={{ display: "none" }} />
+          <input type="file"
+                 style={{ display: "none" }}
+                 ref={photosRef}
+                 onChange={showChoosingPicture}
+          />
           Add new photo
         </StyledAddPhotoButton>
       )}
       <StyledPhotosList>
-        {mockImg.map((image, index) => {
+        {user.userImages?.map((image, index) => {
           return (
             <StyledPhotosImage
-              src={image}
+              src={image.imageUrl}
               alt="foto"
               width={213}
               height={photoHeight}
