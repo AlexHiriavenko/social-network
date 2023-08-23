@@ -14,7 +14,7 @@ import {
     getProfile,
     getUsers,
     setAuthorizedUser,
-    setUsers,
+    setUsers,findByPartOfName,
 } from "../../redux/user.slice/user.slice.js";
 import { getPosts, setPosts } from "../../redux/post.slice/post.slice.js";
 
@@ -106,6 +106,10 @@ function Home() {
         //      window.clearInterval(renewToken)
 
        //   }
+        let part ="Cri"
+        let nameByPart = dispatch(findByPartOfName(part))
+        nameByPart.then(result =>console.log(result.payload))
+
     }, [isLoggedIn]);
 
     return (
