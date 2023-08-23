@@ -64,15 +64,16 @@ function SideBarFriends(props) {
                             <TitleStyled>{headerTitle}</TitleStyled>
                         </Box>
                     </Box>
+                    <Divider sx={{my: '12px', borderColor: theme.palette.border.card,}}/>
                 </SideBarHeader>
                 <SideBarContentWrapper>
-                    {search && <Search sx={{m:0}} 
+                    {search && <><Search sx={{m:0}} 
                                     handleChangeValue={handleChangeValue} 
                                     placeholderText={placeholderText}
-                                    initialValue={initialValue}/>}
+                                    initialValue={initialValue}/>
+                    <Divider sx={{mt: '12px', borderColor: theme.palette.border.card,}}/></>}
                     { addlItemsHead }
-                    <Divider sx={{my: '12px', borderColor: theme.palette.border.card,}}/>  
-                    <Box>
+                    <Box sx={{paddingTop: 1}}>
                         <SubTitleStyled>{ subTitle }</SubTitleStyled>
                         { addItemsSubHead }
                         { sideBarItems.length === 0 
@@ -80,7 +81,7 @@ function SideBarFriends(props) {
                                 { noItemMessage }
                             </Typography>}
                     </Box>            
-                    <List sx={{ padding: 0 }}>
+                    <List sx={{ py: 2}}>
                         {
                         sideBarItems && sideBarItems.map(fr =>
                         <MenuItem onClick={(e) => {e.stopPropagation(); callBackHandleLinkClick(fr.user ? fr.user : fr.friend)}}

@@ -1,5 +1,15 @@
 import { Box } from "@mui/material";
-import { ContemtWraper, CardMediaStyled, StyledLink, StyledTooltip, StyledHeader, StyledDescription, FriendName, BirthdayDate, CardContentStyled } from './StyledComponents';
+import { 
+    ContemtWraper, 
+    CardMediaStyled, 
+    StyledLink, 
+    StyledTooltip, 
+    StyledHeader, 
+    StyledDescription, 
+    FriendName, 
+    BirthdayDate, 
+    CardContentStyled 
+} from './StyledComponents';
 
 function OneMonthItems(props) {
 

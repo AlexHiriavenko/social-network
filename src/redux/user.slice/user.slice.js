@@ -31,7 +31,9 @@ export const uploadAvatar = createAsyncThunk(
 
         console.log(multipartFile)
         let accessToken = JSON.parse(localStorage.getItem('token'))
+
         await axios.post(`${import.meta.env.VITE_APP_API_URL}/users/${id}/avatar`, multipartFile,
+
             {
 
                 headers:
@@ -66,6 +68,7 @@ export const uploadCoverPhoto = createAsyncThunk(
     }
 
 );
+
 export const uploadPhotos = createAsyncThunk(
     "Users/uploadPhotos",
     async function ({ multipartFile, id }) {
@@ -85,6 +88,7 @@ export const uploadPhotos = createAsyncThunk(
     }
 
 );
+
 export const findByPartOfName = createAsyncThunk(
     "Users/findByPartOfName",
     async function (part) {

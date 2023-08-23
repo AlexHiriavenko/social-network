@@ -55,12 +55,13 @@ export const StyledDescription = styled(Typography)(({theme}) => ({
     color: theme.palette.textColor.main, 
 }))
 
-export const FriendName = styled(Link)({
+export const FriendName = styled(Link)(({theme}) => ({
     textDecoration: 'none',
     '&:hover': {textDecoration: 'underline', cursor: 'pointer', },
-    color: 'inherit',
+    color: theme.palette.textColor.main, 
     fontWeight: 500,
-})
+    
+}))
 
 export const BirthdayDate = styled(Typography)(({theme}) => ({
     display: 'flex',
