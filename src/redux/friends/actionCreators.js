@@ -56,3 +56,12 @@ export const getFriendsById = createAsyncThunk(
       return data;
     }
   );
+
+  export const getBirthdays = createAsyncThunk(
+    'friends/getBirthdays',
+    async function() {
+      console.log("getBirthdays");
+      const { data } = await instance.get("/friends/birthdays");
+      return data;
+    }
+  );

@@ -11,6 +11,8 @@ function SideBarHeader(props) {
         marginTop: 20,
         marginBottom: 12,
         flexDirection: 'column',
+        height: 40,
+        position: 'fix',
     })
 
     return (

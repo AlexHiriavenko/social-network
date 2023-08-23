@@ -57,7 +57,7 @@ function Friend (props) {
         margin: "4px",
         flexShrink: 1,
         backgroundColor: horizontal ? 'inherit' : theme.palette.backgroundColor.card,
-        '&:hover': horizontal ? 'inherit' : {backgroundColor: theme.palette.backgroundColor.page,},
+        '&:hover': horizontal ? 'inherit' : null,
         boxShadow:  horizontal ? 'none' : null,
         border: horizontal ? null: `solid 1px ${theme.palette.border.card}`,
         zIndex: 100,
@@ -112,7 +112,6 @@ function Friend (props) {
         flexDirection: 'column',
         flexShrink: 1,
         justifyContent: 'center',
-
     })
 
     const handleMutualFriendClick = (payload) => {

@@ -9,11 +9,12 @@ function Search(props) {
 
     const theme = useTheme();
 
-    const { placeholderText, initialValue, handleChangeValue } = props;
+    const { placeholderText, handleChangeValue } = props;
 
-    const [inputValue, setInputValue] = useState('');
-    const timeoutRef = useRef(null);
-    
+    const timeoutRef = useRef(null);  
+    const valueRef = useRef(null);
+
+    const placeholderCurrent = valueRef.current ? valueRef.current : placeholderText;
 
     function debounce(f, t) {
         clearTimeout(timeoutRef.current);
@@ -21,13 +22,9 @@ function Search(props) {
       }
 
     const handleSearchImput = (event) => {
-        setInputValue(event.target.value);
+        useRef.current = event.target.value;  
         debounce(() => handleChangeValue(event.target.value), 800);
     }
-
-    useEffect(() => {
-        setInputValue(initialValue);
-    }, [initialValue])
 
     return(
         <>
@@ -35,10 +32,10 @@ function Search(props) {
                 <SearchIconWrapper sx={{px: 1.5,}}>
                     <SearchIcon sx={{color: theme.palette.textColor.secondary}}/>
                 </SearchIconWrapper>
-                <StyledInputBase placeholder={placeholderText} inputRef={input => input && input.focus()}
+                <StyledInputBase placeholder={placeholderCurrent} inputRef={input => input && input.focus()}
                     sx={{width: '100%', px: 1, color: theme.palette.textColor.main}}
                     onChange={handleSearchImput}
-                    value={inputValue}/>
+                    value={valueRef.current}/>
             </SearchDiv>
         </>
     )

@@ -15,7 +15,7 @@ function FriendSuggestionsPage() {
 
     const dispatch = useDispatch(); 
 
-    const user = useSelector((store)=>store.user.user, shallowEqual);
+    const user = useSelector((store)=>store.user.authorizedUser, shallowEqual);
     const friendSuggestions = useSelector((store)=>store.friends.friendSuggestions, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
 

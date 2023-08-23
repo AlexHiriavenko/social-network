@@ -2,18 +2,17 @@
 import React, {useEffect} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import Friend from "../../../components/Friends/Friend/Friend";
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import { ButtonStyled } from '../../../components/StyledComponents/Buttons';
 import { getFriendList, getFriendshipRequests, getFriendSuggestions,  createFriendship, updateFriendship } from '../../../redux/friends/actionCreators';
-import { removeSuggestions, setCurrentFriend, } from '../../../redux/friends/friends.slise';
-import styled from "@emotion/styled";
+import { removeSuggestions, } from '../../../redux/friends/friends.slise';
 import SideBarList from '../SideBarList'
 import SideBarHeader from '../../../components/Friends/SideBar/SideBarHeader';
-import { NavLink } from "react-router-dom";
 import { useTheme } from '@mui/material/styles';
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 import {SidebarStyled} from '../../../components/StyledComponents/SideBarFriends'
-import { setFriends, setUser, getUser, getFriends } from "../../../redux/user.slice/user.slice";
+import { SectorTitle, SectorHeader, FriendsContainer, SectionWraper, H1Styled, LinkStyled, SideBarWrapper } from '../../../components/StyledComponents/FriendPageComponents';
+import { handleLinkClick } from '../handleClickLink';
 
 
 function FriendsHome() {
@@ -51,95 +50,10 @@ function FriendsHome() {
         dispatch(removeSuggestions(payload));
     }
 
-    const handleLinkClick = (friend) => {
-        const id  = friend.id;
-        dispatch(setCurrentFriend({}));
-        dispatch(setUser({}));
-
-        // get user friends
-    const userFriendsResponse = dispatch(getFriends(id));
-        userFriendsResponse
-            .then((data) => {
-                const friends = data.payload.filter(el => el.status === 'accepted');
-                dispatch(setFriends(friends));
-                localStorage.setItem("friends", JSON.stringify(friends));
-            })
-            .catch((error) => console.log(error.message));
-
-        // checking if the user is authorized
-        if (id === authUser.id) {
-            dispatch(setUser(authUser));
-            localStorage.setItem("user", JSON.stringify(authUser));
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        } else {
-            const userResponse = dispatch(getUser(id));
-            userResponse
-            .then((data) => {
-                dispatch(setUser(data.payload));
-                localStorage.setItem("user", JSON.stringify(data.payload));
-                window.scrollTo({ top: 0, behavior: "smooth" });
-            })
-            .catch((error) => error.message);
-        }
-        dispatch(setCurrentFriend(friend));
+    const handleClickLinklocal = (friend) => {
+        handleLinkClick(dispatch, friend, authUser);
     }
-
-    const SectorTitle = styled(Typography)(({theme}) => ({
-        padding: '16px 4px',
-        fontWeight: 700,
-        fontSize: '1.25rem',
-        lineHeight: 1.2,
-        textAlign: 'left',
-        color: theme.palette.textColor.content
-    }))
-
-    const SectorHeader = styled(Box)({
-        width:'100%',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    })
-
-    const FriendsContainer = styled(Box)({
-        width: '100%',
-        display: 'flex',
-        flexWrap: 'wrap',
-    }) 
-
-    const SectionWraper = styled(Box)(({theme}) => ({
-        width: '100%', 
-        display: 'flex', 
-        flexDirection: 'column', 
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingBottom: 0,
-        paddingTop: 0,
-        height: '100%',
-        boxSizing: 'content-box',
-        overflowY: 'scroll',
-        overflowX: 'hidden',
-        backgroundColor: theme.palette.backgroundColor.page,
-        "&::-webkit-scrollbar": {
-            width: 0,
-          },
-    }))
-
-    const H1Styled = styled('h1')(({theme}) => ({
-        fontWeight: 900,
-        fontSize: '1.5rem',
-        fontFamily: 'inherit',
-        color: theme.palette.textColor.content,
-    }))
-
-    const LinkStyled = styled(NavLink)(({theme}) => ({
-        fontFamily: 'inherit',
-        fontSize: '1.0625rem',
-        fontWeight: 400,
-        lineHeight: 1.1765,
-        paddingBottom: 1,
-        color: theme.palette.textColor.blueLink,
-        textDecoration: 'none'
-    }))
+    
 
     const theme = useTheme();
 
@@ -147,10 +61,12 @@ function FriendsHome() {
     <PageBoxFriendsWrapper>
         <PageBoxFriends>
             <SidebarStyled >
-                <SideBarHeader>
-                    <H1Styled>Friends</H1Styled>
-                </SideBarHeader>
-                <SideBarList  activeItem={"Home"}/>
+                <SideBarWrapper>
+                    <SideBarHeader>
+                        <H1Styled>Friends</H1Styled>
+                    </SideBarHeader>
+                    <SideBarList  activeItem={"Home"}/>
+                </SideBarWrapper>
             </SidebarStyled>         
             <SectionWraper>
             {friendsRequestsToUser.length > 0 && <Box sx={{px: '16px'}}>
@@ -163,7 +79,7 @@ function FriendsHome() {
                         friendsRequestsToUser.map(fr => <Friend 
                             key={fr.id}
                             referenseForLinks={"/friends/requests/"}
-                            handleLinkClick={() => handleLinkClick(fr.user)}
+                            handleLinkClick={() => handleClickLinklocal(fr.user)}
                             mutualFriends={fr.mutualFriends}
                             isAvatarMutualFriend={true}
                             friend={fr.user} 
@@ -189,7 +105,7 @@ function FriendsHome() {
                         friendSuggestions &&  friendSuggestions.map(fr => <Friend 
                             key={fr.friend.id}
                             referenseForLinks={"/friends/suggestions/"}
-                            handleLinkClick={() => handleLinkClick(fr.friend)}
+                            handleLinkClick={() => handleClickLinklocal(fr.friend)}
                             mutualFriends={fr.mutualFriends}
                             isAvatarMutualFriend={true}
                             friend={fr.friend} 
