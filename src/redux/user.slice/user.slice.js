@@ -31,7 +31,7 @@ export const uploadAvatar = createAsyncThunk(
 
         console.log(multipartFile)
         let accessToken = JSON.parse(localStorage.getItem('token'))
-        await axios.post(`${import.meta.env.VITE_APP_API_URL}/${id}/users/avatar`, multipartFile,
+        await axios.post(`${import.meta.env.VITE_APP_API_URL}/users/${id}/avatar`, multipartFile,
             {
 
                 headers:
