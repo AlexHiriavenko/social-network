@@ -33,7 +33,9 @@ function Home() {
             dispatch(logOut())
         }
     };
-
+    if(!JSON.parse(localStorage.getItem("token"))){
+        dispatch(logOut())
+    }
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
     useEffect(() => {
         console.log(JSON.parse(localStorage.getItem("token")) == "out");
@@ -110,7 +112,9 @@ function Home() {
         let nameByPart = dispatch(findByPartOfName(part))
         nameByPart.then(result =>console.log(result.payload))
 
-    }, [isLoggedIn]);
+
+    }, []);
+
 
     return (
         <div

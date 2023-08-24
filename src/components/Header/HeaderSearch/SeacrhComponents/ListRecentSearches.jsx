@@ -26,9 +26,9 @@ function ListRecentSearches(props) {
                     No search history yet
                 </Typography>
             )}
-            {recentUsersList.map((friend) => (
+            {props.users?.map((user) => (
                 <ListItem
-                    key={friend.userID}
+                    key={user.id}
                     sx={{
                         gap: 1,
                         "&:hover": {
@@ -38,7 +38,7 @@ function ListRecentSearches(props) {
                     className="search__list-item"
                 >
                     <Link
-                        to={`./user-page/${friend.userID}`}
+                        to={`./user-page/${user.id}`}
                         onClick={onClick}
                         className="search__user-link"
                     >
@@ -46,17 +46,17 @@ function ListRecentSearches(props) {
                             className="search__user-avatar"
                             sx={{ minWidth: "40px", minHeight: "40px" }}
                             alt="user icon"
-                            src={friend.userPhoto}
+                            src={user.profilePicture}
                         ></Avatar>
                         <Typography
                             className="search__user-name"
                             color={theme.palette.textColor.content}
                         >
-                            {friend.userName}
+                            {user.fullName}
                         </Typography>
                     </Link>
                     <CloseIcon
-                        id={friend.userID}
+                        id={user.id}
                         onClick={handleRemoveUser}
                         className="search__user-remove"
                         sx={{
