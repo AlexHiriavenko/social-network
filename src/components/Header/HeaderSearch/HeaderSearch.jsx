@@ -75,6 +75,7 @@ function HeaderSearch() {
                             variant="h6"
                         >
                             Recent searches
+
                         </Typography>
 
                         <SearchForHomePage
