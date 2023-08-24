@@ -5,24 +5,26 @@ import ListRecentSearches from "./SeacrhComponents/ListRecentSearches";
 import { toggleVisible } from "../../../redux/searchDrawer.slice/headerSearch.slice";
 import BtnArrowBack from "../../Buttons/BtnArrowBack";
 import { useTheme } from "@mui/material/styles";
+import {useState} from "react";
+import SearchForHomePage from "../../Search/SearchForHomePage.jsx";
 
 function HeaderSearch() {
     const theme = useTheme();
     const dispatch = useDispatch();
     const isDrawerOpen = useSelector((state) => state.searchDrawer.isVisible);
-
+    const[foundUser,setFoundUser] = useState([])
     const toggleDrawer = () => {
         dispatch(toggleVisible());
     };
 
     return (
-        <>
-            <Search
-                inputId="header-search"
-                onClick={toggleDrawer}
-                inputClass="header__input"
-                searchIconWrapClass="header__search-icon-wrap"
-            />
+        <><Search
+            inputId="header-search"
+            onClick={toggleDrawer}
+            inputClass="header__input"
+            searchIconWrapClass="header__search-icon-wrap"
+        />
+
             <Drawer
                 anchor="left"
                 open={isDrawerOpen}
@@ -58,6 +60,7 @@ function HeaderSearch() {
                             searchIconWrapClass="drawer__search-icon-wrap"
                             inputId="header-drawer-search"
                         />
+
                     </Box>
                     <Divider sx={{ mt: "4px" }} />
                     <Box>
@@ -73,7 +76,11 @@ function HeaderSearch() {
                         >
                             Recent searches
                         </Typography>
-                        <ListRecentSearches onClick={toggleDrawer} />
+
+                        <SearchForHomePage
+
+                            setFoundUser ={setFoundUser}/>
+                        <ListRecentSearches onClick={toggleDrawer} users={foundUser} />
                     </Box>
                 </Box>
             </Drawer>
@@ -82,3 +89,5 @@ function HeaderSearch() {
 }
 
 export default HeaderSearch;
+/*
+ */
