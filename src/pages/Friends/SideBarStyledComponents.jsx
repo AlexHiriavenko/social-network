@@ -29,7 +29,7 @@ export const SubTitleStyled = styled(Typography)(({ theme }) => ({
     lineHeight: 1.1765,
     fontSize: '1.0625rem',
     color: theme.palette.textColor.content,
-    paddingTop: 20,
+    paddingTop: 10,
 }))
 
 export const MenuItem = styled(ListItemButton)(({ theme }) => ({
