@@ -30,6 +30,15 @@ instance.interceptors.response.use((r) => r,
             })
                 .catch(err => {
                     console.log(err)
+                    const refresh = JSON.parse(localStorage.getItem("refresh"))
+                  axios.post(`${import.meta.env.VITE_APP_API_URL}/api/auth/renew`,{},{
+
+                        params:{refresh:refresh},
+
+
+                    }).then(({status}) =>{
+                        console.log(status)
+                    }).catch(err =>{console.log(err)})
                 });
 
         }
