@@ -81,6 +81,7 @@ function HeaderSearch() {
                         <SearchForHomePage
 
                             setFoundUser ={setFoundUser}/>
+
                         <ListRecentSearches onClick={toggleDrawer} users={foundUser} />
                     </Box>
                 </Box>
