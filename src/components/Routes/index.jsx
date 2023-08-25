@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import {Route, Routes, useNavigate, useParams} from "react-router-dom";
 import PrivateRoute from "../../utils/router/PrivateRoute";
 import {
   Contacts,
@@ -27,11 +27,12 @@ import {
 import ChangePasswordForm from "../../pages/LogIn/ChangePasswordForm";
 import { useSelector } from "react-redux";
 import ForgotForm from "../../pages/LogIn/ForgotForm.jsx";
+import ProfileForSearch from "../../pages/UserProfile/ProfileForSearch.jsx"
 
 export default function AllRoutes() {
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   const navigate = useNavigate();
-
+  let  {id} = useParams()
   const handleLogIn = () => {
     //   dispatch(logIn());
     navigate("/");
@@ -44,6 +45,7 @@ export default function AllRoutes() {
         <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/groups" element={<Groups />} />
         <Route path="/profile" element={<Profile />}>
+
           <Route path="/profile/" element={<ProfilePosts />} />
           <Route path="/profile/about" element={<ProfileAbout />}>
             <Route path="/profile/about/" element={<Overview />} />
@@ -178,6 +180,9 @@ export default function AllRoutes() {
           path="/friends/birthdays"
           element={<FriendBirthdays/>}/>
         <Route path="/chats" element={<Chats />} />
+
+        <Route path={"/:id"} element={<ProfileForSearch id ={id} />}/>
+
         <Route path="*" element={<NotFound />} />
       </Route>
       <Route
