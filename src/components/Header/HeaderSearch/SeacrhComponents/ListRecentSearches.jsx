@@ -38,7 +38,7 @@ function ListRecentSearches(props) {
                     className="search__list-item"
                 >
                     <Link
-                        to={`./user-page/${user.id}`}
+                        to={`/${user.id}`}
                         onClick={onClick}
                         className="search__user-link"
                     >

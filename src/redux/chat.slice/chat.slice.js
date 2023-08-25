@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "../../instance.js";
 
 export const getChats = createAsyncThunk("chat/getChats", async function () {
-    const chats = await instance.get("/chats").then((response) => response.json());
+    const chats = await instance.get("/chats");
     console.log(chats);
     return chats;
 });
@@ -19,7 +19,7 @@ export const getChat = createAsyncThunk("chat/getChat", async function (id) {
 });
 
 export const addNewUser = createAsyncThunk("chat/addNewUser", async function ({ chatId, newUser }) {
-    const { status } = await instance.put(`/messages/${chatId}/participants`, newUser);
+    const { status } = await instance.put(`/chats/${chatId}/participants`, newUser);
     console.log(status);
 });
 export const initialState = {
