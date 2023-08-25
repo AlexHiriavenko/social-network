@@ -201,7 +201,6 @@ console.log(user)
     // Functions
 
 
-
     useEffect(() => {
 
         const acceptedFriendsArray =  userFriends.length>0 ? userFriends.filter(
