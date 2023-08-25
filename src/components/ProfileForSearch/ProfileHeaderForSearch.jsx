@@ -191,7 +191,6 @@ const StyledProfileUserFriends = styled(Typography)(({ theme }) => ({
 
 export default function ProfileHeaderForSearch(props) {
     // Constants
-
     const user = props.user;
 console.log(user)
     const userFriends = useSelector((state) => state.user.friends);
