@@ -18,13 +18,14 @@ function HeaderSearch() {
     };
 
     return (
-        <><Search
-            inputId="header-search"
-            onClick={toggleDrawer}
-            inputClass="header__input"
-            searchIconWrapClass="header__search-icon-wrap"
-        />
-
+        <>
+            <Search
+                inputId="header-search"
+                onClick={toggleDrawer}
+                inputClass="header__input"
+                searchIconWrapClass="header__search-icon-wrap"
+                setFoundUser ={setFoundUser}
+            />
             <Drawer
                 anchor="left"
                 open={isDrawerOpen}
@@ -42,6 +43,9 @@ function HeaderSearch() {
                     },
                 }}
             >
+                <SearchForHomePage
+
+                    setFoundUser ={setFoundUser}/>
                 <Box
                     sx={{
                         width: { xs: "320px", sm: "360px" },
@@ -54,11 +58,6 @@ function HeaderSearch() {
                             onClick={toggleDrawer}
                             color={theme.palette.textColor.secondary}
                             hoverColor={theme.palette.input.mainBackground}
-                        />
-                        <Search
-                            inputClass="header__drawer-searh-input"
-                            searchIconWrapClass="drawer__search-icon-wrap"
-                            inputId="header-drawer-search"
                         />
 
                     </Box>
@@ -78,9 +77,7 @@ function HeaderSearch() {
 
                         </Typography>
 
-                        <SearchForHomePage
 
-                            setFoundUser ={setFoundUser}/>
 
                         <ListRecentSearches onClick={toggleDrawer} users={foundUser} />
                     </Box>
@@ -91,5 +88,10 @@ function HeaderSearch() {
 }
 
 export default HeaderSearch;
-/*
+/* <Search
+                            inputClass="header__drawer-searh-input"
+                            searchIconWrapClass="drawer__search-icon-wrap"
+                            inputId="header-drawer-search"
+                        />
+
  */

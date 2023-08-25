@@ -5,6 +5,7 @@ import { parseJwt } from "../../parseJwt.js";
 import instance from "../../instance.js";
 
 
+
 export const logIn = createAsyncThunk(
     "Login/logIn",
 
@@ -32,9 +33,7 @@ export const getAccessToken = createAsyncThunk(
             `${import.meta.env.VITE_APP_API_URL}/api/auth/token`,
             { refreshToken: refresh }
         );
-        //document.cookie = `token=${token.data.accessToken}`;
-       // localStorage.setItem("token",JSON.stringify(token.data.accessToken))
-       // localStorage.setItem("refresh",JSON.stringify(token.data.refreshToken))
+
         return token.data.accessToken;
     }
 );
@@ -98,8 +97,8 @@ export const loginGoogle = createAsyncThunk(
         const { data } = await instance.get(`/users/profile`);
         localStorage.setItem("authorizedUser", JSON.stringify({...data,isAuthorized:true}));
         localStorage.setItem("user", JSON.stringify(data));
-
-
+        let auth = parseJwt(token.data.accessToken);
+        localStorage.setItem("auth", JSON.stringify(auth));
     }
 );
 const LoginSlice = createSlice({

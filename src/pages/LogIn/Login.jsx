@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {logIn, loginGoogle, setLogin} from "../../redux/login.slice/login.slice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import {setAuthorizedUser} from "../../redux/user.slice/user.slice.js";
+
 export default function LogIn() {
   const navigate = useNavigate();
   // const token = useSelector(store => store.login.token)
@@ -28,6 +28,7 @@ export default function LogIn() {
       localStorage.setItem("token",JSON.stringify("out"))
     }
   }, []);
+
   const dispatch = useDispatch();
   const [registerModal, setRegisterModal] = useState(false);
   const handleRegisterModal = () => {
@@ -161,17 +162,21 @@ export default function LogIn() {
                           `${import.meta.env.VITE_APP_API_URL}/oauth2/authorization/google`
                         }
                         onClick={async () => {
-                          dispatch(setLogin());
 
-                          dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
+                         if(navigator.userAgent.slice(102,108) === "Safari"){
+                           dispatch(setLogin());
+                         }
 
                           await axios.post(
                               `${import.meta.env.VITE_APP_API_URL}/api/auth`,
                               { email: url }
                           );
                           await  dispatch(loginGoogle());
+                          dispatch(setLogin())
 
-                        }}>
+
+
+                        }} >
                       Login with Google
                     </a>
                     <br />
