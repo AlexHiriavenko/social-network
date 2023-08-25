@@ -6,7 +6,7 @@ import { useTheme } from "@mui/material/styles";
 
 function MessengerHeader(props) {
     const theme = useTheme();
-    const { toggleMenu } = props;
+    const { toggleMenu, setNewMessageModal } = props;
     const navigate = useNavigate();
 
     return (
@@ -17,14 +17,12 @@ function MessengerHeader(props) {
                 justifyContent: "space-between",
                 pl: 2,
                 pr: 2,
-            }}
-        >
+            }}>
             <Typography
                 variant="h5"
                 component={"h4"}
                 fontWeight={600}
-                color={theme.palette.textColor.content}
-            >
+                color={theme.palette.textColor.content}>
                 Chats
             </Typography>
             <Box>
@@ -40,9 +38,10 @@ function MessengerHeader(props) {
                                 navigate("/chats");
                                 toggleMenu();
                             }
-                        }}
-                    >
-                        <ZoomOutMapIcon sx={{ color: theme.palette.textColor.content }} />
+                        }}>
+                        <ZoomOutMapIcon
+                            sx={{ color: theme.palette.textColor.content }}
+                        />
                     </IconButton>
                 </Tooltip>
                 <Tooltip title="New Message" sx={{ ml: 0.5 }}>
@@ -52,7 +51,7 @@ function MessengerHeader(props) {
                                 backgroundColor: theme.palette.hoverColor.main,
                             },
                         }}
-                    >
+                        onClick={() => setNewMessageModal(true)}>
                         <EditNoteIcon
                             sx={{ color: theme.palette.textColor.content }}
                             fontSize="large"
