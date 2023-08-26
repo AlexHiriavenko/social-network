@@ -14,7 +14,6 @@ export default function Profile(props) {
     let {id} = useParams()
 
 
-
 useEffect(()=>{
 
     const userPromise = dispatch(getUser(id))
