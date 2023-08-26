@@ -64,7 +64,7 @@ export default function SearchProfileAbout() {
     // State
     const [locationNameNavigation, setLocationNameNavigation] = useState("");
     // Functions
-    // //Find Location for right way
+
     function whatLocation(locationArray) {
         if (locationArray[1] === "search") {
             setLocationNameNavigation(`search/${id}`);
