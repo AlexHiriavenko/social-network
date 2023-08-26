@@ -50,7 +50,7 @@ export default function ProfileIntroForSearch(props) {
             console.log(user)
         })
 
-    },[])
+    },[id])
     // UseEffect
 
     return (

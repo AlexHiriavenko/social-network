@@ -17,6 +17,6 @@ export default function PostListForSearch({ posts }) {
     );
 }
 
-PostList.defaultProps = {
+PostListForSearch.defaultProps = {
     posts: [],
 };
