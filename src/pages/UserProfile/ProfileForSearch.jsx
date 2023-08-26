@@ -30,7 +30,7 @@ useEffect(()=>{
 
                 <>
                     <ProfileHeaderForSearch user={user} />
-                    <ProfileNavigationForSearch user ={user} />
+                    <ProfileNavigationForSearch user ={user} id={id}  />
                     <Outlet />
                 </>
 

@@ -28,7 +28,10 @@ import ChangePasswordForm from "../../pages/LogIn/ChangePasswordForm";
 import { useSelector } from "react-redux";
 import ForgotForm from "../../pages/LogIn/ForgotForm.jsx";
 import ProfileForSearch from "../../pages/UserProfile/ProfileForSearch.jsx"
-
+import SearchProfileAbout from "../../components/ProfileForSearch/SearchProfileAbout.jsx"
+import ProfilePhotosForSearch from "../../components/ProfileForSearch/ProfilePhotosForSearch.jsx"
+import ProfileFriendsForSearch from "../../components/ProfileForSearch/ProfileFriendsForSearch.jsx"
+import ProfilePostsForSearch from "../../components/ProfileForSearch/ProfilePostsForSearch.jsx"
 export default function AllRoutes() {
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   const navigate = useNavigate();
@@ -181,7 +184,32 @@ export default function AllRoutes() {
           element={<FriendBirthdays/>}/>
         <Route path="/chats" element={<Chats />} />
 
-        <Route path={"/:id"} element={<ProfileForSearch id ={id} />}/>
+        <Route path={"search/:id"} element={<ProfileForSearch id ={id} />}>
+
+          <Route path="/search/:id/" element={<ProfilePostsForSearch  id ={id}/>} />
+          <Route path="/search/:id/about" element={<SearchProfileAbout id={id} />}>
+
+            <Route
+                path="/search/:id/about/employment"
+                element={<Employment />}
+            />
+            <Route
+                path="/search/:id/about/places"
+                element={<Places />}
+            />
+            <Route
+                path="/search/:id/about/contacts"
+                element={<Contacts />}
+            />
+          </Route>
+          <Route
+              path="/search/:id/friends"
+              element={<ProfileFriendsForSearch id ={id} />}
+          />
+          <Route path="/search/:id/photos" element={<ProfilePhotosForSearch id ={id} />} />
+
+
+        </Route>
 
         <Route path="*" element={<NotFound />} />
       </Route>

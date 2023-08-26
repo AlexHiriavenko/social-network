@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 import { useNavigate } from "react-router-dom";
+import {getFriends} from "../../redux/user.slice/user.slice.js";
 
 const StyledProfileBackgroundWrapper = styled(Box)(({ theme }) => ({
     maxHeight: "450px",
@@ -192,18 +193,32 @@ const StyledProfileUserFriends = styled(Typography)(({ theme }) => ({
 export default function ProfileHeaderForSearch(props) {
     // Constants
     const user = props.user;
+    let id = user?.id
 console.log(user)
-    const userFriends = useSelector((state) => state.user.friends);
+    const [userFriends,setUserFriends] = useState(null)
     // State
     const [mutualFriendsIsOpen, setMutualFriendsStatus] = useState(true);
 
     const [acceptedFriends, setAcceptedFriends] = useState([]);
-    // Functions
 
+    const  dispatch = useDispatch()
+    // Functions
+    useEffect(() => {
+
+        (async() => {
+            let friends = await  dispatch(getFriends(id))
+            console.log(friends.payload)
+            if (friends.payload) {
+
+                setUserFriends(friends.payload)
+            }
+
+        })()
+    }, []);
 
     useEffect(() => {
 
-        const acceptedFriendsArray =  userFriends.length>0 ? userFriends.filter(
+        const acceptedFriendsArray =  userFriends?.length>0 ? userFriends?.filter(
             (friendItem) => friendItem?.status === "accepted"
         ) :[];
         setAcceptedFriends(acceptedFriendsArray);
