@@ -13,7 +13,6 @@ export default function Profile(props) {
     const [user,setUser] = useState(null)
     let {id} = useParams()
 
-
 useEffect(()=>{
 
     const userPromise = dispatch(getUser(id))
@@ -29,7 +28,9 @@ useEffect(()=>{
 
                 <>
                     <ProfileHeaderForSearch user={user} />
-                    <ProfileNavigationForSearch user ={user} />
+
+                    <ProfileNavigationForSearch user ={user} id={id}  />
+
                     <Outlet />
                 </>
 
