@@ -56,7 +56,6 @@ const StyledAboutContent = styled(Box)({
     rowGap: "24px",
     padding: "20px 32px 20px 16px",
 });
-
 export default function SearchProfileAbout() {
     // Constants
     const location = useLocation();
