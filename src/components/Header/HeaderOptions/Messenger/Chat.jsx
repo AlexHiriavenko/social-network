@@ -17,7 +17,7 @@ const Chat = () => {
         };
     }, []);
 
-    if (messages[0].createdBy) {
+    if (messages && messages[0].createdBy) {
         return (
             <Box
                 id="chatModal"

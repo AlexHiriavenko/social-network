@@ -28,7 +28,7 @@ function NewMessageHeader({ setNewMessageModal }) {
                 fontWeight={600}
                 color={theme.palette.textColor.content}
             >
-                New Message
+                New Chat with...
             </Typography>
             <Avatar
                 sx={{
