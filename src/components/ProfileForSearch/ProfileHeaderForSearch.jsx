@@ -217,18 +217,18 @@ console.log(user)
 
                 setUserFriends(friends.payload)
             }
+            const acceptedFriendsArray =  userFriends?.length>0 ? userFriends?.filter(
 
+                (friendItem) => friendItem?.status === "accepted"
+            ) :[];
+            setAcceptedFriends(acceptedFriendsArray);
         })()
-    }, []);
+    }, [userFriends,id]);
 
     useEffect(() => {
 
-        const acceptedFriendsArray =  userFriends?.length>0 ? userFriends?.filter(
 
-            (friendItem) => friendItem?.status === "accepted"
-        ) :[];
-        setAcceptedFriends(acceptedFriendsArray);
-    }, [userFriends]);
+    }, []);
     return (
         <StyledProfileHeader>
             <ProfileContainer>
@@ -266,7 +266,7 @@ console.log(user)
                             max={6}
                             sx={{ cursor: "pointer", justifyContent: "flex-end" }}
                         >
-                            {acceptedFriends.map((friendItem, index) => {
+                            {acceptedFriends?.map((friendItem, index) => {
                                 return (
                                     <Avatar
                                         alt={friendItem?.friend?.fullName}

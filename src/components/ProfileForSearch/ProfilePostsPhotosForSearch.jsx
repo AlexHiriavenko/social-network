@@ -66,7 +66,7 @@ export default function ProfilePostsPhotosForSearch(props) {
         <ContentBlock style={{ maxWidth: "680px" }}>
             <ContentBlockHeader>
                 <ContentBlockTitel>Photos</ContentBlockTitel>
-                <ContentBlockLink to={"/profile/photos"}>
+                <ContentBlockLink to={`/search/${id}/photos`}>
                     See all photos
                 </ContentBlockLink>
             </ContentBlockHeader>
