@@ -27,7 +27,6 @@ function UsersList(props) {
 
     const chatParticipants = useSelector((state) => state.chat.chatsParticipants);
     const currentChat = useSelector((state) => state.chat.currentChat);
-    console.log(chatParticipants);
 
     const chatParticipant = (participants, id) =>
         participants.find((participant) => participant.userId === id);

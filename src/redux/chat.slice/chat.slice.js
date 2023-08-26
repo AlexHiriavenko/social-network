@@ -19,10 +19,18 @@ export const getChat = createAsyncThunk("chat/getChat", async function (id) {
     }
 });
 
-export const addNewUser = createAsyncThunk("chat/addNewUser", async function ({ chatId, newUser }) {
-    const { status } = await instance.put(`/chats/${chatId}/participants`, newUser);
-    console.log(status);
-});
+// export const addNewUser = createAsyncThunk("chat/addNewUser", async function ({ chatId, newUser }) {
+//     const { status } = await instance.put(`/chats/${chatId}/participants`, newUser);
+//     console.log(status);
+// });
+
+export const addToChatNewUser = createAsyncThunk(
+    "chat/addNewUser",
+    async function ({ chatId, newUser }) {
+        const { status } = await instance.put(`/chats/${chatId}/participants`, newUser);
+        console.log(status);
+    }
+);
 
 export const initialState = {
     isOpened: false,
@@ -85,14 +93,13 @@ const chatSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getChatsParticipants.fulfilled, (state, action) => {
             if (typeof action.payload === "object") {
-                console.log("сработал");
                 state.chatsParticipants = action.payload;
             } else {
                 state.chatsParticipants = [];
             }
         });
         builder.addCase(getChat.fulfilled, (state, action) => {
-            console.log("сработал");
+            console.log(action.payload);
             state.currentChat = action.payload;
         });
     },

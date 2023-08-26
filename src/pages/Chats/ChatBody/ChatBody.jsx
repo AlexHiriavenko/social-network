@@ -32,7 +32,7 @@ const ChatBody = (props) => {
     if (messages && messages[0].createdBy) {
         return (
             <Box ref={chatFormRef} sx={{ pb: 2 }} className="chat-body">
-                <ChatHeader closeMenu={() => null} />
+                <ChatHeader closeMenu={() => null} setNewMessageDialog={setNewMessageDialog} />
                 <Box sx={{ maxWidth: "1000px" }}>
                     <Box sx={{ pl: 2, pr: 2 }}>
                         <ChatContent />

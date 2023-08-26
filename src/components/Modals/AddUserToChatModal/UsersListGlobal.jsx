@@ -1,9 +1,16 @@
+import { useDispatch } from "react-redux";
 import { List, ListItem, Typography, Avatar } from "@mui/material/";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
+import { closeAddUserToChatModal } from "../../../redux/modal.slice/modal.slice";
 
-function GlobalUsersList(props) {
+function UsersListGlobal(props) {
+    const dispatch = useDispatch();
     const theme = useTheme();
+
+    function handleAddUser() {
+        dispatch(closeAddUserToChatModal());
+    }
 
     return (
         <List sx={{ minHeight: "340px" }}>
@@ -16,6 +23,7 @@ function GlobalUsersList(props) {
                             backgroundColor: theme.palette.hoverColor.main,
                         },
                     }}
+                    onClick={handleAddUser}
                 >
                     <Link className="search__user-link">
                         <Avatar
@@ -37,4 +45,4 @@ function GlobalUsersList(props) {
     );
 }
 
-export default GlobalUsersList;
+export default UsersListGlobal;
