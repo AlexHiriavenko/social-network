@@ -25,15 +25,17 @@ function UsersList() {
         participants.find((participant) => participant.userId === id);
 
     function handlerChat(event, chatId) {
-        const closestLi = event.target.closest("li");
-        const userId = +closestLi.id.slice(8);
-        dispatch(setCurrentChatCompanion(chatParticipant(chatParticipants, userId)));
-        dispatch(getChat(chatId));
-        dispatch(openPageChat());
+        if (chatId) {
+            const closestLi = event.target.closest("li");
+            const userId = +closestLi.id.slice(8);
+            dispatch(setCurrentChatCompanion(chatParticipant(chatParticipants, userId)));
+            dispatch(getChat(chatId));
+            dispatch(openPageChat());
+        }
     }
 
     return (
-        <List className="users-list">
+        <List className="users-list" sx={{ minHeight: "50px" }}>
             {!chatParticipants.length && (
                 <Typography sx={{ p: 2 }} color={theme.palette.textColor.content}>
                     No history yet

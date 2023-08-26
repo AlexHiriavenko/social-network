@@ -14,8 +14,10 @@ export const getChatsParticipants = createAsyncThunk("chat/getParticipants", asy
 });
 ////////////////////
 export const getChat = createAsyncThunk("chat/getChat", async function (id) {
-    const { data } = await instance.get(`/chats/${id}`);
-    return data;
+    if (id) {
+        const { data } = await instance.get(`/chats/${id}`);
+        return data;
+    }
 });
 
 export const addNewUser = createAsyncThunk("chat/addNewUser", async function ({ chatId, newUser }) {
@@ -43,6 +45,16 @@ export const initialState = {
     },
 };
 
+const temporaryPartisipantState = {
+    id: null,
+    userId: null,
+    fullName: "New Chat",
+    content: "",
+    lastMessageDate: "",
+    profilePicture:
+        "https://www.facebook.com/images/mercury/clients/messenger/threadlist/NewMessage.png",
+};
+
 const chatSlice = createSlice({
     name: "chat",
     initialState,
@@ -59,6 +71,14 @@ const chatSlice = createSlice({
         resetCurrentChat: function (state, action) {
             state.currentChat = initialState.currentChat;
             state.isOpened = false;
+        },
+        setTemporaryParticipant: function (state, action) {
+            const temporaryParticipant = temporaryPartisipantState;
+            state.chatsParticipants.unshift(temporaryParticipant);
+            state.currentChatCompanion = {
+                fullName: "newPartcipant",
+                profilePicture: temporaryPartisipantState.profilePicture,
+            };
         },
     },
     extraReducers: (builder) => {
@@ -88,7 +108,13 @@ const chatPageSlice = createSlice({
     },
 });
 
-export const { openChat, closeChat, setCurrentChatCompanion, resetCurrentChat } = chatSlice.actions;
+export const {
+    openChat,
+    closeChat,
+    setCurrentChatCompanion,
+    resetCurrentChat,
+    setTemporaryParticipant,
+} = chatSlice.actions;
 
 export const { openPageChat, closePageChat } = chatPageSlice.actions;
 

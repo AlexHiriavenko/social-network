@@ -10,7 +10,7 @@ import { useTheme } from "@mui/material/styles";
 const ChatBody = () => {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const { messages } = useSelector((state) => state.chat.currentChat);
+    const { messages } = useSelector((state) => state.chat.currentChat) || [];
     const chatFormRef = useRef(null);
 
     // в конец чата
@@ -27,7 +27,7 @@ const ChatBody = () => {
         };
     }, []);
 
-    if (messages[0].createdBy) {
+    if (messages && messages[0].createdBy) {
         return (
             <Box ref={chatFormRef} sx={{ pb: 2 }} className="chat-body">
                 <ChatHeader closeMenu={() => null} />

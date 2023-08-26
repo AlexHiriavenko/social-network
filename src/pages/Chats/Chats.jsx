@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import MessengerSidebarHeader from "./MessengerSidebarHeader/MessengerSidebarHeader";
 import ChatBody from "./ChatBody/ChatBody";
 import UsersList from "./UsersList/UsersList";
 import { getChatsParticipants } from "../../redux/chat.slice/chat.slice";
@@ -33,6 +34,7 @@ function Chats() {
                 }}
             >
                 <Sidebar>
+                    <MessengerSidebarHeader />
                     <UsersList />
                 </Sidebar>
                 <ChatBody />
