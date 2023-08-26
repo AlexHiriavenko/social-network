@@ -1,13 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import { resetCurrentChat } from "../../../redux/chat.slice/chat.slice";
 import ChatHeader from "./ChatHeader";
 import ChatContent from "./ChatContent";
 import ChatFooter from "./ChatFooter";
-import { useTheme } from "@mui/material/styles";
+import NewMessageDialog from "../NewMessageDialog/NewMessageDialog";
 
-const ChatBody = () => {
+const ChatBody = (props) => {
+    const { newMessageDialog, setNewMessageDialog } = props;
     const dispatch = useDispatch();
     const theme = useTheme();
     const { messages } = useSelector((state) => state.chat.currentChat) || [];
@@ -39,6 +41,9 @@ const ChatBody = () => {
                 </Box>
             </Box>
         );
+    }
+    if (newMessageDialog) {
+        return <NewMessageDialog setNewMessageModal={setNewMessageDialog}></NewMessageDialog>;
     } else {
         return (
             <div

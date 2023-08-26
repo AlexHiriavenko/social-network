@@ -3,7 +3,6 @@ import instance from "../../instance.js";
 
 export const getChats = createAsyncThunk("chat/getChats", async function () {
     const chats = await instance.get("/chats");
-    console.log(chats);
     return chats;
 });
 
@@ -24,6 +23,7 @@ export const addNewUser = createAsyncThunk("chat/addNewUser", async function ({ 
     const { status } = await instance.put(`/chats/${chatId}/participants`, newUser);
     console.log(status);
 });
+
 export const initialState = {
     isOpened: false,
     chatsParticipants: [],
@@ -73,23 +73,26 @@ const chatSlice = createSlice({
             state.isOpened = false;
         },
         setTemporaryParticipant: function (state, action) {
-            const temporaryParticipant = temporaryPartisipantState;
-            state.chatsParticipants.unshift(temporaryParticipant);
-            state.currentChatCompanion = {
-                fullName: "newPartcipant",
-                profilePicture: temporaryPartisipantState.profilePicture,
-            };
+            state.chatsParticipants = [temporaryPartisipantState, ...state.chatsParticipants];
+        },
+        deleteTemporaryParticipant: function (state) {
+            const targetIndex = state.chatsParticipants.findIndex((el) => el.id === null);
+            if (targetIndex !== -1) {
+                state.chatsParticipants.splice(targetIndex, 1);
+            }
         },
     },
     extraReducers: (builder) => {
         builder.addCase(getChatsParticipants.fulfilled, (state, action) => {
             if (typeof action.payload === "object") {
+                console.log("сработал");
                 state.chatsParticipants = action.payload;
             } else {
                 state.chatsParticipants = [];
             }
         });
         builder.addCase(getChat.fulfilled, (state, action) => {
+            console.log("сработал");
             state.currentChat = action.payload;
         });
     },
@@ -114,6 +117,7 @@ export const {
     setCurrentChatCompanion,
     resetCurrentChat,
     setTemporaryParticipant,
+    deleteTemporaryParticipant,
 } = chatSlice.actions;
 
 export const { openPageChat, closePageChat } = chatPageSlice.actions;

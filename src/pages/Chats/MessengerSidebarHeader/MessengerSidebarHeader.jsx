@@ -2,9 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { IconButton, Typography, Tooltip, Box } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useTheme } from "@mui/material/styles";
-import { setTemporaryParticipant } from "../../../redux/chat.slice/chat.slice";
+import { setTemporaryParticipant, resetCurrentChat } from "../../../redux/chat.slice/chat.slice";
 
 function MessengerSidebarHeader(props) {
+    const { setNewMessageDialog } = props;
     const dispatch = useDispatch();
     const theme = useTheme();
 
@@ -12,7 +13,9 @@ function MessengerSidebarHeader(props) {
 
     function addTemporaryNewChat() {
         if (chatParticipants[0].id) {
+            dispatch(resetCurrentChat());
             dispatch(setTemporaryParticipant());
+            setNewMessageDialog(true);
         }
     }
 
