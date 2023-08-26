@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import {Outlet, useParams} from "react-router-dom";
+import { useParams} from "react-router-dom";
 import {
     ContentBlock,
-    ContentBlockTitel,
+    ContentBlockTitel, ProfileContainer,
 } from "../UserProfile/StyledComponents/ContentBlock/StyledComponents"
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import {getUser} from "../../redux/user.slice/user.slice.js";
 import {useDispatch} from "react-redux";
+import Photos from "../UserProfile/ProfilePhotos/index.jsx";
 
 
 
@@ -70,14 +71,17 @@ const StyledPhotosImage = styled("img")({
         transform: "scale(0.99)",
     },
 });
-
-export default  function Photos (){
+const StyledPhotosPage = styled(Box)(({ theme }) => ({
+    backgroundColor: theme.palette.backgroundColor.page,
+    paddingTop: "20px",
+    paddingBottom: "20px",
+}));
+export default  function ProfilePhotosForSearch (){
     const photosRef = useRef(null);
     const [photoHeight, setPhotoHeight] = useState(213);
     const dispatch = useDispatch();
     const [user,setUser] = useState(null)
 
-  //  let id = useParams();
     let {id} = useParams()
 
 
@@ -86,13 +90,6 @@ export default  function Photos (){
     console.log(user)
     useEffect(()=>{
 
-     /*   const userPromise = dispatch(getUser(id))
-        userPromise.then(result =>{
-            setUser( result.payload)
-            console.log(user)
-        })
-
-      */
 
         (async()=>{
 
@@ -107,23 +104,32 @@ export default  function Photos (){
 
 
     return (
-        <ContentBlock>
-            <ContentBlockTitel>Photos</ContentBlockTitel>
+        <> <StyledPhotosPage>
+            <ProfileContainer>
 
-            <StyledPhotosList>
-                {user?.userImages?.map((image, index) => {
-                    return (
-                        <StyledPhotosImage
-                            src={image.imageUrl}
-                            alt="foto"
-                            width={213}
-                            height={photoHeight}
-                            ref={photosRef}
-                            key={index}
-                        />
-                    );
-                })}
-            </StyledPhotosList>
-        </ContentBlock>
+                <ContentBlock>
+                    <ContentBlockTitel>Photos</ContentBlockTitel>
+
+                    <StyledPhotosList>
+                        {user?.userImages?.map((image, index) => {
+                            return (
+                                <StyledPhotosImage
+                                    src={image.imageUrl}
+                                    alt="foto"
+                                    width={213}
+                                    height={photoHeight}
+                                    ref={photosRef}
+                                    key={index}
+                                />
+                            );
+                        })}
+                    </StyledPhotosList>
+                </ContentBlock>
+
+
+            </ProfileContainer>
+        </StyledPhotosPage>
+
+        </>
     );
 }
