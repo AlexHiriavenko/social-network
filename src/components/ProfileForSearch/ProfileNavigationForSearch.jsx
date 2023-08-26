@@ -117,7 +117,9 @@ const StyledNavigationShowMoreButton = styled(Button)(({ theme }) => ({
     },
 }));
 
+
 export default function ProfileNavigationForSearch(props) {
+
     // Constants
     const location = useLocation();
     const navRef = useRef(null);
@@ -125,15 +127,19 @@ export default function ProfileNavigationForSearch(props) {
     const [listStatus, setListStatus] = useState(false);
     const [locationNameNavigation, setLocationNameNavigation] = useState("notpage");
 
+
     let id =props.id
+
     // Functions
     function toggleList() {
         setListStatus(!listStatus);
     }
     // Find Location for right way
     function whatLocation(locationArray) {
+
         if (locationArray[1] === `search`) {
             setLocationNameNavigation(`search/${id}`);
+
         }
         if (locationArray[1] === "friends") {
             setLocationNameNavigation(`friends/${locationArray[2]}`);
@@ -172,6 +178,8 @@ export default function ProfileNavigationForSearch(props) {
                         Posts
                     </StyledNavigationItem>
 
+
+
                     <StyledNavigationItem
                         to={`/${locationNameNavigation}/friends`}
                         data-loc="/friends"
@@ -197,6 +205,7 @@ export default function ProfileNavigationForSearch(props) {
         </StyledNavigationSection>
     );
 }
+
 /*<StyledNavigationItem
     to={`/${locationNameNavigation}/about`}
     data-loc="/about"
