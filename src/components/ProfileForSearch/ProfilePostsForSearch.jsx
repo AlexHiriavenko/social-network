@@ -1,5 +1,5 @@
 import ProfileIntroForSearch from "./ProfileIntroForSearch.jsx"
-import ProfilePostsPhotos from "../UserProfile/ProfilePosts/PostsPhotos.jsx";
+import ProfilePostsPhotosForSearch from "./ProfilePostsPhotosForSearch.jsx";
 import ProfilePostsFriendsForSearch from "./ProfilePostFriendsForSearch.jsx";
 import { useEffect, useRef, useState } from "react";
 import CreatePost from "../Posts/CreatePost";
@@ -87,7 +87,7 @@ export default function ProfilePostsForSearch() {
                 <StyledPostsLeftSide ref={userInfoRef}>
                     <ProfileIntroForSearch id={id} />
 
-                    <ProfilePostsPhotos id={id} />
+                    <ProfilePostsPhotosForSearch id={id} />
                     <ProfilePostsFriendsForSearch  id ={id}/>
                 </StyledPostsLeftSide>
                 <StyledPostsPublications

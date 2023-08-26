@@ -66,7 +66,7 @@ export default function ProfilePostsFriendsForSearch(props) {
             }
 
         })()
-    }, []);
+    }, [id]);
 
     // Photo size
     useEffect(() => {
