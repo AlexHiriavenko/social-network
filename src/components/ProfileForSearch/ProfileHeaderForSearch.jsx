@@ -271,7 +271,7 @@ console.log(user)
                                     backgroundColor: false ? "" : "#1B74E4",
                                 }}
                             />
-                        )
+
                     </StyledProfileButtonsWrapper>
                 </StyledProfileUserInfoSection>
             </ProfileContainer>

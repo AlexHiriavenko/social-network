@@ -6,7 +6,7 @@ import {
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import { uploadPhotos} from "../../../redux/user.slice/user.slice.js";
+import {getProfile, setAuthorizedUser, setUser, uploadPhotos} from "../../../redux/user.slice/user.slice.js";
 
 const mockImg = [
   "https://www.ictputovanja.hr/data/public/slike-za-novosti/Island-kucica.jpg",
@@ -95,6 +95,17 @@ export default function Photos() {
     setMultipartFile(formData)
     console.log(formData.get("multipartFile"))
    await dispatch(uploadPhotos({multipartFile: formData, id:id}))
+
+   const editUser =  dispatch(getProfile())
+   editUser.then(result =>{
+     console.log(result.payload)
+     if(result.payload) {
+       localStorage.setItem("authorizedUser", JSON.stringify({...result.payload, isAuthorized: true}))
+       localStorage.setItem("user", JSON.stringify({...result.payload, isAuthorized: true}))
+       dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
+       dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
+     }
+   })
   }
   return (
     <ContentBlock>

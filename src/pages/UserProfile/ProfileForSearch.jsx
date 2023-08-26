@@ -9,12 +9,11 @@ import {useEffect, useState} from "react";
 
 export default function Profile(props) {
     const dispatch = useDispatch();
-    const auth = useSelector((state) => state.user?.user);
+
     const [user,setUser] = useState(null)
     let {id} = useParams()
 
 
-   // const id =1;
 useEffect(()=>{
 
     const userPromise = dispatch(getUser(id))
@@ -27,20 +26,13 @@ useEffect(()=>{
 
     return (
         <>
-            {auth ? (
+
                 <>
                     <ProfileHeaderForSearch user={user} />
                     <ProfileNavigationForSearch user ={user} />
                     <Outlet />
                 </>
-            ) : (
-                <Backdrop
-                    sx={{ color: "#fff", }}
-                    open={true}
-                >
-                    <CircularProgress color="inherit" />
-                </Backdrop>
-            )}
+
         </>
     );
 }
