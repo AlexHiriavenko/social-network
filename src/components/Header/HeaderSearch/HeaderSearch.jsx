@@ -5,12 +5,14 @@ import ListRecentSearches from "./SeacrhComponents/ListRecentSearches";
 import { toggleVisible } from "../../../redux/searchDrawer.slice/headerSearch.slice";
 import BtnArrowBack from "../../Buttons/BtnArrowBack";
 import { useTheme } from "@mui/material/styles";
+import {useState} from "react";
+import SearchForHomePage from "../../Search/SearchForHomePage.jsx";
 
 function HeaderSearch() {
     const theme = useTheme();
     const dispatch = useDispatch();
     const isDrawerOpen = useSelector((state) => state.searchDrawer.isVisible);
-
+    const[foundUser,setFoundUser] = useState([])
     const toggleDrawer = () => {
         dispatch(toggleVisible());
     };
@@ -22,6 +24,7 @@ function HeaderSearch() {
                 onClick={toggleDrawer}
                 inputClass="header__input"
                 searchIconWrapClass="header__search-icon-wrap"
+                setFoundUser ={setFoundUser}
             />
             <Drawer
                 anchor="left"
@@ -40,6 +43,9 @@ function HeaderSearch() {
                     },
                 }}
             >
+                <SearchForHomePage
+
+                    setFoundUser ={setFoundUser}/>
                 <Box
                     sx={{
                         width: { xs: "320px", sm: "360px" },
@@ -53,11 +59,7 @@ function HeaderSearch() {
                             color={theme.palette.textColor.secondary}
                             hoverColor={theme.palette.input.mainBackground}
                         />
-                        <Search
-                            inputClass="header__drawer-searh-input"
-                            searchIconWrapClass="drawer__search-icon-wrap"
-                            inputId="header-drawer-search"
-                        />
+
                     </Box>
                     <Divider sx={{ mt: "4px" }} />
                     <Box>
@@ -72,8 +74,12 @@ function HeaderSearch() {
                             variant="h6"
                         >
                             Recent searches
+
                         </Typography>
-                        <ListRecentSearches onClick={toggleDrawer} />
+
+
+
+                        <ListRecentSearches onClick={toggleDrawer} users={foundUser} />
                     </Box>
                 </Box>
             </Drawer>
@@ -82,3 +88,10 @@ function HeaderSearch() {
 }
 
 export default HeaderSearch;
+/* <Search
+                            inputClass="header__drawer-searh-input"
+                            searchIconWrapClass="drawer__search-icon-wrap"
+                            inputId="header-drawer-search"
+                        />
+
+ */

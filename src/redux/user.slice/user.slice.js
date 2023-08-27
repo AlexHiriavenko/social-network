@@ -31,7 +31,9 @@ export const uploadAvatar = createAsyncThunk(
 
         console.log(multipartFile)
         let accessToken = JSON.parse(localStorage.getItem('token'))
-        await axios.post(`https://social-network-backend-2782464b9c31.herokuapp.com/users/${id}/avatar`, multipartFile,
+
+        await axios.post(`${import.meta.env.VITE_APP_API_URL}/users/${id}/avatar`, multipartFile,
+
             {
 
                 headers:
@@ -52,7 +54,7 @@ export const uploadCoverPhoto = createAsyncThunk(
 
         console.log(multipartFile)
         let accessToken = JSON.parse(localStorage.getItem('token'))
-        await axios.post(`https://social-network-backend-2782464b9c31.herokuapp.com/users/${id}/header`, multipartFile,
+        await axios.post(`${import.meta.env.VITE_APP_API_URL}/users/${id}/header`, multipartFile,
             {
 
                 headers:
@@ -62,6 +64,48 @@ export const uploadCoverPhoto = createAsyncThunk(
                 }
             }
         )
+
+    }
+
+);
+
+export const uploadPhotos = createAsyncThunk(
+    "Users/uploadPhotos",
+    async function ({ multipartFile, id }) {
+        console.log(multipartFile)
+        let accessToken = JSON.parse(localStorage.getItem('token'))
+        await axios.post(`${import.meta.env.VITE_APP_API_URL}/users/${id}/image`, multipartFile,
+            {
+
+                headers:
+                    {
+                        'Content-Type': 'multipart/form-data',
+                        'AUTHORIZATION': `Bearer ${accessToken}`
+                    }
+            }
+        )
+
+    }
+
+);
+
+export const findByPartOfName = createAsyncThunk(
+    "Users/findByPartOfName",
+    async function (part) {
+
+
+        let accessToken = JSON.parse(localStorage.getItem('token'))
+       let user =  await axios.get(`${import.meta.env.VITE_APP_API_URL}/users/part`,
+            {
+                params:{part:part},
+                headers:
+                    {
+                        'Content-Type': 'application/json',
+                        'AUTHORIZATION': `Bearer ${accessToken}`
+                    }
+            }
+        )
+return user.data;
 
     }
 
@@ -115,7 +159,7 @@ const UserSlice = createSlice({
         setFriends: (state, action) => {
             state.friends = action.payload;
         },
-        //Set autorized user to State
+        // Set autorized user to State
         setAuthorizedUser: (state, action) => {
             state.authorizedUser = action.payload;
         },

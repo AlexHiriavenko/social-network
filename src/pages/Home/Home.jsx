@@ -14,7 +14,7 @@ import {
     getProfile,
     getUsers,
     setAuthorizedUser,
-    setUsers,
+    setUsers,findByPartOfName,
 } from "../../redux/user.slice/user.slice.js";
 import { getPosts, setPosts } from "../../redux/post.slice/post.slice.js";
 
@@ -33,14 +33,20 @@ function Home() {
             dispatch(logOut())
         }
     };
+    if(!JSON.parse(localStorage.getItem("token"))){
+        dispatch(logOut())
+    }
 
-    const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
     useEffect(() => {
-        console.log(JSON.parse(localStorage.getItem("token")) == "out");
+
         if (JSON.parse(localStorage.getItem("token")) == "out") {
-            (async()=>{await  dispatch(loginGoogle());} )()
+            (async()=>{await  dispatch(loginGoogle());
 
+                let result = await dispatch(getProfile())
 
+                    dispatch(setAuthorizedUser({...result.payload,isAuthorized:true}))
+            }
+            )()
         }
 
        // window.setInterval(renewToken, 60000)
@@ -55,7 +61,7 @@ function Home() {
             );
             authorizedUserResponse
                 .then((result) => {
-                    //  let promiseResult = result
+
 
                     dispatch(
                         setAuthorizedUser({
@@ -106,7 +112,11 @@ function Home() {
         //      window.clearInterval(renewToken)
 
        //   }
-    }, [isLoggedIn]);
+
+
+
+    }, []);
+
 
     return (
         <div

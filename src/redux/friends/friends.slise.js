@@ -8,7 +8,6 @@ const initialState = {
   friendsRequests: [],
   friendSuggestions: [],
   currentFriend: {},
-  searchValue: '',
   birthdays: [[]]
 };
 
@@ -21,9 +20,6 @@ const friendsSlice = createSlice({
     },
     setCurrentFriend: function(state, action) {
       state.currentFriend = action.payload;
-    },
-    setSearchValue: function(state, action) {
-      state.searchValue = action.payload;
     },
     removeFriend: function(state, action) {
       state.friendsList = state.friendsList.filter(el => el.friend.id != action.payload);

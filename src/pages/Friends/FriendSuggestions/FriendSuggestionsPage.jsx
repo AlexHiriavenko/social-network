@@ -15,7 +15,7 @@ function FriendSuggestionsPage() {
 
     const dispatch = useDispatch(); 
 
-    const user = useSelector((store)=>store.user.user, shallowEqual);
+    const user = useSelector((store)=>store.user.authorizedUser, shallowEqual);
     const friendSuggestions = useSelector((store)=>store.friends.friendSuggestions, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
 
@@ -42,7 +42,6 @@ function FriendSuggestionsPage() {
     }
 
     const handleClickRemoveSuggestion = (payload) => {
-        console.log(payload);
         if(user.id === payload.friend.id) {
             dispatch(setCurrentFriend({}));
             dispatch(setUser({}))

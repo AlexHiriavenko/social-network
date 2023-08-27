@@ -1,13 +1,18 @@
 .users-list {
     @media (max-width: 480px) {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
         width: 100%;
         max-width: 100%;
     }
 }
 
 .chats__list-item {
+    @media (max-width: 700px) {
+        justify-content: center !important;
+    }
+
     @media (max-width: 480px) {
         padding-left: 0 !important;
         padding-right: 0 !important;
@@ -139,4 +144,28 @@
     font-size: 18px;
     margin: 18px auto 0;
     text-align: center;
+}
+
+.messenger-sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: space-between;
+    padding-inline: 16px;
+    padding-top: 8px;
+
+    @media (max-width: 480px) {
+        padding-inline: 0;
+    }
+
+
+    &__title {
+        @media (max-width: 480px) {
+            display: none;
+        }
+    }
+
+    &__btn {
+        min-width: 50px;
+    }
 }

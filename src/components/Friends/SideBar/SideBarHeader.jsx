@@ -8,9 +8,11 @@ function SideBarHeader(props) {
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
-        marginTop: 20,
-        marginBottom: 12,
+        paddingTop: 20,
+        paddingBottom: 12,
         flexDirection: 'column',
+        height: 92,
+/*         position: 'fix', */
     })
 
     return (

@@ -6,6 +6,7 @@ const SearchDiv = styled("div")(({ theme }) => ({
     backgroundColor: theme.palette.input.mainBackground,
     borderRadius: "50px",
     marginLeft: theme.spacing(1),
+    maxWidth: "360px",
 }));
 
 const SearchIconWrapper = styled("div")(({ theme, className }) => ({

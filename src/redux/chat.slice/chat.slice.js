@@ -2,8 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "../../instance.js";
 
 export const getChats = createAsyncThunk("chat/getChats", async function () {
-    const chats = await instance.get("/chats").then((response) => response.json());
-    console.log(chats);
+    const chats = await instance.get("/chats");
     return chats;
 });
 
@@ -14,14 +13,27 @@ export const getChatsParticipants = createAsyncThunk("chat/getParticipants", asy
 });
 ////////////////////
 export const getChat = createAsyncThunk("chat/getChat", async function (id) {
-    const { data } = await instance.get(`/chats/${id}`);
-    return data;
+    if (id) {
+        const { data } = await instance.get(`/chats/${id}`);
+        return data;
+    }
 });
 
-export const addNewUser = createAsyncThunk("chat/addNewUser", async function ({ chatId, newUser }) {
-    const { status } = await instance.put(`/messages/${chatId}/participants`, newUser);
-    console.log(status);
-});
+// export const addNewUser = createAsyncThunk("chat/addNewUser", async function ({ chatId, newUser }) {
+//     const { status } = await instance.put(`/chats/${chatId}/participants`, newUser);
+//     console.log(status);
+// });
+
+export const addToChatNewUser = createAsyncThunk(
+    "chat/addNewUser",
+    async function ({ chatId, userId }) {
+        const { status } = await instance.put(`/chats/${chatId}/participants/${userId}`);
+        console.log("ответ: статус " + status);
+        console.log("ай-ди чата: " + chatId);
+        console.log("ай-ди юзера:" + userId);
+    }
+);
+
 export const initialState = {
     isOpened: false,
     chatsParticipants: [],
@@ -43,6 +55,16 @@ export const initialState = {
     },
 };
 
+const temporaryPartisipantState = {
+    id: null,
+    userId: null,
+    fullName: "New Chat",
+    content: "",
+    lastMessageDate: "",
+    profilePicture:
+        "https://www.facebook.com/images/mercury/clients/messenger/threadlist/NewMessage.png",
+};
+
 const chatSlice = createSlice({
     name: "chat",
     initialState,
@@ -60,6 +82,15 @@ const chatSlice = createSlice({
             state.currentChat = initialState.currentChat;
             state.isOpened = false;
         },
+        setTemporaryParticipant: function (state, action) {
+            state.chatsParticipants = [temporaryPartisipantState, ...state.chatsParticipants];
+        },
+        deleteTemporaryParticipant: function (state) {
+            const targetIndex = state.chatsParticipants.findIndex((el) => el.id === null);
+            if (targetIndex !== -1) {
+                state.chatsParticipants.splice(targetIndex, 1);
+            }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getChatsParticipants.fulfilled, (state, action) => {
@@ -70,7 +101,11 @@ const chatSlice = createSlice({
             }
         });
         builder.addCase(getChat.fulfilled, (state, action) => {
+            console.log(action.payload);
             state.currentChat = action.payload;
+        });
+        builder.addCase(addToChatNewUser.fulfilled, (state, action) => {
+            console.log("пользователь добавлен");
         });
     },
 });
@@ -88,7 +123,14 @@ const chatPageSlice = createSlice({
     },
 });
 
-export const { openChat, closeChat, setCurrentChatCompanion, resetCurrentChat } = chatSlice.actions;
+export const {
+    openChat,
+    closeChat,
+    setCurrentChatCompanion,
+    resetCurrentChat,
+    setTemporaryParticipant,
+    deleteTemporaryParticipant,
+} = chatSlice.actions;
 
 export const { openPageChat, closePageChat } = chatPageSlice.actions;
 
