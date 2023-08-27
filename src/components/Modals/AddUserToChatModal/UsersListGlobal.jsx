@@ -38,6 +38,7 @@ function UsersListGlobal(props) {
                 <ListItem
                     key={user.id}
                     sx={{
+                        cursor: "pointer",
                         gap: 1,
                         "&:hover": {
                             backgroundColor: theme.palette.hoverColor.main,
