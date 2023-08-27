@@ -31,6 +31,6 @@ export const handleLinkClick = (dispatch, friend, authUser) => {
                 window.scrollTo({ top: 0, behavior: "smooth" });
             })
             .catch((error) => error.message);
-    }console.log(friend)
+    }
     dispatch(setCurrentFriend(friend));
 }

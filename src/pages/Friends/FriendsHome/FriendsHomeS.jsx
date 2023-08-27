@@ -31,7 +31,6 @@ const dispatch = useDispatch();
 const authUser = useSelector((store)=>store.user.authorizedUser, shallowEqual);
 const callBackHandleLinkClick = useCallback(handleClickLinklocal, [authUser, dispatch, handleClickLinklocal]);
 const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
-console.log(currentFriend)
 
 const navigate = useNavigate();
 
