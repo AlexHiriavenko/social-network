@@ -34,8 +34,8 @@ export const SectionWraper = styled(Box)(({theme}) => ({
     width: '100%', 
     display: 'flex', 
     flexDirection: 'column', 
-    paddingLeft: 20,
-    paddingRight: 20,
+/*     paddingLeft: 20,
+    paddingRight: 20, */
     paddingBottom: 0,
     paddingTop: 0,
     height: '100%',
@@ -46,6 +46,7 @@ export const SectionWraper = styled(Box)(({theme}) => ({
     "&::-webkit-scrollbar": {
         width: 0,
       },
+    [theme.breakpoints.down('sm')]: {backgroundColor: theme.palette.backgroundColor.section,}
 }))
 
 export const H1Styled = styled('h1')(({theme}) => ({

@@ -1,7 +1,7 @@
-import React from "react";
 import { SVGNoFrienSelected } from '../../components/SVG/svg';
 import styled from "@emotion/styled";
 import { Box, Typography } from "@mui/material";
+import PropTypes from 'prop-types';
 
 function FriendEmptyPage(props) {
 
@@ -31,5 +31,13 @@ function FriendEmptyPage(props) {
         </EmptyPage>
     )
 }
+
+FriendEmptyPage.propTypes = {
+    children: PropTypes.node,
+  };
+  
+FriendEmptyPage.defaultProps = {
+    children: <></>,
+  };
 
 export default FriendEmptyPage;
