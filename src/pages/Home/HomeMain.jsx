@@ -15,7 +15,7 @@ function HomeMain() {
   // State
   const [mainPagePosts, setMainPagePosts] = useState([]);
   const [fetching, setFetching] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   // Constants
   const visiblePosts = useSelector((state) => state.post.visiblePosts);
   const dispatch = useDispatch();
@@ -29,6 +29,7 @@ function HomeMain() {
       setFetching(true);
     }
   }
+  console.log(visiblePosts);
   //   useEffect
   useEffect(() => {
     if (fetching) {
