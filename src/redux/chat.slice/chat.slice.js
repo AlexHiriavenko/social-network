@@ -28,9 +28,9 @@ export const addToChatNewUser = createAsyncThunk(
     "chat/addNewUser",
     async function ({ chatId, userId }) {
         const { status } = await instance.put(`/chats/${chatId}/participants/${userId}`);
-        console.log(status);
-        console.log(chatId);
-        console.log(userId);
+        console.log("ответ: статус " + status);
+        console.log("ай-ди чата: " + chatId);
+        console.log("ай-ди юзера:" + userId);
     }
 );
 
