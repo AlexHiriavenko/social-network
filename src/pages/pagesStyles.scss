@@ -3,7 +3,7 @@
     width: 100%;
     max-width: 1920px;
     // justify-content: center;
-    min-height: 100vh;
+    min-height: calc(100vh - 65px);
     margin-left: auto;
     margin-right: auto;
 }

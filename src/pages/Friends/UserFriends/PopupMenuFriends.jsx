@@ -8,6 +8,7 @@ import styled from "@emotion/styled";
 import { Box, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import PropTypes from 'prop-types';
 
 
 function PopupMenuFriends(props) {
@@ -120,5 +121,13 @@ const StyledAvatar = styled(Avatar)(({theme}) => ({
     </>
   );
 }
+
+PopupMenuFriends.propTypes = {
+  handleClickUnfriend: PropTypes.func,
+};
+
+PopupMenuFriends.defaultProps = {
+  handleClickUnfriend: () => { },
+};
 
 export default React.memo(PopupMenuFriends);
