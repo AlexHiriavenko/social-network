@@ -9,23 +9,16 @@ import {
 import { List, ListItem, Typography, Avatar, Box } from "@mui/material/";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-import {
-    getChatsParticipants,
-    deleteTemporaryParticipant,
-} from "../../../redux/chat.slice/chat.slice";
+import { deleteTemporaryParticipant } from "../../../redux/chat.slice/chat.slice";
 
 function UsersList(props) {
     const { setNewMessageDialog } = props;
     const dispatch = useDispatch();
     const theme = useTheme();
 
-    // useEffect(() => {
-    //     dispatch(getChatsParticipants());
-    // }, [dispatch]);
-
-    // dispatch(getChatsParticipants());
-
     const chatParticipants = useSelector((state) => state.chat.chatsParticipants);
+    console.log(chatParticipants);
+
     const currentChat = useSelector((state) => state.chat.currentChat);
 
     const chatParticipant = (participants, id) =>
@@ -56,7 +49,7 @@ function UsersList(props) {
             )}
             {!!chatParticipants.length &&
                 chatParticipants.map(
-                    ({ id: chatId, profilePicture, fullName, userId, content }) => (
+                    ({ id: chatId, profilePicture, fullName, userId, content, quantityUsers }) => (
                         <ListItem
                             id={`chatUser${userId}`}
                             key={userId}
@@ -84,7 +77,12 @@ function UsersList(props) {
                                         className="search__user-name"
                                         color={theme.palette.textColor.content}
                                     >
-                                        {fullName}
+                                        {fullName}{" "}
+                                        {quantityUsers > 0 && (
+                                            <Typography variant="span" sx={{ fontSize: "13px" }}>
+                                                & {quantityUsers} more
+                                            </Typography>
+                                        )}
                                     </Typography>
                                     <Typography
                                         className="search__user-name"

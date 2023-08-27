@@ -19,18 +19,11 @@ export const getChat = createAsyncThunk("chat/getChat", async function (id) {
     }
 });
 
-// export const addNewUser = createAsyncThunk("chat/addNewUser", async function ({ chatId, newUser }) {
-//     const { status } = await instance.put(`/chats/${chatId}/participants`, newUser);
-//     console.log(status);
-// });
-
 export const addToChatNewUser = createAsyncThunk(
     "chat/addNewUser",
     async function ({ chatId, userId }) {
         const { status } = await instance.put(`/chats/${chatId}/participants/${userId}`);
         console.log("ответ: статус " + status);
-        console.log("ай-ди чата: " + chatId);
-        console.log("ай-ди юзера:" + userId);
     }
 );
 
@@ -95,7 +88,25 @@ const chatSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getChatsParticipants.fulfilled, (state, action) => {
             if (typeof action.payload === "object") {
-                state.chatsParticipants = action.payload;
+                const uniqueIdMap = new Map();
+                const idCountMap = {};
+
+                action.payload.forEach((item) => {
+                    if (!uniqueIdMap.has(item.id)) {
+                        uniqueIdMap.set(item.id, item);
+                        idCountMap[item.id] = 0;
+                    } else {
+                        idCountMap[item.id] += 1;
+                    }
+                });
+
+                uniqueIdMap.forEach((item) => {
+                    // количество пользователей кроме авторизированного юзера и 1го участника чата
+                    // чтобы показать в групповом чате например "Alex Smith and 2 more"
+                    item.quantityUsers = idCountMap[item.id];
+                });
+
+                state.chatsParticipants = Array.from(uniqueIdMap.values());
             } else {
                 state.chatsParticipants = [];
             }
@@ -104,9 +115,7 @@ const chatSlice = createSlice({
             console.log(action.payload);
             state.currentChat = action.payload;
         });
-        builder.addCase(addToChatNewUser.fulfilled, (state, action) => {
-            console.log("пользователь добавлен");
-        });
+        builder.addCase(addToChatNewUser.fulfilled, (state, action) => {});
     },
 });
 
