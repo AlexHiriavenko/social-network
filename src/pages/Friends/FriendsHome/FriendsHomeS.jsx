@@ -12,6 +12,7 @@ import {PageBoxFriends} from '../../../components/StyledComponents/PageBoxFriend
 import { MenuItem, SideBarContentWrapper } from '../SideBarStyledComponents';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import styled from "@emotion/styled";
 
 
 function FriendsHomeS(props) {
@@ -35,6 +36,11 @@ const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowE
 
 const navigate = useNavigate();
 
+const LinkStyled = styled(Link)(({theme}) => ({
+    color: theme.palette.textColor.content,
+    fontSize: "14px",
+}))
+
     return(
         <PageBoxFriends sx={{
             display: 'flex',
@@ -44,16 +50,25 @@ const navigate = useNavigate();
                 <SideBarHeader>
                     <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
                         <H1Styled>Friends</H1Styled>
-                        <Box sx={{py: 1, px:2, borderRadius: 10, textDecoration: 'none',
-                                width: '100px', fontSize: "14px", 
-                                backgroundColor: theme.palette.buttonColor.background,
-                                '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},
-                                color: theme.palette.textColor.content}}>
-                            <Link to={"/friends/allfriends"} /* sx={{py: 1, px:2, borderRadius: 10, textDecoration: 'none',
-                                width: '100px', fontSize: "14px", 
-                                backgroundColor: theme.palette.buttonColor.background,
-                                '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},
-                                color: theme.palette.textColor.content}} */>All Friends</Link>
+                        <Box sx={{display: 'flex', gap: 1}}>
+                            <Box sx={{py: 1, px:2, borderRadius: 10, textDecoration: 'none',
+                                    textAlign:'center',
+                                    backgroundColor: theme.palette.buttonColor.background,
+                                    '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},}}>
+                                <LinkStyled to={"/friends/allfriends"}>All Friends</LinkStyled>
+                            </Box>
+                            <Box sx={{py: 1, px:2, borderRadius: 10, textDecoration: 'none',
+                                    textAlign:'center',
+                                    backgroundColor: theme.palette.buttonColor.background,
+                                    '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},}}>
+                                <LinkStyled to={"/friends/requests"}>Requests</LinkStyled>
+                            </Box>
+                            <Box sx={{py: 1, px:2, borderRadius: 10, textDecoration: 'none',
+                                    textAlign:'center',
+                                    backgroundColor: theme.palette.buttonColor.background,
+                                    '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},}}>
+                                <LinkStyled to={"/friends/suggestions"}>Suggestions</LinkStyled>
+                            </Box>
                         </Box>
                     </Box>
                 </SideBarHeader>
