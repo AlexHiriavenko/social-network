@@ -48,22 +48,22 @@ const LinkStyled = styled(Link)(({theme}) => ({
             [theme.breakpoints.up('sm')]: {display: 'none',},}}>
             <SidebarStyled>
                 <SideBarHeader>
-                    <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                    <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 0.5}}>
                         <H1Styled>Friends</H1Styled>
-                        <Box sx={{display: 'flex', gap: 1}}>
-                            <Box sx={{py: 1, px:2, borderRadius: 10, textDecoration: 'none',
+                        <Box sx={{display: 'flex', gap: 1, flexWrap:'wrap'}}>
+                            <Box sx={{py: 0.5, px:2, borderRadius: 10, textDecoration: 'none',
                                     textAlign:'center',
                                     backgroundColor: theme.palette.buttonColor.background,
                                     '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},}}>
                                 <LinkStyled to={"/friends/allfriends"}>All Friends</LinkStyled>
                             </Box>
-                            <Box sx={{py: 1, px:2, borderRadius: 10, textDecoration: 'none',
+                            <Box sx={{py: 0.5, px:2, borderRadius: 10, textDecoration: 'none',
                                     textAlign:'center',
                                     backgroundColor: theme.palette.buttonColor.background,
                                     '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},}}>
                                 <LinkStyled to={"/friends/requests"}>Requests</LinkStyled>
                             </Box>
-                            <Box sx={{py: 1, px:2, borderRadius: 10, textDecoration: 'none',
+                            <Box sx={{py: 0.5, px:2, borderRadius: 10, textDecoration: 'none',
                                     textAlign:'center',
                                     backgroundColor: theme.palette.buttonColor.background,
                                     '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},}}>
