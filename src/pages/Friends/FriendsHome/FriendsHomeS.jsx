@@ -1,7 +1,8 @@
 import { useCallback} from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Friend from "../../../components/Friends/Friend/Friend";
-import { Box, Divider, List, Link } from "@mui/material";
+import { Box, Divider, List, ListItemButton } from "@mui/material";
+import { Link } from "react-router-dom";
 import { ButtonStyled } from '../../../components/StyledComponents/Buttons';
 import SideBarHeader from '../../../components/Friends/SideBar/SideBarHeader';
 import {SidebarStyled} from '../../../components/StyledComponents/SideBarFriends'
@@ -43,10 +44,13 @@ const navigate = useNavigate();
                 <SideBarHeader>
                     <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
                         <H1Styled>Friends</H1Styled>
-                        <Link href="/friends/allfriends" sx={{py: 1, px:2, borderRadius: 10, textDecoration: 'none',
+                        <Box sx={{width: '100px', minWidth: '90px', maxWidth: '150px'}}>
+                            <ListItemButton to={"/friends/allfriends"} sx={{py: 1, px:2, borderRadius: 10, textDecoration: 'none',
+                                width: '100px', fontSize: "14px", 
                                 backgroundColor: theme.palette.buttonColor.background,
                                 '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},
-                                color: theme.palette.textColor.content}}>All Friends</Link>
+                                color: theme.palette.textColor.content}}>All Friends</ListItemButton>
+                        </Box>
                     </Box>
                 </SideBarHeader>
                 <Divider sx={{my: 0, borderColor: theme.palette.border.card,}}/>
