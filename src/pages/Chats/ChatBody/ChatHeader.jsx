@@ -3,10 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import { Typography, Box, Avatar } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { resetCurrentChat } from "../../../redux/chat.slice/chat.slice";
 import { getFriends, setFriends, setUser, getUser } from "../../../redux/user.slice/user.slice";
+import { StyledAvatar, StyledChatHeader } from "./StyledComponents";
+import { openAddUserToChatModal } from "../../../redux/modal.slice/modal.slice";
 
-function ChatHeader({ closeMenu }) {
+function ChatHeader({ closeMenu, setNewMessageDialog }) {
     const location = useLocation();
     const dispatch = useDispatch();
     const theme = useTheme();
@@ -44,18 +47,7 @@ function ChatHeader({ closeMenu }) {
     }
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                position: "sticky",
-                top: 0,
-                zIndex: 2,
-                backgroundColor: theme.palette.backgroundColor.section,
-                width: "100%",
-                p: 2,
-            }}
-        >
+        <StyledChatHeader>
             <Link
                 onClick={() => lookFriendPage(currentChatCompanion.userId)}
                 to="/profile"
@@ -73,26 +65,25 @@ function ChatHeader({ closeMenu }) {
                 />
                 <Typography sx={{ color: theme.palette.textColor.main }}>{fullName}</Typography>
             </Link>
-            <Avatar
-                sx={{
-                    bgcolor: theme.palette.hoverColor.dark,
-                    minWidth: "40px",
-                    minHeight: "40px",
-                    cursor: "pointer",
-                    transitionDuration: "0.5s",
-                    "&:hover": {
-                        backgroundColor: theme.palette.buttonColor.backgroundHover,
-                    },
-                }}
-                onClick={() => dispatch(resetCurrentChat())}
-            >
-                <CloseIcon
-                    sx={{
-                        color: theme.palette.textColor.content,
-                    }}
-                />
-            </Avatar>
-        </Box>
+            <Box sx={{ display: "flex", gap: 1 }}>
+                <StyledAvatar onClick={() => dispatch(openAddUserToChatModal())}>
+                    <PersonAddIcon
+                        sx={{
+                            color: theme.palette.textColor.content,
+                        }}
+                        alt="add participant"
+                    />
+                </StyledAvatar>
+                <StyledAvatar onClick={() => dispatch(resetCurrentChat())}>
+                    <CloseIcon
+                        sx={{
+                            color: theme.palette.textColor.content,
+                        }}
+                        alt="close"
+                    />
+                </StyledAvatar>
+            </Box>
+        </StyledChatHeader>
     );
 }
 

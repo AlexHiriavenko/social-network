@@ -11,4 +11,7 @@ export const SidebarStyled = styled('aside')(({theme})=>({
     "&::-webkit-scrollbar": {
         width: "0",
       },
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      },
 }))
