@@ -112,7 +112,6 @@ const chatSlice = createSlice({
             }
         });
         builder.addCase(getChat.fulfilled, (state, action) => {
-            console.log(action.payload);
             state.currentChat = action.payload;
         });
         builder.addCase(addToChatNewUser.fulfilled, (state, action) => {});
