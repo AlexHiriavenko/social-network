@@ -15,18 +15,18 @@ function UsersListGlobal(props) {
     console.log(currentChat);
 
     function handleAddUser(id = 0, fullName, newUserId) {
-        // const newMessage = {
-        //     id: id,
-        //     content: `${authUser.fullName} add to chat new participant: ${fullName}`,
-        //     sender: authUser,
-        //     chat: currentChat,
-        // };
+        const newMessage = {
+            id: id,
+            content: `${authUser.fullName} add to chat new participant: ${fullName}`,
+            sender: authUser,
+            chat: currentChat,
+        };
         console.log(`url запрос на /chats/${currentChat.id}/participants/${newUserId}`);
 
         dispatch(addToChatNewUser({ chatId: currentChat.id, userId: newUserId }))
-            // .then(() => dispatch(sendMessage(newMessage)))
-            .then(() => dispatch(getChat(currentChat.id)))
             .then(() => dispatch(closeAddUserToChatModal()))
+            .then(() => dispatch(sendMessage(newMessage)))
+            .then(() => dispatch(getChat(currentChat.id)))
             .catch((error) => {
                 console.error("Error sending message:", error);
             });
