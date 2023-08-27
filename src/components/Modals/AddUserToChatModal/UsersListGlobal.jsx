@@ -1,15 +1,35 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { List, ListItem, Typography, Avatar } from "@mui/material/";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { closeAddUserToChatModal } from "../../../redux/modal.slice/modal.slice";
+import { sendMessage } from "../../../redux/message.slice/message.slice";
+import { getChat, addToChatNewUser } from "../../../redux/chat.slice/chat.slice";
 
 function UsersListGlobal(props) {
     const dispatch = useDispatch();
     const theme = useTheme();
 
-    function handleAddUser() {
-        dispatch(closeAddUserToChatModal());
+    const authUser = useSelector((state) => state.user.authorizedUser);
+    const currentChat = useSelector((state) => state.chat.currentChat);
+    console.log(currentChat);
+
+    function handleAddUser(id = 0, fullName, newUserId) {
+        // const newMessage = {
+        //     id: id,
+        //     content: `${authUser.fullName} add to chat new participant: ${fullName}`,
+        //     sender: authUser,
+        //     chat: currentChat,
+        // };
+        console.log(`url запрос на /chats/${currentChat.id}/participants/${newUserId}`);
+
+        dispatch(addToChatNewUser({ chatId: currentChat.id, userId: newUserId }))
+            // .then(() => dispatch(sendMessage(newMessage)))
+            .then(() => dispatch(getChat(currentChat.id)))
+            .then(() => dispatch(closeAddUserToChatModal()))
+            .catch((error) => {
+                console.error("Error sending message:", error);
+            });
     }
 
     return (
@@ -23,7 +43,7 @@ function UsersListGlobal(props) {
                             backgroundColor: theme.palette.hoverColor.main,
                         },
                     }}
-                    onClick={handleAddUser}
+                    onClick={() => handleAddUser(0, user.fullName, +user.id)}
                 >
                     <Link className="search__user-link">
                         <Avatar

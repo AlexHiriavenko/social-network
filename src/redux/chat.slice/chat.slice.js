@@ -26,9 +26,11 @@ export const getChat = createAsyncThunk("chat/getChat", async function (id) {
 
 export const addToChatNewUser = createAsyncThunk(
     "chat/addNewUser",
-    async function ({ chatId, newUser }) {
-        const { status } = await instance.put(`/chats/${chatId}/participants`, newUser);
+    async function ({ chatId, userId }) {
+        const { status } = await instance.put(`/chats/${chatId}/participants/${userId}`);
         console.log(status);
+        console.log(chatId);
+        console.log(userId);
     }
 );
 
@@ -101,6 +103,9 @@ const chatSlice = createSlice({
         builder.addCase(getChat.fulfilled, (state, action) => {
             console.log(action.payload);
             state.currentChat = action.payload;
+        });
+        builder.addCase(addToChatNewUser.fulfilled, (state, action) => {
+            console.log("пользователь добавлен");
         });
     },
 });
