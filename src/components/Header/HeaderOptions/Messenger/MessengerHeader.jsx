@@ -6,7 +6,7 @@ import { useTheme } from "@mui/material/styles";
 
 function MessengerHeader(props) {
     const theme = useTheme();
-    const { toggleMenu } = props;
+    const { toggleMenu, setNewMessageModal } = props;
     const navigate = useNavigate();
 
     return (
@@ -45,13 +45,14 @@ function MessengerHeader(props) {
                         <ZoomOutMapIcon sx={{ color: theme.palette.textColor.content }} />
                     </IconButton>
                 </Tooltip>
-                <Tooltip title="New Message" sx={{ ml: 0.5 }}>
+                <Tooltip title="New Chat" sx={{ ml: 0.5 }}>
                     <IconButton
                         sx={{
                             "&:hover": {
                                 backgroundColor: theme.palette.hoverColor.main,
                             },
                         }}
+                        onClick={() => setNewMessageModal(true)}
                     >
                         <EditNoteIcon
                             sx={{ color: theme.palette.textColor.content }}

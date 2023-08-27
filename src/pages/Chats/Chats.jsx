@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import MessengerSidebarHeader from "./MessengerSidebarHeader/MessengerSidebarHeader";
 import ChatBody from "./ChatBody/ChatBody";
 import UsersList from "./UsersList/UsersList";
 import { getChatsParticipants } from "../../redux/chat.slice/chat.slice";
@@ -10,11 +11,11 @@ function Chats() {
     const dispatch = useDispatch();
     const theme = useTheme();
 
-    const currentChat = useSelector((state) => state.chat.currentChat);
+    const [newMessageDialog, setNewMessageDialog] = useState(false);
 
     useEffect(() => {
         dispatch(getChatsParticipants());
-    }, [dispatch, currentChat]);
+    }, [dispatch]);
 
     return (
         <div
@@ -33,9 +34,13 @@ function Chats() {
                 }}
             >
                 <Sidebar>
-                    <UsersList />
+                    <MessengerSidebarHeader setNewMessageDialog={setNewMessageDialog} />
+                    <UsersList setNewMessageDialog={setNewMessageDialog} />
                 </Sidebar>
-                <ChatBody />
+                <ChatBody
+                    newMessageDialog={newMessageDialog}
+                    setNewMessageDialog={setNewMessageDialog}
+                />
             </div>
         </div>
     );

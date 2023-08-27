@@ -7,6 +7,7 @@ import {
   ContentBlockTitel,
 } from "../StyledComponents/ContentBlock/StyledComponents";
 import styled from "@emotion/styled";
+import {useSelector} from "react-redux";
 const mockImg = [
   "https://www.ictputovanja.hr/data/public/slike-za-novosti/Island-kucica.jpg",
   "https://i.pinimg.com/564x/15/f0/e0/15f0e0372d1e04df5f325d00e5899069.jpg",
@@ -29,6 +30,7 @@ const StyledPostPagePhoto = styled("img")({
 export default function ProfilePostsPhotos() {
   const photosRef = useRef(null);
   const [photoHeight, setPhotoHeight] = useState(213);
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     window.addEventListener("resize", resizePhotoHeigh);
@@ -53,10 +55,10 @@ export default function ProfilePostsPhotos() {
         </ContentBlockLink>
       </ContentBlockHeader>
       <ContentBlockList>
-        {mockImg.map((image, index) => {
+        {user?.userImages?.map((image, index) => {
           return (
             <StyledPostPagePhoto
-              src={image}
+              src={image.imageUrl}
               alt="foto"
               width={213}
               height={photoHeight}
