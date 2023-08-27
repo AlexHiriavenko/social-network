@@ -44,12 +44,16 @@ const navigate = useNavigate();
                 <SideBarHeader>
                     <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
                         <H1Styled>Friends</H1Styled>
-                        <Box sx={{width: '100px', minWidth: '90px', maxWidth: '150px'}}>
-                            <ListItemButton to={"/friends/allfriends"} sx={{py: 1, px:2, borderRadius: 10, textDecoration: 'none',
+                        <Box sx={{py: 1, px:2, borderRadius: 10, textDecoration: 'none',
                                 width: '100px', fontSize: "14px", 
                                 backgroundColor: theme.palette.buttonColor.background,
                                 '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},
-                                color: theme.palette.textColor.content}}>All Friends</ListItemButton>
+                                color: theme.palette.textColor.content}}>
+                            <Link to={"/friends/allfriends"} /* sx={{py: 1, px:2, borderRadius: 10, textDecoration: 'none',
+                                width: '100px', fontSize: "14px", 
+                                backgroundColor: theme.palette.buttonColor.background,
+                                '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},
+                                color: theme.palette.textColor.content}} */>All Friends</Link>
                         </Box>
                     </Box>
                 </SideBarHeader>
