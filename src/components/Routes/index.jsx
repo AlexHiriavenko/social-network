@@ -146,7 +146,7 @@ export default function AllRoutes() {
           />
         </Route>
         <Route
-          path="//friends/allfriends"
+          path="/friends/allfriends"
           element={<UserFriendsPage />}>
           <Route
             path="/friends/allfriends/"

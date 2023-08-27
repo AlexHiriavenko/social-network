@@ -17,7 +17,7 @@ import {
   StyledModalTitle,
 } from "../StyledModalComponents";
 import Post from "../../Posts/Post/Post";
-import { repostPost } from "../../../redux/post.slice/post.slice";
+import { createPost, repostPost } from "../../../redux/post.slice/post.slice";
 
 const StyledPostModalUser = styled(Box)({
   display: "flex",
@@ -109,6 +109,7 @@ export default function CreatePostModal() {
   const authUser = useSelector((state) => state.user.authorizedUser);
   // State
   const [imgUrls, setImgUrls] = useState([]);
+  const [multipartFiles, setMultipartFiles] = useState([]);
   // Functions
   const handleClose = () => {
     dispatch(closeCreateModal());
@@ -124,9 +125,13 @@ export default function CreatePostModal() {
       files.push(filesList[i]);
     }
     const formData = new FormData();
-    formData.append("file", files);
+    files.forEach(el => {
+      formData.append(`files`, el);
+    })
     setImgUrls(files.map((file) => URL.createObjectURL(file)));
+    setMultipartFiles(formData);
   }
+
   // Formik
   const formik = useFormik({
     initialValues: {
@@ -134,19 +139,21 @@ export default function CreatePostModal() {
       userName: `${authUser && authUser?.fullName} `,
     },
     onSubmit: (values) => {
+
       if (repost) {
         const repostResponse = dispatch(
           repostPost({ id: repost?.id, content: values.content })
         );
         repostResponse
           .then((response) => {
-            console.log(response);
             values.content = "";
             setImgUrls([]);
             handleClose();
           })
           .catch((error) => console.log(error));
       } else {
+        setMultipartFiles(multipartFiles.append("content", values.content));
+        dispatch(createPost({ multipartFiles: multipartFiles }))
         values.content = "";
         setImgUrls([]);
         handleClose();

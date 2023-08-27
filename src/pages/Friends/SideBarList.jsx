@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "@emotion/styled";
 import {SVGpersonGo, SVGpersonPlus, SVGPeople, SVGFriendsList, SVGBirthdays, SVGNext} from '../../components/SVG/svg';
 import { NavLink } from "react-router-dom";
@@ -159,9 +158,9 @@ SideBarList.propTypes = {
 
   };
   
-  SideBarList.defaultProps = {
+SideBarList.defaultProps = {
     activeItem: '',
 
-  };
+};
 
 export default SideBarList;

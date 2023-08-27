@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import {setAuthorizedUser,setUser,uploadAvatar,uploadCoverPhoto,getProfile} from '../../../redux/user.slice/user.slice.js'
+import { setAuthorizedUser, setUser, uploadAvatar, uploadCoverPhoto, getProfile } from '../../../redux/user.slice/user.slice.js'
 import { closeEditProfileModal } from "../../../redux/modal.slice/modal.slice";
 import {
   StyledEditedPartButton,
@@ -58,7 +58,7 @@ export default function EditChildModal(props) {
   const { title } = props;
   const fileRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [multipartFile,setMultipartFile] = useState(null)
+  const [multipartFile, setMultipartFile] = useState(null)
   const theme = useTheme();
   //   Functions
   const handleOpen = () => {
@@ -75,26 +75,24 @@ export default function EditChildModal(props) {
     setMultipartFile(formData)
     setSelectedImage(URL.createObjectURL(file));
   }
- async  function savePicture() {
+  async function savePicture() {
     let id = JSON.parse(localStorage.getItem('authorizedUser')).id
-       console.log(multipartFile.get("multipartFile"))
-    if(title === "Select profile picture"){
-     await dispatch(uploadAvatar({multipartFile: multipartFile, id:id}))
+    if (title === "Select profile picture") {
+      await dispatch(uploadAvatar({ multipartFile: multipartFile, id: id }))
     }
-    else if(title === "Select cover picture"){
-     await dispatch(uploadCoverPhoto({multipartFile: multipartFile, id:id}))
+    else if (title === "Select cover picture") {
+      await dispatch(uploadCoverPhoto({ multipartFile: multipartFile, id: id }))
     }
-    const editUser =  dispatch(getProfile())
-    editUser.then(result =>{
-      console.log(result.payload)
-        if(result.payload) {
-            localStorage.setItem("authorizedUser", JSON.stringify({...result.payload, isAuthorized: true}))
-            localStorage.setItem("user", JSON.stringify({...result.payload, isAuthorized: true}))
-            dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
-            dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
-        }
+    const editUser = dispatch(getProfile())
+    editUser.then(result => {
+      if (result.payload) {
+        localStorage.setItem("authorizedUser", JSON.stringify({ ...result.payload, isAuthorized: true }))
+        localStorage.setItem("user", JSON.stringify({ ...result.payload, isAuthorized: true }))
+        dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
+        dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
+      }
     })
-     dispatch(closeEditProfileModal())
+    dispatch(closeEditProfileModal())
   }
   return (
     <>
