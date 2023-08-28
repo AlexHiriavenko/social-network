@@ -1,5 +1,6 @@
 import { setCurrentFriend } from '../../redux/friends/friends.slise';
 import { setFriends, setUser, getUser, getFriends } from "../../redux/user.slice/user.slice";
+import { getFriendshipRequests } from "../../redux/friends/actionCreators";
 
 
 export const handleLinkClick = (dispatch, friend, authUser) => {
@@ -33,4 +34,5 @@ export const handleLinkClick = (dispatch, friend, authUser) => {
             .catch((error) => error.message);
     }
     dispatch(setCurrentFriend(friend));
+    dispatch(getFriendshipRequests());
 }

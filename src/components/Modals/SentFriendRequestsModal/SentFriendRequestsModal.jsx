@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Dialog, DialogTitle, DialogContent, Divider, Typography, Box, Link } from "@mui/material";
 import { closeSentFriendRequests } from  '../../../redux/modal.slice/modal.slice';
@@ -7,14 +7,13 @@ import { StyledModalTitle,
         StyledModalCloseButton, 
         StyledModalCloseButtonLine ,
     } from '../StyledModalComponents';
-import { setCurrentFriend } from '../../../redux/friends/friends.slise';
-import { setFriends, setUser, getUser, getFriends } from "../../../redux/user.slice/user.slice";
 import Friend from '../../Friends/Friend/Friend';
 import styled from "@emotion/styled";
 import { useTheme } from '@mui/material/styles';
 import { ButtonStyled } from '../../../components/StyledComponents/Buttons';
 import { updateFriendship } from '../../../redux/friends/actionCreators';
 import { useNavigate } from "react-router-dom";
+import { handleLinkClick } from '../../../pages/Friends/handleClickLink';
 
 
 function SentFriendRequestsModal() {
@@ -39,40 +38,11 @@ function SentFriendRequestsModal() {
 
     const handleClickItem = (friend) => {
         navigate("/profile");
-        handleLinkClick(friend);
+        handleClickLinklocal(friend);
     }
 
-    const handleLinkClick = (friend) => {
-        const id  = friend.id;
-        dispatch(setCurrentFriend({}));
-        dispatch(setUser({}));
-
-        // get user friends
-    const userFriendsResponse = dispatch(getFriends(id));
-        userFriendsResponse
-            .then((data) => {
-                const friends = data.payload.filter(el => el.status === 'accepted');
-                dispatch(setFriends(friends));
-                localStorage.setItem("friends", JSON.stringify(friends));
-            })
-            .catch((error) => console.log(error.message));
-
-        // checking if the user is authorized
-        if (id === authUser.id) {
-            dispatch(setUser(authUser));
-            localStorage.setItem("user", JSON.stringify(authUser));
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        } else {
-            const userResponse = dispatch(getUser(id));
-            userResponse
-            .then((data) => {
-                dispatch(setUser(data.payload));
-                localStorage.setItem("user", JSON.stringify(data.payload));
-                window.scrollTo({ top: 0, behavior: "smooth" });
-            })
-            .catch((error) => error.message);
-        }
-        dispatch(setCurrentFriend(friend));
+    const handleClickLinklocal = (friend) => {
+        handleLinkClick(dispatch, friend, authUser);
     }
 
     const handleCancelRequest = (friend) => {
