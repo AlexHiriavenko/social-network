@@ -122,7 +122,7 @@ export default function ProfilePostsFriendsForSearch(props) {
         <ContentBlock style={{ maxWidth: "680px" }}>
             <ContentBlockHeader>
                 <ContentBlockTitel>Friends</ContentBlockTitel>
-                <ContentBlockLink to={"/profile/friends"}>
+                <ContentBlockLink to={`/search/${id}/friends`}>
                     See all friends
                 </ContentBlockLink>
             </ContentBlockHeader>

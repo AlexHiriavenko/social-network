@@ -11,6 +11,7 @@ import {
 import styled from "@emotion/styled";
 import { Box, Typography } from "@mui/material";
 import { useSelector ,useDispatch} from "react-redux";
+import {Link} from 'react-router-dom'
 import {getFriends} from "../../redux/user.slice/user.slice.js";
 
 
@@ -113,7 +114,12 @@ export default function FriendsListForSearch(props) {
                     <StyledFriendsList>
                         {userFriends?.map((friendItem, index) => {
                             if (friendItem?.status !== "accepted") return;
-                            return <FriendItem {...friendItem} key={index} />;
+                            return(
+                                <  Link    key={index}
+                                           to={`/search/${friendItem.friend.id}`}>
+                            <FriendItem {...friendItem} key={index}  />;
+                                </Link>
+                        )
                         })}
                     </StyledFriendsList>
 
