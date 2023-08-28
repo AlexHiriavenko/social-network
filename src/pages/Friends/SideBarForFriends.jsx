@@ -38,6 +38,7 @@ function SideBarFriends(props) {
         handleChangeValue,
         placeholderText,
         initialValue,
+        openDrawer,
     } = props;
 
     const theme = useTheme();
@@ -81,10 +82,10 @@ function SideBarFriends(props) {
                                 { noItemMessage }
                             </Typography>}
                     </Box>            
-                    <List sx={{ py: 2}}>
+                    <List sx={{ py: 1}}>
                         {
                         sideBarItems && sideBarItems.map(fr =>
-                        <MenuItem onClick={(e) => {e.stopPropagation(); callBackHandleLinkClick(fr.user ? fr.user : fr.friend)}}
+                        <MenuItem onClick={(e) => {e.stopPropagation(); callBackHandleLinkClick(fr.user ? fr.user : fr.friend); openDrawer(true)}}
                                 key={fr.user ? fr.user.id : fr.friend.id} 
                                 selected={currentFriend.id === (fr.user ? fr.user.id : fr.friend.id)}>
                             <Friend horizontal = 'true'
@@ -145,6 +146,7 @@ SideBarFriends.propTypes = {
     handleChangeValue: PropTypes.func,
     placeholderText: PropTypes.string,
     initialValue: PropTypes.string,
+    openDrawer: PropTypes.func,
   };
   
   SideBarFriends.defaultProps = {
@@ -166,6 +168,7 @@ SideBarFriends.propTypes = {
     handleChangeValue: () => {},
     placeholderText: '',
     initialValue: '',
+    openDrawer: () => {},
   };
 
 export default memo(SideBarFriends);

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../../instance";
+import axios from "axios";
 
 //Получение всех постов
 export const getPosts = createAsyncThunk("Posts/getPosts", async function () {
@@ -30,13 +31,19 @@ export const updatePost = createAsyncThunk(
   }
 );
 
-// //Создание поста
-// export const createPost = createAsyncThunk(
-//   "Posts/updatePost",
-//   async function (updatedPost) {
-//     await instance.put("/posts", updatedPost);
-//   }
-// );
+//Создание поста
+export const createPost = createAsyncThunk(
+  "Posts/updatePost",
+  async function ({ multipartFiles }) {
+    let accessToken = JSON.parse(localStorage.getItem('token'))
+    await axios.post(`${import.meta.env.VITE_APP_API_URL}/posts`, multipartFiles, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'AUTHORIZATION': `Bearer ${accessToken}`
+      }
+    })
+  }
+);
 
 // Получение постов по айди юзера
 export const getPostsByUserId = createAsyncThunk(
@@ -93,9 +100,6 @@ const postSlice = createSlice({
     post: {},
   },
   reducers: {
-    // createPost: function (state, action) {
-    //   state.isCreated = true;
-    // },
     setPosts: (state, action) => {
       state.allPosts = action.payload;
     },
@@ -111,7 +115,7 @@ const postSlice = createSlice({
   },
 });
 
-export const { createPost, deletePost, setPosts, setUserPosts, setPost, setVisiblePosts } =
+export const { deletePost, setPosts, setUserPosts, setPost, setVisiblePosts } =
   postSlice.actions;
 
 export default postSlice.reducer;

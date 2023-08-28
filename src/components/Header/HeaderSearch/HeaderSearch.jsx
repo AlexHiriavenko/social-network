@@ -5,14 +5,14 @@ import ListRecentSearches from "./SeacrhComponents/ListRecentSearches";
 import { toggleVisible } from "../../../redux/searchDrawer.slice/headerSearch.slice";
 import BtnArrowBack from "../../Buttons/BtnArrowBack";
 import { useTheme } from "@mui/material/styles";
-import {useState} from "react";
+import { useState } from "react";
 import SearchForHomePage from "../../Search/SearchForHomePage.jsx";
 
 function HeaderSearch() {
     const theme = useTheme();
     const dispatch = useDispatch();
     const isDrawerOpen = useSelector((state) => state.searchDrawer.isVisible);
-    const[foundUser,setFoundUser] = useState([])
+    const [foundUser, setFoundUser] = useState([]);
     const toggleDrawer = () => {
         dispatch(toggleVisible());
     };
@@ -24,7 +24,7 @@ function HeaderSearch() {
                 onClick={toggleDrawer}
                 inputClass="header__input"
                 searchIconWrapClass="header__search-icon-wrap"
-                setFoundUser ={setFoundUser}
+                setFoundUser={setFoundUser}
             />
             <Drawer
                 anchor="left"
@@ -41,27 +41,35 @@ function HeaderSearch() {
                     classes: {
                         root: "custom-backdrop",
                     },
-                }}
-            >
-                <SearchForHomePage
-
-                    setFoundUser ={setFoundUser}/>
+                }}>
                 <Box
                     sx={{
-                        width: { xs: "320px", sm: "360px" },
+                        display: "flex",
                         backgroundColor: theme.palette.backgroundColor.section,
-                        minHeight: "100%",
-                    }}
-                >
+                        pr: 2,
+                    }}>
                     <Box sx={{ display: "flex", p: 1 }}>
                         <BtnArrowBack
                             onClick={toggleDrawer}
                             color={theme.palette.textColor.secondary}
                             hoverColor={theme.palette.input.mainBackground}
                         />
-
                     </Box>
-                    <Divider sx={{ mt: "4px" }} />
+                    <SearchForHomePage setFoundUser={setFoundUser} />
+                </Box>
+                <Box
+                    sx={{
+                        width: { xs: "320px", sm: "360px" },
+                        backgroundColor: theme.palette.backgroundColor.section,
+                        minHeight: "calc(100% - 60px)",
+                    }}>
+                    <Divider
+                        sx={{
+                            mt: "4px",
+                            backgroundColor:
+                                theme.palette.backgroundColor.pageSeparator,
+                        }}
+                    />
                     <Box>
                         <Typography
                             sx={{
@@ -71,15 +79,14 @@ function HeaderSearch() {
                                 color: theme.palette.textColor.content,
                             }}
                             component="h3"
-                            variant="h6"
-                        >
+                            variant="h6">
                             Recent searches
-
                         </Typography>
 
-
-
-                        <ListRecentSearches onClick={toggleDrawer} users={foundUser} />
+                        <ListRecentSearches
+                            onClick={toggleDrawer}
+                            users={foundUser}
+                        />
                     </Box>
                 </Box>
             </Drawer>

@@ -10,9 +10,10 @@ function SideBarHeader(props) {
         justifyContent: 'space-between',
         paddingTop: 20,
         paddingBottom: 12,
+        paddingLeft: 16,
+        paddingRight: 16,
         flexDirection: 'column',
         height: 92,
-/*         position: 'fix', */
     })
 
     return (

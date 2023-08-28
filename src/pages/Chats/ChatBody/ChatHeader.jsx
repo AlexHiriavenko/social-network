@@ -13,7 +13,9 @@ function ChatHeader({ closeMenu, setNewMessageDialog }) {
     const location = useLocation();
     const dispatch = useDispatch();
     const theme = useTheme();
-    const { fullName, profilePicture } = useSelector((state) => state.chat.currentChatCompanion);
+    const { fullName, profilePicture, quantityUsers } = useSelector(
+        (state) => state.chat.currentChatCompanion
+    );
     const authUser = useSelector((state) => state.user.authorizedUser);
     const currentChatCompanion = useSelector((state) => state.chat.currentChatCompanion);
 
@@ -63,7 +65,14 @@ function ChatHeader({ closeMenu, setNewMessageDialog }) {
                     alt="user icon"
                     src={profilePicture}
                 />
-                <Typography sx={{ color: theme.palette.textColor.main }}>{fullName}</Typography>
+                <Typography sx={{ color: theme.palette.textColor.main }}>
+                    {fullName}{" "}
+                    {quantityUsers > 0 && (
+                        <Typography variant="span" sx={{ fontSize: "13px" }}>
+                            & {quantityUsers} more
+                        </Typography>
+                    )}
+                </Typography>
             </Link>
             <Box sx={{ display: "flex", gap: 1 }}>
                 <StyledAvatar onClick={() => dispatch(openAddUserToChatModal())}>

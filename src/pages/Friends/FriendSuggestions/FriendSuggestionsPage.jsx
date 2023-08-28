@@ -1,15 +1,13 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import styled from "@emotion/styled";
-import { Box } from "@mui/material";
 import { getFriendSuggestions, createFriendship } from "../../../redux/friends/actionCreators";
 import { setCurrentFriend, removeSuggestions } from "../../../redux/friends/friends.slise";
-import { Profile } from "../../index";
 import SideBarFriends from "../SideBarForFriends";
-import FriendEmptyPage from  "../FriendEmptyPage";
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 import { setUser } from "../../../redux/user.slice/user.slice";
+import FriendProfileML from '../FriendProfileML';
+import FriendProfileS from '../FriendProfileS';
 
 function FriendSuggestionsPage() {
 
@@ -18,8 +16,10 @@ function FriendSuggestionsPage() {
     const user = useSelector((store)=>store.user.authorizedUser, shallowEqual);
     const friendSuggestions = useSelector((store)=>store.friends.friendSuggestions, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     useEffect(()=>{
+        setDrawerOpen(currentFriend.id ? true : false);
         if(friendSuggestions.length === 0) {
             dispatch(setCurrentFriend({}));
         } 
@@ -48,24 +48,6 @@ function FriendSuggestionsPage() {
         }
         dispatch(removeSuggestions(payload));
     }
-    
-
-    const SectionWraper = styled(Box)(({theme}) => ({
-        width: '100%', 
-        display: 'flex', 
-        flexDirection: 'column', 
-        padding: 20, 
-        backgroundColor: theme.palette.backgroundColor.page,
-        height: '100%',
-        boxSizing: 'content-box',
-        overflowY: 'scroll',
-        overflowX: 'hidden',
-        paddingBottom: 0,
-        paddingTop: 0,
-        "&::-webkit-scrollbar": {
-            width: "0",
-          },
-    }))
 
     const textMessage = friendSuggestions.length > 0 
         ? "Select people`s names to preview their profile." 
@@ -84,15 +66,15 @@ function FriendSuggestionsPage() {
                                     handleClickRemove={handleClickRemoveSuggestion}
                                     isAvatarMutualFriend={true}
                                     isRemoveButton={true}
-                                    isAddButton={true}/>
-                <SectionWraper>
-                    { 
-                        currentFriend.id === undefined && <FriendEmptyPage>{textMessage}</FriendEmptyPage>
-                    }
-                    {
-                        !(currentFriend.id === undefined) && <Profile/>
-                    }
-                </SectionWraper>
+                                    isAddButton={true}
+                                    openDrawer={setDrawerOpen}/>
+                    <FriendProfileML currentFriend={currentFriend} textMessage={textMessage}/>
+                    <FriendProfileS
+                        drawerOpen={drawerOpen} 
+                        setDrawerOpen={setDrawerOpen} 
+                        currentFriend={currentFriend} 
+                        subtitleText={"Friends Suggestions"}
+                    />
             </PageBoxFriends>
         </PageBoxFriendsWrapper>
     )

@@ -75,7 +75,7 @@ const navigate = useNavigate();
                         className="form-btn create--btn"
                         variant="contained"
                         color="grey"
-                        style={{ alignSelf: "center" }}>
+                        style={{ alignSelf: "center",marginLeft:"-15px"  }}>
                         На главную
                     </Button>
                 </Box>

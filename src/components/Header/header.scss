@@ -131,6 +131,14 @@
     }
 }
 
+.search__user-name {
+    white-space: nowrap;
+    /* Запрет переноса текста на новую строку */
+    overflow: hidden;
+    /* Скрытие части текста, выходящей за границы контейнера */
+    text-overflow: ellipsis;
+}
+
 .search__user-remove {
     max-width: 20px;
     max-height: 20px;

@@ -1,9 +1,35 @@
+import { useDispatch, useSelector } from "react-redux";
 import { List, ListItem, Typography, Avatar } from "@mui/material/";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
+import {
+    createChat,
+    deleteTemporaryParticipant,
+    setCurrentChatCompanion,
+    openChat,
+    getChats,
+} from "../../../../../redux/chat.slice/chat.slice";
 
 function GlobalUsersList(props) {
+    const dispatch = useDispatch();
     const theme = useTheme();
+    const { setNewMessageModal } = props;
+
+    function createNewChat(id, fullName, profilePicture) {
+        // const currentChatCompanion = {
+        //     userId: id,
+        //     fullName: fullName,
+        //     profilePicture: profilePicture,
+        // };
+
+        // dispatch(createChat(id));
+        // dispatch(deleteTemporaryParticipant());
+        // dispatch(setCurrentChatCompanion(currentChatCompanion));
+        // setNewMessageModal(false);
+        // dispatch(openChat());
+        // dispatch(getChats());
+        alert("В стадии разработки");
+    }
 
     return (
         <List sx={{ minHeight: "340px" }}>
@@ -16,6 +42,7 @@ function GlobalUsersList(props) {
                             backgroundColor: theme.palette.hoverColor.main,
                         },
                     }}
+                    onClick={() => createNewChat(user.id, user.fullName, user.profilePicture)}
                 >
                     <Link className="search__user-link">
                         <Avatar
