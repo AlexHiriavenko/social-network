@@ -53,7 +53,6 @@ export default function ProfilePostsForSearch() {
     // Costants
     const dispatch = useDispatch();
     const userInfoRef = useRef(null);
-
     const allUserPosts = useSelector((state) => state.post.allUserPosts);
     const visiblePosts = useSelector((state) => state.post.visiblePosts);
     // State
