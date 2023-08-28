@@ -12,8 +12,6 @@ import HeaderNewMessage from "./NewMessage/HeaderNewMessage";
 function HeaderMessageOptions() {
     const [newMessageModal, setNewMessageModal] = useState(false);
 
-    const handleNewMessageModal = () => setNewMessageModal(true);
-
     const theme = useTheme();
     const [anchorMessageMenu, setAnchorMessageMenu] = useState(null);
 
@@ -59,15 +57,13 @@ function HeaderMessageOptions() {
                         ref: chatRef,
                         className: "header__options-drop-menu",
                         style: {
-                            backgroundColor:
-                                theme.palette.backgroundColor.section,
+                            backgroundColor: theme.palette.backgroundColor.section,
                             maxHeight: "500px",
                         },
                     },
-                }}>
-                {newMessageModal && (
-                    <HeaderNewMessage setNewMessageModal={setNewMessageModal} />
-                )}
+                }}
+            >
+                {newMessageModal && <HeaderNewMessage setNewMessageModal={setNewMessageModal} />}
                 {!open && !newMessageModal && (
                     <MessengerHeader
                         toggleMenu={toggleMenu}

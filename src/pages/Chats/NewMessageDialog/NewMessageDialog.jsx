@@ -10,7 +10,10 @@ function NewMessageDialog({ setNewMessageModal }) {
         <div style={{ width: "100%", padding: "8px 8px" }}>
             <NewMessageHeader setNewMessageModal={setNewMessageModal}></NewMessageHeader>
             <SearchForHomePage setFoundUser={setFoundUser}></SearchForHomePage>
-            <GlobalUsersList users={foundUser}></GlobalUsersList>
+            <GlobalUsersList
+                users={foundUser}
+                setNewMessageModal={setNewMessageModal}
+            ></GlobalUsersList>
         </div>
     );
 }
