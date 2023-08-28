@@ -223,7 +223,7 @@ console.log(user)
             ) :[];
             setAcceptedFriends(acceptedFriendsArray);
         })()
-    }, [userFriends,id]);
+    }, [id]);
 
     useEffect(() => {
 
