@@ -17,7 +17,6 @@ function UsersList(props) {
     const theme = useTheme();
 
     const chatParticipants = useSelector((state) => state.chat.chatsParticipants);
-    console.log(chatParticipants);
 
     const currentChat = useSelector((state) => state.chat.currentChat);
 

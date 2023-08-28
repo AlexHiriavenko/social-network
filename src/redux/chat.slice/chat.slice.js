@@ -3,6 +3,7 @@ import instance from "../../instance.js";
 
 export const getChats = createAsyncThunk("chat/getChats", async function () {
     const chats = await instance.get("/chats");
+    console.log(chats);
     return chats;
 });
 
@@ -23,9 +24,16 @@ export const addToChatNewUser = createAsyncThunk(
     "chat/addNewUser",
     async function ({ chatId, userId }) {
         const { status } = await instance.put(`/chats/${chatId}/participants/${userId}`);
-        console.log("ответ: статус " + status);
+        return status;
     }
 );
+
+export const createChat = createAsyncThunk("chat/createChat", async function (id) {
+    if (id) {
+        const { data } = await instance.get(`/chats/search/${id}`);
+        return data;
+    }
+});
 
 export const initialState = {
     isOpened: false,
@@ -87,6 +95,7 @@ const chatSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getChatsParticipants.fulfilled, (state, action) => {
+            console.log(action.payload);
             if (typeof action.payload === "object") {
                 const uniqueIdMap = new Map();
                 const idCountMap = {};
@@ -113,6 +122,11 @@ const chatSlice = createSlice({
         });
         builder.addCase(getChat.fulfilled, (state, action) => {
             state.currentChat = action.payload;
+        });
+        builder.addCase(createChat.fulfilled, (state, action) => {
+            console.log(action.payload);
+            // console.log(action.payload[0]);
+            // state.currentChat = action.payload[0];
         });
         builder.addCase(addToChatNewUser.fulfilled, (state, action) => {});
     },

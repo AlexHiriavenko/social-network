@@ -15,7 +15,7 @@ function HeaderNewMessage(props) {
             <NewMessageHeader setNewMessageModal={setNewMessageModal} />
             <Box sx={{ p: 1 }}>
                 <SearchForHomePage setFoundUser={setFoundUser} />
-                <GlobalUsersList users={foundUser} />
+                <GlobalUsersList users={foundUser} setNewMessageModal={setNewMessageModal} />
             </Box>
         </>
     );

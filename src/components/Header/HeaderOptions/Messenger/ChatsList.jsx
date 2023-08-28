@@ -41,7 +41,7 @@ function ChatsList(props) {
             )}
             {!!chatParticipants.length &&
                 chatParticipants.map(
-                    ({ id: chatId, profilePicture, fullName, userId, content }) => (
+                    ({ id: chatId, profilePicture, fullName, userId, content, quantityUsers }) => (
                         <ListItem
                             id={`chatUser${userId}`}
                             key={userId}
@@ -72,7 +72,12 @@ function ChatsList(props) {
                                         className="search__user-name"
                                         color={theme.palette.textColor.content}
                                     >
-                                        {fullName}
+                                        {fullName}{" "}
+                                        {quantityUsers > 0 && (
+                                            <Typography variant="span" sx={{ fontSize: "13px" }}>
+                                                & {quantityUsers} more
+                                            </Typography>
+                                        )}
                                     </Typography>
                                     <Typography
                                         className="search__user-name"
