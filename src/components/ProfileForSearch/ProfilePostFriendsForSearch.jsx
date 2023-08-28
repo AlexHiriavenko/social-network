@@ -7,6 +7,7 @@ import {
     ContentBlockTitel,
 } from "../UserProfile/StyledComponents/ContentBlock/StyledComponents.js";
 import { Box, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -51,6 +52,7 @@ export default function ProfilePostsFriendsForSearch(props) {
     const authUser = useSelector((state) => state.user.authorizedUser);
     const [userFriends,setUserFriends] = useState([])
     const dispatch = useDispatch();
+
      let id = props.id
     // State
     const [photoHeight, setPhotoHeight] = useState(204);
@@ -130,9 +132,16 @@ export default function ProfilePostsFriendsForSearch(props) {
             <StyledPostFriendsList>
                 {acceptedFriends.map((friend, index) => {
                     return (
+                        <  Link    key={index}
+                            to={`/search/${friend.friend.id}`}
+
+                          >
                         <StyledPostFriendItem
                             key={index}
-                            onClick={() => lookFriendPage(friend.friend)}
+                            onClick={() => {
+                                lookFriendPage(friend.friend)
+
+                            }}
                         >
                             <StyledPostFriendImage
                                 src={
@@ -148,9 +157,11 @@ export default function ProfilePostsFriendsForSearch(props) {
                                 {friend.friend.fullName}
                             </StyledPostFriendName>
                         </StyledPostFriendItem>
+                        </Link>
                     );
                 })}
             </StyledPostFriendsList>
+
         </ContentBlock>
     );
 }
