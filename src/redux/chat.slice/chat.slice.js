@@ -95,7 +95,6 @@ const chatSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getChatsParticipants.fulfilled, (state, action) => {
-            console.log(action.payload);
             if (typeof action.payload === "object") {
                 const uniqueIdMap = new Map();
                 const idCountMap = {};
