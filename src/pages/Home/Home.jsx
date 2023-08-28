@@ -24,22 +24,14 @@ function Home() {
 
     const dispatch = useDispatch();
     let user = useSelector((state) => state.user.authorizedUser);
-    const renewToken = async function () {
-        const token = await dispatch(getAccessToken());
-        console.log(token.payload);
-        console.log("Set access token");
-        if(token.payload){
-          localStorage.setItem("token",JSON.stringify(token.payload))}else{
-            dispatch(logOut())
-        }
-    };
+
     if(!JSON.parse(localStorage.getItem("token"))){
         dispatch(logOut())
     }
 
     useEffect(() => {
 
-        if (JSON.parse(localStorage.getItem("token")) == "out") {
+        if (JSON.parse(localStorage.getItem("token")) == "out" ) {
             (async()=>{await  dispatch(loginGoogle());
 
                 let result = await dispatch(getProfile())
@@ -49,7 +41,6 @@ function Home() {
             )()
         }
 
-       // window.setInterval(renewToken, 60000)
         if (
             !localStorage.getItem("authorizedUser") &&
             localStorage.getItem("auth")
@@ -85,33 +76,16 @@ function Home() {
                 )
             );
         }
+        if (!localStorage.getItem("authorizedUser")) {
+            (async()=>{
 
-        // get all users
-/*         const allUsersResponse = dispatch(getUsers());
-        allUsersResponse
-            .then((result) => {
-                dispatch(setUsers(result.payload));
-            })
-            .catch((error) => alert(error)); */
+                    let result = await dispatch(getProfile())
 
-        // get all posts
-/*         const allPostsResponse = dispatch(getPosts());
-        allPostsResponse
-            .then((result) => {
-                dispatch(setPosts(result.payload));
-            })
-            .catch((error) => alert(error));
-        dispatch(
-            setAuthorizedUser(
-                JSON.parse(localStorage.getItem("authorizedUser"))
-            )
-        ); */
+                    dispatch(setAuthorizedUser({...result.payload,isAuthorized:true}))
+                }
+            )()
+        }
 
-       //   return function () {
-
-        //      window.clearInterval(renewToken)
-
-       //   }
 
 
 
