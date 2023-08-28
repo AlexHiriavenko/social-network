@@ -17,7 +17,6 @@ import {
     setUser,
 } from "../../redux/user.slice/user.slice.js";
 
-
 const StyledPostFriendsSubtitle = styled(Typography)(({ theme }) => ({
     width: "100%",
     color: theme.palette.textColor.secondary,
