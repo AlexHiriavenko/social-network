@@ -18,6 +18,9 @@ import { useDispatch } from "react-redux";
 
 export default function RegisterModal(props) {
   const dispatch = useDispatch();
+  const { modal, handleModal } = props;
+
+
   const registerForm = useFormik({
     initialValues: {
       name: "",
@@ -43,6 +46,8 @@ export default function RegisterModal(props) {
           gender: registerForm.values.gender,
         })
       );
+
+   handleModal()
       return console.log({
         name: registerForm.values.name,
         surname: registerForm.values.surname,
@@ -55,7 +60,7 @@ export default function RegisterModal(props) {
       });
     },
   });
-  const { modal, handleModal } = props;
+
   return (
     <>
       <Modal
