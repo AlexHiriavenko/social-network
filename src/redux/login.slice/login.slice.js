@@ -69,7 +69,7 @@ export const register = createAsyncThunk(
                         year,
                     }) {
         await axios.post(
-            `https://social-network-backend-2782464b9c31.herokuapp.com/api/auth/registration`,
+            `${import.meta.env.VITE_APP_API_URL}/api/auth/registration`,
             {
                 email: emailOrPhone,
                 password: password,
