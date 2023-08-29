@@ -10,15 +10,48 @@ import { List, ListItem, Typography, Avatar, Box } from "@mui/material/";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { deleteTemporaryParticipant } from "../../../redux/chat.slice/chat.slice";
+import filterChatParticipants from "../helpers/filterChatParticipants";
 
 function UsersList(props) {
     const { setNewMessageDialog } = props;
     const dispatch = useDispatch();
     const theme = useTheme();
 
+    const authUserID = useSelector((state) => state.user.authorizedUser.id);
     const chatParticipants = useSelector(
         (state) => state.chat.chatsParticipants
     );
+
+    const filteredChats = filterChatParticipants(chatParticipants, authUserID);
+
+    // function filteredParticpents() {
+    //     if (chatParticipants.length > 0) {
+    //         const filteredParticpents = chatParticipants.filter(
+    //             (chat) => chat.userId !== authUserID
+    //         );
+
+    //         const uniqueIdMap = new Map();
+    //         const idCountMap = {};
+
+    //         filteredParticpents.forEach((item) => {
+    //             if (!uniqueIdMap.has(item.id)) {
+    //                 uniqueIdMap.set(item.id, item);
+    //                 idCountMap[item.id] = 0;
+    //             } else {
+    //                 idCountMap[item.id] += 1;
+    //             }
+    //         });
+
+    //         const clone = structuredClone(uniqueIdMap);
+
+    //         clone.forEach((item) => {
+    //             item.quantityUsers = idCountMap[item.id];
+    //         });
+
+    //         return Array.from(clone.values());
+    //     }
+    //     return [];
+    // }
 
     const currentChat = useSelector((state) => state.chat.currentChat);
 
@@ -46,7 +79,9 @@ function UsersList(props) {
     }
 
     return (
-        <List className="users-list" sx={{ minHeight: "50px" }}>
+        <List
+            className="users-list"
+            sx={{ minHeight: "50px", maxHeight: "80vh", overflowY: "auto" }}>
             {!chatParticipants.length && (
                 <Typography
                     sx={{ p: 2 }}
@@ -54,8 +89,8 @@ function UsersList(props) {
                     No history yet
                 </Typography>
             )}
-            {!!chatParticipants.length &&
-                chatParticipants.map(
+            {!!filteredChats.length &&
+                filteredChats.map(
                     ({
                         id: chatId,
                         profilePicture,

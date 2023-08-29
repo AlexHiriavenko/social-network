@@ -110,25 +110,26 @@ const chatSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getChatsParticipants.fulfilled, (state, action) => {
             if (typeof action.payload === "object") {
-                const uniqueIdMap = new Map();
-                const idCountMap = {};
+                // const uniqueIdMap = new Map();
+                // const idCountMap = {};
 
-                action.payload.forEach((item) => {
-                    if (!uniqueIdMap.has(item.id)) {
-                        uniqueIdMap.set(item.id, item);
-                        idCountMap[item.id] = 0;
-                    } else {
-                        idCountMap[item.id] += 1;
-                    }
-                });
+                // action.payload.forEach((item) => {
+                //     if (!uniqueIdMap.has(item.id)) {
+                //         uniqueIdMap.set(item.id, item);
+                //         idCountMap[item.id] = 0;
+                //     } else {
+                //         idCountMap[item.id] += 1;
+                //     }
+                // });
 
-                uniqueIdMap.forEach((item) => {
-                    // количество пользователей кроме авторизированного юзера и 1го участника чата
-                    // чтобы показать в групповом чате например "Alex Smith and 2 more"
-                    item.quantityUsers = idCountMap[item.id];
-                });
+                // uniqueIdMap.forEach((item) => {
+                //     // количество пользователей кроме авторизированного юзера и 1го участника чата
+                //     // чтобы показать в групповом чате например "Alex Smith and 2 more"
+                //     item.quantityUsers = idCountMap[item.id];
+                // });
 
-                state.chatsParticipants = Array.from(uniqueIdMap.values());
+                // state.chatsParticipants = Array.from(uniqueIdMap.values());
+                state.chatsParticipants = action.payload;
                 console.log(state.chatsParticipants);
             } else {
                 state.chatsParticipants = [];
