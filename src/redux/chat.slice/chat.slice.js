@@ -8,10 +8,14 @@ export const getChats = createAsyncThunk("chat/getChats", async function () {
 });
 
 ////////////////////
-export const getChatsParticipants = createAsyncThunk("chat/getParticipants", async function () {
-    const { data } = await instance.get(`chats/participants`);
-    return data;
-});
+export const getChatsParticipants = createAsyncThunk(
+    "chat/getParticipants",
+    async function () {
+        const { data } = await instance.get(`chats/participants`);
+        console.log(data);
+        return data;
+    }
+);
 ////////////////////
 export const getChat = createAsyncThunk("chat/getChat", async function (id) {
     if (id) {
@@ -23,17 +27,22 @@ export const getChat = createAsyncThunk("chat/getChat", async function (id) {
 export const addToChatNewUser = createAsyncThunk(
     "chat/addNewUser",
     async function ({ chatId, userId }) {
-        const { status } = await instance.put(`/chats/${chatId}/participants/${userId}`);
+        const { status } = await instance.put(
+            `/chats/${chatId}/participants/${userId}`
+        );
         return status;
     }
 );
 
-export const createChat = createAsyncThunk("chat/createChat", async function (id) {
-    if (id) {
-        const { data } = await instance.get(`/chats/search/${id}`);
-        return data;
+export const createChat = createAsyncThunk(
+    "chat/createChat",
+    async function (id) {
+        if (id) {
+            const { data } = await instance.get(`/chats/search/${id}`);
+            return data;
+        }
     }
-});
+);
 
 export const initialState = {
     isOpened: false,
@@ -84,10 +93,15 @@ const chatSlice = createSlice({
             state.isOpened = false;
         },
         setTemporaryParticipant: function (state, action) {
-            state.chatsParticipants = [temporaryPartisipantState, ...state.chatsParticipants];
+            state.chatsParticipants = [
+                temporaryPartisipantState,
+                ...state.chatsParticipants,
+            ];
         },
         deleteTemporaryParticipant: function (state) {
-            const targetIndex = state.chatsParticipants.findIndex((el) => el.id === null);
+            const targetIndex = state.chatsParticipants.findIndex(
+                (el) => el.id === null
+            );
             if (targetIndex !== -1) {
                 state.chatsParticipants.splice(targetIndex, 1);
             }
@@ -115,6 +129,7 @@ const chatSlice = createSlice({
                 });
 
                 state.chatsParticipants = Array.from(uniqueIdMap.values());
+                console.log(state.chatsParticipants);
             } else {
                 state.chatsParticipants = [];
             }
