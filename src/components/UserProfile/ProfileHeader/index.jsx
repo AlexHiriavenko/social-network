@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { ProfileContainer } from "../StyledComponents/ContentBlock/StyledComponents";
 import ProfilePageButton from "../ProfilePageButton/ProfilePageButton";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { openEditProfileModal } from "../../../redux/modal.slice/modal.slice";
 import {
   getFriends,
@@ -14,6 +14,9 @@ import {
   setUser,
 } from "../../../redux/user.slice/user.slice";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from '@mui/material/styles';
+import { updateFriendship, createFriendship, getFriendshipRequests } from '../../../redux/friends/actionCreators';
+import { setCurrentFriend } from '../../../redux/friends/friends.slise';
 
 const StyledProfileBackgroundWrapper = styled(Box)(({ theme }) => ({
   maxHeight: "450px",
@@ -198,9 +201,20 @@ export default function ProfileHeader() {
   // Constants
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const theme = useTheme();
   const user = useSelector((state) => state.user.user);
   const authUser = useSelector((state) => state.user.authorizedUser);
   const userFriends = useSelector((state) => state.user.friends);
+  const friendsRequests = useSelector((store)=>store.friends.friendsRequests, shallowEqual);
+  const friendRecord = userFriends.filter(el => el.friend.id === authUser.id);
+  const reqauestRecord = friendsRequests.filter(el =>  el.status==='pending' && ( el.friend.id === user.id || el.user.id === user.id));
+  const buttonText = friendRecord.length > 0 && friendRecord[0].status === "accepted" 
+      ? "Remove from friends" 
+      : reqauestRecord.length > 0 && reqauestRecord[0].user.id === user.id 
+        ? "Confirm request" 
+        : reqauestRecord.length > 0 && reqauestRecord[0].friend.id === user.id
+        ? "Cancel request" : "Add to friends"; 
+
   // State
   const [mutualFriendsIsOpen, setMutualFriendsStatus] = useState(true);
   const [isAuthorized, setAuthorized] = useState(false);
@@ -239,6 +253,23 @@ export default function ProfileHeader() {
         })
         .catch((error) => error.message);
     }
+    dispatch(getFriendshipRequests());
+  }
+
+  const handleAddFriendClick = (id) => {
+    if (buttonText === 'Remove from friends') {
+      const payload = {id: friendRecord[0].id, status: "unfriended"};
+      dispatch(updateFriendship(payload));
+    } else if (buttonText === 'Confirm request') {
+      const payload = {id: reqauestRecord[0].id, status: "accepted"};
+      dispatch(updateFriendship(payload));
+    } else if (buttonText === 'Cancel request') {
+      const payload = {id: reqauestRecord[0].id, status: "canceled"};
+      dispatch(updateFriendship(payload));
+    } else if (buttonText === 'Add to friends') {
+      dispatch(setCurrentFriend({}));
+      dispatch(createFriendship({friendId: id}));
+    } 
   }
   // UseEffect
   useEffect(() => {
@@ -253,6 +284,7 @@ export default function ProfileHeader() {
     ) :[];
     setAcceptedFriends(acceptedFriendsArray);
   }, [userFriends]);
+
   return (
     <StyledProfileHeader>
       <ProfileContainer>
@@ -310,7 +342,7 @@ export default function ProfileHeader() {
                   <Avatar
                     alt={friendItem?.friend?.fullName}
                     src={friendItem?.friend?.profilePicture}
-                    key={index}
+                    key={friendItem?.id}
                     title={friendItem?.friend?.fullName}
                     onClick={() => lookUser(friendItem?.friend?.id)}
                   />
@@ -340,12 +372,13 @@ export default function ProfileHeader() {
             {!isAuthorized && (
               <ProfilePageButton
                 text={
-                  <Typography style={{ color: "#ffffff", fontWeight: 600 }}>
-                    {false ? "Remove from friends" : "Add to friends"}
+                  <Typography style={{ color: friendRecord.length > 0 ? theme.palette.textColor.content : theme.palette.backgroundColor.section, fontWeight: 600 }}>
+                    {buttonText}
                   </Typography>
                 }
+                clickAction={() => handleAddFriendClick(user.id)}
                 style={{
-                  backgroundColor: false ? "" : "#1B74E4",
+                  backgroundColor: friendRecord.length > 0 ? theme.palette.buttonColor.background : theme.palette.buttonColor.primary,
                 }}
               />
             )}
