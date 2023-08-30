@@ -206,13 +206,13 @@ export default function ProfileHeader() {
   const authUser = useSelector((state) => state.user.authorizedUser);
   const userFriends = useSelector((state) => state.user.friends);
   const friendsRequests = useSelector((store)=>store.friends.friendsRequests, shallowEqual);
-  const friendRecord = userFriends.filter(el => el.friend.id === authUser.id);
-  const reqauestRecord = friendsRequests.filter(el =>  el.status==='pending' && ( el.friend.id === user.id || el.user.id === user.id));
+  const friendRecord = userFriends?.filter(el => el.friend.id === authUser.id);
+  const reqauestRecord = friendsRequests?.filter(el =>  el.status==='pending' && ( el.friend.id === user.id || el.user.id === user.id));
   const buttonText = friendRecord.length > 0 && friendRecord[0].status === "accepted" 
       ? "Remove from friends" 
-      : reqauestRecord.length > 0 && reqauestRecord[0].user.id === user.id 
+      : reqauestRecord?.length > 0 && reqauestRecord[0].user.id === user.id
         ? "Confirm request" 
-        : reqauestRecord.length > 0 && reqauestRecord[0].friend.id === user.id
+        : reqauestRecord?.length > 0 && reqauestRecord[0].friend.id === user.id
         ? "Cancel request" : "Add to friends"; 
 
   // State
