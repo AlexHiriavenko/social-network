@@ -8,7 +8,6 @@ import { Box, Button, Typography } from "@mui/material";
 import { BlockUserImage } from "../../UserProfile/StyledComponents/ContentBlock/StyledComponents";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getPost,
   likePost,
   removeLikePost,
 } from "../../../redux/post.slice/post.slice";
