@@ -198,7 +198,7 @@ export default function ProfileHeaderForSearch(props) {
 
     let id = user?.id
 console.log(user)
-    const [userFriends,setUserFriends] = useState(null)
+    const [userFriends,setUserFriends] = useState([])
 
     // State
     const [mutualFriendsIsOpen, setMutualFriendsStatus] = useState(true);
@@ -213,7 +213,7 @@ console.log(user)
         (async() => {
             let friends = await  dispatch(getFriends(id))
             console.log(friends.payload)
-            if (friends.payload) {
+            if (friends.payload && userFriends.length === 0) {
 
                 setUserFriends(friends.payload)
             }
@@ -223,7 +223,7 @@ console.log(user)
             ) :[];
             setAcceptedFriends(acceptedFriendsArray);
         })()
-    }, [id]);
+    }, [userFriends,id]);
 
     useEffect(() => {
 

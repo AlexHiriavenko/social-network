@@ -1,12 +1,12 @@
-import { Avatar, AvatarGroup, Box, Typography } from "@mui/material";
+import {Avatar, AvatarGroup, Box, Typography, Button, Menu, MenuItem, Modal} from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import styled from "@emotion/styled";
 import { ProfileContainer } from "../StyledComponents/ContentBlock/StyledComponents";
 import ProfilePageButton from "../ProfilePageButton/ProfilePageButton";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { openEditProfileModal } from "../../../redux/modal.slice/modal.slice";
+import React, { useEffect, useState } from "react";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import {closeEditProfileModal, openEditProfileModal} from "../../../redux/modal.slice/modal.slice";
 import {
   getFriends,
   getUser,
@@ -14,6 +14,16 @@ import {
   setUser,
 } from "../../../redux/user.slice/user.slice";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from '@mui/material/styles';
+import { updateFriendship, createFriendship, getFriendshipRequests } from '../../../redux/friends/actionCreators';
+import { setCurrentFriend } from '../../../redux/friends/friends.slise';
+import EditChildModal from "../../Modals/EditChildModal/index.jsx";
+import {
+  StyledModalBlock,
+  StyledModalCloseButton,
+  StyledModalCloseButtonLine, StyledModalSeparator,
+  StyledModalTitle
+} from "../../Modals/StyledModalComponents.js";
 
 const StyledProfileBackgroundWrapper = styled(Box)(({ theme }) => ({
   maxHeight: "450px",
@@ -193,14 +203,39 @@ const StyledProfileUserFriends = styled(Typography)(({ theme }) => ({
   fontWeight: "600",
   marginBottom: "5px",
 }));
+const StyledEditProfileModal = styled(StyledModalBlock)({
+  maxWidth: "710px",
+});
+const StyledEditedPart = styled(Box)({
+  display: "flex",
+  justifyContent: "space-between",
+  flexWrap: "wrap",
+  padding: "20px 16px 20px 16px",
+});
+const StyledEditedPartTitle = styled("h2")(({ theme }) => ({
+  color: theme.palette.textColor.main,
+  fontSize: "20px",
+  fontWeight: 700,
+}));
 
 export default function ProfileHeader() {
   // Constants
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const theme = useTheme();
   const user = useSelector((state) => state.user.user);
   const authUser = useSelector((state) => state.user.authorizedUser);
   const userFriends = useSelector((state) => state.user.friends);
+  const friendsRequests = useSelector((store)=>store.friends.friendsRequests, shallowEqual);
+  const friendRecord = userFriends?.filter(el => el.friend.id === authUser.id);
+  const reqauestRecord = friendsRequests?.filter(el =>  el.status==='pending' && ( el.friend.id === user.id || el.user.id === user.id));
+  const buttonText = friendRecord.length > 0 && friendRecord[0].status === "accepted" 
+      ? "Remove from friends" 
+      : reqauestRecord?.length > 0 && reqauestRecord[0].user.id === user.id
+        ? "Confirm request" 
+        : reqauestRecord?.length > 0 && reqauestRecord[0].friend.id === user.id
+        ? "Cancel request" : "Add to friends"; 
+
   // State
   const [mutualFriendsIsOpen, setMutualFriendsStatus] = useState(true);
   const [isAuthorized, setAuthorized] = useState(false);
@@ -239,6 +274,23 @@ export default function ProfileHeader() {
         })
         .catch((error) => error.message);
     }
+    dispatch(getFriendshipRequests());
+  }
+
+  const handleAddFriendClick = (id) => {
+    if (buttonText === 'Remove from friends') {
+      const payload = {id: friendRecord[0].id, status: "unfriended"};
+      dispatch(updateFriendship(payload));
+    } else if (buttonText === 'Confirm request') {
+      const payload = {id: reqauestRecord[0].id, status: "accepted"};
+      dispatch(updateFriendship(payload));
+    } else if (buttonText === 'Cancel request') {
+      const payload = {id: reqauestRecord[0].id, status: "canceled"};
+      dispatch(updateFriendship(payload));
+    } else if (buttonText === 'Add to friends') {
+      dispatch(setCurrentFriend({}));
+      dispatch(createFriendship({friendId: id}));
+    } 
   }
   // UseEffect
   useEffect(() => {
@@ -253,7 +305,21 @@ export default function ProfileHeader() {
     ) :[];
     setAcceptedFriends(acceptedFriendsArray);
   }, [userFriends]);
+ // const theme = useTheme();
+  const [anchorNotifyMenu, setAnchorNotifyMenu] = React.useState(null);
+  const toggleMenu = () =>
+      anchorNotifyMenu
+          ? setAnchorNotifyMenu(null)
+          : setAnchorNotifyMenu(document.querySelector(".anchor-menu"));
+
+  const editProfileModalIsOpen = useSelector(
+    (state) => state.modal.editProfile.isOpen
+    );
+  const handleClose = () => dispatch(closeEditProfileModal());
+
+  const [isOpen,setIsOpen] = useState(false)
   return (
+
     <StyledProfileHeader>
       <ProfileContainer>
         <StyledProfileBackgroundWrapper>
@@ -264,16 +330,80 @@ export default function ProfileHeader() {
             />
           )}
           {isAuthorized && (
+              <>
             <StyledProfileBackgroundWButtonsWrapper>
               <StyledProfileBackgroundButton
+                  clickAction={toggleMenu}
                 text={
                   <StyledProfileBackgroundWButtonText>
                     Edit cover photo
                   </StyledProfileBackgroundWButtonText>
                 }
                 icon={<CameraAltIcon fontSize="small" />}
-              />
+
+              > </StyledProfileBackgroundButton>
+              <Menu
+                  sx={{ mt: "480px" }}
+                  anchorEl={anchorNotifyMenu}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  // keepMounted
+                  open={Boolean(anchorNotifyMenu)}
+                  onClose={toggleMenu}
+                  slotProps={{
+                    paper: {
+
+                      style: { backgroundColor: theme.palette.backgroundColor.section,position:"relative",width:"360px" },
+                    },
+                  }}
+              >
+
+                <Typography
+                    variant="h5"
+                    component={"h4"}
+                    pl={2}
+                    pr={2}
+                    pt={1}
+                    pb={1}
+                    fontWeight={400}
+                    fontSize={20}
+                    sx={{ color: theme.palette.textColor.content }}
+                >
+                  Edit cover picture
+                </Typography>
+
+
+                <MenuItem
+
+
+                    sx={{
+                      display: "flex",
+                      gap: 1,
+                      whiteSpace: "normal",
+                      mb: 1,
+                      "&:hover": { backgroundColor: theme.palette.hoverColor.main },
+                    }}
+                >
+                  <Typography
+                      fontSize={18}
+                      fontWeight={600}
+                      sx={{ color: theme.palette.textColor.content }}
+                  >
+                    Upload cover picture
+                  </Typography>
+                  <EditChildModal title={"Select cover picture"} />
+                </MenuItem>
+              </Menu>
             </StyledProfileBackgroundWButtonsWrapper>
+
+
+    </>
           )}
         </StyledProfileBackgroundWrapper>
         <StyledProfileUserInfoSection>
@@ -289,9 +419,39 @@ export default function ProfileHeader() {
               height={168}
             />
             {isAuthorized && (
-              <StyledProfileUserPictureButton>
+                <>
+              <StyledProfileUserPictureButton
+              onClick={()=>{setIsOpen(true)}}
+              >
                 <CameraAltIcon />
               </StyledProfileUserPictureButton>
+              <Modal
+              open={isOpen}
+            onClose={()=>{setIsOpen(false)}}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            sx={{ paddingLeft: "5px", paddingRight: "5px" }}
+          >
+            <StyledEditProfileModal>
+              <StyledModalCloseButton onClick={()=>{setIsOpen(false)}}>
+                <StyledModalCloseButtonLine></StyledModalCloseButtonLine>
+              </StyledModalCloseButton>
+              <StyledModalTitle
+
+              >Edit profile picture</StyledModalTitle>
+              <StyledModalSeparator></StyledModalSeparator>
+
+              <StyledEditedPart>
+                <StyledEditedPartTitle>Upload profile photo</StyledEditedPartTitle>
+                <EditChildModal title={"Select profile picture"} />
+
+              </StyledEditedPart>
+
+
+            </StyledEditProfileModal>
+
+          </Modal>
+              </>
             )}
           </StyledProfileUserPictureWrapper>
           <StyledProfileUserInfo>
@@ -310,7 +470,7 @@ export default function ProfileHeader() {
                   <Avatar
                     alt={friendItem?.friend?.fullName}
                     src={friendItem?.friend?.profilePicture}
-                    key={index}
+                    key={friendItem?.id}
                     title={friendItem?.friend?.fullName}
                     onClick={() => lookUser(friendItem?.friend?.id)}
                   />
@@ -335,17 +495,18 @@ export default function ProfileHeader() {
                     <StyledProfileShowButtonLine></StyledProfileShowButtonLine>
                   )}
                 </StyledProfileShowMutualFriend>
-              </>
+</>
             )}
             {!isAuthorized && (
               <ProfilePageButton
                 text={
-                  <Typography style={{ color: "#ffffff", fontWeight: 600 }}>
-                    {false ? "Remove from friends" : "Add to friends"}
+                  <Typography style={{ color: friendRecord.length > 0 ? theme.palette.textColor.content : theme.palette.backgroundColor.section, fontWeight: 600 }}>
+                    {buttonText}
                   </Typography>
                 }
+                clickAction={() => handleAddFriendClick(user.id)}
                 style={{
-                  backgroundColor: false ? "" : "#1B74E4",
+                  backgroundColor: friendRecord.length > 0 ? theme.palette.buttonColor.background : theme.palette.buttonColor.primary,
                 }}
               />
             )}
@@ -353,5 +514,6 @@ export default function ProfileHeader() {
         </StyledProfileUserInfoSection>
       </ProfileContainer>
     </StyledProfileHeader>
+
   );
 }
