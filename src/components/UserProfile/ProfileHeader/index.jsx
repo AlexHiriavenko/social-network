@@ -390,7 +390,6 @@ export default function ProfileHeader() {
                       "&:hover": { backgroundColor: theme.palette.hoverColor.main },
                     }}
                 >
-
                   <Typography
                       fontSize={18}
                       fontWeight={600}
