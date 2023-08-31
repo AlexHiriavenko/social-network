@@ -438,7 +438,6 @@ export default function ProfileHeader() {
               </StyledModalCloseButton>
               <StyledModalTitle
 
-
               >Edit profile picture</StyledModalTitle>
               <StyledModalSeparator></StyledModalSeparator>
 
