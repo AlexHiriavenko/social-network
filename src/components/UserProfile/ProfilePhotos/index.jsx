@@ -72,7 +72,7 @@ export default function Photos() {
   const [photoHeight, setPhotoHeight] = useState(213);
   const [isAuthorized, setAuthorized] = useState(false);
   const user = useSelector((state) => state.user.user);
-  const [multipartFile,setMultipartFile] = useState(null)
+  const [multipartFiles,setMultipartFiles] = useState(null)
   const dispatch = useDispatch();
   console.log(user)
   //useEffect(() => {
@@ -88,14 +88,22 @@ export default function Photos() {
     setAuthorized(user.isAuthorized);
   }, [user]);
  async function showChoosingPicture() {
-    let file = photosRef.current.files[0];
+
+   let filesList = photosRef?.current.files;
+   const files = [];
+   for (let i = 0; i < filesList?.length; i++) {
+     files.push(filesList[i]);
+   }
     let id = JSON.parse(localStorage.getItem('authorizedUser')).id
     const formData = new FormData();
-    formData.append("multipartFile", file);
-    setMultipartFile(formData)
-    console.log(formData.get("multipartFile"))
-   await dispatch(uploadPhotos({multipartFile: formData, id:id}))
 
+   files.forEach(el => {
+     formData.append(`multipartFiles`, el);
+   })
+
+   setMultipartFiles(formData);
+    console.log(formData.get("multipartFile"))
+   await dispatch(uploadPhotos({multipartFiles: formData, id:id}))
    const editUser =  dispatch(getProfile())
    editUser.then(result =>{
      console.log(result.payload)
@@ -116,6 +124,7 @@ export default function Photos() {
                  style={{ display: "none" }}
                  ref={photosRef}
                  onChange={showChoosingPicture}
+                 multiple
           />
           Add new photo
         </StyledAddPhotoButton>
