@@ -88,7 +88,7 @@ export default function Photos() {
     setAuthorized(user.isAuthorized);
   }, [user]);
  async function showChoosingPicture() {
- //   let file = photosRef.current.files[0];
+
    let filesList = photosRef?.current.files;
    const files = [];
    for (let i = 0; i < filesList?.length; i++) {
@@ -96,24 +96,14 @@ export default function Photos() {
    }
     let id = JSON.parse(localStorage.getItem('authorizedUser')).id
     const formData = new FormData();
-   // formData.append("multipartFile", file);
+
    files.forEach(el => {
      formData.append(`multipartFiles`, el);
    })
-    //setMultipartFile(formData)
+
    setMultipartFiles(formData);
     console.log(formData.get("multipartFile"))
    await dispatch(uploadPhotos({multipartFiles: formData, id:id}))
-   /*
-
-
-    const formData = new FormData();
-
-    setImgUrls(files.map((file) => URL.createObjectURL(file)));
-
-
-   * */
-
    const editUser =  dispatch(getProfile())
    editUser.then(result =>{
      console.log(result.payload)
