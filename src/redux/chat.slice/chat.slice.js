@@ -39,7 +39,11 @@ export const createChat = createAsyncThunk("chat/createChat", async function (id
 export const initialState = {
     isOpened: false,
     chatsParticipants: [],
-    currentChatCompanion: {},
+    currentChatCompanion: {
+        id: 0,
+        profilePicture: "",
+        fullName: "uknown user",
+    },
     currentChat: {
         id: null,
         messages: [
