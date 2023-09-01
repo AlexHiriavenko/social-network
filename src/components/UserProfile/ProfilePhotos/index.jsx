@@ -70,7 +70,7 @@ export default function Photos() {
   const [photoHeight, setPhotoHeight] = useState(213);
   const [isAuthorized, setAuthorized] = useState(false);
   const user = useSelector((state) => state.user.user);
-  const [multipartFile, setMultipartFile] = useState(null);
+  const [multipartFiles, setMultipartFiles] = useState(null);
   const dispatch = useDispatch();
   console.log(user);
   //useEffect(() => {
