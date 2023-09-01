@@ -71,10 +71,10 @@ export const uploadCoverPhoto = createAsyncThunk(
 
 export const uploadPhotos = createAsyncThunk(
     "Users/uploadPhotos",
-    async function ({ multipartFile, id }) {
-        console.log(multipartFile)
+    async function ({ multipartFiles, id }) {
+        console.log(multipartFiles)
         let accessToken = JSON.parse(localStorage.getItem('token'))
-        await axios.post(`${import.meta.env.VITE_APP_API_URL}/users/${id}/image`, multipartFile,
+        await axios.post(`${import.meta.env.VITE_APP_API_URL}/users/${id}/image`, multipartFiles,
             {
 
                 headers:

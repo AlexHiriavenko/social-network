@@ -85,33 +85,33 @@ export default function Photos() {
   useEffect(() => {
     setAuthorized(user.isAuthorized);
   }, [user]);
-  async function showChoosingPicture() {
-    let file = photosRef.current.files[0];
-    let id = JSON.parse(localStorage.getItem("authorizedUser")).id;
-    const formData = new FormData();
-    formData.append("multipartFile", file);
-    setMultipartFile(formData);
-    console.log(formData.get("multipartFile"));
-    await dispatch(uploadPhotos({ multipartFile: formData, id: id }));
+ async function showChoosingPicture() {
 
-    const editUser = dispatch(getProfile());
-    editUser.then((result) => {
-      console.log(result.payload);
-      if (result.payload) {
-        localStorage.setItem(
-          "authorizedUser",
-          JSON.stringify({ ...result.payload, isAuthorized: true })
-        );
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ ...result.payload, isAuthorized: true })
-        );
-        dispatch(
-          setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser")))
-        );
-        dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
-      }
-    });
+   let filesList = photosRef?.current.files;
+   const files = [];
+   for (let i = 0; i < filesList?.length; i++) {
+     files.push(filesList[i]);
+   }
+    let id = JSON.parse(localStorage.getItem('authorizedUser')).id
+    const formData = new FormData();
+
+   files.forEach(el => {
+     formData.append(`multipartFiles`, el);
+   })
+
+   setMultipartFiles(formData);
+    console.log(formData.get("multipartFile"))
+   await dispatch(uploadPhotos({multipartFiles: formData, id:id}))
+   const editUser =  dispatch(getProfile())
+   editUser.then(result =>{
+     console.log(result.payload)
+     if(result.payload) {
+       localStorage.setItem("authorizedUser", JSON.stringify({...result.payload, isAuthorized: true}))
+       localStorage.setItem("user", JSON.stringify({...result.payload, isAuthorized: true}))
+       dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
+       dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
+     }
+   })
   }
   const handleShowPictures = (allPictures, selected) => {
     dispatch(showPictures());
@@ -122,11 +122,11 @@ export default function Photos() {
       <ContentBlockTitel>Photos</ContentBlockTitel>
       {isAuthorized && (
         <StyledAddPhotoButton>
-          <input
-            type="file"
-            style={{ display: "none" }}
-            ref={photosRef}
-            onChange={showChoosingPicture}
+          <input type="file"
+                 style={{ display: "none" }}
+                 ref={photosRef}
+                 onChange={showChoosingPicture}
+                 multiple
           />
           Add new photo
         </StyledAddPhotoButton>
