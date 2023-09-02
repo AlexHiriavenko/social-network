@@ -8,12 +8,12 @@ import HeaderCreateOptions from "./Create/HeaderCreateOptions";
 
 function HeaderOptions() {
     const location = useLocation();
-    const isMessagesPage = location.pathname === "/chats";
+    const isChatsPage = location.pathname === "/chats";
 
     return (
         <Box sx={{ display: "flex" }}>
             <HeaderCreateOptions />
-            {!isMessagesPage && <HeaderMessageOptions />}
+            {!isChatsPage && <HeaderMessageOptions />}
             <HeaderNotifyOptions />
             <HeaderUserOtions />
         </Box>

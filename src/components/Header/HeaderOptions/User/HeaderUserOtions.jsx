@@ -14,8 +14,7 @@ function HeaderUserOtions() {
     };
 
     const [anchorUserMenu, setAnchorUserMenu] = React.useState(null);
-    const [anchorDisplayModeMenu, setAnchorDisplayModeMenu] =
-        React.useState(null);
+    const [anchorDisplayModeMenu, setAnchorDisplayModeMenu] = React.useState(null);
 
     const toggleMenu = () =>
         anchorUserMenu
@@ -33,24 +32,15 @@ function HeaderUserOtions() {
         setAnchorDisplayModeMenu(null);
         setAnchorUserMenu(document.querySelector(".anchor-menu"));
     };
+
     return (
         <>
-            <Tooltip
-                title="Account"
-                sx={{ p: { xs: "4px", sm: 1 } }}
-                className="anchor-menu">
-                <IconButton
-                    onClick={toggleMenu}
-                    sx={
-                        ({ pt: 1, pb: 1 },
-                        { pl: { xs: 0.5, sm: 1 }, pr: { xs: 0.5, sm: 1 } })
-                    }>
+            <Tooltip title="Account" sx={{ p: { xs: "4px", sm: 1 } }} className="anchor-menu">
+                <IconButton onClick={toggleMenu} sx={({ py: 1 }, { px: { xs: 0.5, sm: 1 } })}>
                     <Avatar
                         sx={{ minWidth: "40px", minHeight: "40px" }}
                         alt="user icon"
-                        src={
-                            authorizedUser ? authorizedUser.profilePicture : ""
-                        }
+                        src={authorizedUser ? authorizedUser.profilePicture : ""}
                     />
                 </IconButton>
             </Tooltip>
