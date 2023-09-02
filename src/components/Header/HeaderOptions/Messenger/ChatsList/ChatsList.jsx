@@ -3,42 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import {
     getChat,
     setCurrentChatCompanion,
-    openPageChat,
-} from "../../../redux/chat.slice/chat.slice";
-
-import { List, ListItem, Typography, Avatar, Box, Tooltip } from "@mui/material/";
+    openChat,
+    getChatsParticipants,
+} from "../../../../../redux/chat.slice/chat.slice";
+import { List, ListItem, Typography, Avatar, Box } from "@mui/material/";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-import { deleteTemporaryParticipant } from "../../../redux/chat.slice/chat.slice";
-import { isAuthUser, setChatParticipant } from "../helpers/chatsHelpers";
+import { isAuthUser, setChatParticipant } from "../../../../../pages/Chats/helpers/chatsHelpers";
 
-function UsersList(props) {
-    const { setNewMessageDialog } = props;
+function ChatsList(props) {
     const dispatch = useDispatch();
     const theme = useTheme();
 
-    const authUserID = useSelector((state) => state.user.authorizedUser.id);
+    useEffect(() => {
+        dispatch(getChatsParticipants());
+    }, [dispatch]);
+
     const chatParticipants = useSelector((state) => state.chat.chatsParticipants);
+    const authUserID = useSelector((state) => state.user.authorizedUser.id);
 
-    const currentChat = useSelector((state) => state.chat.currentChat);
-
-    function handlerChat(event, chatId, participants, userId) {
-        dispatch(setCurrentChatCompanion(setChatParticipant(participants, userId)));
+    function handlerChat(event, chatId, userId) {
+        dispatch(setCurrentChatCompanion(setChatParticipant(chatParticipants, userId)));
         dispatch(getChat(chatId));
-        dispatch(openPageChat());
-        dispatch(deleteTemporaryParticipant());
-        setNewMessageDialog(false);
-    }
-
-    function isActiveItem(id) {
-        return currentChat.id === id;
+        dispatch(openChat());
     }
 
     return (
-        <List
-            className="users-list"
-            sx={{ minHeight: "50px", maxHeight: "80vh", overflowY: "auto" }}
-        >
+        <List className="users-list">
             {!chatParticipants.length && (
                 <Typography sx={{ p: 2 }} color={theme.palette.textColor.content}>
                     No history yet
@@ -57,42 +48,36 @@ function UsersList(props) {
                         <ListItem
                             id={`chat${chatId}`}
                             key={chatId}
-                            onClick={(event) => handlerChat(event, chatId, chatParticipant, userId)}
+                            onClick={(event) => handlerChat(event, chatId, userId)}
                             sx={{
-                                backgroundColor: isActiveItem(chatId)
-                                    ? theme.palette.hoverColor.secondary
-                                    : "none",
                                 gap: 1,
                                 "&:hover": {
                                     backgroundColor: theme.palette.hoverColor.secondary,
                                 },
                             }}
-                            className="chats__list-item"
                         >
-                            <Link className="search__user-link">
-                                <Tooltip
-                                    title={
+                            <Link
+                                style={{
+                                    display: "flex",
+                                    gap: "16px",
+                                    width: "100%",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Avatar
+                                    className="search__user-avatar"
+                                    sx={{ minWidth: "40px", minHeight: "40px" }}
+                                    alt="user icon"
+                                    src={
                                         isAuthUser(authUserID, userId)
-                                            ? chatParticipant[0].fullName
-                                            : fullName
+                                            ? chatParticipant[0].profilePicture
+                                            : profilePicture
                                     }
-                                >
-                                    <Avatar
-                                        className="search__user-avatar"
-                                        sx={{ minWidth: "40px", minHeight: "40px" }}
-                                        alt="user icon"
-                                        src={
-                                            isAuthUser(authUserID, userId)
-                                                ? chatParticipant[0].profilePicture
-                                                : profilePicture
-                                        }
-                                    ></Avatar>
-                                </Tooltip>
-                                <Box className="searh__user-text">
+                                ></Avatar>
+                                <Box>
                                     <Typography
                                         className="search__user-name"
                                         color={theme.palette.textColor.content}
-                                        sx={{ lineHeight: 1 }}
                                     >
                                         {isAuthUser(authUserID, userId)
                                             ? chatParticipant[0].fullName
@@ -107,12 +92,11 @@ function UsersList(props) {
                                         className="search__user-name"
                                         color={theme.palette.textColor.content}
                                         sx={{
-                                            maxWidth: "124px",
+                                            maxWidth: "120px",
                                             fontSize: "12px",
                                             whiteSpace: "nowrap",
                                             overflow: "hidden",
                                             textOverflow: "ellipsis",
-                                            lineHeight: 2,
                                         }}
                                     >
                                         {isAuthUser(authUserID, userId)
@@ -128,4 +112,4 @@ function UsersList(props) {
     );
 }
 
-export default UsersList;
+export default ChatsList;

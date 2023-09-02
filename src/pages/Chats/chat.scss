@@ -36,20 +36,6 @@
     }
 }
 
-.test {
-    display: "flex";
-    flex-direction: "column";
-    justify-content: "center";
-    align-items: center;
-    gap: 2;
-    background-color: red;
-
-    @media (max-width: 480px) {
-        justify-content: center;
-        align-items: center;
-    }
-}
-
 .message-text-authUser {
     background-color: $active-link-color;
     color: white;

@@ -18,11 +18,7 @@ function HomeAsideLeft() {
 
     function showAuthorizedUser() {
         if (authorizedUser) {
-            dispatch(
-                setAuthorizedUser(
-                    JSON.parse(localStorage.getItem("authorizedUser"))
-                )
-            );
+            dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))));
             authorizedUser = JSON.parse(localStorage.getItem("authorizedUser"));
         }
         dispatch(setUser(authorizedUser));
@@ -44,7 +40,8 @@ function HomeAsideLeft() {
             style={{
                 backgroundColor: theme.palette.backgroundColor.page,
                 borderRight: theme.palette.border.transp,
-            }}>
+            }}
+        >
             <List sx={{ mt: 1 }}>
                 <ListItem
                     className="search__list-item home__list-item"
@@ -53,32 +50,26 @@ function HomeAsideLeft() {
                         "&:hover": {
                             backgroundColor: theme.palette.hoverColor.secondary,
                         },
-                    }}>
+                    }}
+                >
                     <Link
                         className="header__menu-item-link"
                         to={"/profile"}
-                        onClick={showAuthorizedUser}>
-                        {
-                            authorizedUser&&
-                        <Avatar
-                            sx={{ minWidth: "40px", minHeight: "40px" }}
-                            alt="user icon"
-                            src={
-                                authorizedUser
-                                    ? authorizedUser.profilePicture
-                                    : ""
-                            }
-                        /> }
+                        onClick={showAuthorizedUser}
+                    >
+                        {authorizedUser && (
+                            <Avatar
+                                sx={{ minWidth: "40px", minHeight: "40px" }}
+                                alt="user icon"
+                                src={authorizedUser ? authorizedUser.profilePicture : ""}
+                            />
+                        )}
                         <Typography
                             fontWeight={700}
                             fontSize={15}
-                            sx={{
-                                color: (theme) =>
-                                    theme.palette.textColor.content,
-                            }}>
-                            {authorizedUser
-                                ? authorizedUser.fullName
-                                : null}
+                            color={theme.palette.textColor.content}
+                        >
+                            {authorizedUser ? authorizedUser.fullName : null}
                         </Typography>
                     </Link>
                 </ListItem>
@@ -89,10 +80,9 @@ function HomeAsideLeft() {
                         "&:hover": {
                             backgroundColor: theme.palette.hoverColor.secondary,
                         },
-                    }}>
-                    <Link
-                        className="header__menu-item-link"
-                        to={"/friends/home"}>
+                    }}
+                >
+                    <Link className="header__menu-item-link" to={"/friends/home"}>
                         <Group
                             sx={{
                                 minWidth: "40px",
@@ -105,10 +95,8 @@ function HomeAsideLeft() {
                         <Typography
                             fontSize={15}
                             fontWeight={600}
-                            sx={{
-                                color: (theme) =>
-                                    theme.palette.textColor.content,
-                            }}>
+                            color={theme.palette.textColor.content}
+                        >
                             Friends
                         </Typography>
                     </Link>
@@ -121,7 +109,8 @@ function HomeAsideLeft() {
                         "&:hover": {
                             backgroundColor: theme.palette.hoverColor.secondary,
                         },
-                    }}>
+                    }}
+                >
                     <Link className="header__menu-item-link" to={"/chats"}>
                         <Forum
                             sx={{
@@ -135,10 +124,8 @@ function HomeAsideLeft() {
                         <Typography
                             fontSize={15}
                             fontWeight={600}
-                            sx={{
-                                color: (theme) =>
-                                    theme.palette.textColor.content,
-                            }}>
+                            color={theme.palette.textColor.content}
+                        >
                             Messenger
                         </Typography>
                     </Link>
