@@ -19,26 +19,20 @@ import { getChat } from "../../../redux/chat.slice/chat.slice";
 export default function EditMessageModal() {
     const dispatch = useDispatch();
     const inputRef = useRef(null);
-    const editMessageModalIsOpen = useSelector(
-        (state) => state.modal.editMessage.isOpen
-    );
-    const editMessageId = useSelector(
-        (state) => state.message.currentMessageId
-    );
-    const editMessageContent = useSelector(
-        (state) => state.message.currentMessageContent
-    );
+    const editMessageModalIsOpen = useSelector((state) => state.modal.editMessage.isOpen);
+    const editMessageId = useSelector((state) => state.message.currentMessageId);
+    const editMessageContent = useSelector((state) => state.message.currentMessageContent);
     const currentChat = useSelector((state) => state.chat.currentChat);
     const authUser = useSelector((state) => state.user.authorizedUser);
 
     const handleKeyDown = (event, id = 0) => {
         if (event.key === "Enter" && inputRef.current.value.trim()) {
+            event.preventDefault();
             const inputValue = inputRef.current.value.trim();
             const message = {
                 id: id,
                 content: inputValue,
-                sender: authUser,
-                chat: currentChat,
+                chatId: currentChat.id,
             };
             inputRef.current.value = "";
             dispatch(editMessage(message))
@@ -83,7 +77,8 @@ export default function EditMessageModal() {
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
-            sx={{ paddingLeft: "5px", paddingRight: "5px" }}>
+            sx={{ paddingLeft: "5px", paddingRight: "5px" }}
+        >
             <StyledWrapModal>
                 <StyledModalCloseButton onClick={handleClose}>
                     <StyledModalCloseButtonLine></StyledModalCloseButtonLine>
@@ -102,9 +97,7 @@ export default function EditMessageModal() {
                             )
                         }
                         defaultValue={editMessageContent}
-                        onKeyDown={(event) =>
-                            handleKeyDown(event, editMessageId)
-                        }
+                        onKeyDown={(event) => handleKeyDown(event, editMessageId)}
                         multiline
                         autoFocus
                     />
@@ -112,9 +105,7 @@ export default function EditMessageModal() {
                 <StyledBtnGroup>
                     <StyledButton
                         text={"Edit"}
-                        clickAction={(event) =>
-                            handleClickEdit(event, editMessageId)
-                        }
+                        clickAction={(event) => handleClickEdit(event, editMessageId)}
                     />
                 </StyledBtnGroup>
             </StyledWrapModal>

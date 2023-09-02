@@ -33,8 +33,17 @@ const ChatBody = (props) => {
         return (
             <Box ref={chatFormRef} sx={{ pb: 2 }} className="chat-body">
                 <ChatHeader closeMenu={() => null} setNewMessageDialog={setNewMessageDialog} />
-                <Box sx={{ maxWidth: "1000px" }}>
-                    <Box sx={{ pl: 2, pr: 2 }}>
+                <Box sx={{ maxWidth: "1000px", height: "100%" }}>
+                    <Box
+                        sx={{
+                            pl: 2,
+                            pr: 2,
+                            height: "100%",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",
+                        }}
+                    >
                         <ChatContent />
                         <ChatFooter />
                     </Box>
