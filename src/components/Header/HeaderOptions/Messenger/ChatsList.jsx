@@ -9,6 +9,7 @@ import {
 import { List, ListItem, Typography, Avatar, Box } from "@mui/material/";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
+import { isAuthUser, setChatParticipant } from "../../../../pages/Chats/helpers/chatsHelpers";
 
 function ChatsList(props) {
     const dispatch = useDispatch();
@@ -21,13 +22,8 @@ function ChatsList(props) {
     const chatParticipants = useSelector((state) => state.chat.chatsParticipants);
     const authUserID = useSelector((state) => state.user.authorizedUser.id);
 
-    const chatParticipant = (participants, id) =>
-        participants.find((participant) => participant.userId === id);
-
-    function handlerChat(event, chatId) {
-        const closestLi = event.target.closest("li");
-        const userId = +closestLi.id.slice(8);
-        dispatch(setCurrentChatCompanion(chatParticipant(chatParticipants, userId)));
+    function handlerChat(event, chatId, userId) {
+        dispatch(setCurrentChatCompanion(setChatParticipant(chatParticipants, userId)));
         dispatch(getChat(chatId));
         dispatch(openChat());
     }
@@ -41,11 +37,18 @@ function ChatsList(props) {
             )}
             {!!chatParticipants.length &&
                 chatParticipants.map(
-                    ({ id: chatId, profilePicture, fullName, userId, content, quantityUsers }) => (
+                    ({
+                        id: chatId,
+                        profilePicture,
+                        fullName,
+                        userId,
+                        content,
+                        chatParticipant,
+                    }) => (
                         <ListItem
-                            id={`chatUser${userId}`}
+                            id={`chat${chatId}`}
                             key={chatId}
-                            onClick={(event) => handlerChat(event, chatId)}
+                            onClick={(event) => handlerChat(event, chatId, userId)}
                             sx={{
                                 gap: 1,
                                 "&:hover": {
@@ -65,17 +68,23 @@ function ChatsList(props) {
                                     className="search__user-avatar"
                                     sx={{ minWidth: "40px", minHeight: "40px" }}
                                     alt="user icon"
-                                    src={profilePicture}
+                                    src={
+                                        isAuthUser(authUserID, userId)
+                                            ? chatParticipant[0].profilePicture
+                                            : profilePicture
+                                    }
                                 ></Avatar>
                                 <Box>
                                     <Typography
                                         className="search__user-name"
                                         color={theme.palette.textColor.content}
                                     >
-                                        {fullName}{" "}
-                                        {quantityUsers > 0 && (
+                                        {isAuthUser(authUserID, userId)
+                                            ? chatParticipant[0].fullName
+                                            : fullName}{" "}
+                                        {chatParticipant.length > 1 && (
                                             <Typography variant="span" sx={{ fontSize: "13px" }}>
-                                                & {quantityUsers} more
+                                                & {chatParticipant.length - 1} more
                                             </Typography>
                                         )}
                                     </Typography>
@@ -90,7 +99,9 @@ function ChatsList(props) {
                                             textOverflow: "ellipsis",
                                         }}
                                     >
-                                        {content}
+                                        {isAuthUser(authUserID, userId)
+                                            ? "You: " + content
+                                            : content}
                                     </Typography>
                                 </Box>
                             </Link>

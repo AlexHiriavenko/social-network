@@ -24,8 +24,7 @@ function UsersListGlobal(props) {
             const newMessage = {
                 id: id,
                 content: `${authUser.fullName} add to chat new participant: ${fullName}`,
-                sender: authUser,
-                chat: currentChat,
+                chatId: currentChat.id,
             };
             dispatch(addToChatNewUser({ chatId: currentChat.id, userId: newUserId }))
                 .then(() => dispatch(closeAddUserToChatModal()))

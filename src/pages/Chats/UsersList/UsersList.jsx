@@ -6,7 +6,7 @@ import {
     openPageChat,
 } from "../../../redux/chat.slice/chat.slice";
 
-import { List, ListItem, Typography, Avatar, Box } from "@mui/material/";
+import { List, ListItem, Typography, Avatar, Box, Tooltip } from "@mui/material/";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { deleteTemporaryParticipant } from "../../../redux/chat.slice/chat.slice";
@@ -70,20 +70,29 @@ function UsersList(props) {
                             className="chats__list-item"
                         >
                             <Link className="search__user-link">
-                                <Avatar
-                                    className="search__user-avatar"
-                                    sx={{ minWidth: "40px", minHeight: "40px" }}
-                                    alt="user icon"
-                                    src={
+                                <Tooltip
+                                    title={
                                         isAuthUser(authUserID, userId)
-                                            ? chatParticipant[0].profilePicture
-                                            : profilePicture
+                                            ? chatParticipant[0].fullName
+                                            : fullName
                                     }
-                                ></Avatar>
+                                >
+                                    <Avatar
+                                        className="search__user-avatar"
+                                        sx={{ minWidth: "40px", minHeight: "40px" }}
+                                        alt="user icon"
+                                        src={
+                                            isAuthUser(authUserID, userId)
+                                                ? chatParticipant[0].profilePicture
+                                                : profilePicture
+                                        }
+                                    ></Avatar>
+                                </Tooltip>
                                 <Box className="searh__user-text">
                                     <Typography
                                         className="search__user-name"
                                         color={theme.palette.textColor.content}
+                                        sx={{ lineHeight: 1 }}
                                     >
                                         {isAuthUser(authUserID, userId)
                                             ? chatParticipant[0].fullName
@@ -98,11 +107,12 @@ function UsersList(props) {
                                         className="search__user-name"
                                         color={theme.palette.textColor.content}
                                         sx={{
-                                            maxWidth: "120px",
+                                            maxWidth: "124px",
                                             fontSize: "12px",
                                             whiteSpace: "nowrap",
                                             overflow: "hidden",
                                             textOverflow: "ellipsis",
+                                            lineHeight: 2,
                                         }}
                                     >
                                         {isAuthUser(authUserID, userId)
