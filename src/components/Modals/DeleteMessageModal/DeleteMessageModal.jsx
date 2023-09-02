@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Modal } from "@mui/material";
 import {
     StyledWrapModal,
@@ -17,25 +18,40 @@ import { getChat } from "../../../redux/chat.slice/chat.slice";
 
 export default function DeleteMessageModal() {
     const dispatch = useDispatch();
-    const deleteMessageModalIsOpen = useSelector(
-        (state) => state.modal.deleteMessage.isOpen
-    );
-    const deleteMessageId = useSelector(
-        (state) => state.message.currentMessageId
-    );
+    const deleteMessageModalIsOpen = useSelector((state) => state.modal.deleteMessage.isOpen);
+    const deleteMessageId = useSelector((state) => state.message.currentMessageId);
     const currentChat = useSelector((state) => state.chat.currentChat);
 
     const handleDelete = () => {
-        dispatch(deleteMessage(deleteMessageId))
-            .then(() => dispatch(getChat(currentChat.id)))
-            .then(() => {
-                dispatch(closeDeleteMessageModal());
-            });
+        dispatch(closeDeleteMessageModal());
+        dispatch(deleteMessage(deleteMessageId)).then(() => dispatch(getChat(currentChat.id)));
+    };
+
+    const handleKeyPress = (event) => {
+        if (event.key === "Enter" && deleteMessageModalIsOpen) {
+            dispatch(deleteMessage(deleteMessageId))
+                .then(() => dispatch(getChat(currentChat.id)))
+                .then(() => {
+                    dispatch(closeDeleteMessageModal());
+                });
+        }
     };
 
     const handleClose = () => {
         dispatch(closeDeleteMessageModal());
     };
+
+    useEffect(() => {
+        if (deleteMessageModalIsOpen) {
+            document.addEventListener("keydown", handleKeyPress);
+        } else {
+            document.removeEventListener("keydown", handleKeyPress);
+        }
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyPress);
+        };
+    }, [deleteMessageModalIsOpen]);
 
     return (
         <Modal
@@ -43,7 +59,8 @@ export default function DeleteMessageModal() {
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
-            sx={{ paddingLeft: "5px", paddingRight: "5px" }}>
+            sx={{ paddingLeft: "5px", paddingRight: "5px" }}
+        >
             <StyledWrapModal>
                 <StyledModalCloseButton onClick={handleClose}>
                     <StyledModalCloseButtonLine></StyledModalCloseButtonLine>

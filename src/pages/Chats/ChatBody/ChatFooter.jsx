@@ -14,14 +14,14 @@ function ChatFooter() {
     const authUser = useSelector((state) => state.user.authorizedUser);
     const currentChat = useSelector((state) => state.chat.currentChat);
 
-    const handleKeyDown = (event, id = 0) => {
+    const handleKeyDown = (event) => {
         if (event.key === "Enter" && inputRef.current.value.trim()) {
+            event.preventDefault();
             const inputValue = inputRef.current.value.trim();
             const newMessage = {
-                id: id,
+                id: 0,
                 content: inputValue,
-                sender: authUser,
-                chat: currentChat,
+                chatId: currentChat.id,
             };
             inputRef.current.value = "";
             dispatch(sendMessage(newMessage))
@@ -36,10 +36,9 @@ function ChatFooter() {
         if (inputRef.current.value.trim()) {
             const inputValue = inputRef.current.value.trim();
             const newMessage = {
-                id: id,
+                id: 0,
                 content: inputValue,
-                sender: authUser,
-                chat: currentChat,
+                chatId: currentChat.id,
             };
             inputRef.current.value = "";
             dispatch(sendMessage(newMessage))

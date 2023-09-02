@@ -6,11 +6,11 @@ import {
     openPageChat,
 } from "../../../redux/chat.slice/chat.slice";
 
-import { List, ListItem, Typography, Avatar, Box } from "@mui/material/";
+import { List, ListItem, Typography, Avatar, Box, Tooltip } from "@mui/material/";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { deleteTemporaryParticipant } from "../../../redux/chat.slice/chat.slice";
-import filterChatParticipants from "../helpers/filterChatParticipants";
+import { isAuthUser, setChatParticipant } from "../helpers/chatsHelpers";
 
 function UsersList(props) {
     const { setNewMessageDialog } = props;
@@ -18,60 +18,16 @@ function UsersList(props) {
     const theme = useTheme();
 
     const authUserID = useSelector((state) => state.user.authorizedUser.id);
-    const chatParticipants = useSelector(
-        (state) => state.chat.chatsParticipants
-    );
-
-    const filteredChats = filterChatParticipants(chatParticipants, authUserID);
-
-    // function filteredParticpents() {
-    //     if (chatParticipants.length > 0) {
-    //         const filteredParticpents = chatParticipants.filter(
-    //             (chat) => chat.userId !== authUserID
-    //         );
-
-    //         const uniqueIdMap = new Map();
-    //         const idCountMap = {};
-
-    //         filteredParticpents.forEach((item) => {
-    //             if (!uniqueIdMap.has(item.id)) {
-    //                 uniqueIdMap.set(item.id, item);
-    //                 idCountMap[item.id] = 0;
-    //             } else {
-    //                 idCountMap[item.id] += 1;
-    //             }
-    //         });
-
-    //         const clone = structuredClone(uniqueIdMap);
-
-    //         clone.forEach((item) => {
-    //             item.quantityUsers = idCountMap[item.id];
-    //         });
-
-    //         return Array.from(clone.values());
-    //     }
-    //     return [];
-    // }
+    const chatParticipants = useSelector((state) => state.chat.chatsParticipants);
 
     const currentChat = useSelector((state) => state.chat.currentChat);
 
-    const chatParticipant = (participants, id) =>
-        participants.find((participant) => participant.userId === id);
-
-    function handlerChat(event, chatId) {
-        if (chatId) {
-            const closestLi = event.target.closest("li");
-            const userId = +closestLi.id.slice(8);
-            dispatch(
-                setCurrentChatCompanion(
-                    chatParticipant(chatParticipants, userId)
-                )
-            );
-            dispatch(getChat(chatId));
-            dispatch(openPageChat());
-            dispatch(deleteTemporaryParticipant());
-            setNewMessageDialog(false);
-        }
+    function handlerChat(event, chatId, participants, userId) {
+        dispatch(setCurrentChatCompanion(setChatParticipant(participants, userId)));
+        dispatch(getChat(chatId));
+        dispatch(openPageChat());
+        dispatch(deleteTemporaryParticipant());
+        setNewMessageDialog(false);
     }
 
     function isActiveItem(id) {
@@ -81,55 +37,69 @@ function UsersList(props) {
     return (
         <List
             className="users-list"
-            sx={{ minHeight: "50px", maxHeight: "80vh", overflowY: "auto" }}>
+            sx={{ minHeight: "50px", maxHeight: "80vh", overflowY: "auto" }}
+        >
             {!chatParticipants.length && (
-                <Typography
-                    sx={{ p: 2 }}
-                    color={theme.palette.textColor.content}>
+                <Typography sx={{ p: 2 }} color={theme.palette.textColor.content}>
                     No history yet
                 </Typography>
             )}
-            {!!filteredChats.length &&
-                filteredChats.map(
+            {!!chatParticipants.length &&
+                chatParticipants.map(
                     ({
                         id: chatId,
                         profilePicture,
                         fullName,
                         userId,
                         content,
-                        quantityUsers,
+                        chatParticipant,
                     }) => (
                         <ListItem
-                            id={`chatUser${userId}`}
+                            id={`chat${chatId}`}
                             key={chatId}
-                            onClick={(event) => handlerChat(event, chatId)}
+                            onClick={(event) => handlerChat(event, chatId, chatParticipant, userId)}
                             sx={{
                                 backgroundColor: isActiveItem(chatId)
                                     ? theme.palette.hoverColor.secondary
                                     : "none",
                                 gap: 1,
                                 "&:hover": {
-                                    backgroundColor:
-                                        theme.palette.hoverColor.secondary,
+                                    backgroundColor: theme.palette.hoverColor.secondary,
                                 },
                             }}
-                            className="chats__list-item">
+                            className="chats__list-item"
+                        >
                             <Link className="search__user-link">
-                                <Avatar
-                                    className="search__user-avatar"
-                                    sx={{ minWidth: "40px", minHeight: "40px" }}
-                                    alt="user icon"
-                                    src={profilePicture}></Avatar>
+                                <Tooltip
+                                    title={
+                                        isAuthUser(authUserID, userId)
+                                            ? chatParticipant[0].fullName
+                                            : fullName
+                                    }
+                                >
+                                    <Avatar
+                                        className="search__user-avatar"
+                                        sx={{ minWidth: "40px", minHeight: "40px" }}
+                                        alt="user icon"
+                                        src={
+                                            isAuthUser(authUserID, userId)
+                                                ? chatParticipant[0].profilePicture
+                                                : profilePicture
+                                        }
+                                    ></Avatar>
+                                </Tooltip>
                                 <Box className="searh__user-text">
                                     <Typography
                                         className="search__user-name"
-                                        color={theme.palette.textColor.content}>
-                                        {fullName}{" "}
-                                        {quantityUsers > 0 && (
-                                            <Typography
-                                                variant="span"
-                                                sx={{ fontSize: "13px" }}>
-                                                & {quantityUsers} more
+                                        color={theme.palette.textColor.content}
+                                        sx={{ lineHeight: 1 }}
+                                    >
+                                        {isAuthUser(authUserID, userId)
+                                            ? chatParticipant[0].fullName
+                                            : fullName}{" "}
+                                        {chatParticipant.length > 1 && (
+                                            <Typography variant="span" sx={{ fontSize: "13px" }}>
+                                                & {chatParticipant.length - 1} more
                                             </Typography>
                                         )}
                                     </Typography>
@@ -137,13 +107,17 @@ function UsersList(props) {
                                         className="search__user-name"
                                         color={theme.palette.textColor.content}
                                         sx={{
-                                            maxWidth: "120px",
+                                            maxWidth: "124px",
                                             fontSize: "12px",
                                             whiteSpace: "nowrap",
                                             overflow: "hidden",
                                             textOverflow: "ellipsis",
-                                        }}>
-                                        {content}
+                                            lineHeight: 2,
+                                        }}
+                                    >
+                                        {isAuthUser(authUserID, userId)
+                                            ? "You: " + content
+                                            : content}
                                     </Typography>
                                 </Box>
                             </Link>

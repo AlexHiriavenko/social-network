@@ -7,7 +7,8 @@ import {
   ContentBlockTitel,
 } from "../StyledComponents/ContentBlock/StyledComponents";
 import styled from "@emotion/styled";
-import {useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setPictures, showPictures } from "../../../redux/pictures.slice/picture.slice";
 const mockImg = [
   "https://www.ictputovanja.hr/data/public/slike-za-novosti/Island-kucica.jpg",
   "https://i.pinimg.com/564x/15/f0/e0/15f0e0372d1e04df5f325d00e5899069.jpg",
@@ -31,7 +32,7 @@ export default function ProfilePostsPhotos() {
   const photosRef = useRef(null);
   const [photoHeight, setPhotoHeight] = useState(213);
   const user = useSelector((state) => state.user.user);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     window.addEventListener("resize", resizePhotoHeigh);
     return function () {
@@ -46,6 +47,10 @@ export default function ProfilePostsPhotos() {
   function resizePhotoHeigh() {
     if (photosRef.current) setPhotoHeight(photosRef.current.width);
   }
+  const handleShowPictures = (allPictures, selected) => {
+    dispatch(showPictures());
+    dispatch(setPictures({ allPictures, selected, pathName: "imageUrl" }));
+  };
   return (
     <ContentBlock style={{ maxWidth: "680px" }}>
       <ContentBlockHeader>
@@ -64,6 +69,7 @@ export default function ProfilePostsPhotos() {
               height={photoHeight}
               ref={photosRef}
               key={index}
+              onClick={() => handleShowPictures(user.userImages, image)}
             />
           );
         })}
