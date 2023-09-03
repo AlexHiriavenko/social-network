@@ -6,16 +6,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { resetCurrentChat } from "../../../redux/chat.slice/chat.slice";
 import { getFriends, setFriends, setUser, getUser } from "../../../redux/user.slice/user.slice";
-import { StyledAvatar, StyledChatHeader } from "./StyledComponents";
+import { StyledAvatar, StyledChatHeader, StyledLink } from "./StyledChatBody";
 import { openAddUserToChatModal } from "../../../redux/modal.slice/modal.slice";
 
 function ChatHeader({ closeMenu, setNewMessageDialog }) {
     const location = useLocation();
     const dispatch = useDispatch();
     const theme = useTheme();
-    const { fullName, profilePicture, quantityUsers } = useSelector(
-        (state) => state.chat.currentChatCompanion
-    );
+    const { fullName, profilePicture } = useSelector((state) => state.chat.currentChatCompanion);
+    const quantityUsers = 0;
     const authUser = useSelector((state) => state.user.authorizedUser);
     const currentChatCompanion = useSelector((state) => state.chat.currentChatCompanion);
 
@@ -50,15 +49,7 @@ function ChatHeader({ closeMenu, setNewMessageDialog }) {
 
     return (
         <StyledChatHeader>
-            <Link
-                onClick={() => lookFriendPage(currentChatCompanion.userId)}
-                to="/profile"
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 8,
-                }}
-            >
+            <StyledLink onClick={() => lookFriendPage(currentChatCompanion.id)} to="/profile">
                 <Avatar
                     className="search__user-avatar"
                     sx={{ minWidth: "40px", minHeight: "40px" }}
@@ -73,7 +64,7 @@ function ChatHeader({ closeMenu, setNewMessageDialog }) {
                         </Typography>
                     )}
                 </Typography>
-            </Link>
+            </StyledLink>
             <Box sx={{ display: "flex", gap: 1 }}>
                 <StyledAvatar onClick={() => dispatch(openAddUserToChatModal())}>
                     <PersonAddIcon

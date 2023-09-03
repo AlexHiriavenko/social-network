@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { TextField, Box } from "@mui/material";
+import { TextField, Box, Typography } from "@mui/material";
 
 export const StyledTextField = styled(TextField)(({ theme }) => ({
     width: "300px",
@@ -87,16 +87,5 @@ export const ChatContainer = styled(Box)(({ theme, className }) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    ...className,
-}));
-
-export const WrappMessage = styled(Box)(({ theme, className }) => ({
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-    "@media (max-width: 480px)": {
-        flexDirection: column,
-        gap: 0,
-    },
     ...className,
 }));

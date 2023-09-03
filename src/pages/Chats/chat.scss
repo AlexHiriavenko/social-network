@@ -23,33 +23,6 @@
     }
 }
 
-.wrap-message {
-    @media (max-width: 480px) {
-        max-width: 254px;
-    }
-}
-
-.wrap-btns {
-    @media (max-width: 480px) {
-        flex-direction: column;
-        gap: 0;
-    }
-}
-
-.message-text-authUser {
-    background-color: $active-link-color;
-    color: white;
-
-    @media (max-width: 480px) {
-        min-width: 100px;
-        max-width: 120px;
-    }
-}
-
-.messege-text-chatPartner {
-    background-color: lightgray;
-}
-
 .chat-body {
     display: flex;
     flex-direction: column;

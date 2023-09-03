@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import { resetCurrentChat } from "../../../../../redux/chat.slice/chat.slice";
-import ChatContent from "../../../../../pages/Chats/ChatBody/ChatContent";
+import ListMessages from "../../../../../pages/Chats/ChatBody/ListMessages";
 import ChatFooter from "../../../../../pages/Chats/ChatBody/ChatFooter";
 
 const CurrentChat = () => {
@@ -23,7 +23,7 @@ const CurrentChat = () => {
                 ref={chatFormRef}
                 sx={{ px: 2, pb: 2, height: "100%", overflow: "hidden" }}
             >
-                <ChatContent />
+                <ListMessages />
                 <ChatFooter />
             </Box>
         );

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import { resetCurrentChat } from "../../../redux/chat.slice/chat.slice";
 import ChatHeader from "./ChatHeader";
-import ChatContent from "./ChatContent";
+import ListMessages from "./ListMessages";
 import ChatFooter from "./ChatFooter";
 import NewMessageDialog from "../NewMessageDialog/NewMessageDialog";
 import { EmptyChatPage, ChatContainer } from "../styledChatComponents";
@@ -32,7 +32,7 @@ const ChatBody = (props) => {
                     <ChatHeader closeMenu={() => null} setNewMessageDialog={setNewMessageDialog} />
                     <Box sx={{ maxWidth: "1000px", height: "100%" }}>
                         <ChatContainer>
-                            <ChatContent />
+                            <ListMessages />
                             <ChatFooter />
                         </ChatContainer>
                     </Box>

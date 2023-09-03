@@ -18,8 +18,8 @@ function ItemChatList({ chat }) {
     const chatParticipants = useSelector((state) => state.chat.chatsParticipants);
     const authUserID = useSelector((state) => state.user.authorizedUser.id);
 
-    function handlerChat(event, chatId, userId) {
-        dispatch(setCurrentChatCompanion(setChatParticipant(chatParticipants, userId)));
+    function handlerChat(event, chatId, participants, userId) {
+        dispatch(setCurrentChatCompanion(setChatParticipant(participants, userId)));
         dispatch(getChat(chatId));
         dispatch(openChat());
     }
@@ -27,7 +27,7 @@ function ItemChatList({ chat }) {
     return (
         <ListItem
             id={`chat${chatId}`}
-            onClick={(event) => handlerChat(event, chatId, userId)}
+            onClick={(event) => handlerChat(event, chatId, chatParticipant, userId)}
             sx={{
                 gap: 1,
                 "&:hover": {
