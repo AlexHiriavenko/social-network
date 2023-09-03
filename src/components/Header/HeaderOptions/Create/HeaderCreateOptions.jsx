@@ -5,7 +5,7 @@ import { default as AddOption } from "@mui/icons-material/Add";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import { useTheme } from "@mui/material/styles";
 import { openCreateModal } from "../../../../redux/modal.slice/modal.slice";
-import { AvatarStyled, MenuItemStyled } from "../headerOptionsStyled";
+import { AvatarStyled, MenuItemStyled, BtnCreate } from "../headerOptionsStyled";
 
 function HeaderCreateOptions() {
     const dispatch = useDispatch();
@@ -60,21 +60,14 @@ function HeaderCreateOptions() {
                     component={"h4"}
                     p={2}
                     fontWeight={600}
-                    sx={{ color: theme.palette.textColor.content }}
+                    color={theme.palette.textColor.content}
                 >
                     Create
                 </Typography>
                 <MenuItemStyled onClick={handleOpen}>
-                    <IconButton
-                        sx={{
-                            backgroundColor: "rgb(230, 228, 228)",
-                            "&:hover": {
-                                backgroundColor: "rgb(230, 228, 228)",
-                            },
-                        }}
-                    >
+                    <BtnCreate>
                         <PostAddIcon />
-                    </IconButton>
+                    </BtnCreate>
                     <Typography fontWeight={600} sx={{ color: theme.palette.textColor.content }}>
                         Post
                     </Typography>

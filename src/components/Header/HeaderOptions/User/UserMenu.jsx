@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Typography, Menu, Avatar, MenuItem } from "@mui/material";
+import { Typography, Menu, Avatar } from "@mui/material";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import NightsStayIcon from "@mui/icons-material/NightsStay";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -32,7 +32,7 @@ function UserMenu(props) {
             localStorage.setItem("user", JSON.stringify(authorizedUser));
         }
         window.scrollTo({ top: 0, behavior: "smooth" });
-        // get user friends
+
         const userFriendsResponse = dispatch(getFriends(authorizedUser.id));
         userFriendsResponse
             .then((data) => {
@@ -77,9 +77,13 @@ function UserMenu(props) {
                     <Avatar
                         sx={{ minWidth: "40px", minHeight: "40px" }}
                         alt="user icon"
-                        src={authorizedUser ? authorizedUser.profilePicture : ""}
+                        src={
+                            authorizedUser
+                                ? authorizedUser.profilePicture
+                                : "https://www.facebook.com/images/mercury/clients/messenger/threadlist/NewMessage.png"
+                        }
                     />
-                    <Typography fontWeight={700} sx={{ color: theme.palette.textColor.content }}>
+                    <Typography fontWeight={700} color={theme.palette.textColor.content}>
                         My Profile
                     </Typography>
                 </Link>
@@ -87,21 +91,21 @@ function UserMenu(props) {
             <UserMenuItemStyled onClick={toggleMenu}>
                 <Link className="header__menu-item-link" to={"/friends/home"}>
                     <GroupIcon className="header__menu-item-icon" />
-                    <Typography fontWeight={700} sx={{ color: theme.palette.textColor.content }}>
+                    <Typography fontWeight={700} color={theme.palette.textColor.content}>
                         Friends
                     </Typography>
                 </Link>
             </UserMenuItemStyled>
-            <UserMenuItemStyled onClick={toggleDisplayModeMenu} className="header__menu-item">
+            <UserMenuItemStyled onClick={toggleDisplayModeMenu}>
                 <NightsStayIcon className="header__menu-item-icon" />
-                <Typography fontWeight={700} sx={{ color: theme.palette.textColor.content }}>
+                <Typography fontWeight={700} color={theme.palette.textColor.content}>
                     Display Mode
                 </Typography>
                 <ArrowForwardIosIcon sx={{ ml: "auto", color: "rgb(101, 103, 107)" }} />
             </UserMenuItemStyled>
-            <UserMenuItemStyled onClick={logOut} className="header__menu-item">
+            <UserMenuItemStyled onClick={logOut}>
                 <ExitToAppIcon className="header__menu-item-icon" />
-                <Typography fontWeight={700} sx={{ color: theme.palette.textColor.content }}>
+                <Typography fontWeight={700} color={theme.palette.textColor.content}>
                     Log Out
                 </Typography>
             </UserMenuItemStyled>

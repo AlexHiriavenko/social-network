@@ -1,24 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../../../redux/login.slice/login.slice";
 import { IconButton, Avatar, Tooltip } from "@mui/material";
 import DarkModeMenu from "./DarkModeMenu";
 import UserMenu from "./UserMenu";
-import {setAuthorizedUser, setFriends, setUser} from "../../../../redux/user.slice/user.slice.js";
+import { setAuthorizedUser, setFriends, setUser } from "../../../../redux/user.slice/user.slice.js";
 
 function HeaderUserOtions() {
     const dispatch = useDispatch();
+
+    const [anchorUserMenu, setAnchorUserMenu] = useState(null);
+    const [anchorDisplayModeMenu, setAnchorDisplayModeMenu] = useState(null);
     const authorizedUser = useSelector((state) => state.user.authorizedUser);
 
     const handleLogOut = (event) => {
         dispatch(logOut());
-        dispatch(setAuthorizedUser(null))
-        dispatch(setUser(null))
-        dispatch(setFriends([]))
+        dispatch(setAuthorizedUser(null));
+        dispatch(setUser(null));
+        dispatch(setFriends([]));
     };
-
-    const [anchorUserMenu, setAnchorUserMenu] = React.useState(null);
-    const [anchorDisplayModeMenu, setAnchorDisplayModeMenu] = React.useState(null);
 
     const toggleMenu = () =>
         anchorUserMenu

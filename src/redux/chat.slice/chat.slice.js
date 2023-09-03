@@ -10,7 +10,6 @@ export const getChats = createAsyncThunk("chat/getChats", async function () {
 ////////////////////
 export const getChatsParticipants = createAsyncThunk("chat/getParticipants", async function () {
     const { data } = await instance.get(`chats/participants`);
-    console.log(data);
     return data;
 });
 ////////////////////
@@ -18,6 +17,8 @@ export const getChat = createAsyncThunk("chat/getChat", async function (id) {
     if (id) {
         const { data } = await instance.get(`/chats/${id}`);
         return data;
+    } else {
+        console.log("id is not valid");
     }
 });
 
@@ -33,6 +34,8 @@ export const createChat = createAsyncThunk("chat/createChat", async function (id
     if (id) {
         const { data } = await instance.get(`/chats/search/${id}`);
         return data;
+    } else {
+        console.log("id is not valid");
     }
 });
 
@@ -41,7 +44,8 @@ export const initialState = {
     chatsParticipants: [],
     currentChatCompanion: {
         id: 0,
-        profilePicture: "",
+        profilePicture:
+            "https://www.facebook.com/images/mercury/clients/messenger/threadlist/NewMessage.png",
         fullName: "uknown user",
     },
     currentChat: {
@@ -102,7 +106,6 @@ const chatSlice = createSlice({
         builder.addCase(getChatsParticipants.fulfilled, (state, action) => {
             if (typeof action.payload === "object") {
                 state.chatsParticipants = action.payload;
-                console.log(state.chatsParticipants);
             } else {
                 state.chatsParticipants = [];
             }

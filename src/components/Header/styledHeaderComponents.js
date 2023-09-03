@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { Avatar, Button, MenuItem, Box, Typography, AppBar } from "@mui/material";
+import { Box, AppBar } from "@mui/material";
 
 export const AppBarStyled = styled(AppBar)(({ theme, className }) => ({
     color: "inherit",
@@ -18,4 +18,14 @@ export const FlexCenter = styled(Box)(({ theme, className }) => ({
     justifyContent: "center",
     alignItems: "center",
     ...className,
+}));
+
+export const WrapLink = styled(Box)(({ theme }) => ({
+    boxSizing: "content-box",
+    width: "100%",
+    paddingBottom: "4px",
+    paddingTop: "4px",
+    borderRadius: "12px",
+    transitionDuration: "0.5s",
+    "&:hover": { backgroundColor: theme.palette.hoverColor.main },
 }));

@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { Avatar, Button, MenuItem, Box, Typography } from "@mui/material";
+import { Avatar, Button, MenuItem, Box, Typography, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const AvatarStyled = styled(Avatar)(({ theme }) => ({
@@ -29,6 +29,8 @@ export const MenuItemStyled = styled(MenuItem)(({ theme }) => ({
 }));
 
 export const UserMenuItemStyled = styled(MenuItem)(({ theme }) => ({
+    gap: "16px",
+    alignItems: "center",
     marginTop: "8px",
     "&:hover": {
         backgroundColor: theme.palette.hoverColor.main,
@@ -60,4 +62,11 @@ export const LastMessageContent = styled(Typography)(({ theme, className }) => (
     overflow: "hidden",
     textOverflow: "ellipsis",
     ...className,
+}));
+
+export const BtnCreate = styled(IconButton)(({ theme }) => ({
+    backgroundColor: "rgb(230, 228, 228)",
+    "&:hover": {
+        backgroundColor: "rgb(230, 228, 228)",
+    },
 }));
