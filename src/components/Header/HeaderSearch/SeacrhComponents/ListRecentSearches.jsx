@@ -1,10 +1,12 @@
 import { List, ListItem, Typography, Avatar } from "@mui/material/";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
+import {useSelector} from "react-redux";
 
 function ListRecentSearches(props) {
     const theme = useTheme();
     const onClick = props.onClick;
+    const authUser = useSelector((state) => state.user.authorizedUser);
 
     return (
         <List>
@@ -23,7 +25,7 @@ function ListRecentSearches(props) {
                         },
                     }}
                 >
-                    <Link to={`search/${user.id}`} onClick={onClick} className="search__user-link">
+                    <Link to={user.id === authUser.id ? `/profile` : `search/${user.id}`} onClick={onClick} className="search__user-link">
                         <Avatar
                             className="search__user-avatar"
                             sx={{ minWidth: "40px", minHeight: "40px" }}
