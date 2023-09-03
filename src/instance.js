@@ -6,8 +6,8 @@ import { readCookie } from "./readCookie.js";
 
 const instance = axios.create({
 
-    baseURL: `${import.meta.env.VITE_APP_API_URL}`
-    //baseURL: "https://social-network-backend-2782464b9c31.herokuapp.com"
+    //baseURL: `${import.meta.env.VITE_APP_API_URL}`
+    baseURL: "https://social-network-backend-2782464b9c31.herokuapp.com"
     //baseURL: "http://localhost:9000"
 
 })

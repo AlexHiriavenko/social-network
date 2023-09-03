@@ -20,7 +20,7 @@ const notifications = createSlice({
     initialState,
     reducers: {
       addNewMessages: function (state, action) {
-        state.newMessages = action.payload;
+        state.newMessages.push(action.payload);
       },
       deleteNewMessages: function(state) {
         state.newMessages = [];
