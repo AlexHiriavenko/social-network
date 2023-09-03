@@ -69,3 +69,34 @@ export const ContainerFlex = styled("div")(({ theme, className }) => ({
     marginRight: "auto",
     ...className,
 }));
+
+export const EmptyChatPage = styled("div")(({ theme, className }) => ({
+    alignSelf: "center",
+    paddingBottom: "65px",
+    fontSize: "22px",
+    fontWeight: 700,
+    margin: "18px auto 0",
+    textAlign: "center",
+    color: theme.palette.textColor.secondary,
+    ...className,
+}));
+
+export const ChatContainer = styled(Box)(({ theme, className }) => ({
+    paddingInline: "16px",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    ...className,
+}));
+
+export const WrappMessage = styled(Box)(({ theme, className }) => ({
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    "@media (max-width: 480px)": {
+        flexDirection: column,
+        gap: 0,
+    },
+    ...className,
+}));

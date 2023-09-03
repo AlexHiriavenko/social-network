@@ -8,7 +8,7 @@ import {
     openDeleteMessageModal,
     openEditMessageModal,
 } from "../../../redux/modal.slice/modal.slice";
-import { StyledMessageBtnGroup } from "../styledChatComponents";
+import { StyledMessageBtnGroup, WrapMessage } from "../styledChatComponents";
 
 function ChatContent() {
     const dispatch = useDispatch();
@@ -16,11 +16,10 @@ function ChatContent() {
 
     const { messages } = useSelector((state) => state.chat.currentChat);
 
-    const sortedMessages = messages
-        ? messages.toSorted((a, b) => {
-              return new Date(a.createdDate) - new Date(b.createdDate);
-          })
-        : [];
+    const sortedMessages =
+        messages.length > 1
+            ? messages.toSorted((a, b) => new Date(a.createdDate) - new Date(b.createdDate))
+            : messages;
 
     const authUser = useSelector((state) => state.user.authorizedUser);
     const authUserId = authUser.id;
@@ -42,7 +41,7 @@ function ChatContent() {
         <List className="chat-body__list">
             {sortedMessages.map((message, index) => (
                 <ListItem
-                    sx={{ p: 0 }}
+                    p={0}
                     className={
                         isAuthUser(authUserId, message.sender.id)
                             ? "chat-body__item--authUser"
@@ -50,25 +49,12 @@ function ChatContent() {
                     }
                     key={index}
                 >
-                    <Typography
-                        sx={{
-                            width: "100%",
-                            textAlign: "center",
-                            color: theme.palette.textColor.secondary,
-                        }}
-                    >
+                    <Typography color={theme.palette.textColor.secondary} align="left">
                         {message.createdDate
                             ? new Date(message.createdDate).toLocaleString()
                             : "unknown date"}
                     </Typography>
-                    <Box
-                        className="wrap-message"
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 1,
-                        }}
-                    >
+                    <WrapMessage>
                         {" "}
                         <Tooltip title={message.sender.fullName}>
                             <Avatar
@@ -122,7 +108,7 @@ function ChatContent() {
                                 </StyledMessageBtnGroup>
                             ) : null}
                         </Box>
-                    </Box>
+                    </WrapMessage>
                 </ListItem>
             ))}
         </List>

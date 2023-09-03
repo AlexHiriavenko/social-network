@@ -1,79 +1,12 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import instance from "../../instance.js";
-
-export const getChats = createAsyncThunk("chat/getChats", async function () {
-    const chats = await instance.get("/chats");
-    console.log(chats);
-    return chats;
-});
-
-////////////////////
-export const getChatsParticipants = createAsyncThunk("chat/getParticipants", async function () {
-    const { data } = await instance.get(`chats/participants`);
-    return data;
-});
-////////////////////
-export const getChat = createAsyncThunk("chat/getChat", async function (id) {
-    if (id) {
-        const { data } = await instance.get(`/chats/${id}`);
-        return data;
-    } else {
-        console.log("id is not valid");
-    }
-});
-
-export const addToChatNewUser = createAsyncThunk(
-    "chat/addNewUser",
-    async function ({ chatId, userId }) {
-        const { status } = await instance.put(`/chats/${chatId}/participants/${userId}`);
-        return status;
-    }
-);
-
-export const createChat = createAsyncThunk("chat/createChat", async function (id) {
-    if (id) {
-        const { data } = await instance.get(`/chats/search/${id}`);
-        return data;
-    } else {
-        console.log("id is not valid");
-    }
-});
-
-export const initialState = {
-    isOpened: false,
-    chatsParticipants: [],
-    currentChatCompanion: {
-        id: 0,
-        profilePicture:
-            "https://www.facebook.com/images/mercury/clients/messenger/threadlist/NewMessage.png",
-        fullName: "uknown user",
-    },
-    currentChat: {
-        id: null,
-        messages: [
-            {
-                createdBy: "",
-                createdDate: "",
-                updatedBy: "",
-                updatedDate: "",
-                id: null,
-                content: "",
-                chatId: null,
-            },
-        ],
-        users: [],
-    },
-};
-
-const temporaryPartisipantState = {
-    id: null,
-    userId: null,
-    fullName: "New Chat",
-    content: "",
-    lastMessageDate: "",
-    profilePicture:
-        "https://www.facebook.com/images/mercury/clients/messenger/threadlist/NewMessage.png",
-};
+import { createSlice } from "@reduxjs/toolkit";
+import {
+    getChats,
+    getChat,
+    getChatsParticipants,
+    createChat,
+    addToChatNewUser,
+} from "./chatActions.js";
+import { initialState, temporaryPartisipantState } from "./chatInitialStates.js";
 
 const chatSlice = createSlice({
     name: "chat",
@@ -145,6 +78,8 @@ export const {
 } = chatSlice.actions;
 
 export const { openPageChat, closePageChat } = chatPageSlice.actions;
+
+export { getChats, getChat, getChatsParticipants, createChat, addToChatNewUser };
 
 export default chatSlice.reducer;
 export const chatPageReducer = chatPageSlice.reducer;
