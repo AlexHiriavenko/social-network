@@ -4,11 +4,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
 import { mockInfo } from "./mockData";
 import { useTheme } from "@mui/material/styles";
+import {useSelector} from "react-redux";
 
 function ListRecentSearches(props) {
     const theme = useTheme();
     const onClick = props.onClick;
-
+    const authUser = useSelector((state) => state.user.authorizedUser);
     const [recentUsersList, setRecentUsersList] = useState(mockInfo);
 
     const handleRemoveUser = (event) => {
@@ -40,7 +41,7 @@ function ListRecentSearches(props) {
                         },
                     }}>
                     <Link
-                        to={`search/${user.id}`}
+                        to= {user.id === authUser.id ? `/profile` : `search/${user.id}`}
                         onClick={onClick}
                         className="search__user-link">
                         <Avatar
@@ -54,17 +55,7 @@ function ListRecentSearches(props) {
                             {user.fullName}
                         </Typography>
                     </Link>
-                    {/* <CloseIcon
-                        id={user.id}
-                        onClick={handleRemoveUser}
-                        className="search__user-remove"
-                        sx={{
-                            color: theme.palette.textColor.content,
-                            "&:hover": {
-                                backgroundColor: theme.palette.hoverColor.dark,
-                            },
-                        }}
-                    /> */}
+
                 </ListItem>
             ))}
         </List>
