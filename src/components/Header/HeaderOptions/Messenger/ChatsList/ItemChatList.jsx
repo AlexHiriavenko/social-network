@@ -15,7 +15,6 @@ function ItemChatList({ chat }) {
     const dispatch = useDispatch();
     const theme = useTheme();
 
-    const chatParticipants = useSelector((state) => state.chat.chatsParticipants);
     const authUserID = useSelector((state) => state.user.authorizedUser.id);
 
     function handlerChat(event, chatId, participants, userId) {

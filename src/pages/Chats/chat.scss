@@ -1,28 +1,3 @@
-.users-list {
-    max-width: 100%;
-
-    @media (max-width: 480px) {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        max-width: 100%;
-    }
-}
-
-.chats__list-item {
-    @media (max-width: 700px) {
-        justify-content: center !important;
-    }
-
-    @media (max-width: 480px) {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        width: 100%;
-        justify-content: center !important;
-    }
-}
-
 .chat-body {
     display: flex;
     flex-direction: column;

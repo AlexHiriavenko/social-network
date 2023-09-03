@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { Avatar, Button, MenuItem, Box, Typography, IconButton } from "@mui/material";
+import { Avatar, Button, MenuItem, Box, Typography, IconButton, List } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const AvatarStyled = styled(Avatar)(({ theme }) => ({
@@ -58,6 +58,7 @@ export const LastMessageContent = styled(Typography)(({ theme, className }) => (
     width: "100%",
     maxWidth: "120px",
     fontSize: "12px",
+    lineHeight: 2,
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
@@ -69,4 +70,15 @@ export const BtnCreate = styled(IconButton)(({ theme }) => ({
     "&:hover": {
         backgroundColor: "rgb(230, 228, 228)",
     },
+}));
+
+export const StyledMessagesList = styled(List)(({ theme, className }) => ({
+    maxWidth: "100%",
+    "@media (max-width: 480px)": {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "100%",
+    },
+    ...className,
 }));

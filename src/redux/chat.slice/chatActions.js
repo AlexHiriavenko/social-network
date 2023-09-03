@@ -7,12 +7,11 @@ export const getChats = createAsyncThunk("chat/getChats", async function () {
     return chats;
 });
 
-////////////////////
 export const getChatsParticipants = createAsyncThunk("chat/getParticipants", async function () {
     const { data } = await instance.get(`chats/participants`);
     return data;
 });
-////////////////////
+
 export const getChat = createAsyncThunk("chat/getChat", async function (id) {
     if (id) {
         const { data } = await instance.get(`/chats/${id}`);
