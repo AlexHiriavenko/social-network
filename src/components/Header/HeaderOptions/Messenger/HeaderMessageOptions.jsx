@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import { Menu } from "@mui/material";
 import HeaderChatIcon from "./HeaderChatIcon";
-import MessengerHeader from "./MessengerHeader";
-import ChatsList from "./ChatsList";
+import ChatHead from "./CurrentChat/ChatHead";
+import ChatsList from "./ChatsList/ChatsList";
 import ChatHeader from "../../../../pages/Chats/ChatBody/ChatHeader";
-import Chat from "./Chat";
-import HeaderNewMessage from "./NewMessage/HeaderNewMessage";
+import CurrentChat from "./CurrentChat/CurrentChat";
+import NewChat from "./NewChat/NewChat";
 
 function HeaderMessageOptions() {
     const [newMessageModal, setNewMessageModal] = useState(false);
@@ -63,16 +63,13 @@ function HeaderMessageOptions() {
                     },
                 }}
             >
-                {newMessageModal && <HeaderNewMessage setNewMessageModal={setNewMessageModal} />}
+                {newMessageModal && <NewChat setNewMessageModal={setNewMessageModal} />}
                 {!open && !newMessageModal && (
-                    <MessengerHeader
-                        toggleMenu={toggleMenu}
-                        setNewMessageModal={setNewMessageModal}
-                    />
+                    <ChatHead toggleMenu={toggleMenu} setNewMessageModal={setNewMessageModal} />
                 )}
                 {!open && !newMessageModal && <ChatsList />}
                 {open && <ChatHeader closeMenu={closeMenu} />}
-                {open && <Chat />}
+                {open && <CurrentChat />}
             </Menu>
         </>
     );

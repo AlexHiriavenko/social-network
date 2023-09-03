@@ -3,22 +3,15 @@ import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
+import { ContainerFlexSB } from "../../headerOptionsStyled";
 
-function MessengerHeader(props) {
+function ChatHead(props) {
     const theme = useTheme();
     const { toggleMenu, setNewMessageModal } = props;
     const navigate = useNavigate();
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                pl: 2,
-                pr: 2,
-            }}
-        >
+        <ContainerFlexSB>
             <Typography
                 variant="h5"
                 component={"h4"}
@@ -61,8 +54,8 @@ function MessengerHeader(props) {
                     </IconButton>
                 </Tooltip>
             </Box>
-        </Box>
+        </ContainerFlexSB>
     );
 }
 
-export default MessengerHeader;
+export default ChatHead;
