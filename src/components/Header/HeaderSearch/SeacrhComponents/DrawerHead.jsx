@@ -12,6 +12,7 @@ function DrawerHead({ toggleDrawer, setFoundUser }) {
                 display: "flex",
                 backgroundColor: theme.palette.backgroundColor.section,
                 pr: 2,
+                pb: "4px",
             }}
         >
             <Box sx={{ display: "flex", p: 1 }}>
