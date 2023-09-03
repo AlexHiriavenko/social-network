@@ -9,6 +9,7 @@ import userReducer from "./user.slice/user.slice.js";
 import darkModeSReducer from "./darkMode.slice/darkMode.slice";
 import modalReducer from "./modal.slice/modal.slice";
 import notificationReducer from "./notifications.slice/notifications.slice";
+import picturesReducer from "./pictures.slice/picture.slice";
 
 export const store = configureStore({
     reducer: {
@@ -22,7 +23,8 @@ export const store = configureStore({
         friends: friendReducer,
         modal: modalReducer,
         user: userReducer,
-        notifications: notificationReducer
+        notifications: notificationReducer,
+        pictures: picturesReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

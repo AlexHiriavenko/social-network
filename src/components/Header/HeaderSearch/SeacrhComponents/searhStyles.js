@@ -3,6 +3,8 @@ import { InputBase } from "@mui/material";
 
 const SearchDiv = styled("div")(({ theme }) => ({
     position: "relative",
+    display: "flex",
+    alignContent: "center",
     backgroundColor: theme.palette.input.mainBackground,
     borderRadius: "50px",
     marginLeft: theme.spacing(1),
@@ -16,6 +18,8 @@ const SearchIconWrapper = styled("div")(({ theme, className }) => ({
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
+    backgroundColor: theme.palette.input.mainBackground,
+    borderRadius: "50%",
     ...className,
 }));
 

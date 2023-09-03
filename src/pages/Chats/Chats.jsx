@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useTheme } from "@mui/material/styles";
+import { useDispatch } from "react-redux";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import MessengerSidebarHeader from "./MessengerSidebarHeader/MessengerSidebarHeader";
 import ChatBody from "./ChatBody/ChatBody";
-import UsersList from "./UsersList/UsersList";
+import ChatsList from "./ChatsList/ChatsList";
 import { getChatsParticipants } from "../../redux/chat.slice/chat.slice";
+import { Container, ContainerFlex } from "./styledChatComponents";
 
 function Chats() {
     const dispatch = useDispatch();
-    const theme = useTheme();
 
     const [newMessageDialog, setNewMessageDialog] = useState(false);
 
@@ -18,31 +17,18 @@ function Chats() {
     }, [dispatch]);
 
     return (
-        <div
-            style={{
-                backgroundColor: theme.palette.backgroundColor.card,
-                height: "calc(100% - 65px)",
-                overflow: "hidden",
-            }}
-        >
-            <div
-                className="container-page"
-                style={{
-                    display: "flex",
-                    backgroundColor: theme.palette.backgroundColor.card,
-                    height: "calc(100% - 65px)",
-                }}
-            >
+        <Container>
+            <ContainerFlex>
                 <Sidebar>
                     <MessengerSidebarHeader setNewMessageDialog={setNewMessageDialog} />
-                    <UsersList setNewMessageDialog={setNewMessageDialog} />
+                    <ChatsList setNewMessageDialog={setNewMessageDialog} />
                 </Sidebar>
                 <ChatBody
                     newMessageDialog={newMessageDialog}
                     setNewMessageDialog={setNewMessageDialog}
                 />
-            </div>
-        </div>
+            </ContainerFlex>
+        </Container>
     );
 }
 

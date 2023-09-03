@@ -3,8 +3,9 @@ import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch } from "react-redux";
 import { deleteTemporaryParticipant } from "../../../../../redux/chat.slice/chat.slice";
+import { AvatarStyled, ContainerFlexSB } from "../../headerOptionsStyled";
 
-function NewMessageHeader({ setNewMessageModal }) {
+function NewChatHead({ setNewMessageModal }) {
     const theme = useTheme();
     const dispatch = useDispatch();
     function handleClose() {
@@ -13,15 +14,7 @@ function NewMessageHeader({ setNewMessageModal }) {
     }
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                pl: 2,
-                pr: 2,
-            }}
-        >
+        <ContainerFlexSB>
             <Typography
                 variant="h5"
                 component={"h4"}
@@ -30,27 +23,15 @@ function NewMessageHeader({ setNewMessageModal }) {
             >
                 New Chat with...
             </Typography>
-            <Avatar
-                sx={{
-                    bgcolor: theme.palette.hoverColor.dark,
-                    minWidth: "40px",
-                    minHeight: "40px",
-                    cursor: "pointer",
-                    transitionDuration: "0.5s",
-                    "&:hover": {
-                        backgroundColor: theme.palette.buttonColor.backgroundHover,
-                    },
-                }}
-                onClick={handleClose}
-            >
+            <AvatarStyled onClick={handleClose}>
                 <CloseIcon
                     sx={{
                         color: theme.palette.textColor.content,
                     }}
                 />
-            </Avatar>
-        </Box>
+            </AvatarStyled>
+        </ContainerFlexSB>
     );
 }
 
-export default NewMessageHeader;
+export default NewChatHead;

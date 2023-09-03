@@ -8,14 +8,11 @@ export const getChats = createAsyncThunk("chat/getChats", async function () {
 });
 
 ////////////////////
-export const getChatsParticipants = createAsyncThunk(
-    "chat/getParticipants",
-    async function () {
-        const { data } = await instance.get(`chats/participants`);
-        console.log(data);
-        return data;
-    }
-);
+export const getChatsParticipants = createAsyncThunk("chat/getParticipants", async function () {
+    const { data } = await instance.get(`chats/participants`);
+    console.log(data);
+    return data;
+});
 ////////////////////
 export const getChat = createAsyncThunk("chat/getChat", async function (id) {
     if (id) {
@@ -27,27 +24,26 @@ export const getChat = createAsyncThunk("chat/getChat", async function (id) {
 export const addToChatNewUser = createAsyncThunk(
     "chat/addNewUser",
     async function ({ chatId, userId }) {
-        const { status } = await instance.put(
-            `/chats/${chatId}/participants/${userId}`
-        );
+        const { status } = await instance.put(`/chats/${chatId}/participants/${userId}`);
         return status;
     }
 );
 
-export const createChat = createAsyncThunk(
-    "chat/createChat",
-    async function (id) {
-        if (id) {
-            const { data } = await instance.get(`/chats/search/${id}`);
-            return data;
-        }
+export const createChat = createAsyncThunk("chat/createChat", async function (id) {
+    if (id) {
+        const { data } = await instance.get(`/chats/search/${id}`);
+        return data;
     }
-);
+});
 
 export const initialState = {
     isOpened: false,
     chatsParticipants: [],
-    currentChatCompanion: {},
+    currentChatCompanion: {
+        id: 0,
+        profilePicture: "",
+        fullName: "uknown user",
+    },
     currentChat: {
         id: null,
         messages: [
@@ -93,15 +89,10 @@ const chatSlice = createSlice({
             state.isOpened = false;
         },
         setTemporaryParticipant: function (state, action) {
-            state.chatsParticipants = [
-                temporaryPartisipantState,
-                ...state.chatsParticipants,
-            ];
+            state.chatsParticipants = [temporaryPartisipantState, ...state.chatsParticipants];
         },
         deleteTemporaryParticipant: function (state) {
-            const targetIndex = state.chatsParticipants.findIndex(
-                (el) => el.id === null
-            );
+            const targetIndex = state.chatsParticipants.findIndex((el) => el.id === null);
             if (targetIndex !== -1) {
                 state.chatsParticipants.splice(targetIndex, 1);
             }
@@ -110,25 +101,6 @@ const chatSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getChatsParticipants.fulfilled, (state, action) => {
             if (typeof action.payload === "object") {
-                // const uniqueIdMap = new Map();
-                // const idCountMap = {};
-
-                // action.payload.forEach((item) => {
-                //     if (!uniqueIdMap.has(item.id)) {
-                //         uniqueIdMap.set(item.id, item);
-                //         idCountMap[item.id] = 0;
-                //     } else {
-                //         idCountMap[item.id] += 1;
-                //     }
-                // });
-
-                // uniqueIdMap.forEach((item) => {
-                //     // количество пользователей кроме авторизированного юзера и 1го участника чата
-                //     // чтобы показать в групповом чате например "Alex Smith and 2 more"
-                //     item.quantityUsers = idCountMap[item.id];
-                // });
-
-                // state.chatsParticipants = Array.from(uniqueIdMap.values());
                 state.chatsParticipants = action.payload;
                 console.log(state.chatsParticipants);
             } else {
