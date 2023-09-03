@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
-import {setUser} from "../../../../redux/user.slice/user.slice.js";
+import {getFriends, setFriends, setUser} from "../../../../redux/user.slice/user.slice.js";
 
 function ListRecentSearches(props) {
     const theme = useTheme();
@@ -13,7 +13,18 @@ function ListRecentSearches(props) {
     const user = useSelector((state) => state.user.user);
     useEffect(()=>{
         if(user === null){
-        dispatch(setUser(authUser));}
+        dispatch(setUser(authUser));
+            const userFriendsResponse = dispatch(getFriends(authUser.id));
+            userFriendsResponse
+                .then((data) => {
+                    if (data.payload) {
+                        dispatch(setFriends(data.payload));
+                        localStorage.setItem("friends", JSON.stringify(data.payload));
+                    }
+                })
+                .catch((error) => console.log(error.message));
+
+        }
     },[])
 
     return (
