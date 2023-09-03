@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from "@mui/material/styles";
-import { List, ListItem, Typography, Box, Avatar } from "@mui/material";
+import { List, ListItem, Typography, Box, Avatar, Tooltip } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import { setMessageContent, setMessageId } from "../../../redux/message.slice/message.slice";
@@ -69,11 +69,14 @@ function ChatContent() {
                             gap: 1,
                         }}
                     >
-                        <Avatar
-                            sx={{ minWidth: "40px", minHeight: "40px" }}
-                            alt="user icon"
-                            src={message.sender.profilePicture}
-                        ></Avatar>
+                        {" "}
+                        <Tooltip title={message.sender.fullName}>
+                            <Avatar
+                                sx={{ minWidth: "40px", minHeight: "40px" }}
+                                alt="user icon"
+                                src={message.sender.profilePicture}
+                            ></Avatar>
+                        </Tooltip>
                         <Box
                             id={"message" + message.id}
                             className="wrap-btns"

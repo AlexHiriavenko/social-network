@@ -50,3 +50,22 @@ export const StyledMessageBtnGroup = styled(Box)(({ theme }) => ({
         gap: "4px",
     },
 }));
+
+export const Container = styled("div")(({ theme, className }) => ({
+    backgroundColor: theme.palette.backgroundColor.card,
+    height: "calc(100% - 65px)",
+    overflow: "hidden",
+    ...className,
+}));
+
+export const ContainerFlex = styled("div")(({ theme, className }) => ({
+    display: "flex",
+    backgroundColor: theme.palette.backgroundColor.card,
+    height: "calc(100% - 65px)",
+    width: "100%",
+    maxWidth: "1920px",
+    minHeight: "calc(100vh - 65px)",
+    marginLeft: "auto",
+    marginRight: "auto",
+    ...className,
+}));

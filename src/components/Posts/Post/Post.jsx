@@ -7,11 +7,7 @@ import styled from "@emotion/styled";
 import { Box, Button, Typography } from "@mui/material";
 import { BlockUserImage } from "../../UserProfile/StyledComponents/ContentBlock/StyledComponents";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getPost,
-  likePost,
-  removeLikePost,
-} from "../../../redux/post.slice/post.slice";
+import { likePost, removeLikePost } from "../../../redux/post.slice/post.slice";
 import { useNavigate } from "react-router-dom";
 import { getUser, setUser } from "../../../redux/user.slice/user.slice";
 import {
@@ -19,6 +15,10 @@ import {
   openCreateModal,
   setRepostToModal,
 } from "../../../redux/modal.slice/modal.slice";
+import {
+  setPictures,
+  showPictures,
+} from "../../../redux/pictures.slice/picture.slice";
 
 // Post Styles
 const StyledPost = styled("li")(({ theme }) => ({
@@ -72,7 +72,9 @@ const StyledPostImages = styled(Box)({
 const StyledPostImage = styled("img")({
   objectFit: "cover",
   width: "100%",
+  maxHeight: "500px",
   transitionDuration: "300ms",
+  cursor: "pointer",
   "&:hover": {
     opacity: "0.9",
   },
@@ -191,7 +193,11 @@ export default function Post(props) {
   const handleOpenComment = () => {
     dispatch(openCreateCommentModal(props));
     // dispatch(setPost(props));
-  }
+  };
+  const handleShowPictures = (allPictures, selected) => {
+    dispatch(showPictures());
+    dispatch(setPictures({ allPictures, selected, pathName: "imgUrl" }));
+  };
   function getPostDate(postDate) {
     const date = new Date(postDate);
     let month;
@@ -286,9 +292,7 @@ export default function Post(props) {
   useEffect(() => {
     if (!authUser) return;
 
-
     if (likes.find((like) => like?.id === authUser?.id)) {
-
       setLikedStatus(true);
     } else {
       setLikedStatus(false);
@@ -325,6 +329,12 @@ export default function Post(props) {
                 <StyledPostImage
                   src={repost?.postImages[0]?.imgUrl}
                   alt="post image"
+                  onClick={() =>
+                    handleShowPictures(
+                      repost?.postImages,
+                      repost?.postImages[0]
+                    )
+                  }
                 />
               )}
               <StyledPostExtraImages>
@@ -335,7 +345,12 @@ export default function Post(props) {
                     if (index > 3) return;
                     if (index === 3) {
                       return (
-                        <StyledPostImageItem key={index}>
+                        <StyledPostImageItem
+                          key={index}
+                          onClick={() =>
+                            handleShowPictures(repost?.postImages, postImage)
+                          }
+                        >
                           <StyledPostLastShowedItem>
                             +{repost?.postImages?.length - 3}
                           </StyledPostLastShowedItem>
@@ -357,6 +372,9 @@ export default function Post(props) {
                             ref={photosRef}
                             width={195}
                             height={photoHeight}
+                            onClick={() =>
+                              handleShowPictures(repost?.postImages, postImage)
+                            }
                           />
                         </StyledPostImageItem>
                       );
@@ -376,10 +394,10 @@ export default function Post(props) {
                 onClick={() => lookUser(repost?.user.id)}
               />
               <Box>
-
-                <StyledPostAuthorName onClick={() => lookUser(repost?.user?.id)}>
+                <StyledPostAuthorName
+                  onClick={() => lookUser(repost?.user?.id)}
+                >
                   {repost?.user && repost?.user?.fullName}
-
                 </StyledPostAuthorName>
                 <StyledPostDate>
                   {getPostDate(repost && repost?.createdDate)}
@@ -396,7 +414,11 @@ export default function Post(props) {
       {!parentId && (
         <StyledPostImages>
           {postImages?.length > 0 && (
-            <StyledPostImage src={postImages[0].imgUrl} alt="post image" />
+            <StyledPostImage
+              src={postImages[0].imgUrl}
+              alt="post image"
+              onClick={() => handleShowPictures(postImages, postImages[0])}
+            />
           )}
           <StyledPostExtraImages>
             {postImages?.length > 0 &&
@@ -405,7 +427,10 @@ export default function Post(props) {
                 if (index > 3) return;
                 if (index === 3) {
                   return (
-                    <StyledPostImageItem key={index}>
+                    <StyledPostImageItem
+                      key={index}
+                      onClick={() => handleShowPictures(postImages, postImage)}
+                    >
                       <StyledPostLastShowedItem>
                         +{postImages?.length - 3}
                       </StyledPostLastShowedItem>
@@ -427,6 +452,9 @@ export default function Post(props) {
                         ref={photosRef}
                         width={195}
                         height={photoHeight}
+                        onClick={() =>
+                          handleShowPictures(postImages, postImage)
+                        }
                       />
                     </StyledPostImageItem>
                   );
@@ -441,12 +469,10 @@ export default function Post(props) {
           {likes?.length > 0 ? `${likesAmount} likes` : null}
         </StyledPostReachItem>
         <StyledPostReachItem>
-
           {comments?.length > 0 ? `${comments?.length} comments` : null}
         </StyledPostReachItem>
         <StyledPostReachItem>
           {reposts?.length > 0 ? `${reposts?.length} shares` : null}
-
         </StyledPostReachItem>
       </StyledPostReach>
       {!inModal && (

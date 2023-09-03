@@ -1,19 +1,16 @@
 import { useState } from "react";
 import SearchForHomePage from "../../../components/Search/SearchForHomePage";
-import NewMessageHeader from "../../../components/Header/HeaderOptions/Messenger/NewMessage/NewMessageHeader";
-import GlobalUsersList from "../../../components/Header/HeaderOptions/Messenger/NewMessage/GlobalUsersList";
+import NewChatHead from "../../../components/Header/HeaderOptions/Messenger/NewChat/NewChatHead";
+import GlobalUsersList from "../../../components/Header/HeaderOptions/Messenger/NewChat/GlobalUsersList";
 
 function NewMessageDialog({ setNewMessageModal }) {
     const [foundUser, setFoundUser] = useState([]);
 
     return (
         <div style={{ width: "100%", padding: "8px 8px" }}>
-            <NewMessageHeader setNewMessageModal={setNewMessageModal}></NewMessageHeader>
-            <SearchForHomePage setFoundUser={setFoundUser}></SearchForHomePage>
-            <GlobalUsersList
-                users={foundUser}
-                setNewMessageModal={setNewMessageModal}
-            ></GlobalUsersList>
+            <NewChatHead setNewMessageModal={setNewMessageModal} />
+            <SearchForHomePage setFoundUser={setFoundUser} />
+            <GlobalUsersList users={foundUser} setNewMessageModal={setNewMessageModal} />
         </div>
     );
 }

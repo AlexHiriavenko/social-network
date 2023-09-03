@@ -1,4 +1,6 @@
 .users-list {
+    max-width: 100%;
+
     @media (max-width: 480px) {
         display: flex;
         flex-direction: column;
@@ -34,20 +36,6 @@
     }
 }
 
-.test {
-    display: "flex";
-    flex-direction: "column";
-    justify-content: "center";
-    align-items: center;
-    gap: 2;
-    background-color: red;
-
-    @media (max-width: 480px) {
-        justify-content: center;
-        align-items: center;
-    }
-}
-
 .message-text-authUser {
     background-color: $active-link-color;
     color: white;
@@ -63,6 +51,8 @@
 }
 
 .chat-body {
+    display: flex;
+    flex-direction: column;
     width: calc(100% - 370px);
     max-width: 100%;
     height: 100%;

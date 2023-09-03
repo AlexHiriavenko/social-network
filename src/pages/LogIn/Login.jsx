@@ -20,9 +20,10 @@ export default function LogIn() {
   const navigate = useNavigate();
   // const token = useSelector(store => store.login.token)
   let url = window.location.href.slice(0, -6);
+  const[message,setMessage] = useState(null)
 
   useEffect(() => {
-   // if (!readCookie("token")) {
+    // if (!readCookie("token")) {
     //  document.cookie = `token=${0}`;
     if(!localStorage.getItem("token")){
       localStorage.setItem("token",JSON.stringify("out"))
@@ -43,12 +44,16 @@ export default function LogIn() {
     onSubmit: async () => {
       const email = loginForm.values.email;
       const password = loginForm.values.password;
-      await dispatch(
+      const auth = await  dispatch(
           logIn({
             email: loginForm.values.email,
             password: loginForm.values.password,
           })
       );
+
+      if(auth.type === 'Login/logIn/rejected') {
+        setMessage("Incorrect login or password")
+      }
 
       if (JSON.parse(localStorage.getItem("token"))!= "out") {
         dispatch(setLogin());
@@ -143,6 +148,7 @@ export default function LogIn() {
                         onClick={loginForm.handleSubmit}>
                       Вход
                     </Button>
+                    <p >{message}</p>
                     <button className="forgot-pass-btn" onClick={handleForgot}>
                       Забыли аккаунт?
                     </button>
@@ -163,9 +169,9 @@ export default function LogIn() {
                         }
                         onClick={async () => {
 
-                         if(navigator.userAgent.slice(102,108) === "Safari"){
-                           dispatch(setLogin());
-                         }
+                          if(navigator.userAgent.slice(102,108) === "Safari"){
+                            dispatch(setLogin());
+                          }
 
                           await axios.post(
                               `${import.meta.env.VITE_APP_API_URL}/api/auth`,

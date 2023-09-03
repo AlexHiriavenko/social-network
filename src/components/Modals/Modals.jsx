@@ -4,6 +4,7 @@ import EditProfileModal from "./EditProfileModal";
 import DeleteMessageModal from "./DeleteMessageModal/DeleteMessageModal";
 import EditMessageModal from "./EditMessageModal/EditMessageModal";
 import AddUserToChatModal from "./AddUserToChatModal/AddUserToChatModal";
+import Pictures from "../Pictures/Pictures";
 
 export default function Modals() {
     return (
@@ -14,6 +15,7 @@ export default function Modals() {
             <DeleteMessageModal />
             <EditMessageModal />
             <AddUserToChatModal />
+            <Pictures/>
         </>
     );
 }
