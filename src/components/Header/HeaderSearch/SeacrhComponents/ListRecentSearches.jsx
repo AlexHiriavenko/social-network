@@ -23,7 +23,6 @@ function ListRecentSearches(props) {
                     }
                 })
                 .catch((error) => console.log(error.message));
-
         }
     },[])
 
