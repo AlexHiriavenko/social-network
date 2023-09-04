@@ -58,6 +58,16 @@ export const WrapBns = styled(Box)(({ theme, className }) => ({
     ...className,
 }));
 
+export const ChatFooterContainer = styled(Box)(({ theme, className }) => ({
+    display: "flex",
+    gap: "16px",
+    alignItems: "center",
+    marginTop: "16px",
+    marginBottom: "8px",
+
+    ...className,
+}));
+
 export const AuthUserMessage = styled(Typography)(({ theme, className }) => ({
     backgroundColor: "#1B74E4",
     color: "#ffffff",
@@ -68,14 +78,16 @@ export const AuthUserMessage = styled(Typography)(({ theme, className }) => ({
     ...className,
 }));
 
-export const PartnerUserMessage = styled(Typography)(({ theme, className }) => ({
-    backgroundColor: "lightgray",
-    padding: "16px",
-    minWidth: "200px",
-    maxWidth: "300px",
-    borderRadius: "16px",
-    ...className,
-}));
+export const PartnerUserMessage = styled(Typography)(
+    ({ theme, className }) => ({
+        backgroundColor: "lightgray",
+        padding: "16px",
+        minWidth: "200px",
+        maxWidth: "300px",
+        borderRadius: "16px",
+        ...className,
+    })
+);
 
 export const StyledLink = styled(Link)(({ theme, className }) => ({
     display: "flex",

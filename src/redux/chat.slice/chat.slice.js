@@ -52,7 +52,6 @@ const chatSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getChatsParticipants.fulfilled, (state, action) => {
-            console.log(action.payload);
             if (typeof action.payload === "object") {
                 state.chatsParticipants = action.payload;
             } else {
@@ -60,11 +59,9 @@ const chatSlice = createSlice({
             }
         });
         builder.addCase(getChat.fulfilled, (state, action) => {
-            console.log(action.payload);
             state.currentChat = action.payload;
         });
         builder.addCase(createChat.fulfilled, (state, action) => {
-            console.log(action.payload);
             const messages = action.payload[0].messages;
             if (messages) {
                 const sortedArray = action.payload.sort(
@@ -72,10 +69,6 @@ const chatSlice = createSlice({
                 );
                 state.currentChat = sortedArray[0];
             }
-            // if (!messages.length) {
-            //     const chat = action.payload[0];
-            //     state.currentChat = chat;
-            // }
         });
         builder.addCase(addToChatNewUser.fulfilled, (state, action) => {});
     },

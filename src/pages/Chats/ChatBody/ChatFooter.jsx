@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import { StyledTextField } from "../styledChatComponents";
-import { StyledAvatar } from "./StyledChatBody";
+import { StyledAvatar, ChatFooterContainer } from "./StyledChatBody";
 import SendIcon from "@mui/icons-material/Send";
 import { sendMessage } from "../../../redux/message.slice/message.slice";
 import { getChat } from "../../../redux/chat.slice/chat.slice";
@@ -50,14 +50,7 @@ function ChatFooter() {
     };
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                gap: 2,
-                alignItems: "center",
-                mt: 2,
-                mb: 1,
-            }}>
+        <ChatFooterContainer>
             <StyledTextField
                 label="your message"
                 variant="outlined"
@@ -74,7 +67,7 @@ function ChatFooter() {
                 onClick={handleClickSend}>
                 <SendIcon fontSize="large" color="primary" />
             </StyledAvatar>
-        </Box>
+        </ChatFooterContainer>
     );
 }
 

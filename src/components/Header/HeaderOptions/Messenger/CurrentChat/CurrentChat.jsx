@@ -22,7 +22,7 @@ const CurrentChat = () => {
             <ChatContainer
                 id="chatModal"
                 ref={chatFormRef}
-                sx={{ px: 2, pb: 2, minHeight: "400px", overflow: "hidden" }}>
+                sx={{ pb: 2, minHeight: "400px", overflow: "hidden" }}>
                 <ListMessages />
                 <ChatFooter />
             </ChatContainer>

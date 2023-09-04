@@ -5,14 +5,14 @@ import {
     getUser,
 } from "../../../redux/user.slice/user.slice";
 import { resetCurrentChat } from "../../../redux/chat.slice/chat.slice";
-
+///
 export const setChatParticipant = (participants, id) => {
     const user = participants.find((participant) => participant.id === id);
     return user ? user : participants[0];
 };
-
+///
 export const isAuthUser = (authUserID, userId) => authUserID === userId;
-
+///
 export function lookFriendPage(dispatch, location, id, authUser, closeMenu) {
     const userFriendsResponse = dispatch(getFriends(id));
     userFriendsResponse

@@ -1,12 +1,15 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from "@mui/material/styles";
-import { ListItem, Typography, Box, Avatar, Tooltip } from "@mui/material";
-import { setMessageContent, setMessageId } from "../../../redux/message.slice/message.slice";
+import { ListItem, Typography, Avatar, Tooltip } from "@mui/material";
+import {
+    setMessageContent,
+    setMessageId,
+} from "../../../redux/message.slice/message.slice";
 import {
     openDeleteMessageModal,
     openEditMessageModal,
 } from "../../../redux/modal.slice/modal.slice";
-import {StyledMessageBtnGroup} from "../styledChatComponents";
+import { StyledMessageBtnGroup } from "../styledChatComponents";
 import {
     BtnDeleteMessage,
     BtnEditMessage,
@@ -42,8 +45,7 @@ function ItemListMessage({ message }) {
                 isAuthUser(authUserId, message.sender.id)
                     ? "chat-body__item--authUser"
                     : "chat-body__item--chatPartner"
-            }
-        >
+            }>
             <Typography color={theme.palette.textColor.secondary} align="left">
                 {message.createdDate
                     ? new Date(message.createdDate).toLocaleString()
@@ -55,12 +57,13 @@ function ItemListMessage({ message }) {
                     <Avatar
                         sx={{ minWidth: "40px", minHeight: "40px" }}
                         alt="user icon"
-                        src={message.sender.profilePicture}
-                    ></Avatar>
+                        src={message.sender.profilePicture}></Avatar>
                 </Tooltip>
                 <WrapBns id={"message" + message.id}>
                     {isAuthUser(authUserId, message.sender.id) ? (
-                        <AuthUserMessage>{message.content ? message.content : ""}</AuthUserMessage>
+                        <AuthUserMessage>
+                            {message.content ? message.content : ""}
+                        </AuthUserMessage>
                     ) : (
                         <PartnerUserMessage>
                             {message.content ? message.content : ""}
@@ -70,11 +73,17 @@ function ItemListMessage({ message }) {
                         <StyledMessageBtnGroup>
                             <BtnEditMessage
                                 onClick={(event) =>
-                                    handleOpenEdit(event, message.id, message.content)
+                                    handleOpenEdit(
+                                        event,
+                                        message.id,
+                                        message.content
+                                    )
                                 }
                             />
                             <BtnDeleteMessage
-                                onClick={(event) => handleOpenDelete(event, message.id)}
+                                onClick={(event) =>
+                                    handleOpenDelete(event, message.id)
+                                }
                             />
                         </StyledMessageBtnGroup>
                     ) : null}
