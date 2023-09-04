@@ -5,8 +5,12 @@ import {
     getChatsParticipants,
     createChat,
     addToChatNewUser,
+    deleteChat,
 } from "./chatActions.js";
-import { initialState, temporaryPartisipantState } from "./chatInitialStates.js";
+import {
+    initialState,
+    temporaryPartisipantState,
+} from "./chatInitialStates.js";
 
 const chatSlice = createSlice({
     name: "chat",
@@ -21,15 +25,26 @@ const chatSlice = createSlice({
         setCurrentChatCompanion: function (state, action) {
             state.currentChatCompanion = action.payload;
         },
+        setChatsList: function (state, action) {
+            state.chatsParticipants = [
+                action.payload,
+                ...state.chatsParticipants,
+            ];
+        },
         resetCurrentChat: function (state, action) {
             state.currentChat = initialState.currentChat;
             state.isOpened = false;
         },
         setTemporaryParticipant: function (state, action) {
-            state.chatsParticipants = [temporaryPartisipantState, ...state.chatsParticipants];
+            state.chatsParticipants = [
+                temporaryPartisipantState,
+                ...state.chatsParticipants,
+            ];
         },
         deleteTemporaryParticipant: function (state) {
-            const targetIndex = state.chatsParticipants.findIndex((el) => el.id === null);
+            const targetIndex = state.chatsParticipants.findIndex(
+                (el) => el.id === null
+            );
             if (targetIndex !== -1) {
                 state.chatsParticipants.splice(targetIndex, 1);
             }
@@ -37,6 +52,7 @@ const chatSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getChatsParticipants.fulfilled, (state, action) => {
+            console.log(action.payload);
             if (typeof action.payload === "object") {
                 state.chatsParticipants = action.payload;
             } else {
@@ -44,20 +60,22 @@ const chatSlice = createSlice({
             }
         });
         builder.addCase(getChat.fulfilled, (state, action) => {
+            console.log(action.payload);
             state.currentChat = action.payload;
         });
         builder.addCase(createChat.fulfilled, (state, action) => {
             console.log(action.payload);
             const messages = action.payload[0].messages;
             if (messages) {
-                const sortedArray = action.payload.sort((a, b) => a.users.length - b.users.length);
+                const sortedArray = action.payload.sort(
+                    (a, b) => a.users.length - b.users.length
+                );
                 state.currentChat = sortedArray[0];
             }
-            if (!messages) {
-                const chat = action.payload[0];
-                chat.messages.createdBy = "author";
-                state.currentChat = chat;
-            }
+            // if (!messages.length) {
+            //     const chat = action.payload[0];
+            //     state.currentChat = chat;
+            // }
         });
         builder.addCase(addToChatNewUser.fulfilled, (state, action) => {});
     },
@@ -83,11 +101,19 @@ export const {
     resetCurrentChat,
     setTemporaryParticipant,
     deleteTemporaryParticipant,
+    setChatsList,
 } = chatSlice.actions;
 
 export const { openPageChat, closePageChat } = chatPageSlice.actions;
 
-export { getChats, getChat, getChatsParticipants, createChat, addToChatNewUser };
+export {
+    getChats,
+    getChat,
+    getChatsParticipants,
+    createChat,
+    addToChatNewUser,
+    deleteChat,
+};
 
 export default chatSlice.reducer;
 export const chatPageReducer = chatPageSlice.reducer;

@@ -23,13 +23,16 @@ const ChatBody = (props) => {
 
     useEffect(() => () => dispatch(resetCurrentChat()), []);
 
-    const showChat = messages && messages[0].createdBy;
+    const showChat = messages && messages[0]?.createdBy;
 
     return (
         <>
             {showChat && (
                 <Box ref={chatFormRef} pb={2} className="chat-body">
-                    <ChatHeader closeMenu={() => null} setNewMessageDialog={setNewMessageDialog} />
+                    <ChatHeader
+                        closeMenu={() => null}
+                        setNewMessageDialog={setNewMessageDialog}
+                    />
                     <Box sx={{ maxWidth: "1000px", height: "100%" }}>
                         <ChatContainer>
                             <ListMessages />
@@ -38,9 +41,13 @@ const ChatBody = (props) => {
                     </Box>
                 </Box>
             )}
-            {newMessageDialog && <NewMessageDialog setNewMessageModal={setNewMessageDialog} />}
+            {newMessageDialog && (
+                <NewMessageDialog setNewMessageModal={setNewMessageDialog} />
+            )}
             {!showChat && !newMessageDialog && (
-                <EmptyChatPage>Select a chat or start a new conversation</EmptyChatPage>
+                <EmptyChatPage>
+                    Select a chat or start a new conversation
+                </EmptyChatPage>
             )}
         </>
     );

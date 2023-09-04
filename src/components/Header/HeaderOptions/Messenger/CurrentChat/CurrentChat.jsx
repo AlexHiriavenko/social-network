@@ -16,13 +16,14 @@ const CurrentChat = () => {
         };
     }, []);
 
-    if (messages && messages[0].createdBy) {
+    const showChat = messages && messages[0]?.createdBy;
+
+    if (showChat) {
         return (
             <Box
                 id="chatModal"
                 ref={chatFormRef}
-                sx={{ px: 2, pb: 2, height: "100%", overflow: "hidden" }}
-            >
+                sx={{ px: 2, pb: 2, height: "100%", overflow: "hidden" }}>
                 <ListMessages />
                 <ChatFooter />
             </Box>
