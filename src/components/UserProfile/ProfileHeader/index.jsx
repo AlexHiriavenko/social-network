@@ -503,7 +503,7 @@ export default function ProfileHeader() {
                       <StyledEditedPartTitle>
                         Upload profile photo
                       </StyledEditedPartTitle>
-                      <EditChildModal title={"Select profile picture"} />
+                      <EditChildModal setIsOpen={setIsOpen} title={"Select profile picture"} />
                     </StyledEditedPart>
                   </StyledEditProfileModal>
                 </Modal>

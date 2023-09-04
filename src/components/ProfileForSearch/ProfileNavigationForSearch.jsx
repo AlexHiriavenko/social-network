@@ -179,7 +179,12 @@ export default function ProfileNavigationForSearch(props) {
                     </StyledNavigationItem>
 
 
-
+                    <StyledNavigationItem
+                        to={`/${locationNameNavigation}/about`}
+                        data-loc="/about"
+                    >
+                        About
+                    </StyledNavigationItem>
                     <StyledNavigationItem
                         to={`/${locationNameNavigation}/friends`}
                         data-loc="/friends"
@@ -206,9 +211,4 @@ export default function ProfileNavigationForSearch(props) {
     );
 }
 
-/*<StyledNavigationItem
-    to={`/${locationNameNavigation}/about`}
-    data-loc="/about"
->
-    About
-</StyledNavigationItem>*/
+/**/
