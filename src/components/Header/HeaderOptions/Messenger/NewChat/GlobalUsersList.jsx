@@ -23,12 +23,12 @@ function GlobalUsersList(props) {
         };
         dispatch(deleteTemporaryParticipant());
         setNewMessageModal(false);
-        dispatch(setCurrentChatCompanion(currentChatCompanion));
-        dispatch(createChat(id)).then(({ payload }) => console.log(payload[0].id));
+        // dispatch(setCurrentChatCompanion(currentChatCompanion));
+        // dispatch(createChat(id)).then(({ payload }) => console.log(payload[0].id));
 
         // dispatch(openChat());
         // dispatch(getChats());
-        // alert("В стадии разработки");
+        alert("В стадии разработки");
     }
 
     return (
