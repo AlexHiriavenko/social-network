@@ -1,4 +1,9 @@
-import { getFriends, setFriends, setUser, getUser } from "../../../redux/user.slice/user.slice";
+import {
+    getFriends,
+    setFriends,
+    setUser,
+    getUser,
+} from "../../../redux/user.slice/user.slice";
 import { resetCurrentChat } from "../../../redux/chat.slice/chat.slice";
 
 export const setChatParticipant = (participants, id) => {

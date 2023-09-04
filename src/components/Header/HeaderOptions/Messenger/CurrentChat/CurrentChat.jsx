@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import { resetCurrentChat } from "../../../../../redux/chat.slice/chat.slice";
 import ListMessages from "../../../../../pages/Chats/ChatBody/ListMessages";
 import ChatFooter from "../../../../../pages/Chats/ChatBody/ChatFooter";
+import { ChatContainer } from "../../../../../pages/Chats/styledChatComponents";
 
 const CurrentChat = () => {
     const dispatch = useDispatch();
@@ -16,17 +17,15 @@ const CurrentChat = () => {
         };
     }, []);
 
-    const showChat = messages && messages[0]?.createdBy;
-
-    if (showChat) {
+    if (messages && messages[0].createdBy) {
         return (
-            <Box
+            <ChatContainer
                 id="chatModal"
                 ref={chatFormRef}
-                sx={{ px: 2, pb: 2, height: "100%", overflow: "hidden" }}>
+                sx={{ px: 2, pb: 2, minHeight: "400px", overflow: "hidden" }}>
                 <ListMessages />
                 <ChatFooter />
-            </Box>
+            </ChatContainer>
         );
     }
 };

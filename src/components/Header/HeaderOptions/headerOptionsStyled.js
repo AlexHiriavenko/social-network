@@ -1,5 +1,13 @@
 import { styled } from "@mui/material/styles";
-import { Avatar, Button, MenuItem, Box, Typography, IconButton, List } from "@mui/material";
+import {
+    Avatar,
+    Button,
+    MenuItem,
+    Box,
+    Typography,
+    IconButton,
+    List,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const AvatarStyled = styled(Avatar)(({ theme }) => ({
@@ -53,17 +61,19 @@ export const StyledLink = styled(Link)(({ theme, className }) => ({
     ...className,
 }));
 
-export const LastMessageContent = styled(Typography)(({ theme, className }) => ({
-    color: theme.palette.textColor.content,
-    width: "100%",
-    maxWidth: "120px",
-    fontSize: "12px",
-    lineHeight: 2,
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    ...className,
-}));
+export const LastMessageContent = styled(Typography)(
+    ({ theme, className }) => ({
+        color: theme.palette.textColor.content,
+        width: "100%",
+        maxWidth: "120px",
+        fontSize: "12px",
+        lineHeight: 2,
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        ...className,
+    })
+);
 
 export const BtnCreate = styled(IconButton)(({ theme }) => ({
     backgroundColor: "rgb(230, 228, 228)",
@@ -74,6 +84,7 @@ export const BtnCreate = styled(IconButton)(({ theme }) => ({
 
 export const StyledMessagesList = styled(List)(({ theme, className }) => ({
     maxWidth: "100%",
+    minHeight: "400px",
     "@media (max-width: 480px)": {
         display: "flex",
         flexDirection: "column",

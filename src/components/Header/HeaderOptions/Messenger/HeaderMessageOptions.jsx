@@ -57,15 +57,20 @@ function HeaderMessageOptions() {
                         ref: chatRef,
                         className: "header__options-drop-menu",
                         style: {
-                            backgroundColor: theme.palette.backgroundColor.section,
-                            maxHeight: "500px",
+                            backgroundColor:
+                                theme.palette.backgroundColor.section,
+                            minHeight: "500px",
                         },
                     },
-                }}
-            >
-                {newMessageModal && <NewChat setNewMessageModal={setNewMessageModal} />}
+                }}>
+                {newMessageModal && (
+                    <NewChat setNewMessageModal={setNewMessageModal} />
+                )}
                 {!open && !newMessageModal && (
-                    <ChatHead toggleMenu={toggleMenu} setNewMessageModal={setNewMessageModal} />
+                    <ChatHead
+                        toggleMenu={toggleMenu}
+                        setNewMessageModal={setNewMessageModal}
+                    />
                 )}
                 {!open && !newMessageModal && <ChatsList />}
                 {open && <ChatHeader closeMenu={closeMenu} />}
