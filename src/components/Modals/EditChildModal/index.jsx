@@ -92,8 +92,15 @@ export default function EditChildModal(props) {
         dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
       }
     })
+
     dispatch(closeEditProfileModal())
+  if(setIsOpen){
     props.setIsOpen(false)
+  }
+    handleClose()
+
+
+
   }
   return (
     <>

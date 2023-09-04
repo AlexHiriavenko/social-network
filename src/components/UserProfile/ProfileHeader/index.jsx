@@ -444,7 +444,7 @@ export default function ProfileHeader() {
                     >
                       Upload cover picture
                     </Typography>
-                    <EditChildModal title={"Select cover picture"} />
+                    <EditChildModal setIsOpen={setIsOpen} title={"Select cover picture"} />
                   </MenuItem>
                 </Menu>
               </StyledProfileBackgroundWButtonsWrapper>
