@@ -1,28 +1,18 @@
 import * as React from "react";
-import { NavLink, useMatch } from "react-router-dom";
-import { styled } from "@mui/material/styles";
+import { NavLink, useMatch, useLocation } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-import { Tooltip, Box } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import GroupsIcon from "@mui/icons-material/Groups";
+import { WrapLink } from "../styledHeaderComponents";
 
-const WrapLink = styled(Box)(({ theme }) => ({
-    boxSizing: "content-box",
-    width: "100%",
-    paddingBottom: "4px",
-    paddingTop: "4px",
-    borderRadius: "12px",
-    transitionDuration: "0.5s",
-    "&:hover": { backgroundColor: theme.palette.hoverColor.main },
-}));
-
-const setActive = ({ isActive }) =>
-    isActive ? "header__nav-link--active" : "header__nav-link";
+const setActive = ({ isActive }) => (isActive ? "header__nav-link--active" : "header__nav-link");
 
 function HeaderNavigation() {
     const theme = useTheme();
+    const location = useLocation();
     const matchHome = useMatch("/");
-    const matchGroups = useMatch("/groups");
+    const matchFriends = location.pathname.includes("friends");
 
     return (
         <nav className="header__nav">
@@ -46,12 +36,12 @@ function HeaderNavigation() {
                         <GroupsIcon
                             sx={{
                                 fontSize: "34px",
-                                color: matchGroups?.pathname
+                                color: matchFriends
                                     ? theme.palette.textColor.primary
                                     : theme.palette.textColor.secondary,
-                                border: matchGroups?.pathname
-                                    ? "2px solid #1B74E4"
-                                    : "2px solid rgb(101, 103, 107)",
+                                border: matchFriends
+                                    ? `2px solid ${theme.palette.textColor.primary}`
+                                    : `2px solid ${theme.palette.textColor.secondary}`,
                                 borderRadius: "50%",
                                 mt: 0.5,
                             }}

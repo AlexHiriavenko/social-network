@@ -2,38 +2,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { List, ListItem, Typography, Avatar } from "@mui/material/";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-import {
-    createChat,
-    deleteTemporaryParticipant,
-    setCurrentChatCompanion,
-    openChat,
-    getChats,
-} from "../../../../../redux/chat.slice/chat.slice";
+import { createNewChat } from "../helpers";
 
-function GlobalUsersList(props) {
+function GlobalUsersList({ users, setNewMessageModal }) {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const { setNewMessageModal } = props;
 
-    function createNewChat(id, fullName, profilePicture) {
-        // const currentChatCompanion = {
-        //     userId: id,
-        //     fullName: fullName,
-        //     profilePicture: profilePicture,
-        // };
+    const authUser = useSelector((state) => state.user.authorizedUser);
 
-        // dispatch(createChat(id));
-        // dispatch(deleteTemporaryParticipant());
-        // dispatch(setCurrentChatCompanion(currentChatCompanion));
-        // setNewMessageModal(false);
-        // dispatch(openChat());
-        // dispatch(getChats());
-        alert("В стадии разработки");
-    }
+    let args = [dispatch, authUser, setNewMessageModal];
 
     return (
-        <List sx={{ minHeight: "340px" }}>
-            {props.users?.map((user) => (
+        <List sx={{ minHeight: "500px" }}>
+            {users?.map((user) => (
                 <ListItem
                     key={user.id}
                     sx={{
@@ -42,19 +23,20 @@ function GlobalUsersList(props) {
                             backgroundColor: theme.palette.hoverColor.main,
                         },
                     }}
-                    onClick={() => createNewChat(user.id, user.fullName, user.profilePicture)}
-                >
+                    onClick={() =>
+                        createNewChat(
+                            args,
+                            user.id,
+                            user.fullName,
+                            user.profilePicture
+                        )
+                    }>
                     <Link className="search__user-link">
                         <Avatar
-                            className="search__user-avatar"
                             sx={{ minWidth: "40px", minHeight: "40px" }}
                             alt="user icon"
-                            src={user.profilePicture}
-                        ></Avatar>
-                        <Typography
-                            className="search__user-name"
-                            color={theme.palette.textColor.content}
-                        >
+                            src={user.profilePicture}></Avatar>
+                        <Typography color={theme.palette.textColor.content}>
                             {user.fullName}
                         </Typography>
                     </Link>
