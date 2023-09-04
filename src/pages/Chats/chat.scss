@@ -77,27 +77,3 @@
         align-self: flex-start;
     }
 }
-
-.messenger-sidebar-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    justify-content: space-between;
-    padding-inline: 16px;
-    padding-top: 8px;
-
-    @media (max-width: 480px) {
-        padding-inline: 0;
-    }
-
-
-    &__title {
-        @media (max-width: 480px) {
-            display: none;
-        }
-    }
-
-    &__btn {
-        min-width: 50px;
-    }
-}

@@ -43,7 +43,6 @@ export default function AddUserToChatModal() {
                 </StyledContentWrapper>
                 <UsersListGlobal users={foundUser}></UsersListGlobal>
                 <StyledBtnGroup>
-                    {/* <StyledButton text={"Yes"} clickAction={handleAddUser} /> */}
                     <StyledButton text={"Cancel"} clickAction={handleClose} />
                 </StyledBtnGroup>
             </StyledWrapModal>

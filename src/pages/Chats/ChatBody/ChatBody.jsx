@@ -39,7 +39,9 @@ const ChatBody = (props) => {
                 </Box>
             )}
             {newMessageDialog && <NewMessageDialog setNewMessageModal={setNewMessageDialog} />}
-            {!showChat && <EmptyChatPage>Select a chat or start a new conversation</EmptyChatPage>}
+            {!showChat && !newMessageDialog && (
+                <EmptyChatPage>Select a chat or start a new conversation</EmptyChatPage>
+            )}
         </>
     );
 };

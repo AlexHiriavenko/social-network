@@ -8,7 +8,7 @@ export const initialState = {
         fullName: "uknown user",
     },
     currentChat: {
-        id: null,
+        id: 0,
         messages: [
             {
                 createdBy: "",
@@ -32,4 +32,5 @@ export const temporaryPartisipantState = {
     lastMessageDate: "",
     profilePicture:
         "https://www.facebook.com/images/mercury/clients/messenger/threadlist/NewMessage.png",
+    chatParticipant: [],
 };

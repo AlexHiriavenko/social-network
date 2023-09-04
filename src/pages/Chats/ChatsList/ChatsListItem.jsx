@@ -29,7 +29,7 @@ function ChatsListItem({ chat, setNewMessageDialog }) {
     }
 
     function isActiveItem(id) {
-        return currentChat.id === id;
+        if (id && currentChat?.id) return currentChat.id === id;
     }
 
     return (

@@ -48,8 +48,16 @@ const chatSlice = createSlice({
         });
         builder.addCase(createChat.fulfilled, (state, action) => {
             console.log(action.payload);
-            // console.log(action.payload[0]);
-            // state.currentChat = action.payload[0];
+            const messages = action.payload[0].messages;
+            if (messages) {
+                const sortedArray = action.payload.sort((a, b) => a.users.length - b.users.length);
+                state.currentChat = sortedArray[0];
+            }
+            if (!messages) {
+                const chat = action.payload[0];
+                chat.messages.createdBy = "author";
+                state.currentChat = chat;
+            }
         });
         builder.addCase(addToChatNewUser.fulfilled, (state, action) => {});
     },

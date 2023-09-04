@@ -16,19 +16,19 @@ function GlobalUsersList(props) {
     const { setNewMessageModal } = props;
 
     function createNewChat(id, fullName, profilePicture) {
-        // const currentChatCompanion = {
-        //     userId: id,
-        //     fullName: fullName,
-        //     profilePicture: profilePicture,
-        // };
+        const currentChatCompanion = {
+            userId: id,
+            fullName: fullName,
+            profilePicture: profilePicture,
+        };
+        dispatch(deleteTemporaryParticipant());
+        setNewMessageModal(false);
+        dispatch(setCurrentChatCompanion(currentChatCompanion));
+        dispatch(createChat(id)).then(({ payload }) => console.log(payload[0].id));
 
-        // dispatch(createChat(id));
-        // dispatch(deleteTemporaryParticipant());
-        // dispatch(setCurrentChatCompanion(currentChatCompanion));
-        // setNewMessageModal(false);
         // dispatch(openChat());
         // dispatch(getChats());
-        alert("В стадии разработки");
+        // alert("В стадии разработки");
     }
 
     return (

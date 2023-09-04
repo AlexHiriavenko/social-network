@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { TextField, Box } from "@mui/material";
+import { TextField, Box, IconButton, Typography } from "@mui/material";
 
 export const StyledTextField = styled(TextField)(({ theme }) => ({
     width: "300px",
@@ -87,5 +87,33 @@ export const ChatContainer = styled(Box)(({ theme, className }) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
+    ...className,
+}));
+
+export const BtnNewChat = styled(IconButton)(({ theme, className }) => ({
+    minWidth: "50px",
+    "&:hover": {
+        backgroundColor: theme.palette.hoverColor.main,
+    },
+    ...className,
+}));
+
+export const ChatTitle = styled(Typography)(({ theme, className }) => ({
+    "@media (max-width: 480px)": {
+        display: "none",
+    },
+    ...className,
+}));
+
+export const WrapSidebar = styled("div")(({ theme, className }) => ({
+    display: "flex",
+    alignItems: "center",
+    gap: "16px",
+    justifyContent: "space-between",
+    paddingInline: "16px",
+    paddingTop: "8px",
+    "@media (max-width: 480px)": {
+        paddingInline: 0,
+    },
     ...className,
 }));
