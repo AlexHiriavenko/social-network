@@ -9,7 +9,6 @@ function GlobalUsersListItem({ user, setNewMessageModal }) {
     const theme = useTheme();
 
     const authUser = useSelector((state) => state.user.authorizedUser);
-
     let args = [dispatch, authUser, setNewMessageModal];
 
     return (

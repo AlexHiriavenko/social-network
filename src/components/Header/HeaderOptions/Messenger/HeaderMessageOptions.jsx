@@ -10,10 +10,14 @@ import CurrentChat from "./CurrentChat/CurrentChat";
 import NewChat from "./NewChat/NewChat";
 
 function HeaderMessageOptions() {
-    const [newMessageModal, setNewMessageModal] = useState(false);
-
     const theme = useTheme();
+
+    const [newMessageModal, setNewMessageModal] = useState(false);
     const [anchorMessageMenu, setAnchorMessageMenu] = useState(null);
+
+    const open = useSelector((state) => state.chat.isOpened);
+    const { messages } = useSelector((state) => state.chat.currentChat) || [];
+    const chatRef = useRef(null);
 
     const toggleMenu = () =>
         anchorMessageMenu
@@ -24,10 +28,6 @@ function HeaderMessageOptions() {
         setAnchorMessageMenu(null);
         setNewMessageModal(false);
     };
-
-    const open = useSelector((state) => state.chat.isOpened);
-    const { messages } = useSelector((state) => state.chat.currentChat);
-    const chatRef = useRef(null);
 
     useEffect(() => {
         if (chatRef.current) {
