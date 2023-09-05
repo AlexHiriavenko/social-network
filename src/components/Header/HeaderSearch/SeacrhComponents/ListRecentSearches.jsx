@@ -6,7 +6,7 @@ function ListRecentSearches({ users }) {
     const theme = useTheme();
 
     return (
-        <List>
+        <List sx={{ bgcolor: theme.palette.backgroundColor.section }}>
             {!users?.length && (
                 <Typography p={2} color={theme.palette.textColor.content}>
                     No search history yet

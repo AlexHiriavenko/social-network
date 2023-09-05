@@ -11,11 +11,16 @@ function NewMessageDialog({ setNewMessageModal }) {
     const bg = theme.palette.backgroundColor.pageSeparator;
 
     return (
-        <div style={{ width: "100%", padding: "8px 8px" }}>
+        <div style={{ width: "100%", padding: "8px" }}>
             <NewChatHead setNewMessageModal={setNewMessageModal} />
             <SearchForHomePage setFoundUser={setFoundUser} />
             <Divider sx={{ bgcolor: bg, mt: 2 }} />
-            <GlobalUsersList users={foundUser} setNewMessageModal={setNewMessageModal} />
+            <div style={{ maxHeight: "80%", overflowY: "auto" }}>
+                <GlobalUsersList
+                    users={foundUser}
+                    setNewMessageModal={setNewMessageModal}
+                />
+            </div>
         </div>
     );
 }

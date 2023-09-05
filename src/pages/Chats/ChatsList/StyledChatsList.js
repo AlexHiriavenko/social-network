@@ -2,6 +2,7 @@ import { styled } from "@mui/material/styles";
 import { List, ListItem } from "@mui/material";
 
 export const StyledMessagesList = styled(List)(({ theme, className }) => ({
+    backgroundColor: theme.palette.backgroundColor.section,
     maxWidth: "100%",
     minHeight: "50px",
     maxHeight: "80vh",
