@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useParams} from "react-router-dom";
-import FriendsList from "../UserProfile/ProfileFriends/FriendsList.jsx";
+import FriendsListForSearch from "./FriendListForSearch.jsx";
 import {
     ContentBlock,
     ContentBlockTitel,
@@ -60,7 +60,7 @@ export default function SearchProfileAbout() {
     // Constants
     const location = useLocation();
     const navRef = useRef(null);
-    let id =1
+    let {id} = useParams();
     // State
     const [locationNameNavigation, setLocationNameNavigation] = useState("");
     // Functions
@@ -85,8 +85,8 @@ export default function SearchProfileAbout() {
             if (link.dataset.loc === locationName) return link;
         });
        // if (!newRoute) return;
-        links.find((link) => link.dataset.active).removeAttribute("data-active");
-        newRoute.setAttribute("data-active", true);
+        links?.find((link) => link.dataset.active)?.removeAttribute("data-active");
+        newRoute?.setAttribute("data-active", true);
     }, [location]);
 
     return (
@@ -125,7 +125,7 @@ export default function SearchProfileAbout() {
                         <Outlet />
                     </StyledAboutContent>
                 </ContentBlock>
-                <FriendsList />
+                <FriendsListForSearch  id ={id}/>
             </StyledAboutContainer>
         </StyledAboutSection>
     );
