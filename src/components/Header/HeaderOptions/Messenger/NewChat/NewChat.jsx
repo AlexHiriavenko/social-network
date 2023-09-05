@@ -4,8 +4,7 @@ import SearchForHomePage from "../../../../Search/SearchForHomePage";
 import GlobalUsersList from "./GlobalUsersList";
 import NewChatHead from "./NewChatHead";
 
-function NewChat(props) {
-    const { setNewMessageModal } = props;
+function NewChat({ setNewMessageModal }) {
     const [foundUser, setFoundUser] = useState([]);
 
     return (
@@ -13,7 +12,10 @@ function NewChat(props) {
             <NewChatHead setNewMessageModal={setNewMessageModal} />
             <Box sx={{ p: 1 }}>
                 <SearchForHomePage setFoundUser={setFoundUser} />
-                <GlobalUsersList users={foundUser} setNewMessageModal={setNewMessageModal} />
+                <GlobalUsersList
+                    users={foundUser}
+                    setNewMessageModal={setNewMessageModal}
+                />
             </Box>
         </>
     );
