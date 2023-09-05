@@ -29,3 +29,21 @@ export const WrapLink = styled(Box)(({ theme }) => ({
     transitionDuration: "0.5s",
     "&:hover": { backgroundColor: theme.palette.hoverColor.main },
 }));
+
+export const ContainerDrawerBody = styled(Box)(({ theme, className }) => ({
+    width: {
+        xs: "320px",
+        sm: "360px",
+    },
+    backgroundColor: theme.palette.backgroundColor.section,
+    minHeight: "calc(100% - 65px)",
+    ...className,
+}));
+
+export const TitleDrawerBody = styled(Box)(({ theme, className }) => ({
+    flexGrow: 1,
+    padding: "16px",
+    fontFamily: "Segoe UI Bold",
+    color: theme.palette.textColor.content,
+    ...className,
+}));

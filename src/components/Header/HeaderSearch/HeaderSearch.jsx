@@ -12,9 +12,7 @@ function HeaderSearch() {
     const dispatch = useDispatch();
     const isDrawerOpen = useSelector((state) => state.searchDrawer.isVisible);
     const [foundUser, setFoundUser] = useState([]);
-    const toggleDrawer = () => {
-        dispatch(toggleVisible());
-    };
+    const toggleDrawer = () => dispatch(toggleVisible());
 
     return (
         <Box sx={isDrawerOpen ? { visibility: "hidden" } : {}}>
@@ -37,11 +35,18 @@ function HeaderSearch() {
                 }}
                 ModalProps={{
                     onBackdropClick: toggleDrawer,
-                }}
-            >
-                <DrawerHead toggleDrawer={toggleDrawer} setFoundUser={setFoundUser} />
-                <Divider sx={{ backgroundColor: theme.palette.backgroundColor.pageSeparator }} />
-                <DrawerBody toggleDrawer={toggleDrawer} foundUser={foundUser} />
+                }}>
+                <DrawerHead
+                    toggleDrawer={toggleDrawer}
+                    setFoundUser={setFoundUser}
+                />
+                <Divider
+                    sx={{
+                        backgroundColor:
+                            theme.palette.backgroundColor.pageSeparator,
+                    }}
+                />
+                <DrawerBody foundUser={foundUser} />
             </Drawer>
         </Box>
     );
