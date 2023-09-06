@@ -1,47 +1,24 @@
-import { useSelector } from "react-redux";
-import { AppBar, Toolbar, Container, Box } from "@mui/material";
+import { Toolbar, Container } from "@mui/material";
 import HeaderNavigation from "./HeaderNavigation/HeaderNavigation";
 import HeaderSearch from "./HeaderSearch/HeaderSearch";
 import HeaderOptios from "./HeaderOptions/HeaderOptions";
 import HeaderLogo from "./HeaderLogo/HeaderLogo";
-import { useTheme } from "@mui/material/styles";
+import { AppBarStyled, FlexCenter } from "./styledHeaderComponents";
 
 function Header() {
-    const isDrawerOpen = useSelector((state) => state.searchDrawer.isVisible);
-    const theme = useTheme();
     return (
-        <AppBar
-            position="sticky"
-            color="inherit"
-            sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                height: "65px",
-                minHeight: "5%",
-                backgroundColor: theme.palette.backgroundColor.section,
-                boxShadow: theme.palette.shadow.down,
-            }}
-        >
-            <Container maxWidth="xl" sx={{ pl: { xs: 1, sm: 2 }, pr: { xs: 1, sm: 2 } }}>
-                <Toolbar sx={{ display: "flex", justifyContent: "space-between" }} disableGutters>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
+        <AppBarStyled position="sticky">
+            <Container maxWidth="xl" sx={{ px: { xs: 1, sm: 2 } }}>
+                <Toolbar sx={{ justifyContent: "space-between" }} disableGutters>
+                    <FlexCenter>
                         <HeaderLogo />
-                        <Box sx={isDrawerOpen ? { visibility: "hidden" } : {}}>
-                            <HeaderSearch />
-                        </Box>
-                    </Box>
+                        <HeaderSearch />
+                    </FlexCenter>
                     <HeaderNavigation />
                     <HeaderOptios />
                 </Toolbar>
             </Container>
-        </AppBar>
+        </AppBarStyled>
     );
 }
 export default Header;

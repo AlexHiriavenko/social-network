@@ -1,24 +1,24 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import SearchForHomePage from "../../../../Search/SearchForHomePage";
 import GlobalUsersList from "./GlobalUsersList";
-import NewMessageHeader from "./NewMessageHeader";
+import NewChatHead from "./NewChatHead";
 
-function HeaderNewMessage(props) {
-    const theme = useTheme();
-    const { setNewMessageModal } = props;
+function NewChat({ setNewMessageModal }) {
     const [foundUser, setFoundUser] = useState([]);
 
     return (
         <>
-            <NewMessageHeader setNewMessageModal={setNewMessageModal} />
+            <NewChatHead setNewMessageModal={setNewMessageModal} />
             <Box sx={{ p: 1 }}>
                 <SearchForHomePage setFoundUser={setFoundUser} />
-                <GlobalUsersList users={foundUser} setNewMessageModal={setNewMessageModal} />
+                <GlobalUsersList
+                    users={foundUser}
+                    setNewMessageModal={setNewMessageModal}
+                />
             </Box>
         </>
     );
 }
 
-export default HeaderNewMessage;
+export default NewChat;

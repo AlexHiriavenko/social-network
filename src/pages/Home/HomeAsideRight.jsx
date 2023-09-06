@@ -1,8 +1,6 @@
 import { Typography, List, ListItem, Divider } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import SvgDanIT from "../../components/SVG/DanIT";
-import ContactsList from "./ContactsList";
-import UsersList from "../Chats/UsersList/UsersList";
 
 function HomeAsideRight() {
     const theme = useTheme();
@@ -93,23 +91,6 @@ function HomeAsideRight() {
                     </a>
                 </ListItem>
             </List>
-            {/* <Divider
-                sx={{
-                    backgroundColor: theme.palette.border.simpleTransp,
-                }}
-            />
-            <Typography
-                component="h3"
-                sx={{
-                    pl: 2,
-                    mt: 2,
-                    color: theme.palette.textColor.secondary,
-                    fontWeight: 600,
-                    fontSize: "17px",
-                }}>
-                Contacts
-            </Typography>
-            <UsersList /> */}
         </aside>
     );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Typography, Menu, Avatar, MenuItem } from "@mui/material";
+import { Typography, Menu, Avatar } from "@mui/material";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import NightsStayIcon from "@mui/icons-material/NightsStay";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -13,6 +13,7 @@ import {
     setUser,
 } from "../../../../redux/user.slice/user.slice";
 import GroupIcon from "@mui/icons-material/Group";
+import { UserMenuItemStyled } from "../headerOptionsStyled";
 
 function UserMenu(props) {
     const theme = useTheme();
@@ -23,24 +24,22 @@ function UserMenu(props) {
 
     function showAuthorizedUser() {
         if (authorizedUser == null) {
-            dispatch(
-                setAuthorizedUser(
-                    JSON.parse(localStorage.getItem("authorizedUser"))
-                )
-            );
+            dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))));
             authorizedUser = JSON.parse(localStorage.getItem("authorizedUser"));
         }
-        if(authorizedUser){
-        dispatch(setUser(authorizedUser));
-        localStorage.setItem("user", JSON.stringify(authorizedUser));}
+        if (authorizedUser) {
+            dispatch(setUser(authorizedUser));
+            localStorage.setItem("user", JSON.stringify(authorizedUser));
+        }
         window.scrollTo({ top: 0, behavior: "smooth" });
-        // get user friends
+
         const userFriendsResponse = dispatch(getFriends(authorizedUser.id));
         userFriendsResponse
             .then((data) => {
-                if(data.payload){
-                dispatch(setFriends(data.payload));
-                localStorage.setItem("friends", JSON.stringify(data.payload));}
+                if (data.payload) {
+                    dispatch(setFriends(data.payload));
+                    localStorage.setItem("friends", JSON.stringify(data.payload));
+                }
             })
             .catch((error) => console.log(error.message));
     }
@@ -67,84 +66,49 @@ function UserMenu(props) {
                         backgroundColor: theme.palette.backgroundColor.section,
                     },
                 },
-            }}>
-            <MenuItem
-                onClick={toggleMenu}
-                sx={{
-                    "&:hover": {
-                        backgroundColor: theme.palette.hoverColor.main,
-                    },
-                }}>
+            }}
+        >
+            <UserMenuItemStyled onClick={toggleMenu}>
                 <Link
                     className="header__menu-item-link"
                     to={"/profile"}
-                    onClick={showAuthorizedUser}>
+                    onClick={showAuthorizedUser}
+                >
                     <Avatar
                         sx={{ minWidth: "40px", minHeight: "40px" }}
                         alt="user icon"
                         src={
-                            authorizedUser ? authorizedUser.profilePicture : ""
+                            authorizedUser
+                                ? authorizedUser.profilePicture
+                                : "https://www.facebook.com/images/mercury/clients/messenger/threadlist/NewMessage.png"
                         }
                     />
-                    <Typography
-                        fontWeight={700}
-                        sx={{ color: theme.palette.textColor.content }}>
+                    <Typography fontWeight={700} color={theme.palette.textColor.content}>
                         My Profile
                     </Typography>
                 </Link>
-            </MenuItem>
-            <MenuItem
-                onClick={toggleMenu}
-                sx={{
-                    mt: 1,
-                    "&:hover": {
-                        backgroundColor: theme.palette.hoverColor.main,
-                    },
-                }}>
+            </UserMenuItemStyled>
+            <UserMenuItemStyled onClick={toggleMenu}>
                 <Link className="header__menu-item-link" to={"/friends/home"}>
                     <GroupIcon className="header__menu-item-icon" />
-                    <Typography
-                        fontWeight={700}
-                        sx={{ color: theme.palette.textColor.content }}>
+                    <Typography fontWeight={700} color={theme.palette.textColor.content}>
                         Friends
                     </Typography>
                 </Link>
-            </MenuItem>
-            <MenuItem
-                onClick={toggleDisplayModeMenu}
-                className="header__menu-item"
-                sx={{
-                    mt: 1,
-                    "&:hover": {
-                        backgroundColor: theme.palette.hoverColor.main,
-                    },
-                }}>
+            </UserMenuItemStyled>
+            <UserMenuItemStyled onClick={toggleDisplayModeMenu}>
                 <NightsStayIcon className="header__menu-item-icon" />
-                <Typography
-                    fontWeight={700}
-                    sx={{ color: theme.palette.textColor.content }}>
+                <Typography fontWeight={700} color={theme.palette.textColor.content}>
                     Display Mode
                 </Typography>
-                <ArrowForwardIosIcon
-                    sx={{ ml: "auto", color: "rgb(101, 103, 107)" }}
-                />
-            </MenuItem>
-            <MenuItem
-                onClick={logOut}
-                className="header__menu-item"
-                sx={{
-                    mt: 1,
-                    "&:hover": {
-                        backgroundColor: theme.palette.hoverColor.main,
-                    },
-                }}>
+                <ArrowForwardIosIcon sx={{ ml: "auto", color: "rgb(101, 103, 107)" }} />
+            </UserMenuItemStyled>
+            <UserMenuItemStyled onClick={logOut}>
                 <ExitToAppIcon className="header__menu-item-icon" />
-                <Typography
-                    fontWeight={700}
-                    sx={{ color: theme.palette.textColor.content }}>
+                <Typography fontWeight={700} color={theme.palette.textColor.content}>
                     Log Out
                 </Typography>
-            </MenuItem>
+            </UserMenuItemStyled>
         </Menu>
     );
 }

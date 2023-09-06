@@ -1,19 +1,26 @@
+import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
+import { Divider } from "@mui/material";
 import SearchForHomePage from "../../../components/Search/SearchForHomePage";
-import NewMessageHeader from "../../../components/Header/HeaderOptions/Messenger/NewMessage/NewMessageHeader";
-import GlobalUsersList from "../../../components/Header/HeaderOptions/Messenger/NewMessage/GlobalUsersList";
+import NewChatHead from "../../../components/Header/HeaderOptions/Messenger/NewChat/NewChatHead";
+import GlobalUsersList from "../../../components/Header/HeaderOptions/Messenger/NewChat/GlobalUsersList";
 
 function NewMessageDialog({ setNewMessageModal }) {
+    const theme = useTheme();
     const [foundUser, setFoundUser] = useState([]);
+    const bg = theme.palette.backgroundColor.pageSeparator;
 
     return (
-        <div style={{ width: "100%", padding: "8px 8px" }}>
-            <NewMessageHeader setNewMessageModal={setNewMessageModal}></NewMessageHeader>
-            <SearchForHomePage setFoundUser={setFoundUser}></SearchForHomePage>
-            <GlobalUsersList
-                users={foundUser}
-                setNewMessageModal={setNewMessageModal}
-            ></GlobalUsersList>
+        <div style={{ width: "100%", padding: "8px" }}>
+            <NewChatHead setNewMessageModal={setNewMessageModal} />
+            <SearchForHomePage setFoundUser={setFoundUser} />
+            <Divider sx={{ bgcolor: bg, mt: 2 }} />
+            <div style={{ maxHeight: "80%", overflowY: "auto" }}>
+                <GlobalUsersList
+                    users={foundUser}
+                    setNewMessageModal={setNewMessageModal}
+                />
+            </div>
         </div>
     );
 }

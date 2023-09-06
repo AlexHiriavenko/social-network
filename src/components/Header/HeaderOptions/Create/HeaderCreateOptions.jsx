@@ -12,6 +12,11 @@ import { default as AddOption } from "@mui/icons-material/Add";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import { useTheme } from "@mui/material/styles";
 import { openCreateModal } from "../../../../redux/modal.slice/modal.slice";
+import {
+    AvatarStyled,
+    MenuItemStyled,
+    BtnCreate,
+} from "../headerOptionsStyled";
 
 function HeaderCreateOptions() {
     const dispatch = useDispatch();
@@ -32,16 +37,11 @@ function HeaderCreateOptions() {
         <>
             <Tooltip title="Create" sx={{ p: { xs: "4px", sm: 1 } }}>
                 <IconButton onClick={toggleMenu}>
-                    <Avatar
-                        sx={{
-                            bgcolor: theme.palette.hoverColor.dark,
-                            minWidth: "40px",
-                            minHeight: "40px",
-                        }}>
+                    <AvatarStyled>
                         <AddOption
                             style={{ color: theme.palette.textColor.content }}
                         />
-                    </Avatar>
+                    </AvatarStyled>
                 </IconButton>
             </Tooltip>
             <Menu
@@ -73,33 +73,19 @@ function HeaderCreateOptions() {
                     component={"h4"}
                     p={2}
                     fontWeight={600}
-                    sx={{ color: theme.palette.textColor.content }}>
+                    color={theme.palette.textColor.content}>
                     Create
                 </Typography>
-                <MenuItem
-                    onClick={handleOpen}
-                    sx={{
-                        gap: 2,
-                        mb: 1,
-                        "&:hover": {
-                            backgroundColor: theme.palette.hoverColor.main,
-                        },
-                    }}>
-                    <IconButton
-                        sx={{
-                            backgroundColor: "rgb(230, 228, 228)",
-                            "&:hover": {
-                                backgroundColor: "rgb(230, 228, 228)",
-                            },
-                        }}>
+                <MenuItemStyled onClick={handleOpen}>
+                    <BtnCreate>
                         <PostAddIcon />
-                    </IconButton>
+                    </BtnCreate>
                     <Typography
                         fontWeight={600}
                         sx={{ color: theme.palette.textColor.content }}>
                         Post
                     </Typography>
-                </MenuItem>
+                </MenuItemStyled>
             </Menu>
         </>
     );

@@ -1,13 +1,19 @@
-import { Box, Button, TextField } from "@mui/material";
+import {Box, Button, IconButton, InputAdornment, TextField} from "@mui/material";
 import { useFormik } from "formik";
 import {useDispatch} from "react-redux";
 import {changePassword} from "../../redux/login.slice/login.slice.js";
 import {  useNavigate } from "react-router-dom";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {useState} from "react";
 
 export default function ChangePasswordForm() {
 
 const dispatch = useDispatch();
 const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
 
     const changePasswordForm = useFormik({
         initialValues: {
@@ -48,17 +54,30 @@ const navigate = useNavigate();
                             variant="outlined"
                         />
                         <TextField
-                            id="newPassword"
-                            onBlur={changePasswordForm.handleBlur}
-
                             name="newPassword"
-                            required
-                            label="Ваш новый пароль"
-                            fullWidth
-                            value={changePasswordForm.values.newPassword}
                             onChange={changePasswordForm.handleChange}
+                            onBlur={changePasswordForm.handleBlur}
+                            value={changePasswordForm.values.newPassword}
+                            id="newPassword"
+                            label="Ваш новый пароль"
+
                             variant="outlined"
+                            type={showPassword ? "text" : "password"}
+                            fullWidth
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            edge="end">
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
                         />
+
                         <Button
                             onClick={changePasswordForm.handleSubmit}
                             className="form-btn create--btn"

@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import { StyledTextField } from "../styledChatComponents";
+import { StyledAvatar, ChatFooterContainer } from "./StyledChatBody";
 import SendIcon from "@mui/icons-material/Send";
 import { sendMessage } from "../../../redux/message.slice/message.slice";
 import { getChat } from "../../../redux/chat.slice/chat.slice";
@@ -11,7 +12,6 @@ function ChatFooter() {
     const dispatch = useDispatch();
     const theme = useTheme();
     const inputRef = useRef(null);
-    const authUser = useSelector((state) => state.user.authorizedUser);
     const currentChat = useSelector((state) => state.chat.currentChat);
 
     const handleKeyDown = (event) => {
@@ -50,15 +50,7 @@ function ChatFooter() {
     };
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                gap: 2,
-                alignItems: "center",
-                mt: 2,
-                mb: 1,
-            }}
-        >
+        <ChatFooterContainer>
             <StyledTextField
                 label="your message"
                 variant="outlined"
@@ -66,24 +58,16 @@ function ChatFooter() {
                 inputRef={inputRef}
                 onKeyDown={handleKeyDown}
             />
-            <Avatar
+            <StyledAvatar
                 sx={{
                     bgcolor: theme.palette.hoverColor.secondary,
-                    minWidth: "40px",
-                    minHeight: "40px",
-                    cursor: "pointer",
                     p: 1,
                     boxSizing: "content-box",
-                    transitionDuration: "0.5s",
-                    "&:hover": {
-                        backgroundColor: theme.palette.buttonColor.backgroundHover,
-                    },
                 }}
-                onClick={handleClickSend}
-            >
+                onClick={handleClickSend}>
                 <SendIcon fontSize="large" color="primary" />
-            </Avatar>
-        </Box>
+            </StyledAvatar>
+        </ChatFooterContainer>
     );
 }
 

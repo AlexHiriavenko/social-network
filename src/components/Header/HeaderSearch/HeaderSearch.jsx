@@ -1,24 +1,21 @@
-import { useSelector, useDispatch } from "react-redux";
-import { Drawer, Divider, Box, Button, Typography } from "@mui/material/";
-import Search from "./SeacrhComponents/Search";
-import ListRecentSearches from "./SeacrhComponents/ListRecentSearches";
-import { toggleVisible } from "../../../redux/searchDrawer.slice/headerSearch.slice";
-import BtnArrowBack from "../../Buttons/BtnArrowBack";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
-import SearchForHomePage from "../../Search/SearchForHomePage.jsx";
+import { useSelector, useDispatch } from "react-redux";
+import { Drawer, Divider, Box } from "@mui/material/";
+import Search from "./SeacrhComponents/Search";
+import { toggleVisible } from "../../../redux/searchDrawer.slice/headerSearch.slice";
+import DrawerHead from "./SeacrhComponents/DrawerHead";
+import DrawerBody from "./SeacrhComponents/DrawerBody";
 
 function HeaderSearch() {
     const theme = useTheme();
     const dispatch = useDispatch();
     const isDrawerOpen = useSelector((state) => state.searchDrawer.isVisible);
     const [foundUser, setFoundUser] = useState([]);
-    const toggleDrawer = () => {
-        dispatch(toggleVisible());
-    };
+    const toggleDrawer = () => dispatch(toggleVisible());
 
     return (
-        <>
+        <Box sx={isDrawerOpen ? { visibility: "hidden" } : {}}>
             <Search
                 inputId="header-search"
                 onClick={toggleDrawer}
@@ -38,67 +35,21 @@ function HeaderSearch() {
                 }}
                 ModalProps={{
                     onBackdropClick: toggleDrawer,
-                    classes: {
-                        root: "custom-backdrop",
-                    },
                 }}>
-                <Box
+                <DrawerHead
+                    toggleDrawer={toggleDrawer}
+                    setFoundUser={setFoundUser}
+                />
+                <Divider
                     sx={{
-                        display: "flex",
-                        backgroundColor: theme.palette.backgroundColor.section,
-                        pr: 2,
-                    }}>
-                    <Box sx={{ display: "flex", p: 1 }}>
-                        <BtnArrowBack
-                            onClick={toggleDrawer}
-                            color={theme.palette.textColor.secondary}
-                            hoverColor={theme.palette.input.mainBackground}
-                        />
-                    </Box>
-                    <SearchForHomePage setFoundUser={setFoundUser} />
-                </Box>
-                <Box
-                    sx={{
-                        width: { xs: "320px", sm: "360px" },
-                        backgroundColor: theme.palette.backgroundColor.section,
-                        minHeight: "calc(100% - 60px)",
-                    }}>
-                    <Divider
-                        sx={{
-                            mt: "4px",
-                            backgroundColor:
-                                theme.palette.backgroundColor.pageSeparator,
-                        }}
-                    />
-                    <Box>
-                        <Typography
-                            sx={{
-                                flexGrow: 1,
-                                p: 2,
-                                fontFamily: "Segoe UI Bold",
-                                color: theme.palette.textColor.content,
-                            }}
-                            component="h3"
-                            variant="h6">
-                            Recent searches
-                        </Typography>
-
-                        <ListRecentSearches
-                            onClick={toggleDrawer}
-                            users={foundUser}
-                        />
-                    </Box>
-                </Box>
+                        backgroundColor:
+                            theme.palette.backgroundColor.pageSeparator,
+                    }}
+                />
+                <DrawerBody foundUser={foundUser} />
             </Drawer>
-        </>
+        </Box>
     );
 }
 
 export default HeaderSearch;
-/* <Search
-                            inputClass="header__drawer-searh-input"
-                            searchIconWrapClass="drawer__search-icon-wrap"
-                            inputId="header-drawer-search"
-                        />
-
- */
