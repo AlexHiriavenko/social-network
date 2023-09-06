@@ -227,7 +227,7 @@ export default function CreateCommentModal() {
             id="content"
           >
           </StyledPostModalTextArea>
-          <StyledPostModalButton onClick={formik.handleSubmit}>
+          <StyledPostModalButton type="submit" onClick={formik.handleSubmit}>
             <SendIcon sx={{ color: "#65676b", }} />
           </StyledPostModalButton>
         </StyledPostModalCreateCommentArea>

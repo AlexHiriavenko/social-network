@@ -33,6 +33,7 @@ const initialState = {
         isOpen: false,
         userLikes: [],
         parentPost: {},
+        isLikedPost: false,
     },
 };
 
@@ -105,11 +106,14 @@ const modalSlice = createSlice({
             state.checkLikes.isOpen = true;
             state.checkLikes.userLikes = action.payload.userLikes;
             state.checkLikes.parentPost = action.payload.parentPost;
+            state.checkLikes.isLikedPost = action.payload.isLiked;
         },
         closeCheckLikesModal: function (state) {
             state.checkLikes.isOpen = false;
             state.checkLikes.userLikes = [];
             state.checkLikes.parentPost = {};
+            state.checkLikes.isLikedPost = false;
+
         },
     },
 });

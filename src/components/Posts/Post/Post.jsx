@@ -270,7 +270,7 @@ export default function Post(props) {
     return month + " " + date.getDate();
   }
   function handleOpenLikesModal() {
-    dispatch(openCheckLikesModal({ userLikes: likes, parentPost: props }))
+    dispatch(openCheckLikesModal({ userLikes: likes, parentPost: props, isLiked }))
   }
   function checkReposts() {
     dispatch(openCheckRepostsModal({ reposts, parentPost: props }))

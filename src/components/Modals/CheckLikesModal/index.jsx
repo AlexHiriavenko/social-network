@@ -11,7 +11,7 @@ const StyledModalBlock = styled("div")(({ theme }) => ({
     position: "absolute",
     maxWidth: "680px",
     minWidth: "320px",
-    maxHeight: "500px",
+    minHeight: "400px",
     width: "100%",
 
     backgroundColor: theme.palette.backgroundColor.section,
@@ -27,7 +27,7 @@ export const StyledPostItemsWrraper = styled("div")(({ theme }) => ({
     gap: "10px",
     padding: "13px",
     position: "relative",
-    maxHeight: "320px",
+    maxHeight: "400px",
     overflowY: "auto",
     "&::-webkit-scrollbar": {
         display: "none",
@@ -47,6 +47,13 @@ const StyledLikeAuthorName = styled(Typography)(({ theme }) => ({
     cursor: "pointer",
 }));
 
+const StyledLikeSubTitle = styled(Typography)(({ theme }) => ({
+    fontSize: "15px",
+    color: theme.palette.textColor.secondary,
+    fontWeight: 600,
+    cursor: "pointer",
+}));
+
 export default function CheckLikesModal() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -55,6 +62,7 @@ export default function CheckLikesModal() {
     const userLikes = useSelector(state => state.modal.checkLikes.userLikes);
     const parentPost = useSelector(state => state.modal.checkLikes.parentPost);
     const authUser = useSelector((state) => state.user?.authorizedUser);
+    const isLikedPost = useSelector(state => state.modal.checkLikes.isLikedPost);
 
 
     const handleClose = () => dispatch(closeCheckLikesModal());
@@ -77,7 +85,6 @@ export default function CheckLikesModal() {
         handleClose();
     }
 
-    console.log(userLikes);
     return (
         <Modal
             open={modalIsOpen}
@@ -91,8 +98,27 @@ export default function CheckLikesModal() {
                     <StyledTitle>{parentPost.user?.fullName}`s reposts</StyledTitle>
                 </StyledTitleWrraper>
                 <StyledPostItemsWrraper>
+                    {isLikedPost && (
+                        <StyledLikeAuthor>
+                            <BlockUserImage
+                                src={
+                                    authUser?.profilePicture ||
+                                    "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
+                                }
+                                alt="Author image"
+                                width={50}
+                                height={50}
+                                onClick={() => lookUser(authUser?.id)}
+                            />
+                            <StyledLikeAuthorName onClick={() => lookUser(authUser?.id)}>
+                                {authUser?.fullName}
+                            </StyledLikeAuthorName>
+                            <StyledLikeSubTitle onClick={() => lookUser(authUser?.id)}>
+                                It's you!
+                            </StyledLikeSubTitle>
+                        </StyledLikeAuthor>)}
                     {userLikes.map((user, index) => {
-                        return (
+                        if (user.id !== authUser.id) return (
                             <StyledLikeAuthor key={index}>
                                 <BlockUserImage
                                     src={
