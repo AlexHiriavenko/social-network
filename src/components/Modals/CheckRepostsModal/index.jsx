@@ -103,7 +103,6 @@ export default function CheckRepostsModal() {
     const reposts = useSelector(state => state.modal.checkReposts.reposts);
     const parentPost = useSelector(state => state.modal.checkReposts.parentPost);
     const handleClose = () => dispatch(closeCheckRepostsModal());
-    console.log(reposts);
 
     return (
         <Modal
