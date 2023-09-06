@@ -57,7 +57,7 @@ const StyledTitle = styled(Typography)(({ theme }) => ({
 const StyledModalBlock = styled("div")(({ theme }) => ({
   position: "absolute",
   maxWidth: "680px",
-  minWidth: "320px",
+  minWidth: "300px",
   maxHeight: "95vh",
 
   backgroundColor: theme.palette.backgroundColor.section,
@@ -219,7 +219,7 @@ export default function CreateCommentModal() {
         <StyledPostModalCreateCommentArea onSubmit={formik.handleSubmit}>
           <StyledPostModalTextArea
             cols="80"
-            rows="3"
+            rows={window.innerHeight < "850" ? "1" : "3"}
             placeholder="Write a comment..."
             onChange={formik.handleChange}
             value={formik.values.content}

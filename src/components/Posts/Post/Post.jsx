@@ -11,6 +11,11 @@ import { likePost, removeLikePost } from "../../../redux/post.slice/post.slice";
 import { useNavigate } from "react-router-dom";
 import { getUser, setUser } from "../../../redux/user.slice/user.slice";
 import {
+  closeCheckRepostsModal,
+  closeCreateCommentModal,
+  closeCreateModal,
+  openCheckLikesModal,
+  openCheckRepostsModal,
   openCreateCommentModal,
   openCreateModal,
   setRepostToModal,
@@ -115,6 +120,7 @@ const StyledPostReach = styled(Box)({
   paddingBottom: "10px",
 });
 const StyledPostReachItem = styled("a")(({ theme }) => ({
+  cursor: "pointer",
   color: theme.palette.textColor.secondary,
   fontSize: "15px",
   "&:nth-of-type(2)": {
@@ -166,6 +172,22 @@ const StyledRePostWrapper = styled(Box)(({ theme }) => ({
   overflow: "hidden",
 }));
 
+const StyledShowAttachmentButton = styled(Button)(({ theme }) => ({
+  textAlign: "center",
+  fontWeight: 600,
+  paddingLeft: "12px",
+  paddingRight: "12px",
+  height: "36px",
+  borderRadius: "5px",
+  transitionDuration: "300ms",
+  width: "100%",
+  color: theme.palette.textColor.blueLink,
+  cursor: "pointer",
+  "&:hover": {
+    backgroundColor: "rgba(255,255,255,0.1)",
+  },
+}));
+
 export default function Post(props) {
   // Constats
   const {
@@ -179,6 +201,7 @@ export default function Post(props) {
     parentId,
     id,
     inModal,
+    showAttachmentBtn
   } = props;
   const photosRef = useRef(null);
   const dispatch = useDispatch();
@@ -189,6 +212,7 @@ export default function Post(props) {
   const [repost, setRepost] = useState({});
   const [isLiked, setLikedStatus] = useState(false);
   const [likesAmount, setLikesAmount] = useState(likes?.length);
+  const [isShowAttachmentBtn, setIsShowAttachmentBtn] = useState(showAttachmentBtn);
   // Functions
   const handleOpenComment = () => {
     dispatch(openCreateCommentModal(props));
@@ -245,6 +269,12 @@ export default function Post(props) {
 
     return month + " " + date.getDate();
   }
+  function handleOpenLikesModal() {
+    dispatch(openCheckLikesModal({ userLikes: likes, parentPost: props }))
+  }
+  function checkReposts() {
+    dispatch(openCheckRepostsModal({ reposts, parentPost: props }))
+  }
   function like() {
     dispatch(likePost(id));
     setLikedStatus(true);
@@ -260,6 +290,7 @@ export default function Post(props) {
     dispatch(openCreateModal());
   }
   function lookUser(id) {
+
     if (id === authUser?.id) {
       dispatch(setUser(authUser));
       navigate("/profile");
@@ -274,6 +305,9 @@ export default function Post(props) {
         })
         .catch((error) => error.message);
     }
+    dispatch(closeCheckRepostsModal());
+    dispatch(closeCreateCommentModal());
+    dispatch(closeCreateModal());
   }
   // UseEffect
   useEffect(() => {
@@ -322,7 +356,7 @@ export default function Post(props) {
       <StyledPostContent>
         <StyledPostContentText>{content}</StyledPostContentText>
 
-        {parentId && (
+        {parentId && !isShowAttachmentBtn && (
           <StyledRePostWrapper>
             <StyledPostImages>
               {repost?.postImages && repost?.postImages?.length > 0 && (
@@ -409,6 +443,7 @@ export default function Post(props) {
             </StyledPostContentText>
           </StyledRePostWrapper>
         )}
+        {isShowAttachmentBtn && (<StyledShowAttachmentButton onClick={() => { setIsShowAttachmentBtn(false) }}>Show Attachment</StyledShowAttachmentButton>)}
       </StyledPostContent>
 
       {!parentId && (
@@ -465,13 +500,13 @@ export default function Post(props) {
       )}
 
       <StyledPostReach>
-        <StyledPostReachItem>
-          {likes?.length > 0 ? `${likesAmount} likes` : null}
+        <StyledPostReachItem onClick={handleOpenLikesModal}>
+          {likesAmount > 0 ? `${likesAmount} likes` : null}
         </StyledPostReachItem>
-        <StyledPostReachItem>
+        <StyledPostReachItem onClick={handleOpenComment}>
           {comments?.length > 0 ? `${comments?.length} comments` : null}
         </StyledPostReachItem>
-        <StyledPostReachItem>
+        <StyledPostReachItem onClick={checkReposts}>
           {reposts?.length > 0 ? `${reposts?.length} shares` : null}
         </StyledPostReachItem>
       </StyledPostReach>

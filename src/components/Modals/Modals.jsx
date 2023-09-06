@@ -5,6 +5,8 @@ import DeleteMessageModal from "./DeleteMessageModal/DeleteMessageModal";
 import EditMessageModal from "./EditMessageModal/EditMessageModal";
 import AddUserToChatModal from "./AddUserToChatModal/AddUserToChatModal";
 import Pictures from "../Pictures/Pictures";
+import CheckRepostsModal from "./CheckRepostsModal";
+import CheckLikesModal from "./CheckLikesModal";
 
 export default function Modals() {
     return (
@@ -15,7 +17,9 @@ export default function Modals() {
             <DeleteMessageModal />
             <EditMessageModal />
             <AddUserToChatModal />
-            <Pictures/>
+            <Pictures />
+            <CheckRepostsModal />
+            <CheckLikesModal />
         </>
     );
 }
