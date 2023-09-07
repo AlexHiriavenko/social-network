@@ -6,7 +6,7 @@ import {
 } from "../../../../redux/user.slice/user.slice";
 import { toggleVisible } from "../../../../redux/searchDrawer.slice/headerSearch.slice";
 
-export function lookFriendPage(dispatch, id, authUser) {
+export function lookUserPage(dispatch, id, authUser) {
     const userFriendsResponse = dispatch(getFriends(id));
     userFriendsResponse
         .then((data) => {
@@ -20,8 +20,8 @@ export function lookFriendPage(dispatch, id, authUser) {
         localStorage.setItem("user", JSON.stringify(authUser));
         window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-        const lookedFriend = dispatch(getUser(id));
-        lookedFriend
+        const lookedUser = dispatch(getUser(id));
+        lookedUser
             .then((data) => {
                 dispatch(setUser(data.payload));
                 localStorage.setItem("user", JSON.stringify(data.payload));
