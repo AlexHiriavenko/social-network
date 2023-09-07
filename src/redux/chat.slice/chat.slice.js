@@ -17,7 +17,9 @@ const chatSlice = createSlice({
     initialState,
     reducers: {
         setChatInitialState:function (state){
-            state.chatsParticipants = initialState.chatsParticipants
+            state.chatsParticipants =[]
+            state.currentChatCompanion = null
+            state.currentChat = null
 
         },
         openChat: function (state, action) {

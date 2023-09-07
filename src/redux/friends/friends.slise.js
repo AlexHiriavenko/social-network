@@ -16,9 +16,11 @@ const friendsSlice = createSlice({
   initialState,
   reducers: {
     setInitialState:function (state){
-      state.friendsList = initialState.friendsList
-      state.friendsRequests=initialState.friendsRequests
-      state.friendSuggestions=initialState.friendSuggestions
+      state.friendsList = []
+      state.friendsRequests= []
+      state.friendSuggestions= []
+      state.birthdays = [[]]
+      state.currentFriend={}
     },
     removeSuggestions: function (state, action) {
       state.friendSuggestions = state.friendSuggestions.filter(el => el.friend.id != action.payload.friend.id);

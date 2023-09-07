@@ -149,9 +149,9 @@ const UserSlice = createSlice({
 
     reducers: {
         setUserInitialState(state){
-            state.authorizedUser = initialState.authorizedUser
-            state.user = initialState.user
-            state.friends =initialState.friends
+            state.authorizedUser = null
+            state.user = null
+            state.friends =[]
 
         },
         //Загрузка юзеров в стейт
