@@ -2,7 +2,14 @@ import React, { useEffect } from "react";
 import { shallowEqual, useSelector, useDispatch } from "react-redux";
 import Header from "./components/Header/Header";
 import Modals from "./components/Modals/Modals";
-import { connectWebSocket, disconnectWebSocket, subscribeToTopic, unSubscribeToTopic, isConnected } from './socket';
+import { 
+    connectWebSocket, 
+    disconnectWebSocket, 
+    subscribeToTopic, 
+    unSubscribeAllTopics, 
+    isConnected, 
+    subscribes 
+} from './socket';
 import AllRoutes from "./components/Routes";
 
 import {addNewMessages} from './redux/notifications.slice/notifications.slice';
@@ -34,14 +41,9 @@ function App() {
             })
             subscribeToTopic(`/topic/notification/user.${authUser.id}`, (message) => {
                 console.log(message);
-            })
-        return () => {
-            if(isConnected && !isLoggedIn && !authUser) {
-                unSubscribeToTopic(`/topic/messages/user.${authUser.id}`);
-                unSubscribeToTopic(`/topic/notification/user.${authUser.id}`);
+            })} else if((!isLoggedIn || !authUser) && subscribes.length > 0) {
+                unSubscribeAllTopics();
             }
-          };
-        }
     }, [dispatch, isLoggedIn, authUser]);
 
     return (
