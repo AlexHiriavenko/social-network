@@ -2,7 +2,7 @@ import { ListItem, Typography, Avatar } from "@mui/material/";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { lookFriendPage } from "./lookFriendPage";
+import { lookUserPage } from "./lookUserPage.js";
 
 function ListSearchItem({ user }) {
     const theme = useTheme();
@@ -19,7 +19,7 @@ function ListSearchItem({ user }) {
             }}>
             <Link
                 to="/profile"
-                onClick={() => lookFriendPage(dispatch, user.id, authUser)}
+                onClick={() => lookUserPage(dispatch, user.id, authUser)}
                 className="search__user-link">
                 <Avatar
                     className="search__user-avatar"
