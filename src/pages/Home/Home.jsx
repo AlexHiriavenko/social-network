@@ -25,9 +25,9 @@ function Home() {
     const dispatch = useDispatch();
     let user = useSelector((state) => state.user.authorizedUser);
 
-    if(!JSON.parse(localStorage.getItem("token"))){
-        dispatch(logOut())
-    }
+  //  if(!JSON.parse(localStorage.getItem("token"))){
+   //     dispatch(logOut())
+   // }
 
     useEffect(() => {
 

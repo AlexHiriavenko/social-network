@@ -10,10 +10,14 @@ import CurrentChat from "./CurrentChat/CurrentChat";
 import NewChat from "./NewChat/NewChat";
 
 function HeaderMessageOptions() {
-    const [newMessageModal, setNewMessageModal] = useState(false);
-
     const theme = useTheme();
+
+    const [newMessageModal, setNewMessageModal] = useState(false);
     const [anchorMessageMenu, setAnchorMessageMenu] = useState(null);
+
+    const open = useSelector((state) => state.chat.isOpened);
+    const { messages } = useSelector((state) => state.chat.currentChat) || [];
+    const chatRef = useRef(null);
 
     const toggleMenu = () =>
         anchorMessageMenu
@@ -24,10 +28,6 @@ function HeaderMessageOptions() {
         setAnchorMessageMenu(null);
         setNewMessageModal(false);
     };
-
-    const open = useSelector((state) => state.chat.isOpened);
-    const { messages } = useSelector((state) => state.chat.currentChat);
-    const chatRef = useRef(null);
 
     useEffect(() => {
         if (chatRef.current) {
@@ -57,15 +57,20 @@ function HeaderMessageOptions() {
                         ref: chatRef,
                         className: "header__options-drop-menu",
                         style: {
-                            backgroundColor: theme.palette.backgroundColor.section,
-                            maxHeight: "500px",
+                            backgroundColor:
+                                theme.palette.backgroundColor.section,
+                            minHeight: "500px",
                         },
                     },
-                }}
-            >
-                {newMessageModal && <NewChat setNewMessageModal={setNewMessageModal} />}
+                }}>
+                {newMessageModal && (
+                    <NewChat setNewMessageModal={setNewMessageModal} />
+                )}
                 {!open && !newMessageModal && (
-                    <ChatHead toggleMenu={toggleMenu} setNewMessageModal={setNewMessageModal} />
+                    <ChatHead
+                        toggleMenu={toggleMenu}
+                        setNewMessageModal={setNewMessageModal}
+                    />
                 )}
                 {!open && !newMessageModal && <ChatsList />}
                 {open && <ChatHeader closeMenu={closeMenu} />}

@@ -1,4 +1,4 @@
-import { Typography, Box, Avatar } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch } from "react-redux";
@@ -19,8 +19,7 @@ function NewChatHead({ setNewMessageModal }) {
                 variant="h5"
                 component={"h4"}
                 fontWeight={600}
-                color={theme.palette.textColor.content}
-            >
+                color={theme.palette.textColor.content}>
                 New Chat with...
             </Typography>
             <AvatarStyled onClick={handleClose}>

@@ -5,7 +5,6 @@ import ProfileFriends from "./UserProfile/Friends/ProfileFriends";
 import ProfilePhotos from "./UserProfile/Photos/ProfilePhotos";
 import Home from "./Home/Home";
 import Watch from "./Watch/Watch";
-import Marketplace from "./Marketplace/Marketplace";
 import Groups from "./Groups/Groups";
 import LogIn from "./LogIn/Login";
 import NotFound from "./NotFound/NotFound";
@@ -19,12 +18,11 @@ import Places from "./UserProfile/About/Places";
 import Contacts from "./UserProfile/About/Contacts";
 import UserPage from "./UserPage/UserPage";
 import Chats from "./Chats/Chats";
-import FriendBirthdays from './Friends/FriendBirthdays/FriendBirthdays';
+import FriendBirthdays from "./Friends/FriendBirthdays/FriendBirthdays";
 
 export {
     Home,
     Watch,
-    Marketplace,
     Groups,
     LogIn,
     NotFound,

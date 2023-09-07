@@ -1,17 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import { resetCurrentChat } from "../../../redux/chat.slice/chat.slice";
 import ChatHeader from "./ChatHeader";
-import ChatContent from "./ChatContent";
+import ListMessages from "./ListMessages";
 import ChatFooter from "./ChatFooter";
 import NewMessageDialog from "../NewMessageDialog/NewMessageDialog";
+import { EmptyChatPage, ChatContainer } from "../styledChatComponents";
 
 const ChatBody = (props) => {
     const { newMessageDialog, setNewMessageDialog } = props;
     const dispatch = useDispatch();
-    const theme = useTheme();
     const { messages } = useSelector((state) => state.chat.currentChat) || [];
     const chatFormRef = useRef(null);
 
@@ -22,47 +21,36 @@ const ChatBody = (props) => {
         }
     }, [messages]);
 
-    // обнуление стейта текущего чата при размонтировании
-    useEffect(() => {
-        return () => {
-            dispatch(resetCurrentChat());
-        };
-    }, []);
+    useEffect(() => () => dispatch(resetCurrentChat()), []);
 
-    if (messages && messages[0].createdBy) {
-        return (
-            <Box ref={chatFormRef} sx={{ pb: 2 }} className="chat-body">
-                <ChatHeader closeMenu={() => null} setNewMessageDialog={setNewMessageDialog} />
-                <Box sx={{ maxWidth: "1000px", height: "100%" }}>
-                    <Box
-                        sx={{
-                            pl: 2,
-                            pr: 2,
-                            height: "100%",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-between",
-                        }}
-                    >
-                        <ChatContent />
-                        <ChatFooter />
+    const showChat = messages && messages[0]?.createdBy;
+
+    return (
+        <>
+            {showChat && (
+                <Box ref={chatFormRef} pb={2} className="chat-body">
+                    <ChatHeader
+                        closeMenu={() => null}
+                        setNewMessageDialog={setNewMessageDialog}
+                    />
+                    <Box sx={{ maxWidth: "1000px", height: "100%" }}>
+                        <ChatContainer>
+                            <ListMessages />
+                            <ChatFooter />
+                        </ChatContainer>
                     </Box>
                 </Box>
-            </Box>
-        );
-    }
-    if (newMessageDialog) {
-        return <NewMessageDialog setNewMessageModal={setNewMessageDialog}></NewMessageDialog>;
-    } else {
-        return (
-            <div
-                className="empty-chat-page"
-                style={{ color: theme.palette.textColor.secondary, marginTop: "22px" }}
-            >
-                Select a chat or start a new conversation
-            </div>
-        );
-    }
+            )}
+            {newMessageDialog && (
+                <NewMessageDialog setNewMessageModal={setNewMessageDialog} />
+            )}
+            {!showChat && !newMessageDialog && (
+                <EmptyChatPage>
+                    Select a chat or start a new conversation
+                </EmptyChatPage>
+            )}
+        </>
+    );
 };
 
 export default ChatBody;
