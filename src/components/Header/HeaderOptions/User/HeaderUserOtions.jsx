@@ -4,7 +4,8 @@ import { logOut } from "../../../../redux/login.slice/login.slice";
 import { IconButton, Avatar, Tooltip } from "@mui/material";
 import DarkModeMenu from "./DarkModeMenu";
 import UserMenu from "./UserMenu";
-import { setAuthorizedUser, setFriends, setUser } from "../../../../redux/user.slice/user.slice.js";
+import {setAuthorizedUser, setFriends, setUser, setUserInitialState} from "../../../../redux/user.slice/user.slice.js";
+import {setInitialState} from "../../../../redux/friends/friends.slise.js";
 
 function HeaderUserOtions() {
     const dispatch = useDispatch();
@@ -18,6 +19,8 @@ function HeaderUserOtions() {
         dispatch(setAuthorizedUser(null));
         dispatch(setUser(null));
         dispatch(setFriends([]));
+        dispatch(setInitialState());
+        dispatch(setUserInitialState())
     };
 
     const toggleMenu = () =>

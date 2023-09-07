@@ -112,7 +112,7 @@ const LoginSlice = createSlice({
                 state.isLoading = false;
                 state.token = action.payload;
             },
-            [logIn.rejected]: (state) => {},
+            [logIn.rejected]: (error) => {console.log(error)},
         },
     },
 });
