@@ -39,15 +39,24 @@ function Home() {
                     dispatch(setAuthorizedUser({...result.payload,isAuthorized:true}))
             }
             )()
+            if (!localStorage.getItem("authorizedUser")) {
+                (async()=>{
+
+                        let result = await dispatch(getProfile())
+
+                        dispatch(setAuthorizedUser({...result.payload,isAuthorized:true}))
+                    }
+                )()
+            }
         }
 
         if (
-            !localStorage.getItem("authorizedUser") &&
-            localStorage.getItem("auth")
+            !localStorage.getItem("authorizedUser")
+
         ) {
-            const auth = localStorage.getItem("auth");
+
             const authorizedUserResponse = dispatch(
-                //  getUser(JSON.parse(auth).id)
+
                 getProfile()
             );
             authorizedUserResponse
@@ -76,15 +85,7 @@ function Home() {
                 )
             );
         }
-        if (!localStorage.getItem("authorizedUser")) {
-            (async()=>{
 
-                    let result = await dispatch(getProfile())
-
-                    dispatch(setAuthorizedUser({...result.payload,isAuthorized:true}))
-                }
-            )()
-        }
 
 
 
