@@ -16,6 +16,7 @@ import {logIn, loginGoogle, setLogin} from "../../redux/login.slice/login.slice"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
 export default function LogIn() {
   const navigate = useNavigate();
   // const token = useSelector(store => store.login.token)
@@ -148,7 +149,7 @@ export default function LogIn() {
                         onClick={loginForm.handleSubmit}>
                       Вход
                     </Button>
-                    <p >{message}</p>
+                    <p className="red" >{message}</p>
                     <button className="forgot-pass-btn" onClick={handleForgot}>
                       Забыли аккаунт?
                     </button>
@@ -169,16 +170,16 @@ export default function LogIn() {
                         }
                         onClick={async () => {
 
-                          if(navigator.userAgent.slice(102,108) === "Safari"){
+                       //   if(navigator.userAgent.slice(102,108) === "Safari"){   }
                             dispatch(setLogin());
-                          }
+
 
                           await axios.post(
                               `${import.meta.env.VITE_APP_API_URL}/api/auth`,
                               { email: url }
                           );
 
-                          dispatch(setLogin())
+
 
 
 

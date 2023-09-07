@@ -1,7 +1,7 @@
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Drawer, Divider } from "@mui/material/";
+import { Drawer, Divider, Box } from "@mui/material/";
 import Search from "./SeacrhComponents/Search";
 import { toggleVisible } from "../../../redux/searchDrawer.slice/headerSearch.slice";
 import DrawerHead from "./SeacrhComponents/DrawerHead";
@@ -12,12 +12,10 @@ function HeaderSearch() {
     const dispatch = useDispatch();
     const isDrawerOpen = useSelector((state) => state.searchDrawer.isVisible);
     const [foundUser, setFoundUser] = useState([]);
-    const toggleDrawer = () => {
-        dispatch(toggleVisible());
-    };
+    const toggleDrawer = () => dispatch(toggleVisible());
 
     return (
-        <>
+        <Box sx={isDrawerOpen ? { visibility: "hidden" } : {}}>
             <Search
                 inputId="header-search"
                 onClick={toggleDrawer}
@@ -37,21 +35,20 @@ function HeaderSearch() {
                 }}
                 ModalProps={{
                     onBackdropClick: toggleDrawer,
-                    classes: {
-                        root: "custom-backdrop",
-                    },
-                }}
-            >
-                <DrawerHead toggleDrawer={toggleDrawer} setFoundUser={setFoundUser} />
+                }}>
+                <DrawerHead
+                    toggleDrawer={toggleDrawer}
+                    setFoundUser={setFoundUser}
+                />
                 <Divider
                     sx={{
-                        mt: "4px",
-                        backgroundColor: theme.palette.backgroundColor.pageSeparator,
+                        backgroundColor:
+                            theme.palette.backgroundColor.pageSeparator,
                     }}
                 />
-                <DrawerBody toggleDrawer={toggleDrawer} foundUser={foundUser} />
+                <DrawerBody foundUser={foundUser} />
             </Drawer>
-        </>
+        </Box>
     );
 }
 

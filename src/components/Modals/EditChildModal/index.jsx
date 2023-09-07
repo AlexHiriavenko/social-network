@@ -55,7 +55,7 @@ export default function EditChildModal(props) {
   // Constants
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const { title } = props;
+  const { title,setIsOpen } = props;
   const fileRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [multipartFile, setMultipartFile] = useState(null)
@@ -92,7 +92,15 @@ export default function EditChildModal(props) {
         dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
       }
     })
+
     dispatch(closeEditProfileModal())
+  if(setIsOpen){
+    props.setIsOpen(false)
+  }
+    handleClose()
+
+
+
   }
   return (
     <>
@@ -152,6 +160,7 @@ export default function EditChildModal(props) {
     </>
   );
 }
+
 
 EditChildModal.defaultProps = {
   title: "Child modal",

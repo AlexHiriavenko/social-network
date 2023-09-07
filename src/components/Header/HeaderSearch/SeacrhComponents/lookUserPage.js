@@ -3,17 +3,10 @@ import {
     setFriends,
     setUser,
     getUser,
-} from "../../../redux/user.slice/user.slice";
-import { resetCurrentChat } from "../../../redux/chat.slice/chat.slice";
-///
-export const setChatParticipant = (participants, id) => {
-    const user = participants.find((participant) => participant.id === id);
-    return user ? user : participants[0];
-};
-///
-export const isAuthUser = (authUserID, userId) => authUserID === userId;
-///
-export function lookFriendPage(dispatch, location, id, authUser, closeMenu) {
+} from "../../../../redux/user.slice/user.slice";
+import { toggleVisible } from "../../../../redux/searchDrawer.slice/headerSearch.slice";
+
+export function lookUserPage(dispatch, id, authUser) {
     const userFriendsResponse = dispatch(getFriends(id));
     userFriendsResponse
         .then((data) => {
@@ -27,8 +20,8 @@ export function lookFriendPage(dispatch, location, id, authUser, closeMenu) {
         localStorage.setItem("user", JSON.stringify(authUser));
         window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-        const lookedFriend = dispatch(getUser(id));
-        lookedFriend
+        const lookedUser = dispatch(getUser(id));
+        lookedUser
             .then((data) => {
                 dispatch(setUser(data.payload));
                 localStorage.setItem("user", JSON.stringify(data.payload));
@@ -36,8 +29,5 @@ export function lookFriendPage(dispatch, location, id, authUser, closeMenu) {
             })
             .catch((error) => console.log(error.message));
     }
-    dispatch(resetCurrentChat());
-    if (location.pathname !== "/chats") {
-        closeMenu();
-    }
+    dispatch(toggleVisible());
 }

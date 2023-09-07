@@ -6,11 +6,13 @@ import { useRef } from "react";
 import { findByPartOfName } from "../../../../redux/user.slice/user.slice.js";
 
 function Search(props) {
-    const { onClick, inputClass, searchIconWrapClass, inputId, setFoundUser } = props;
-    const isDrawerOpen = useSelector((state) => state.searchDrawer.isVisible);
+    const { onClick, inputClass, searchIconWrapClass, inputId, setFoundUser } =
+        props;
+
     const theme = useTheme();
     const dispatch = useDispatch();
 
+    const isDrawerOpen = useSelector((state) => state.searchDrawer.isVisible);
     const timeoutRef = useRef(null);
     const valueRef = useRef(null);
 
@@ -40,8 +42,7 @@ function Search(props) {
                 className={searchIconWrapClass}
                 sx={{
                     width: { xs: "100%" },
-                }}
-            >
+                }}>
                 <SearchIcon
                     style={{
                         color: theme.palette.textColor.secondary,

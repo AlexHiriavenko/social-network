@@ -1,11 +1,22 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { IconButton, Typography, Menu, Avatar, Tooltip, MenuItem } from "@mui/material";
+import {
+    IconButton,
+    Typography,
+    Menu,
+    Avatar,
+    Tooltip,
+    MenuItem,
+} from "@mui/material";
 import { default as AddOption } from "@mui/icons-material/Add";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import { useTheme } from "@mui/material/styles";
 import { openCreateModal } from "../../../../redux/modal.slice/modal.slice";
-import { AvatarStyled, MenuItemStyled } from "../headerOptionsStyled";
+import {
+    AvatarStyled,
+    MenuItemStyled,
+    BtnCreate,
+} from "../headerOptionsStyled";
 
 function HeaderCreateOptions() {
     const dispatch = useDispatch();
@@ -27,7 +38,9 @@ function HeaderCreateOptions() {
             <Tooltip title="Create" sx={{ p: { xs: "4px", sm: 1 } }}>
                 <IconButton onClick={toggleMenu}>
                     <AvatarStyled>
-                        <AddOption style={{ color: theme.palette.textColor.content }} />
+                        <AddOption
+                            style={{ color: theme.palette.textColor.content }}
+                        />
                     </AvatarStyled>
                 </IconButton>
             </Tooltip>
@@ -50,32 +63,26 @@ function HeaderCreateOptions() {
                     paper: {
                         className: "header__options-drop-menu",
                         style: {
-                            backgroundColor: theme.palette.backgroundColor.section,
+                            backgroundColor:
+                                theme.palette.backgroundColor.section,
                         },
                     },
-                }}
-            >
+                }}>
                 <Typography
                     variant="h5"
                     component={"h4"}
                     p={2}
                     fontWeight={600}
-                    sx={{ color: theme.palette.textColor.content }}
-                >
+                    color={theme.palette.textColor.content}>
                     Create
                 </Typography>
                 <MenuItemStyled onClick={handleOpen}>
-                    <IconButton
-                        sx={{
-                            backgroundColor: "rgb(230, 228, 228)",
-                            "&:hover": {
-                                backgroundColor: "rgb(230, 228, 228)",
-                            },
-                        }}
-                    >
+                    <BtnCreate>
                         <PostAddIcon />
-                    </IconButton>
-                    <Typography fontWeight={600} sx={{ color: theme.palette.textColor.content }}>
+                    </BtnCreate>
+                    <Typography
+                        fontWeight={600}
+                        sx={{ color: theme.palette.textColor.content }}>
                         Post
                     </Typography>
                 </MenuItemStyled>

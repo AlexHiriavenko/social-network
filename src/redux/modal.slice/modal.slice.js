@@ -24,6 +24,17 @@ const initialState = {
     addUserToChat: {
         isOpen: false,
     },
+    checkReposts: {
+        isOpen: false,
+        reposts: [],
+        parentPost: {},
+    },
+    checkLikes: {
+        isOpen: false,
+        userLikes: [],
+        parentPost: {},
+        isLikedPost: false,
+    },
 };
 
 const modalSlice = createSlice({
@@ -80,6 +91,30 @@ const modalSlice = createSlice({
         closeAddUserToChatModal: function (state) {
             state.addUserToChat.isOpen = false;
         },
+        openCheckRepostsModal: function (state, action) {
+            state.checkReposts.isOpen = true;
+            state.checkReposts.reposts = action.payload.reposts;
+            state.checkReposts.parentPost = action.payload.parentPost;
+
+        },
+        closeCheckRepostsModal: function (state) {
+            state.checkReposts.isOpen = false;
+            state.checkReposts.reposts = [];
+            state.checkReposts.parentPost = {};
+        },
+        openCheckLikesModal: function (state, action) {
+            state.checkLikes.isOpen = true;
+            state.checkLikes.userLikes = action.payload.userLikes;
+            state.checkLikes.parentPost = action.payload.parentPost;
+            state.checkLikes.isLikedPost = action.payload.isLiked;
+        },
+        closeCheckLikesModal: function (state) {
+            state.checkLikes.isOpen = false;
+            state.checkLikes.userLikes = [];
+            state.checkLikes.parentPost = {};
+            state.checkLikes.isLikedPost = false;
+
+        },
     },
 });
 
@@ -100,6 +135,10 @@ export const {
     resetRepostToModal,
     openAddUserToChatModal,
     closeAddUserToChatModal,
+    openCheckRepostsModal,
+    closeCheckRepostsModal,
+    openCheckLikesModal,
+    closeCheckLikesModal,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

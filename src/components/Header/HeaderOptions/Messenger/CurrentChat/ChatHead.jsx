@@ -4,6 +4,7 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { ContainerFlexSB } from "../../headerOptionsStyled";
+import { BtnNewChat } from "../../../../../pages/Chats/styledChatComponents";
 
 function ChatHead(props) {
     const theme = useTheme();
@@ -39,19 +40,12 @@ function ChatHead(props) {
                     </IconButton>
                 </Tooltip>
                 <Tooltip title="New Chat" sx={{ ml: 0.5 }}>
-                    <IconButton
-                        sx={{
-                            "&:hover": {
-                                backgroundColor: theme.palette.hoverColor.main,
-                            },
-                        }}
-                        onClick={() => setNewMessageModal(true)}
-                    >
+                    <BtnNewChat onClick={() => setNewMessageModal(true)}>
                         <EditNoteIcon
                             sx={{ color: theme.palette.textColor.content }}
                             fontSize="large"
                         />
-                    </IconButton>
+                    </BtnNewChat>
                 </Tooltip>
             </Box>
         </ContainerFlexSB>
