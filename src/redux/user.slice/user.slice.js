@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../../instance";
 import axios from "axios";
+import {initialState} from "../chat.slice/chatInitialStates.js";
 
 //Получение всех пользователей
 export const getUsers = createAsyncThunk("Users/getUsers", async function () {
@@ -147,6 +148,12 @@ const UserSlice = createSlice({
     },
 
     reducers: {
+        setUserInitialState(state){
+            state.authorizedUser = initialState.authorizedUser
+            state.user = initialState.user
+            state.friends =initialState.friends
+
+        },
         //Загрузка юзеров в стейт
         setUsers: (state, action) => {
             state.allUsers = action.payload;
@@ -176,7 +183,8 @@ const UserSlice = createSlice({
     },
 });
 
-export const { setUsers, setUser, setFriends, setAuthorizedUser } =
+export const { setUsers, setUser, setFriends, setAuthorizedUser,setUserInitialState
+} =
     UserSlice.actions;
 
 export default UserSlice.reducer;

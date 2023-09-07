@@ -16,6 +16,10 @@ const chatSlice = createSlice({
     name: "chat",
     initialState,
     reducers: {
+        setChatInitialState:function (state){
+            state.chatsParticipants = initialState.chatsParticipants
+
+        },
         openChat: function (state, action) {
             state.isOpened = true;
         },
@@ -97,7 +101,7 @@ export const {
     setChatsList,
 } = chatSlice.actions;
 
-export const { openPageChat, closePageChat } = chatPageSlice.actions;
+export const { openPageChat, closePageChat,setChatInitialState } = chatPageSlice.actions;
 
 export {
     getChats,
