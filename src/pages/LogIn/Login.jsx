@@ -170,16 +170,16 @@ export default function LogIn() {
                         }
                         onClick={async () => {
 
-                          if(navigator.userAgent.slice(102,108) === "Safari"){
+                       //   if(navigator.userAgent.slice(102,108) === "Safari"){   }
                             dispatch(setLogin());
-                          }
+
 
                           await axios.post(
                               `${import.meta.env.VITE_APP_API_URL}/api/auth`,
                               { email: url }
                           );
 
-                          dispatch(setLogin())
+
 
 
 
