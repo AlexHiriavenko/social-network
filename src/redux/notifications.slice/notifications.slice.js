@@ -1,18 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-/* import { createAsyncThunk } from "@reduxjs/toolkit"; */
-
-/* export const messageSubscribe = createAsyncThunk(
-    'notifications/messageSubscribe',
-    async function(payload) {
-
-    }
-  ); */
 
 const initialState = {
     newMessages: [],
     notifications: [],
-    isConnected: false,
-    stomp: null,
 };
 
 const notifications = createSlice({
@@ -20,7 +10,7 @@ const notifications = createSlice({
     initialState,
     reducers: {
       addNewMessages: function (state, action) {
-        state.newMessages = action.payload;
+        state.newMessages.push(action.payload);
       },
       deleteNewMessages: function(state) {
         state.newMessages = [];
@@ -30,12 +20,6 @@ const notifications = createSlice({
       },
       deleteNotifications: function(state) {
         state.notifications = [];
-      },
-      setIsConnected: function(state, action) {
-        state.isConnected = action.payload;
-      },
-      setIsStomp: function(state, action) {
-        state.isConnected = action.payload;
       },
     },
 })

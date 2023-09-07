@@ -83,8 +83,8 @@ const LinkStyled = styled(Link)(({theme}) => ({
                     <FriendsContainer>
                     {
                         friendsRequestsToUser.map(fr => 
-                        <MenuItem onClick={(e) => {e.stopPropagation(); callBackHandleLinkClick(fr.user); navigate("/friends/requests/")}}
-                                key={fr.user} 
+                            <MenuItem onClick={(e) => {e.stopPropagation(); callBackHandleLinkClick(fr.user); navigate("/friends/requests/")}}
+                                key={fr.id} 
                                 selected={currentFriend.id === (fr.user)}>
                             <Friend horizontal='true'
                             key={fr.id}
@@ -114,7 +114,7 @@ const LinkStyled = styled(Link)(({theme}) => ({
                     <FriendsContainer>
                     {
                         friendSuggestions &&  friendSuggestions.map(fr => 
-                        <MenuItem onClick={(e) => {e.stopPropagation(); callBackHandleLinkClick(fr.friend); navigate("/friends/suggestions/")}}
+                            <MenuItem onClick={(e) => {e.stopPropagation(); callBackHandleLinkClick(fr.friend); navigate("/friends/suggestions/")}}
                                 key={fr.friend.id} 
                                 selected={currentFriend.id === (fr.friend)}>
                             <Friend 
