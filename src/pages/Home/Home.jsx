@@ -40,7 +40,6 @@ function Home() {
                    // localStorage.setItem('authorizedUser',JSON.stringify({...result.payload,isAuthorized:true}))
             }
             )()
-
         }
         if (
             !localStorage.getItem("authorizedUser") &&
