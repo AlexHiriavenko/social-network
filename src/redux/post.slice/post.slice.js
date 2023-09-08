@@ -87,9 +87,6 @@ export const commentPost = createAsyncThunk(
   }
 );
 
-const initialState = {
-  isCreated: false,
-};
 
 const postSlice = createSlice({
   name: "posts",

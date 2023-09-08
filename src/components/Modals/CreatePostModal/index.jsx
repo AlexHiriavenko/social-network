@@ -109,7 +109,7 @@ export default function CreatePostModal() {
   const authUser = useSelector((state) => state.user.authorizedUser);
   // State
   const [imgUrls, setImgUrls] = useState([]);
-  const [multipartFiles, setMultipartFiles] = useState([]);
+  const [files, setFiles] = useState([]);
   // Functions
   const handleClose = () => {
     dispatch(closeCreateModal());
@@ -124,12 +124,8 @@ export default function CreatePostModal() {
     for (let i = 0; i < filesList?.length; i++) {
       files.push(filesList[i]);
     }
-    const formData = new FormData();
-    files.forEach(el => {
-      formData.append(`files`, el);
-    })
+    setFiles(files);
     setImgUrls(files.map((file) => URL.createObjectURL(file)));
-    setMultipartFiles(formData);
   }
 
   // Formik
@@ -152,8 +148,14 @@ export default function CreatePostModal() {
           })
           .catch((error) => console.log(error));
       } else {
-        setMultipartFiles(multipartFiles.append("content", values.content));
-        dispatch(createPost({ multipartFiles: multipartFiles }))
+        const formData = new FormData();
+        formData.append("content", values.content);
+        if (imgUrls.length !== 0) {
+          files.forEach(el => {
+            formData.append(`files`, el);
+          })
+        }
+        dispatch(createPost({ multipartFiles: formData }))
         values.content = "";
         setImgUrls([]);
         handleClose();
