@@ -24,7 +24,14 @@ export const getProfile = createAsyncThunk(
         return data;
     }
 );
+export const getUserImages = createAsyncThunk(
+    "Users/getUserImages",
+    async function (id) {
+        const { data } = await instance.get(`/users/${id}/images`);
 
+        return data;
+    }
+);
 //Редактирование юзера
 export const uploadAvatar = createAsyncThunk(
     "Users/uploadAvatar",
