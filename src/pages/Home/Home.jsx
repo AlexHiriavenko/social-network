@@ -41,9 +41,7 @@ function Home() {
             }
             )()
 
-
         }
-
         if (
             !localStorage.getItem("authorizedUser") &&
             localStorage.getItem("auth")
