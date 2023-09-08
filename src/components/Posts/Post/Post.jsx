@@ -201,7 +201,7 @@ export default function Post(props) {
     parentId,
     id,
     inModal,
-    showAttachmentBtn
+    isItemRepost,
   } = props;
   const photosRef = useRef(null);
   const dispatch = useDispatch();
@@ -212,7 +212,8 @@ export default function Post(props) {
   const [repost, setRepost] = useState({});
   const [isLiked, setLikedStatus] = useState(false);
   const [likesAmount, setLikesAmount] = useState(likes?.length);
-  const [isShowAttachmentBtn, setIsShowAttachmentBtn] = useState(showAttachmentBtn);
+  const [isShowAttachmentBtn, setIsShowAttachmentBtn] = useState(isItemRepost);
+  const [isListReposted, setIsListReposted] = useState(isItemRepost);
   // Functions
   const handleOpenComment = () => {
     dispatch(openCreateCommentModal(props));
@@ -500,15 +501,15 @@ export default function Post(props) {
       )}
 
       <StyledPostReach>
-        <StyledPostReachItem onClick={handleOpenLikesModal}>
+        {!isListReposted && <><StyledPostReachItem onClick={handleOpenLikesModal}>
           {likesAmount > 0 ? `${likesAmount} likes` : null}
         </StyledPostReachItem>
-        <StyledPostReachItem onClick={handleOpenComment}>
-          {comments?.length > 0 ? `${comments?.length} comments` : null}
-        </StyledPostReachItem>
-        <StyledPostReachItem onClick={checkReposts}>
-          {reposts?.length > 0 ? `${reposts?.length} shares` : null}
-        </StyledPostReachItem>
+          <StyledPostReachItem onClick={handleOpenComment}>
+            {comments?.length > 0 ? `${comments?.length} comments` : null}
+          </StyledPostReachItem>
+          <StyledPostReachItem onClick={checkReposts}>
+            {reposts?.length > 0 ? `${reposts?.length} shares` : null}
+          </StyledPostReachItem></>}
       </StyledPostReach>
       {!inModal && (
         <StyledPostButtons>
@@ -520,10 +521,10 @@ export default function Post(props) {
             )}
             <StyledPostButtonText>Like</StyledPostButtonText>
           </StyledPostButton>
-          <StyledPostButton onClick={handleOpenComment}>
+          {!isListReposted && <StyledPostButton onClick={handleOpenComment}>
             <ChatBubbleOutlineIcon sx={{ color: "#65676b" }} />{" "}
             <StyledPostButtonText>Comment</StyledPostButtonText>
-          </StyledPostButton>
+          </StyledPostButton>}
           <StyledPostButton onClick={repostPost}>
             <ReplyIcon sx={{ color: "#65676b" }} />{" "}
             <StyledPostButtonText>Share</StyledPostButtonText>
