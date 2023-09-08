@@ -37,24 +37,16 @@ function Home() {
                 let result = await dispatch(getProfile())
 
                     dispatch(setAuthorizedUser({...result.payload,isAuthorized:true}))
-                    localStorage.setItem('authorizedUser',JSON.stringify({...result.payload,isAuthorized:true}))
+                   // localStorage.setItem('authorizedUser',JSON.stringify({...result.payload,isAuthorized:true}))
             }
             )()
-            if (!localStorage.getItem("authorizedUser")) {
-                (async()=>{
 
-                        let result = await dispatch(getProfile())
 
-                        localStorage.setItem('authorizedUser',JSON.stringify({...result.payload,isAuthorized:true}))
-
-                        dispatch(setAuthorizedUser({...result.payload,isAuthorized:true}))
-                    }
-                )()
-            }
         }
 
         if (
-            !localStorage.getItem("authorizedUser")
+            !localStorage.getItem("authorizedUser") &&
+            localStorage.getItem("auth")
 
         ) {
 
@@ -89,8 +81,17 @@ function Home() {
             );
         }
 
+      /*  if (!localStorage.getItem("authorizedUser")) {
+            (async()=>{
 
+                    let result = await dispatch(getProfile())
 
+                    localStorage.setItem('authorizedUser',JSON.stringify({...result.payload,isAuthorized:true}))
+
+                    dispatch(setAuthorizedUser({...result.payload,isAuthorized:true}))
+                }
+            )()
+        }*/
 
 
     }, []);
