@@ -15,6 +15,7 @@ import {
 import UploadIcon from "@mui/icons-material/Upload";
 import ProfilePageButton from "../../UserProfile/ProfilePageButton/ProfilePageButton";
 import { useTheme } from "@emotion/react";
+import {editUser} from "../../../editUser.js";
 
 const StyledSelectButton = styled("label")(({ theme }) => ({
   width: "100%",
@@ -83,23 +84,14 @@ export default function EditChildModal(props) {
     else if (title === "Select cover picture") {
       await dispatch(uploadCoverPhoto({ multipartFile: multipartFile, id: id }))
     }
-    const editUser = dispatch(getProfile())
-    editUser.then(result => {
-      if (result.payload) {
-        localStorage.setItem("authorizedUser", JSON.stringify({ ...result.payload, isAuthorized: true }))
-        localStorage.setItem("user", JSON.stringify({ ...result.payload, isAuthorized: true }))
-        dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
-        dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
-      }
-    })
+
+    editUser(dispatch)
 
     dispatch(closeEditProfileModal())
   if(setIsOpen){
     props.setIsOpen(false)
   }
     handleClose()
-
-
 
   }
   return (
