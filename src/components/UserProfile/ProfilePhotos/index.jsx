@@ -17,6 +17,7 @@ import {
   setPictures,
   showPictures,
 } from "../../../redux/pictures.slice/picture.slice";
+import {editUser} from "../../../editUser.js";
 
 const StyledAddPhotoButton = styled("label")(({ theme }) => ({
   fontSize: "15px",
@@ -112,7 +113,7 @@ export default function Photos() {
          const images =await dispatch(getUserImages(user.id));
 
          setImages(images.payload)
-
+         editUser(dispatch);
 
   }
   const handleShowPictures = (allPictures, selected) => {
