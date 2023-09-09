@@ -92,7 +92,6 @@ export default function EditChildModal(props) {
     props.setIsOpen(false)
   }
     handleClose()
-
   }
   return (
     <>
