@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    isConnectedSocket: false,
     newMessages: [],
     notifications: [],
 };
@@ -9,6 +10,9 @@ const notifications = createSlice({
     name: "notifications",
     initialState,
     reducers: {
+      setIsConnected: function (state, action) {
+        state.isConnectedSocket = action.payload;
+      },
       addNewMessages: function (state, action) {
         state.newMessages.push(action.payload);
       },
@@ -16,15 +20,18 @@ const notifications = createSlice({
         state.newMessages = [];
       },
       addNotifications: function (state, action) {
-        state.notifications = action.payload;
+        state.notifications.push(action.payload);
       },
-      deleteNotifications: function(state) {
+      deleteAllNotifications: function(state) {
         state.notifications = [];
+      },
+      deleteNotification: function(state, action) {
+        state.notifications = state.notifications.filter(el => el.id !== action.payload);
       },
     },
 })
 
 
-export const { addNewMessages, deleteNewMessages, addNotifications, deleteNotifications, setIsConnected, setIsStomp } = notifications.actions;
+export const { addNewMessages, deleteNewMessages, addNotifications, deleteAllNotifications, deleteNotification, setIsConnected } = notifications.actions;
 
 export default notifications.reducer;
