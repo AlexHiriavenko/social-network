@@ -14,24 +14,24 @@ export const connectWebSocket = (inputListOfChanales) => {
     connectSocket();
   };
 
-const connectSocket = () => {
-    if (!socket || socket.readyState === WebSocket.CLOSED) {
-        socket = new SockJS(serverUrl);
-        stompClient = Stomp.over(socket);    
+    const connectSocket = () => {
+        if (!socket || socket.readyState === WebSocket.CLOSED) {
+            socket = new SockJS(serverUrl);
+            stompClient = Stomp.over(socket);    
     
-        stompClient.connect({}, (frame) => {
-            console.log(frame);
-            isConnected = true;
+            stompClient.connect({}, (frame) => {
+                console.log(frame);
+                isConnected = true;
             
-            listOfChanales.forEach(element => {
-                if(subscribes.filter(el => el.topic === element.topic).length > 0) {
-                    return;
-                }
-                const id = stompClient.subscribe(element.topic, (message) => element.callback(message))
-                subscribes.push({topic: element.topic, id});
+                listOfChanales.forEach(element => {
+                    if(subscribes.filter(el => el.topic === element.topic).length > 0) {
+                        return;
+                    }
+                    const id = stompClient.subscribe(element.topic, (message) => element.callback(message))
+                    subscribes.push({topic: element.topic, id});
+                });
             });
-        });
-    }
+        }
       
     socket.onClose = (event) => {
         console.log('onClose');
