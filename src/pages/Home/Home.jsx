@@ -37,17 +37,18 @@ function Home() {
                 let result = await dispatch(getProfile())
 
                     dispatch(setAuthorizedUser({...result.payload,isAuthorized:true}))
+                   // localStorage.setItem('authorizedUser',JSON.stringify({...result.payload,isAuthorized:true}))
             }
             )()
         }
-
         if (
             !localStorage.getItem("authorizedUser") &&
             localStorage.getItem("auth")
+
         ) {
-            const auth = localStorage.getItem("auth");
+
             const authorizedUserResponse = dispatch(
-                //  getUser(JSON.parse(auth).id)
+
                 getProfile()
             );
             authorizedUserResponse
@@ -76,17 +77,18 @@ function Home() {
                 )
             );
         }
-        if (!localStorage.getItem("authorizedUser")) {
+
+      /*  if (!localStorage.getItem("authorizedUser")) {
             (async()=>{
 
                     let result = await dispatch(getProfile())
 
+                    localStorage.setItem('authorizedUser',JSON.stringify({...result.payload,isAuthorized:true}))
+
                     dispatch(setAuthorizedUser({...result.payload,isAuthorized:true}))
                 }
             )()
-        }
-
-
+        }*/
 
 
     }, []);

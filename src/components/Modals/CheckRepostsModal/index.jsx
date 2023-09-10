@@ -118,9 +118,10 @@ export default function CheckRepostsModal() {
                 </StyledTitleWrraper>
                 <StyledPostItemsWrraper>
                     {reposts.map((repost, index) => {
+                        console.log(repost);
                         return (
                             <StyledRepostWrraper key={index}>
-                                <Post showAttachmentBtn={true} {...repost} key={index} />
+                                <Post isItemRepost={true} {...repost} key={index} />
                             </StyledRepostWrraper>
                         );
                     })}
