@@ -6,9 +6,6 @@ import { PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageB
 import { handleLinkClick } from '../handleClickLink';
 import FriendsHomeLM from './FriendsHomeLM';
 import FriendsHomeS from './FriendsHomeS';
-/* import { Stomp } from 'react-stomp';
-import { Client, StompJs } from '@stomp/stompjs'; */
-
 
 
 function FriendsHome() {
@@ -53,21 +50,21 @@ function FriendsHome() {
     return (
     <PageBoxFriendsWrapper >
             <FriendsHomeLM 
-            friendsRequestsToUser={friendsRequestsToUser}
-            friendSuggestions={friendSuggestions}
-            handleClickLinklocal={handleClickLinklocal} 
-            handleClickConfirm={handleClickConfirm} 
-            handleClickRemove={handleClickRemove}
-            handleClickAdd={handleClickAdd}
-            handleClickRemoveSuggestion={handleClickRemoveSuggestion}/>
+                friendsRequestsToUser={friendsRequestsToUser}
+                friendSuggestions={friendSuggestions}
+                handleClickLinklocal={handleClickLinklocal} 
+                handleClickConfirm={handleClickConfirm} 
+                handleClickRemove={handleClickRemove}
+                handleClickAdd={handleClickAdd}
+                handleClickRemoveSuggestion={handleClickRemoveSuggestion}/>
             <FriendsHomeS            
-            friendsRequestsToUser={friendsRequestsToUser}
-            friendSuggestions={friendSuggestions}
-            handleClickLinklocal={handleClickLinklocal} 
-            handleClickConfirm={handleClickConfirm} 
-            handleClickRemove={handleClickRemove}
-            handleClickAdd={handleClickAdd}
-            handleClickRemoveSuggestion={handleClickRemoveSuggestion}/>
+                friendsRequestsToUser={friendsRequestsToUser}
+                friendSuggestions={friendSuggestions}
+                handleClickLinklocal={handleClickLinklocal} 
+                handleClickConfirm={handleClickConfirm} 
+                handleClickRemove={handleClickRemove}
+                handleClickAdd={handleClickAdd}
+                handleClickRemoveSuggestion={handleClickRemoveSuggestion}/>
     </PageBoxFriendsWrapper>
     );
 }

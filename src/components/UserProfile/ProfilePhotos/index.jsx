@@ -8,6 +8,7 @@ import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getProfile,
+  getUserImages,
   setAuthorizedUser,
   setUser,
   uploadPhotos,
@@ -16,6 +17,7 @@ import {
   setPictures,
   showPictures,
 } from "../../../redux/pictures.slice/picture.slice";
+import {editUser} from "../../../editUser.js";
 
 const StyledAddPhotoButton = styled("label")(({ theme }) => ({
   fontSize: "15px",
@@ -70,9 +72,9 @@ export default function Photos() {
   const [photoHeight, setPhotoHeight] = useState(213);
   const [isAuthorized, setAuthorized] = useState(false);
   const user = useSelector((state) => state.user.user);
-  const [multipartFiles, setMultipartFiles] = useState(null);
+  const [images,setImages] = useState([])
   const dispatch = useDispatch();
-  console.log(user);
+
   //useEffect(() => {
 
   // window.addEventListener("resize", () => {
@@ -84,6 +86,11 @@ export default function Photos() {
   // }, [photosRef.current]);
   useEffect(() => {
     setAuthorized(user.isAuthorized);
+    (async ()=>{
+      const images =await dispatch(getUserImages(user.id));
+      console.log(images.payload)
+      setImages(images.payload)
+    })()
   }, [user]);
  async function showChoosingPicture() {
 
@@ -99,23 +106,19 @@ export default function Photos() {
      formData.append(`multipartFiles`, el);
    })
 
-   setMultipartFiles(formData);
-    console.log(formData.get("multipartFile"))
+
+
    await dispatch(uploadPhotos({multipartFiles: formData, id:id}))
-   const editUser =  dispatch(getProfile())
-   editUser.then(result =>{
-     console.log(result.payload)
-     if(result.payload) {
-       localStorage.setItem("authorizedUser", JSON.stringify({...result.payload, isAuthorized: true}))
-       localStorage.setItem("user", JSON.stringify({...result.payload, isAuthorized: true}))
-       dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))))
-       dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
-     }
-   })
+
+         const images =await dispatch(getUserImages(user.id));
+
+         setImages(images.payload)
+         editUser(dispatch);
+
   }
   const handleShowPictures = (allPictures, selected) => {
     dispatch(showPictures());
-    dispatch(setPictures({ allPictures, selected, pathName: "imageUrl" }));
+    dispatch(setPictures({ allPictures, selected, pathName: "imgUrl" }));
   };
   return (
     <ContentBlock>
@@ -132,16 +135,16 @@ export default function Photos() {
         </StyledAddPhotoButton>
       )}
       <StyledPhotosList>
-        {user.userImages?.map((image, index) => {
+        {images?.map((image, index) => {
           return (
             <StyledPhotosImage
-              src={image.imageUrl}
+              src={image.imgUrl}
               alt="foto"
               width={213}
               height={photoHeight}
-              ref={photosRef}
+
               key={index}
-              onClick={() => handleShowPictures(user.userImages, image)}
+              onClick={() => handleShowPictures(images, image)}
             />
           );
         })}

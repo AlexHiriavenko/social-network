@@ -1,29 +1,37 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../../instance";
 import axios from "axios";
+import {initialState} from "../chat.slice/chatInitialStates.js";
 
 //Получение всех пользователей
 export const getUsers = createAsyncThunk("Users/getUsers", async function () {
     const { data } = await instance.get("/users");
-    // console.log(data);
+
     return data;
 });
 
 //Получение юзера по айди
 export const getUser = createAsyncThunk("Users/getUser", async function (id) {
     const { data } = await instance.get(`users/${id}`);
-    console.log(data);
+
     return data;
 });
 export const getProfile = createAsyncThunk(
     "Users/getProfile",
     async function () {
         const { data } = await instance.get(`/users/profile`);
-        console.log(data);
+
         return data;
     }
 );
+export const getUserImages = createAsyncThunk(
+    "Users/getUserImages",
+    async function (id) {
+        const { data } = await instance.get(`/users/${id}/images`);
 
+        return data;
+    }
+);
 //Редактирование юзера
 export const uploadAvatar = createAsyncThunk(
     "Users/uploadAvatar",
@@ -52,7 +60,7 @@ export const uploadCoverPhoto = createAsyncThunk(
     "Users/uploadCoverPhoto",
     async function ({ multipartFile, id }) {
 
-        console.log(multipartFile)
+
         let accessToken = JSON.parse(localStorage.getItem('token'))
         await axios.post(`${import.meta.env.VITE_APP_API_URL}/users/${id}/header`, multipartFile,
             {
@@ -72,7 +80,7 @@ export const uploadCoverPhoto = createAsyncThunk(
 export const uploadPhotos = createAsyncThunk(
     "Users/uploadPhotos",
     async function ({ multipartFiles, id }) {
-        console.log(multipartFiles)
+
         let accessToken = JSON.parse(localStorage.getItem('token'))
         await axios.post(`${import.meta.env.VITE_APP_API_URL}/users/${id}/image`, multipartFiles,
             {
@@ -131,7 +139,7 @@ export const getFriends = createAsyncThunk(
     "Users/getFriends",
     async function (id) {
         const { data } = await instance.get(`/friends/${id}/friends`);
-        console.log(data);
+
         return data;
     }
 );
@@ -147,6 +155,12 @@ const UserSlice = createSlice({
     },
 
     reducers: {
+        setUserInitialState(state){
+            state.authorizedUser = null
+            state.user = null
+            state.friends =[]
+
+        },
         //Загрузка юзеров в стейт
         setUsers: (state, action) => {
             state.allUsers = action.payload;
@@ -165,18 +179,19 @@ const UserSlice = createSlice({
         },
     },
     extraReducers: {
-        [getUsers.pending]: (state) => {
+        [getProfile.pending]: (state) => {
             state.isLoading = true;
         },
-        [getUsers.fulfilled]: (state, action) => {
+        [getProfile.fulfilled]: (state, action) => {
             state.isLoading = false;
-            state.value = action.payload;
+            state.authorizedUser = { ... action.payload,isAuthorized:true};
         },
-        [getUsers.rejected]: (state) => { },
+        [getProfile.rejected]: (error) => { console.log(error)},
     },
 });
 
-export const { setUsers, setUser, setFriends, setAuthorizedUser } =
+export const { setUsers, setUser, setFriends, setAuthorizedUser,setUserInitialState
+} =
     UserSlice.actions;
 
 export default UserSlice.reducer;

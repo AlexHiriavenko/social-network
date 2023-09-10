@@ -133,22 +133,6 @@ function SideBarList({activeItem}) {
                     </MenuItemContent>
                 </MenuItem>
             </ListItemStyled>
-{/*             <ListItemStyled>
-                <MenuItem to={"/friends/customlists"} 
-                        style={({ isActive }) => {return{backgroundColor: isActive 
-                        ? theme.palette.backgroundColor.page 
-                        : null}}}>
-                    <MenuItemContent>
-                        <IconContainer data-path="customlists" sx={{bgcolor: theme.palette.buttonColor.background}}>
-                            <SVGFriendsList color={activeItem ==="customlists"? colorActiveSvg: colorBaseSvg}/>
-                        </IconContainer>
-                        <MenuItemName>
-                            Custom lists
-                        </MenuItemName>
-                    </MenuItemContent>
-                    <SVGNext color={theme.palette.textColor.secondary}/>
-                </MenuItem>
-            </ListItemStyled> */}
         </List>
     )
 }
