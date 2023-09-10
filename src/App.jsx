@@ -17,7 +17,9 @@ function App() {
     const authUser = useSelector((store)=>store.user.authorizedUser, shallowEqual);
 
     const notifications = useSelector((store)=>store.notifications.notifications, shallowEqual);
+    const messages = useSelector((store)=>store.notifications.newMessages, shallowEqual);
     console.log(notifications);
+    console.log(messages);
 
     const dispatch = useDispatch();
 
@@ -26,12 +28,12 @@ function App() {
             connectWebSocket([{
                 topic: `/topic/messages/user.${authUser.id}`, callback: (message) => {
                     console.log(message);
-                    dispatch(addNewMessages(message.body));
+                    dispatch(addNewMessages(JSON.parse(message.body)));
                 }
             }, {
                 topic: `/topic/notification/user.${authUser.id}`, callback: (message) => {
                     console.log(message);
-                    dispatch(addNotifications(message.body))
+                    dispatch(addNotifications(JSON.parse(message.body)))
                 }
             }])
         }
