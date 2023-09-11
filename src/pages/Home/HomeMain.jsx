@@ -33,7 +33,7 @@ function HomeMain() {
     //   useEffect
     useEffect(() => {
         if (fetching) {
-            dispatch(getPageblePosts({ page: currentPage, size: 3 }))
+            dispatch(getPageblePosts({ page: currentPage, size: 6 }))
                 .then((data) => {
                     setCurrentPage(currentPage + 1);
                     setMainPagePosts([...mainPagePosts, ...data.payload]);
