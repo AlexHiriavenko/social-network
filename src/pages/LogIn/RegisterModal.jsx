@@ -15,10 +15,12 @@ import { Link } from "react-router-dom";
 import { dayOfBirth, yearOfBirth, mounthOfBirst } from "./registerOptions";
 import { register } from "../../redux/login.slice/login.slice";
 import { useDispatch } from "react-redux";
+import {useState} from "react";
 
 export default function RegisterModal(props) {
   const dispatch = useDispatch();
   const { modal, handleModal } = props;
+  const [message,setMessage] = useState(null);
 
 
   const registerForm = useFormik({
@@ -46,8 +48,13 @@ export default function RegisterModal(props) {
           gender: registerForm.values.gender,
         })
       );
+      setMessage("Account successfully created. Please check your email to activate your account")
+       window.setTimeout(()=>{
+         handleModal()
+         setMessage(null)
 
-   handleModal()
+       },7000)
+
       return console.log({
         name: registerForm.values.name,
         surname: registerForm.values.surname,
@@ -217,6 +224,7 @@ export default function RegisterModal(props) {
               </Button>
             </form>
           </Box>
+          <h3 className="register_message">{message}</h3>
           <p className="form-footer-text">
             Люди, которые пользуются нашим сервисом, могли загрузить вашу
             контактную информацию на Facebook.{" "}
@@ -230,6 +238,7 @@ export default function RegisterModal(props) {
             файлов cookie. Вы можете получать от нас SMS-уведомления, отказаться
             от которых можно в любой момент.
           </p>
+
         </Box>
       </Modal>
     </>

@@ -53,7 +53,7 @@ export default function LogIn() {
       );
 
       if(auth.type === 'Login/logIn/rejected') {
-        setMessage("Incorrect login or password")
+        setMessage("Incorrect login or password or account not activated after creation")
       }
 
       if (JSON.parse(localStorage.getItem("token"))!= "out") {
