@@ -81,7 +81,9 @@ export default function LogIn() {
   const token = useSelector((state) => state.login.token);
   return (
       <>
-        {isLoggedIn && token ? null : (
+
+        {isLoggedIn  ? null : (
+
             <section className="login-section">
               <Container maxWidth="xl">
                 <div className="login-section__wrapper">
