@@ -162,7 +162,8 @@ export default function CreatePostModal() {
         // Add Post to page top before reload
         repostResponse
           .then((response) => {
-            console.log(response);
+            if (response.meta.requestStatus !== "fulfilled") return;
+
             updatedPosts.unshift({
               ...basicPost,
               content: response.meta.arg.content,
@@ -173,13 +174,12 @@ export default function CreatePostModal() {
               parentId: repost,
             });
             dispatch(setVisiblePosts(updatedPosts));
+            // Reset Form
+            values.content = "";
+            setImgUrls([]);
+            handleClose();
           })
           .catch((error) => console.log(error));
-
-        // Reset Form
-        values.content = "";
-        setImgUrls([]);
-        handleClose();
       } else {
         const formData = new FormData();
         formData.append("content", values.content);
@@ -194,7 +194,9 @@ export default function CreatePostModal() {
 
         // Add Post to page top before reload
         createPostResponse
-          .then(() => {
+          .then((response) => {
+            if (response.meta.requestStatus !== "fulfilled") return;
+
             updatedPosts.unshift({
               ...basicPost,
               content: values.content,
@@ -204,13 +206,12 @@ export default function CreatePostModal() {
               id: actualDate.getSeconds(),
             });
             dispatch(setVisiblePosts(updatedPosts));
+            // Reset Form
+            values.content = "";
+            setImgUrls([]);
+            handleClose();
           })
           .catch((e) => console.log(e));
-
-        // Reset Form
-        values.content = "";
-        setImgUrls([]);
-        handleClose();
       }
     },
   });
