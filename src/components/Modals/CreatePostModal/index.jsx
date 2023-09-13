@@ -151,17 +151,35 @@ export default function CreatePostModal() {
       userName: `${authUser && authUser?.fullName} `,
     },
     onSubmit: (values) => {
+      const actualDate = new Date();
+      const updatedPosts = [...visiblePosts];
+
       if (repost) {
         const repostResponse = dispatch(
           repostPost({ id: repost?.id, content: values.content })
         );
+
+        // Add Post to page top before reload
         repostResponse
           .then((response) => {
-            values.content = "";
-            setImgUrls([]);
-            handleClose();
+            console.log(response);
+            updatedPosts.unshift({
+              ...basicPost,
+              content: response.meta.arg.content,
+              createdDate: actualDate,
+              updatedDate: actualDate,
+              postImages: imgUrls.map((url) => ({ imgUrl: url })),
+              id: actualDate.getSeconds(),
+              parentId: repost,
+            });
+            dispatch(setVisiblePosts(updatedPosts));
           })
           .catch((error) => console.log(error));
+
+        // Reset Form
+        values.content = "";
+        setImgUrls([]);
+        handleClose();
       } else {
         const formData = new FormData();
         formData.append("content", values.content);
@@ -170,20 +188,24 @@ export default function CreatePostModal() {
             formData.append(`files`, el);
           });
         }
-        dispatch(createPost({ multipartFiles: formData }));
+        const createPostResponse = dispatch(
+          createPost({ multipartFiles: formData })
+        );
 
         // Add Post to page top before reload
-        const actualDate = new Date();
-        const updatedPosts = [...visiblePosts];
-        updatedPosts.unshift({
-          ...basicPost,
-          content: values.content,
-          createdDate: actualDate,
-          updatedDate: actualDate,
-          postImages: imgUrls.map((url) => ({ imgUrl: url })),
-          id: actualDate.getSeconds(),
-        });
-        dispatch(setVisiblePosts(updatedPosts));
+        createPostResponse
+          .then(() => {
+            updatedPosts.unshift({
+              ...basicPost,
+              content: values.content,
+              createdDate: actualDate,
+              updatedDate: actualDate,
+              postImages: imgUrls.map((url) => ({ imgUrl: url })),
+              id: actualDate.getSeconds(),
+            });
+            dispatch(setVisiblePosts(updatedPosts));
+          })
+          .catch((e) => console.log(e));
 
         // Reset Form
         values.content = "";
