@@ -4,10 +4,7 @@ import { useRef, useState } from "react";
 import { useFormik } from "formik";
 import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    closeCreateModal,
-    resetRepostToModal,
-} from "../../../redux/modal.slice/modal.slice";
+import { closeCreateModal, resetRepostToModal } from "../../../redux/modal.slice/modal.slice";
 import { BlockUserImage } from "../../UserProfile/StyledComponents/ContentBlock/StyledComponents";
 import {
     StyledModalBlock,
@@ -101,9 +98,7 @@ const StyledPostModalButton = styled(Button)({
 export default function CreatePostModal() {
     // Constants
     const dispatch = useDispatch();
-    const createModalIsOpen = useSelector(
-        (state) => state.modal.createPost.isOpen
-    );
+    const createModalIsOpen = useSelector((state) => state.modal.createPost.isOpen);
     const repost = useSelector((state) => state.modal.createPost.repost);
     const fileRef = useRef(null);
     const authUser = useSelector((state) => state.user.authorizedUser);
@@ -149,6 +144,7 @@ export default function CreatePostModal() {
             } else {
                 const formData = new FormData();
                 formData.append("content", values.content);
+                console.log(files);
                 if (imgUrls.length !== 0) {
                     files.forEach((el) => {
                         formData.append(`files`, el);
@@ -168,7 +164,8 @@ export default function CreatePostModal() {
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
-            sx={{ paddingLeft: "5px", paddingRight: "5px" }}>
+            sx={{ paddingLeft: "5px", paddingRight: "5px" }}
+        >
             <StyledModalBlock>
                 <StyledModalCloseButton onClick={handleClose}>
                     <StyledModalCloseButtonLine></StyledModalCloseButtonLine>
@@ -185,9 +182,7 @@ export default function CreatePostModal() {
                         width={40}
                         height={40}
                     />
-                    <StyledPostModalUserName>
-                        {authUser?.fullName}
-                    </StyledPostModalUserName>
+                    <StyledPostModalUserName>{authUser?.fullName}</StyledPostModalUserName>
                 </StyledPostModalUser>
                 <StyledPostModalCreateArea onSubmit={formik.handleSubmit}>
                     <StyledPostModalTextArea
@@ -197,15 +192,11 @@ export default function CreatePostModal() {
                         onChange={formik.handleChange}
                         value={formik.values.content}
                         name="content"
-                        id="content"></StyledPostModalTextArea>
+                        id="content"
+                    ></StyledPostModalTextArea>
 
                     {imgUrls.map((url, index) => (
-                        <StyledPostModalImage
-                            src={url}
-                            alt=""
-                            width={450}
-                            key={index}
-                        />
+                        <StyledPostModalImage src={url} alt="" width={450} key={index} />
                     ))}
 
                     {!repost ? (

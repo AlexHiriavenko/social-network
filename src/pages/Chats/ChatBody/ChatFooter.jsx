@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import { StyledTextField } from "../styledChatComponents";
@@ -9,6 +9,8 @@ import { getChat } from "../../../redux/chat.slice/chat.slice";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import IconButton from "@mui/material/IconButton";
 import { StyledPostModalAddFilesButton } from "../../../components/Modals/CreatePostModal";
+import { current } from "immer";
+import { createPost } from "../../../redux/post.slice/post.slice";
 
 function ChatFooter() {
     const dispatch = useDispatch();
@@ -16,40 +18,58 @@ function ChatFooter() {
     const inputRef = useRef(null);
     const fileRef = useRef(null);
     const currentChat = useSelector((state) => state.chat.currentChat);
+    const [imgUrls, setImgUrls] = useState([]);
+    const [files, setFiles] = useState([]);
 
     const handleKeyDown = (event) => {
-        if (event.key === "Enter" && inputRef.current.value.trim()) {
-            event.preventDefault();
-            const inputValue = inputRef.current.value.trim();
-            const newMessage = {
-                id: 0,
-                content: inputValue,
-                chatId: currentChat.id,
-            };
-            inputRef.current.value = "";
-            dispatch(sendMessage(newMessage))
-                .then(() => dispatch(getChat(currentChat.id)))
-                .catch((error) => {
-                    console.error("Error sending message:", error);
-                });
-        }
+        const formData = new FormData();
+
+        // if (event.key === "Enter" && inputRef.current.value.trim()) {
+        //     event.preventDefault();
+        //     const inputValue = inputRef.current.value.trim();
+        //     const newMessage = {
+        //         id: 0,
+        //         content: inputValue,
+        //         chatId: currentChat.id,
+        //     };
+        //     inputRef.current.value = "";
+        //     dispatch(sendMessage(newMessage))
+        //         .then(() => dispatch(getChat(currentChat.id)))
+        //         .catch((error) => {
+        //             console.error("Error sending message:", error);
+        //         });
+        // }
     };
 
     const handleClickSend = (event, id = 0) => {
-        if (inputRef.current.value.trim()) {
-            const inputValue = inputRef.current.value.trim();
-            const newMessage = {
-                id: 0,
-                content: inputValue,
-                chatId: currentChat.id,
-            };
-            inputRef.current.value = "";
-            dispatch(sendMessage(newMessage))
-                .then(() => dispatch(getChat(currentChat.id)))
-                .catch((error) => {
-                    console.error("Error sending message:", error);
-                });
-        }
+        const formData = new FormData();
+        const inputValue = inputRef.current.value.trim();
+        console.log(inputValue);
+        console.log(currentChat.id);
+        formData.append("content", inputValue);
+        formData.append("chatId", currentChat.id);
+        console.log(files);
+        files.forEach((el) => {
+            formData.append(`files`, el);
+        });
+        console.log(files);
+        dispatch(sendMessage({ files: formData })).then(() => dispatch(getChat(currentChat.id)));
+        // dispatch(createPost({ multipartFiles: formData }));
+
+        // if (inputRef.current.value.trim()) {
+        //     const inputValue = inputRef.current.value.trim();
+        //     const newMessage = {
+        //         id: 0,
+        //         content: inputValue,
+        //         chatId: currentChat.id,
+        //     };
+        //     inputRef.current.value = "";
+        //     dispatch(sendMessage(newMessage))
+        //         .then(() => dispatch(getChat(currentChat.id)))
+        //         .catch((error) => {
+        //             console.error("Error sending message:", error);
+        //         });
+        // }
     };
 
     function showChoosingPicture() {
@@ -98,7 +118,8 @@ function ChatFooter() {
                             />
                         </StyledPostModalAddFilesButton>
                     ),
-                }}></StyledTextField>
+                }}
+            ></StyledTextField>
             <StyledAvatar
                 sx={{
                     bgcolor: theme.palette.hoverColor.secondary,
@@ -106,7 +127,8 @@ function ChatFooter() {
                     boxSizing: "content-box",
                     mb: 1,
                 }}
-                onClick={handleClickSend}>
+                onClick={handleClickSend}
+            >
                 <SendIcon fontSize="large" color="primary" />
             </StyledAvatar>
         </ChatFooterContainer>
