@@ -54,9 +54,7 @@ export default function EditMessageModal() {
             const message = {
                 id: id,
                 content: inputValue,
-                chat: {
-                    id: currentChat.id,
-                },
+                chatId: currentChat.id,
             };
             inputRef.current.value = "";
             dispatch(editMessage(message))

@@ -20,6 +20,7 @@ export const editMessage = createAsyncThunk(
 export const deleteMessage = createAsyncThunk(
     "chat/deleteMessage",
     async function (id) {
+        console.log(id);
         const { status } = await instance.delete(`/messages/${id}`);
         console.log(status);
     }

@@ -98,7 +98,7 @@ export default function Pictures() {
   }
   // useEffect
   useEffect(() => {
-    console.log(pictures);
+    // console.log(pictures);
     pictures.allPictures?.forEach((item, index) => {
       if (item[pictures.pathName] === pictures?.selected[pictures.pathName]) {
         setShowedPicture({ ...pictures.selected, number: index });

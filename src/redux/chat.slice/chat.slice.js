@@ -16,11 +16,10 @@ const chatSlice = createSlice({
     name: "chat",
     initialState,
     reducers: {
-        setChatInitialState:function (state){
-            state.chatsParticipants =[]
-            state.currentChatCompanion = null
-            state.currentChat = null
-
+        setChatInitialState: function (state) {
+            state.chatsParticipants = [];
+            state.currentChatCompanion = null;
+            state.currentChat = null;
         },
         openChat: function (state, action) {
             state.isOpened = true;
@@ -65,16 +64,11 @@ const chatSlice = createSlice({
             }
         });
         builder.addCase(getChat.fulfilled, (state, action) => {
+            console.log(action.payload);
             state.currentChat = action.payload;
         });
         builder.addCase(createChat.fulfilled, (state, action) => {
-            const messages = action.payload[0].messages;
-            if (messages) {
-                const sortedArray = action.payload.sort(
-                    (a, b) => a.users.length - b.users.length
-                );
-                state.currentChat = sortedArray[0];
-            }
+            state.currentChat = action.payload;
         });
         builder.addCase(addToChatNewUser.fulfilled, (state, action) => {});
     },
@@ -103,7 +97,8 @@ export const {
     setChatsList,
 } = chatSlice.actions;
 
-export const { openPageChat, closePageChat,setChatInitialState } = chatPageSlice.actions;
+export const { openPageChat, closePageChat, setChatInitialState } =
+    chatPageSlice.actions;
 
 export {
     getChats,

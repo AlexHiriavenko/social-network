@@ -39,6 +39,7 @@ export const createChat = createAsyncThunk(
     async function (id) {
         if (id) {
             const { data } = await instance.get(`/chats/search/${id}`);
+            console.log(data);
             return data;
         } else {
             console.log("id is not valid");

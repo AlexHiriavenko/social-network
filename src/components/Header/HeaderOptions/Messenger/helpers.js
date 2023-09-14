@@ -22,8 +22,8 @@ export function createNewChat(args, id, fullName, profilePicture) {
     dispatch(setCurrentChatCompanion(currentChatCompanion));
     dispatch(openChat());
     dispatch(createChat(id)).then(({ payload }) => {
-        if (payload[0].messages.length < 1) {
-            const chatID = payload[0].id;
+        if (payload.messages.length < 1) {
+            const chatID = payload.id;
             const newMessage = {
                 id: 0,
                 content: `${authUser.fullName} created this chat with ${fullName}`,
