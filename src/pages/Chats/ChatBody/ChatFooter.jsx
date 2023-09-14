@@ -8,6 +8,7 @@ import { sendMessage } from "../../../redux/message.slice/message.slice";
 import { getChat } from "../../../redux/chat.slice/chat.slice";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import IconButton from "@mui/material/IconButton";
+import { StyledPostModalAddFilesButton } from "../../../components/Modals/CreatePostModal";
 
 function ChatFooter() {
     const dispatch = useDispatch();
@@ -51,6 +52,16 @@ function ChatFooter() {
         }
     };
 
+    function showChoosingPicture() {
+        let filesList = fileRef?.current.files;
+        const files = [];
+        for (let i = 0; i < filesList?.length; i++) {
+            files.push(filesList[i]);
+        }
+        setFiles(files);
+        setImgUrls(files.map((file) => URL.createObjectURL(file)));
+    }
+
     return (
         <ChatFooterContainer>
             <StyledTextField
@@ -61,15 +72,31 @@ function ChatFooter() {
                 onKeyDown={handleKeyDown}
                 InputProps={{
                     endAdornment: (
-                        <IconButton sx={{ p: 0 }}>
+                        // <IconButton sx={{ p: 0 }}>
+                        //     <AddPhotoAlternateIcon
+                        //         sx={{
+                        //             color: "#45bd62",
+                        //             width: "24px",
+                        //             height: "24px",
+                        //         }}
+                        //     />
+                        // </IconButton>
+                        <StyledPostModalAddFilesButton>
+                            <input
+                                type="file"
+                                ref={fileRef}
+                                onChange={showChoosingPicture}
+                                style={{ display: "none" }}
+                                multiple
+                            />
                             <AddPhotoAlternateIcon
                                 sx={{
                                     color: "#45bd62",
-                                    width: "24px",
-                                    height: "24px",
+                                    width: "36px",
+                                    height: "36px",
                                 }}
                             />
-                        </IconButton>
+                        </StyledPostModalAddFilesButton>
                     ),
                 }}></StyledTextField>
             <StyledAvatar
