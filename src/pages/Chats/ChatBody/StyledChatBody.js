@@ -63,7 +63,6 @@ export const ChatFooterContainer = styled(Box)(({ theme, className }) => ({
     gap: "16px",
     alignItems: "center",
     marginTop: "16px",
-    marginBottom: "8px",
 
     ...className,
 }));

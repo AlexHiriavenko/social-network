@@ -6,11 +6,14 @@ import { StyledAvatar, ChatFooterContainer } from "./StyledChatBody";
 import SendIcon from "@mui/icons-material/Send";
 import { sendMessage } from "../../../redux/message.slice/message.slice";
 import { getChat } from "../../../redux/chat.slice/chat.slice";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import IconButton from "@mui/material/IconButton";
 
 function ChatFooter() {
     const dispatch = useDispatch();
     const theme = useTheme();
     const inputRef = useRef(null);
+    const fileRef = useRef(null);
     const currentChat = useSelector((state) => state.chat.currentChat);
 
     const handleKeyDown = (event) => {
@@ -56,12 +59,25 @@ function ChatFooter() {
                 multiline
                 inputRef={inputRef}
                 onKeyDown={handleKeyDown}
-            />
+                InputProps={{
+                    endAdornment: (
+                        <IconButton sx={{ p: 0 }}>
+                            <AddPhotoAlternateIcon
+                                sx={{
+                                    color: "#45bd62",
+                                    width: "24px",
+                                    height: "24px",
+                                }}
+                            />
+                        </IconButton>
+                    ),
+                }}></StyledTextField>
             <StyledAvatar
                 sx={{
                     bgcolor: theme.palette.hoverColor.secondary,
                     p: 1,
                     boxSizing: "content-box",
+                    mb: 1,
                 }}
                 onClick={handleClickSend}>
                 <SendIcon fontSize="large" color="primary" />

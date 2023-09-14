@@ -7,6 +7,7 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
     backgroundColor: theme.palette.backgroundColor.hover,
     borderRadius: "12px",
     boxShadow: theme.palette.shadow.down,
+    marginBottom: "8px",
     "& label": {
         color: theme.palette.textColor.secondary,
     },
