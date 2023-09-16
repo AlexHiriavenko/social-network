@@ -118,12 +118,16 @@ export const findByPartOfName = createAsyncThunk(
     }
 
 );
-
-
 export const updateUser = createAsyncThunk(
     "Users/updateUser",
     async function (updatedUser) {
         await instance.put("/users", updatedUser);
+    }
+);
+export const deleteUserImage = createAsyncThunk(
+    "Users/deleteUserImage",
+    async function (imgId) {
+        await instance.delete(`/userImages/${imgId}`);
     }
 );
 export const getMyChats = createAsyncThunk(
