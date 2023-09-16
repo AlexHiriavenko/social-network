@@ -173,7 +173,6 @@ export default function Pictures() {
       console.log(comments)
       setComments(comments.payload)
     })(
-
     )
   }, [showedPicture]);
   return (
