@@ -16,7 +16,6 @@ const friendsSlice = createSlice({
   reducers: {
     setInitialState: function (state){
       state = initialState;
-    },
     setCurrentFriend: function(state, action) {
       state.currentFriend = action.payload;
     },
