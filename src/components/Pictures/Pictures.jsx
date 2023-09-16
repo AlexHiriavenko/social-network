@@ -6,7 +6,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useDispatch, useSelector } from "react-redux";
 import { closePictures } from "../../redux/pictures.slice/picture.slice";
 import { useEffect, useState } from "react";
-import {Box} from '@mui/material'
+import {Box, Button} from '@mui/material'
 import Comment from "../Comment/index.jsx";
 import CreateCommentModal from "../Modals/CreateCommentModal/index.jsx";
 import SendIcon from "@mui/icons-material/Send.js";
@@ -207,26 +207,40 @@ export default function Pictures() {
           ,[theme.breakpoints.down('sm')]: {
             width: '100%',
             top:'60%',
+            height:'30vh',
 
             position:'absolute'
           }}} >
 
-          {  comments?.map(comment => {
+          {  comments?.reverse().map((comment,index) => {
 
-            return <> <Box style={{marginTop: "10px"}}>
+
+
+            return <>
+            {
+                index <3 &&
+              <Box style={{marginTop: "10px"}}>
                 <Comment user={comment.author} content={comment.content} createdDate={comment.createdDate}/>
-              </Box></>
+              </Box>}
+
+
+            </>
 
           })
-          }
 
+          }
+          {
+              comments.length > 3 &&
+              <Button>View all comments</Button>
+
+          }
 
           <StyledPostModalCreateCommentArea onSubmit={formik.handleSubmit}>
             <Box style={{display:"flex"}}>
 
             <StyledPostModalTextArea
                 cols="80"
-                rows={window.innerHeight < "850" ? "1" : "3"}
+                rows={window.innerHeight < "850" ? "1" : "2"}
                 placeholder="Write a comment..."
                 onChange={formik.handleChange}
                 value={formik.values.content}
