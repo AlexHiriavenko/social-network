@@ -23,7 +23,7 @@ function HomeMain() {
     function handleScroll(e) {
         if (
             e.target.documentElement.scrollHeight -
-                (e.target.documentElement.scrollTop + window.innerHeight) <
+            (e.target.documentElement.scrollTop + window.innerHeight) <
             250
         ) {
             setFetching(true);

@@ -2,24 +2,26 @@ import React, { useEffect } from "react";
 import { shallowEqual, useSelector, useDispatch } from "react-redux";
 import Header from "./components/Header/Header";
 import Modals from "./components/Modals/Modals";
-import { 
+import {
     connectWebSocket,
     disconnectWebSocket,
     isConnected,
 } from './socket';
 import AllRoutes from "./components/Routes";
 
-import {addNewMessages, addNotifications} from './redux/notifications.slice/notifications.slice';
+import { setAllNotifications, addNewMessages, addNewNotifications, getNotifications } from './redux/notifications.slice/notifications.slice';
 
 
 function App() {
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn, shallowEqual);
-    const authUser = useSelector((store)=>store.user.authorizedUser, shallowEqual);
+    const authUser = useSelector((store) => store.user.authorizedUser, shallowEqual);
 
-    const notifications = useSelector((store)=>store.notifications.notifications, shallowEqual);
-    const messages = useSelector((store)=>store.notifications.newMessages, shallowEqual);
-    console.log(notifications);
-    console.log(messages);
+    const unreadedNotifications = useSelector((store) => store.notifications.newNotifications, shallowEqual);
+    const allNotifications = useSelector((store) => store.notifications.allNotifications, shallowEqual)
+    const messages = useSelector((store) => store.notifications.newMessages, shallowEqual);
+    console.log(unreadedNotifications);
+    console.log(allNotifications);
+    console.log(authUser);
 
     const dispatch = useDispatch();
 
@@ -33,11 +35,11 @@ function App() {
             }, {
                 topic: `/topic/notification/user.${authUser.id}`, callback: (message) => {
                     console.log(message);
-                    dispatch(addNotifications(JSON.parse(message.body)))
+                    dispatch(addNewNotifications(JSON.parse(message.body)));
                 }
             }])
         }
-        if(isConnected && (!isLoggedIn || !authUser)) {
+        if (isConnected && (!isLoggedIn || !authUser)) {
             disconnectWebSocket();
         }
     }, [dispatch, isLoggedIn, authUser]);

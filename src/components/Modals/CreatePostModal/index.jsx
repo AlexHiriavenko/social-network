@@ -155,7 +155,8 @@ export default function CreatePostModal() {
             formData.append(`files`, el);
           })
         }
-        dispatch(createPost({ multipartFiles: formData }))
+        const createResponse = dispatch(createPost({ multipartFiles: formData }));
+        createResponse.then((data) => console.log(data));
         values.content = "";
         setImgUrls([]);
         handleClose();
