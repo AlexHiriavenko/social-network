@@ -6,15 +6,16 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useDispatch, useSelector } from "react-redux";
 import { closePictures } from "../../redux/pictures.slice/picture.slice";
 import { useEffect, useState } from "react";
-import {Box, Button} from '@mui/material'
+import {Box, Button, Typography} from '@mui/material'
 import Comment from "../Comment/index.jsx";
 import CreateCommentModal from "../Modals/CreateCommentModal/index.jsx";
 import SendIcon from "@mui/icons-material/Send.js";
 import {useFormik} from "formik";
 import {commentPost, setVisiblePosts} from "../../redux/post.slice/post.slice.js";
-import {addImgComment, getImageComments, updateUser} from "../../redux/user.slice/user.slice.js";
+import {addImgComment, getImageComments, getUser, updateUser} from "../../redux/user.slice/user.slice.js";
 import {editUser} from "../../editUser.js";
 import {useTheme} from "@emotion/react";
+import {BlockUserImage} from "../UserProfile/StyledComponents/ContentBlock/StyledComponents.js";
 const StyledPictureSection = styled("section")({
   backgroundColor: "#000",
   position: "fixed",
@@ -90,6 +91,26 @@ const StyledPostModalButton = styled("button")(({ theme }) => ({
   marginLeft:"-20px",
   cursor: "pointer",
 }));
+const StyledCommentWrraper = styled("div")(({ theme }) => ({
+  display: "flex",
+  gap: "10px",
+}));
+
+const StyledCommentContent = styled("div")(({ theme }) => ({
+  backgroundColor: theme.palette.input.mainBackground,
+  padding: "8px 12px",
+  borderRadius: "18px",
+}));
+
+
+
+const StyledCommentName = styled(Typography)(({ theme }) => ({
+  display: "flex",
+  gap: "10px",
+  color: theme.palette.textColor.main,
+  fontWeight: 600,
+  fontFamily: "sans-serif",
+}));
 
 
 export default function Pictures() {
@@ -99,11 +120,12 @@ export default function Pictures() {
   const authUser = useSelector((state) => state.user?.authorizedUser);
   const pictures = useSelector((state) => state.pictures.pictures);
   const [comments,setComments] = useState([])
+  const [owner,setOwner] = useState(null)
   const theme = useTheme();
   // State
   const [showedPicture, setShowedPicture] = useState("");
   // Functions
-  console.log(showedPicture)
+
   function handleClose() {
     dispatch(closePictures());
   }
@@ -157,7 +179,7 @@ export default function Pictures() {
   });
   // useEffect
   useEffect(() => {
-    console.log(pictures);
+
     pictures.allPictures?.forEach((item, index) => {
       if (item[pictures.pathName] === pictures?.selected[pictures.pathName]) {
         setShowedPicture({ ...pictures.selected, number: index });
@@ -167,8 +189,14 @@ export default function Pictures() {
   useEffect(() => {
     (async function(){
       const comments = await dispatch(getImageComments(showedPicture.id))
-      console.log(comments)
+
       setComments(comments.payload)
+      if(showedPicture.userId != authUser.id){
+        const user = await  dispatch(getUser(showedPicture.userId))
+        setOwner(user.payload)
+      }else{
+        setOwner(authUser)
+      }
     })(
     )
   }, [showedPicture]);
@@ -212,6 +240,24 @@ export default function Pictures() {
             position:'absolute'
           }}} >
 
+          <StyledCommentWrraper>
+            <BlockUserImage src={
+                owner?.profilePicture ||
+                "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
+            }
+                            alt=""
+                            width={40}
+                            height={40} />
+            <StyledCommentContent>
+              <StyledCommentName>
+                {owner?.fullName}
+
+              </StyledCommentName>
+
+            </StyledCommentContent>
+          </StyledCommentWrraper>
+          <Box style={{width:"100%",height:"0.7px",backgroundColor:"grey"}}></Box>
+<Box style={{marginLeft:"10px"}}>
           {  comments?.reverse().map((comment,index) => {
 
             return <>
@@ -228,10 +274,11 @@ export default function Pictures() {
 
           }
           {
-              comments.length > 3 &&
+              comments?.length > 3 &&
               <Button>View all comments</Button>
 
           }
+        </Box>
 
           <StyledPostModalCreateCommentArea onSubmit={formik.handleSubmit}>
             <Box style={{display:"flex"}}>
@@ -250,7 +297,9 @@ export default function Pictures() {
               <SendIcon sx={{ color: "#65676b", }} />
             </StyledPostModalButton></Box>
           </StyledPostModalCreateCommentArea>
+
         </Box>
+
       </StyledPictureWrap>
     </StyledPictureSection>
         </>
