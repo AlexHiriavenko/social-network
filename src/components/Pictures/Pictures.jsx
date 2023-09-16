@@ -12,7 +12,9 @@ import CreateCommentModal from "../Modals/CreateCommentModal/index.jsx";
 import SendIcon from "@mui/icons-material/Send.js";
 import {useFormik} from "formik";
 import {commentPost, setVisiblePosts} from "../../redux/post.slice/post.slice.js";
-import {addImgComment, getImageComments} from "../../redux/user.slice/user.slice.js";
+import {addImgComment, getImageComments, updateUser} from "../../redux/user.slice/user.slice.js";
+import {editUser} from "../../editUser.js";
+import {useTheme} from "@emotion/react";
 const StyledPictureSection = styled("section")({
   backgroundColor: "#000",
   position: "fixed",
@@ -97,7 +99,7 @@ export default function Pictures() {
   const authUser = useSelector((state) => state.user?.authorizedUser);
   const pictures = useSelector((state) => state.pictures.pictures);
   const [comments,setComments] = useState([])
-
+  const theme = useTheme();
   // State
   const [showedPicture, setShowedPicture] = useState("");
   // Functions
@@ -118,12 +120,7 @@ export default function Pictures() {
       });
     }
   }
- async function updateComments(){
-   const comments = await dispatch(getImageComments(showedPicture.id))
-   console.log(comments)
-   setComments(comments.payload)
 
-  }
   function showNext() {
     if (pictures.allPictures.length - 1 !== showedPicture.number) {
       setShowedPicture({
@@ -143,7 +140,7 @@ export default function Pictures() {
       content: "",
       userName: ``,
     },
-    onSubmit: () => {
+    onSubmit: async() => {
       const newComment ={
 
         id: 0,
@@ -152,10 +149,10 @@ export default function Pictures() {
         imageId: showedPicture.id
 
       }
-      dispatch(addImgComment(newComment))
-    // updateComments()
+     await dispatch(addImgComment(newComment))
 
-
+        const comments = await dispatch(getImageComments(showedPicture.id))
+        setComments(comments.payload)
     }
   });
   // useEffect
@@ -198,7 +195,21 @@ export default function Pictures() {
             <ArrowForwardIosIcon />
           </StyledArrowBtn>
         )}
-        <Box style={{width:"30%",height:"100vh",backgroundColor:"white",zIndex:"10"}} >
+        <Box sx={{width:"30%",backgroundColor:"white",zIndex:"10",[theme.breakpoints.down('md')]: {
+          height:"100vh"
+          },
+          [theme.breakpoints.down('lg')]: {
+            height:"100vh"
+          },
+              [theme.breakpoints.down('xl')]: {
+          height:"100vh"
+        }
+          ,[theme.breakpoints.down('sm')]: {
+            width: '100%',
+            top:'60%',
+
+            position:'absolute'
+          }}} >
 
           {  comments?.map(comment => {
 
