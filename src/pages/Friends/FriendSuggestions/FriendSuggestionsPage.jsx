@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { getFriendSuggestions, createFriendship } from "../../../redux/friends/actionCreators";
-import { setCurrentFriend, removeSuggestions } from "../../../redux/friends/friends.slise";
+import { setCurrentFriend } from "../../../redux/friends/friends.slise";
 import SideBarFriends from "../SideBarForFriends";
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 import { setUser } from "../../../redux/user.slice/user.slice";
@@ -38,7 +38,7 @@ function FriendSuggestionsPage() {
             dispatch(setCurrentFriend({}));
             dispatch(setUser({}));
         }
-        dispatch(createFriendship({friendId: friend.friend.id}));
+        dispatch(createFriendship({friendID: friend.friend.id}));
     }
 
     const handleClickRemoveSuggestion = (payload) => {
@@ -46,7 +46,8 @@ function FriendSuggestionsPage() {
             dispatch(setCurrentFriend({}));
             dispatch(setUser({}))
         }
-        dispatch(removeSuggestions(payload));
+        console.log(payload.friend.id)
+        dispatch(createFriendship({status: 'removed', friendID: payload.friend.id }));
     }
 
     const textMessage = friendSuggestions.length > 0 
