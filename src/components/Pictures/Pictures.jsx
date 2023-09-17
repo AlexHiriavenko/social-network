@@ -177,6 +177,8 @@ export default function Pictures() {
 
         const comments = await dispatch(getImageComments(showedPicture.id))
         setComments(comments.payload)
+
+      formik.setFieldValue("content", "");
     }
   });
   // useEffect
@@ -235,6 +237,12 @@ export default function Pictures() {
           },
               [theme.breakpoints.down('xl')]: {
           height:"100vh"
+        },[theme.breakpoints.down('md')]: {
+          width: '100%',
+          top:'61%',
+          height:'39vh',
+
+          position:'absolute'
         }
           ,[theme.breakpoints.down('sm')]: {
             width: '100%',
