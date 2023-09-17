@@ -118,8 +118,23 @@ function Friend (props) {
         dispatch(setUser(payload));
     }
 
+    const mutualFriends = mutialFriendsAvatars 
+        ? mutialFriendsAvatars.map(el => 
+            <Link onClick={(e) => {e.stopPropagation(); handleMutualFriendClick(el)}} to={`/Profile`} key={el.id}>
+                <Avatar src={el.profilePicture ? el.profilePicture: userProfileImageDefault} 
+                    sx={{width: 16, height: 16, zIndex: 1000, pointerEvents: 'all'}}/>
+            </Link>)
+        : null;
+    
+    const mutualFriendsTooltip = mutualFriends.length>0 
+        ?   <Tooltip sx={{pointerEvents: 'all'}} title={listMutualFriends}>
+                <MutualFriendsList>
+                    {countMutualFriends} mutual friends
+                </MutualFriendsList>
+            </Tooltip>
+        : null;
+
     return (
-        <>
         <CardStyled horizontal={horizontal}>
             <Link to={referenseForLinks}  onClick={handleLinkClick}>
                 <CardMediaStyled horizontal={horizontal}
@@ -135,17 +150,9 @@ function Friend (props) {
                     </Link>
                     <Box sx={{ display: 'flex', gap: 1/2, height: 30}}>
                         <List sx={{ display: 'flex', '&:nth-last-of-type()': {ml: '-15%'}}}>
-                            {mutialFriendsAvatars && mutialFriendsAvatars.map(el => 
-                                <Link onClick={(e) => {e.stopPropagation(); handleMutualFriendClick(el)}} to={`/Profile`} key={el.id}>
-                                    <Avatar src={el.profilePicture ? el.profilePicture: userProfileImageDefault} 
-                                        sx={{width: 16, height: 16, zIndex: 1000, pointerEvents: 'all'}}/>
-                                </Link>)}
+                            {mutualFriends}
                         </List>
-                        {mutualFriends.length>0 && <Tooltip sx={{pointerEvents: 'all'}} title={listMutualFriends}>
-                            <MutualFriendsList>
-                                {countMutualFriends} mutual friends
-                            </MutualFriendsList>
-                        </Tooltip>}
+                        {mutualFriendsTooltip}
                     </Box>
                 </CardContentStyled>
                 <CardActionsStyled horizontal={horizontal}>
@@ -156,7 +163,6 @@ function Friend (props) {
             {moreMenuButton}
             {additionalButtons}
         </CardStyled>
-        </>
     )
 }
 
