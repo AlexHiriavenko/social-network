@@ -9,7 +9,11 @@ export const getChats = createAsyncThunk("chat/getChats", async function () {
 
 export const getChatsParticipants = createAsyncThunk("chat/getParticipants", async function () {
     const { data } = await instance.get(`chats/participants`);
-    return data;
+    const sortedChats =
+        data.length > 1
+            ? data.toSorted((a, b) => new Date(b.lastMessageDate) - new Date(a.lastMessageDate))
+            : data;
+    return sortedChats;
 });
 
 export const getChat = createAsyncThunk("chat/getChat", async function (id) {

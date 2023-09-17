@@ -2,7 +2,6 @@ import { styled } from "@mui/material/styles";
 import { Typography, Box, Avatar, IconButton } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import { StyledPostModalAddFilesButton } from "../../../components/Modals/CreatePostModal";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 
@@ -129,7 +128,15 @@ export const BtnSendMessage = styled(IconButton)(({ theme, className }) => ({
     ...className,
 }));
 
-export const WrapperAddImgs = styled(StyledPostModalAddFilesButton)(({ theme, className }) => ({
+export const WrapperAddImgs = styled("label")(({ theme, className }) => ({
+    display: "block",
+    width: "36px",
+    height: "36px",
+    borderRadius: "50%",
+    transitionDuration: "300ms",
+    "&:hover": {
+        backgroundColor: theme.palette.buttonColor.backgroundHover,
+    },
     paddingBlock: "8px",
     paddingInline: "8px",
     boxSizing: "content-box",
