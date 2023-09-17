@@ -7,8 +7,10 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
     backgroundColor: theme.palette.backgroundColor.hover,
     borderRadius: "12px",
     boxShadow: theme.palette.shadow.down,
+    marginBottom: "8px",
     "& label": {
         color: theme.palette.textColor.secondary,
+        top: "6px",
     },
     "& label.Mui-focused": {
         color: theme.palette.textColor.secondary,
@@ -29,9 +31,11 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
         },
         "& input": {
             color: theme.palette.textColor.main, // Применяем цвет текста внутри инпута
+            paddingInline: "8px",
         },
         "& textarea": {
             color: theme.palette.textColor.main,
+            paddingInline: "8px",
         },
     },
 }));

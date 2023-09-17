@@ -10,7 +10,7 @@ import { addMessageToChat } from './redux/chat.slice/chat.slice';
 
 function App() {
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn, shallowEqual);
-    const authUser = useSelector((store)=>store.user.authorizedUser, shallowEqual);
+    const authUser = useSelector((store) => store.user.authorizedUser, shallowEqual);
 
     const dispatch = useDispatch();
 
@@ -26,7 +26,7 @@ function App() {
                 }
             }])
         }
-        if(isConnected && (!isLoggedIn || !authUser)) {
+        if (isConnected && (!isLoggedIn || !authUser)) {
             disconnectWebSocket();
         }
     }, [dispatch, isLoggedIn, authUser]);
