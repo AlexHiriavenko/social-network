@@ -8,12 +8,9 @@ import { closePictures } from "../../redux/pictures.slice/picture.slice";
 import { useEffect, useState } from "react";
 import {Box, Button, Typography} from '@mui/material'
 import Comment from "../Comment/index.jsx";
-import CreateCommentModal from "../Modals/CreateCommentModal/index.jsx";
 import SendIcon from "@mui/icons-material/Send.js";
 import {useFormik} from "formik";
-import {commentPost, setVisiblePosts} from "../../redux/post.slice/post.slice.js";
-import {addImgComment, getImageComments, getUser, updateUser} from "../../redux/user.slice/user.slice.js";
-import {editUser} from "../../editUser.js";
+import {addImgComment, getImageComments, getUser} from "../../redux/user.slice/user.slice.js";
 import {useTheme} from "@emotion/react";
 import {BlockUserImage} from "../UserProfile/StyledComponents/ContentBlock/StyledComponents.js";
 const StyledPictureSection = styled("section")({
@@ -94,6 +91,8 @@ const StyledPostModalButton = styled("button")(({ theme }) => ({
 const StyledCommentWrraper = styled("div")(({ theme }) => ({
   display: "flex",
   gap: "10px",
+  marginTop:"10px",
+  marginLeft:"10px"
 }));
 
 const StyledCommentContent = styled("div")(({ theme }) => ({
@@ -255,8 +254,10 @@ export default function Pictures() {
               </StyledCommentName>
 
             </StyledCommentContent>
+
           </StyledCommentWrraper>
-          <Box style={{width:"100%",height:"0.7px",backgroundColor:"grey"}}></Box>
+
+          <Box style={{width:"100%",height:"0.7px",backgroundColor:"grey",marginTop:"10px"}}></Box>
 <Box style={{marginLeft:"10px"}}>
           {  comments?.reverse().map((comment,index) => {
 
