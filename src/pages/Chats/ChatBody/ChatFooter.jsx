@@ -1,53 +1,20 @@
-import { Box, Avatar } from "@mui/material";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useTheme } from "@mui/material/styles";
 import { StyledTextField } from "../styledChatComponents";
-import { StyledAvatar, ChatFooterContainer } from "./StyledChatBody";
+import { ChatFooterContainer, AddImgsIcon, BtnSendMessage, WrapperAddImgs } from "./StyledChatBody";
 import SendIcon from "@mui/icons-material/Send";
-import { sendMessage } from "../../../redux/message.slice/message.slice";
-import { getChat } from "../../../redux/chat.slice/chat.slice";
+import { handleClickSend, handleKeyDown } from "../helpers/sendMessage";
+import { showChoosingPicture } from "../helpers/showChoosingPicture";
 
 function ChatFooter() {
     const dispatch = useDispatch();
-    const theme = useTheme();
     const inputRef = useRef(null);
+    const fileRef = useRef(null);
     const currentChat = useSelector((state) => state.chat.currentChat);
+    const [imgUrls, setImgUrls] = useState([]);
+    const [files, setFiles] = useState([]);
 
-    const handleKeyDown = (event) => {
-        if (event.key === "Enter" && inputRef.current.value.trim()) {
-            event.preventDefault();
-            const inputValue = inputRef.current.value.trim();
-            const newMessage = {
-                id: 0,
-                content: inputValue,
-                chatId: currentChat.id,
-            };
-            inputRef.current.value = "";
-            dispatch(sendMessage(newMessage))
-                .then(() => dispatch(getChat(currentChat.id)))
-                .catch((error) => {
-                    console.error("Error sending message:", error);
-                });
-        }
-    };
-
-    const handleClickSend = (event, id = 0) => {
-        if (inputRef.current.value.trim()) {
-            const inputValue = inputRef.current.value.trim();
-            const newMessage = {
-                id: 0,
-                content: inputValue,
-                chatId: currentChat.id,
-            };
-            inputRef.current.value = "";
-            dispatch(sendMessage(newMessage))
-                .then(() => dispatch(getChat(currentChat.id)))
-                .catch((error) => {
-                    console.error("Error sending message:", error);
-                });
-        }
-    };
+    const args = [dispatch, inputRef, currentChat, files, setFiles, setImgUrls];
 
     return (
         <ChatFooterContainer>
@@ -56,17 +23,41 @@ function ChatFooter() {
                 variant="outlined"
                 multiline
                 inputRef={inputRef}
-                onKeyDown={handleKeyDown}
-            />
-            <StyledAvatar
-                sx={{
-                    bgcolor: theme.palette.hoverColor.secondary,
-                    p: 1,
-                    boxSizing: "content-box",
+                onKeyDown={(event) => handleKeyDown(event, args)}
+                InputProps={{
+                    sx: {
+                        pr: 5,
+                        pt: 2,
+                        pb: 2,
+                        display: "flex",
+                        flexWrap: "wrap",
+                        gap: 1,
+                        minHeight: "70px",
+                    },
+                    endAdornment: (
+                        <>
+                            <WrapperAddImgs>
+                                <input
+                                    type="file"
+                                    ref={fileRef}
+                                    onChange={() =>
+                                        showChoosingPicture(fileRef, setFiles, setImgUrls)
+                                    }
+                                    style={{ display: "none" }}
+                                    multiple
+                                />
+                                <AddImgsIcon fontSize="large" />
+                            </WrapperAddImgs>
+                            {imgUrls.map((url, index) => (
+                                <img src={url} alt="" height={100} key={index} />
+                            ))}
+                        </>
+                    ),
                 }}
-                onClick={handleClickSend}>
+            ></StyledTextField>
+            <BtnSendMessage onClick={(event) => handleClickSend(event, args)}>
                 <SendIcon fontSize="large" color="primary" />
-            </StyledAvatar>
+            </BtnSendMessage>
         </ChatFooterContainer>
     );
 }
