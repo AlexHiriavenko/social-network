@@ -20,7 +20,11 @@ function UserFriendsPage() {
         : []);
 
     const [drawerOpen, setDrawerOpen] = useState(false);
-    const friendsCount = userFriends.length === 0 ? '' : userFriends.length;
+    const friendsCount = userFriends.length === 0 
+        ? '' 
+        : userFriends.length === 1
+            ? `${userFriends.length} Friend`
+            : `${userFriends.length} Friends`;
 
     useEffect(()=>{
         setDrawerOpen(currentFriend.id ? true : false);
@@ -49,8 +53,8 @@ function UserFriendsPage() {
     }, [dispatch])
 
     const textMessage = getFriendList.length > 0 
-    ? "Select people`s names to preview their profile." 
-    : "When you have any friend, you`ll see them here.";
+        ? "Select people`s names to preview their profile." 
+        : "When you have any friend, you`ll see them here.";
 
     const noItemMessage = "No friends yet.";
 
@@ -58,23 +62,22 @@ function UserFriendsPage() {
         <PageBoxFriendsWrapper>
             <PageBoxFriends>
                 <SideBarFriends sideBarItems={userFriends}
-                                    headerTitle={"All Friends"}
-                                    subTitle={`${friendsCount} Friends`}
-                                    noItemMessage={noItemMessage}
-                                    isAvatarMutualFriend={false}
-                                    search={true}
-                                    handleChangeValue={handleChangeValue} 
-                                    placeholderText='Search Friends'
-                                    isMoreMenuButton={true}
-                                    handleClickUnfriend={handleClickUnfriend}
-                                    openDrawer={setDrawerOpen}/>
-                    <FriendProfileML currentFriend={currentFriend} textMessage={textMessage}/>
-                    <FriendProfileS
-                        drawerOpen={drawerOpen} 
-                        setDrawerOpen={setDrawerOpen} 
-                        currentFriend={currentFriend} 
-                        subtitleText={"All Friends"}
-                    />
+                                headerTitle={"All Friends"}
+                                subTitle={friendsCount}
+                                noItemMessage={noItemMessage}
+                                isAvatarMutualFriend={false}
+                                search={true}
+                                handleChangeValue={handleChangeValue} 
+                                placeholderText='Search Friends'
+                                isMoreMenuButton={true}
+                                handleClickUnfriend={handleClickUnfriend}
+                                openDrawer={setDrawerOpen}/>
+                    <FriendProfileML currentFriend={currentFriend} 
+                                textMessage={textMessage}/>
+                    <FriendProfileS drawerOpen={drawerOpen} 
+                                setDrawerOpen={setDrawerOpen} 
+                                currentFriend={currentFriend} 
+                                subtitleText={"All Friends"}/>
             </PageBoxFriends>
         </PageBoxFriendsWrapper>
     )

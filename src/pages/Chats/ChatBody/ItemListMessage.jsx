@@ -61,14 +61,16 @@ function ItemListMessage({ message }) {
                 </Tooltip>
                 <WrapBns id={"message" + message.id}>
                     {isAuthUser(authUserId, message.sender.id) ? (
-                        <AuthUserMessage>{message.content ? message.content : ""}</AuthUserMessage>
-                    ) : (
-                        <PartnerUserMessage>
-                            {message.content ? message.content : ""}
-                        </PartnerUserMessage>
-                    )}
+                        message.content ? (
+                            <AuthUserMessage>{message.content}</AuthUserMessage>
+                        ) : null
+                    ) : message.content ? (
+                        <PartnerUserMessage>{message.content}</PartnerUserMessage>
+                    ) : null}
                     {isAuthUser(authUserId, message.sender.id) ? (
-                        <StyledMessageBtnGroup>
+                        <StyledMessageBtnGroup
+                            sx={{ flexDirection: message.content ? "column" : "row" }}
+                        >
                             <BtnEditMessage
                                 onClick={(event) =>
                                     handleOpenEdit(event, message.id, message.content)

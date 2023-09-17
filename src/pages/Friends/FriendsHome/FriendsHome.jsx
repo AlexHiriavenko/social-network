@@ -1,7 +1,6 @@
 import {useEffect} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import { getFriendList, getFriendshipRequests, getFriendSuggestions,  createFriendship, updateFriendship } from '../../../redux/friends/actionCreators';
-import { removeSuggestions, } from '../../../redux/friends/friends.slise';
 import { PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 import { handleLinkClick } from '../handleClickLink';
 import FriendsHomeLM from './FriendsHomeLM';
@@ -36,11 +35,11 @@ function FriendsHome() {
         dispatch(updateFriendship(payload));
     }
     const handleClickAdd = (friendId) => {
-        dispatch(createFriendship({friendId: friendId}));
+        dispatch(createFriendship({friendID: friendId}));
     }
 
     const handleClickRemoveSuggestion = (payload) => {
-        dispatch(removeSuggestions(payload));
+        dispatch(createFriendship({status: 'removed', friendID: payload.friend.id }));
     }
 
     const handleClickLinklocal = (friend) => {

@@ -7,10 +7,7 @@ export const handleClickSend = (event, args) => {
     const formData = new FormData();
     const inputValue = inputRef.current.value.trim();
 
-    if (inputValue) {
-        formData.append("content", inputValue);
-    }
-
+    formData.append("content", inputValue);
     formData.append("chatId", currentChat.id);
 
     if (files.length) {
@@ -43,9 +40,7 @@ export const handleKeyDown = (event, args) => {
     if (event.key === "Enter" && inputRef.current.value.trim()) {
         event.preventDefault();
 
-        if (inputValue) {
-            formData.append("content", inputValue);
-        }
+        formData.append("content", inputValue);
 
         formData.append("chatId", currentChat.id);
 
