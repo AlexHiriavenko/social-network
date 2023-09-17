@@ -5,31 +5,17 @@ import Modals from "./components/Modals/Modals";
 import { connectWebSocket, disconnectWebSocket, isConnected } from "./socket";
 import AllRoutes from "./components/Routes";
 
-import {
-    addNewMessages,
-    addNotifications,
-} from "./redux/notifications.slice/notifications.slice";
+import { addNotifications } from "./redux/notifications.slice/notifications.slice";
+import { addMessageToChat } from "./redux/chat.slice/chat.slice";
 
 function App() {
-    const isLoggedIn = useSelector(
-        (state) => state.login.isLoggedIn,
-        shallowEqual
-    );
-    const authUser = useSelector(
-        (store) => store.user.authorizedUser,
-        shallowEqual
-    );
+    const isLoggedIn = useSelector((state) => state.login.isLoggedIn, shallowEqual);
+    const authUser = useSelector((store) => store.user.authorizedUser, shallowEqual);
 
-    const notifications = useSelector(
-        (store) => store.notifications.notifications,
-        shallowEqual
-    );
-    const messages = useSelector(
-        (store) => store.notifications.newMessages,
-        shallowEqual
-    );
-    // console.log(notifications);
-    // console.log(messages);
+    const notifications = useSelector((store) => store.notifications.notifications, shallowEqual);
+    const messages = useSelector((store) => store.notifications.newMessages, shallowEqual);
+    console.log(notifications);
+    console.log(messages);
 
     const dispatch = useDispatch();
 
@@ -39,14 +25,13 @@ function App() {
                 {
                     topic: `/topic/messages/user.${authUser.id}`,
                     callback: (message) => {
-                        // console.log(message);
-                        dispatch(addNewMessages(JSON.parse(message.body)));
+                        dispatch(addMessageToChat(JSON.parse(message.body)));
                     },
                 },
                 {
                     topic: `/topic/notification/user.${authUser.id}`,
                     callback: (message) => {
-                        // console.log(message);
+                        console.log(message);
                         dispatch(addNotifications(JSON.parse(message.body)));
                     },
                 },

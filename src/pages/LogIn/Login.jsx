@@ -10,9 +10,8 @@ import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import loginValidation from "./Validation/loginValidation";
 import RegisterModal from "./RegisterModal";
-import ForgotForm from "./ForgotForm";
 import { useDispatch, useSelector } from "react-redux";
-import {logIn, loginGoogle, setLogin} from "../../redux/login.slice/login.slice";
+import {logIn,  setLogin} from "../../redux/login.slice/login.slice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -70,7 +69,7 @@ export default function LogIn() {
 
   const [forgotModal, setForgotModal] = useState(false);
   const handleForgot = () => {
-    //setForgotModal(!forgotModal);
+
     navigate("/forgot");
   };
   const [showPassword, setShowPassword] = useState(false);
@@ -79,9 +78,12 @@ export default function LogIn() {
   };
   const recentLogin = localStorage.getItem("recentLogin") || [];
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+  const token = useSelector((state) => state.login.token);
   return (
       <>
-        {isLoggedIn ? null : (
+
+        {isLoggedIn  ? null : (
+
             <section className="login-section">
               <Container maxWidth="xl">
                 <div className="login-section__wrapper">
@@ -178,10 +180,6 @@ export default function LogIn() {
                               `${import.meta.env.VITE_APP_API_URL}/api/auth`,
                               { email: url }
                           );
-
-
-
-
 
                         }} >
                       Login with Google

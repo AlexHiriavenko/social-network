@@ -37,6 +37,7 @@ const chatSlice = createSlice({
             ];
         },
         resetCurrentChat: function (state, action) {
+            console.log("clear currentChat");
             state.currentChat = initialState.currentChat;
             state.isOpened = false;
         },
@@ -52,6 +53,17 @@ const chatSlice = createSlice({
             );
             if (targetIndex !== -1) {
                 state.chatsParticipants.splice(targetIndex, 1);
+            }
+        },
+        addMessageToChat: function (state, action) {
+            state.chatsParticipants = state.chatsParticipants.map(el => {if (el.id === action.payload.chatId) {
+                    el.content = action.payload.content;
+                    el.fullName = action.payload.sender.fullName;
+                }
+                return el;
+            })
+            if (state.currentChat.id === action.payload.chatId) {
+                state.currentChat.messages.push(action.payload);
             }
         },
     },
@@ -95,6 +107,7 @@ export const {
     setTemporaryParticipant,
     deleteTemporaryParticipant,
     setChatsList,
+    addMessageToChat,
 } = chatSlice.actions;
 
 export const { openPageChat, closePageChat, setChatInitialState } =
