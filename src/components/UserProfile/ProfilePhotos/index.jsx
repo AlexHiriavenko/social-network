@@ -243,7 +243,7 @@ export default function Photos() {
                               }}
                               aria-labelledby="modal-modal-title"
                               aria-describedby="modal-modal-description"
-                              sx={{ paddingLeft: "5px", paddingRight: "5px",backgroundColor:"white",opacity:"0.5" }}
+                              sx={{ paddingLeft: "5px", paddingRight: "5px",backgroundColor:"white",opacity:"0.65" }}
                           >
                             <StyledEditProfileModal>
                               <StyledModalCloseButton
@@ -261,8 +261,8 @@ export default function Photos() {
                                   Are you sure You want to delete this image?
                                 </StyledEditedPartTitle>
                                 <Button
-                                    onClick={()=>{
-                                      dispatch(deleteUserImage(imgId))
+                                    onClick={async()=>{
+                                     await dispatch(deleteUserImage(imgId))
                                       editUser(dispatch)
                                       setModalOpen(false)
 
