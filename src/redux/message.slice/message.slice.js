@@ -2,14 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "../../instance.js";
 import axios from "axios";
 
-// export const sendMessage = createAsyncThunk(
-//     "chat/sendMessage",
-//     async function (newMessage) {
-//         const { status } = await instance.post(`/messages`, newMessage);
-//         console.log(status);
-//     }
-// );
-
 export const sendMessage = createAsyncThunk("chat/sendMessage", async function ({ files }) {
     console.log("slice work");
     let accessToken = JSON.parse(localStorage.getItem("token"));
