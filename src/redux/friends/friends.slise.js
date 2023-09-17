@@ -4,7 +4,6 @@ import { getFriendList, getFriendshipRequests, getFriendSuggestions, createFrien
 
 const initialState = {
   friendsList: [],
-  isNeedToRefreshFriends: false,
   friendsRequests: [],
   friendSuggestions: [],
   currentFriend: {},
@@ -15,12 +14,8 @@ const friendsSlice = createSlice({
   name: "friends",
   initialState,
   reducers: {
-    setInitialState:function (state){
-      state.friendsList = []
-      state.friendsRequests= []
-      state.friendSuggestions= []
-      state.birthdays = [[]]
-      state.currentFriend={}
+    setInitialState: function (state){
+      state = initialState;
     },
     removeSuggestions: function (state, action) {
       state.friendSuggestions = state.friendSuggestions.filter(el => el.friend.id != action.payload.friend.id);
@@ -39,15 +34,12 @@ const friendsSlice = createSlice({
     }, */
     [getFriendList.fulfilled]: (state, action)=>{
       state.friendsList = action.payload;
-      state.isNeedToRefreshFriends = false;
     },
     [getFriendshipRequests.fulfilled]: (state, action)=>{
       state.friendsRequests = action.payload;
-      state.isNeedToRefreshRequests = false;
     },
     [getFriendSuggestions.fulfilled]: (state, action)=>{
       state.friendSuggestions = action.payload;
-      state.isNeedToRefreshSuggestions = false;
     },
     [createFriendship.fulfilled]: (state, action)=>{
       state.friendsRequests.push(action.payload);

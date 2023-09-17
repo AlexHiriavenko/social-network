@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../../instance";
 import axios from "axios";
-import {initialState} from "../chat.slice/chatInitialStates.js";
+
 
 //Получение всех пользователей
 export const getUsers = createAsyncThunk("Users/getUsers", async function () {
@@ -32,6 +32,23 @@ export const getUserImages = createAsyncThunk(
         return data;
     }
 );
+export const getImageComments = createAsyncThunk(
+    "Users/getImageComments",
+    async function (id) {
+        const { data } = await instance.get(`/comments/image/${id}`);
+
+        return data;
+    }
+);
+
+export const addImgComment = createAsyncThunk(
+    "Users/addImgComment",
+    async function (newComment) {
+        const { data } = await instance.post(`/comments`,newComment);
+
+        return data;
+    }
+);
 //Редактирование юзера
 export const uploadAvatar = createAsyncThunk(
     "Users/uploadAvatar",
@@ -40,15 +57,15 @@ export const uploadAvatar = createAsyncThunk(
         console.log(multipartFile)
         let accessToken = JSON.parse(localStorage.getItem('token'))
 
-        await axios.post(`${import.meta.env.VITE_APP_API_URL}/users/${id}/avatar`, multipartFile,
+        await axios.post(`${import.meta.env.VITE_APP_API_URL}/users/avatar`, multipartFile,
 
             {
 
                 headers:
-                {
-                    'Content-Type': 'multipart/form-data',
-                    'AUTHORIZATION': `Bearer ${accessToken}`
-                }
+                    {
+                        'Content-Type': 'multipart/form-data',
+                        'AUTHORIZATION': `Bearer ${accessToken}`
+                    }
             }
         )
 
@@ -62,14 +79,14 @@ export const uploadCoverPhoto = createAsyncThunk(
 
 
         let accessToken = JSON.parse(localStorage.getItem('token'))
-        await axios.post(`${import.meta.env.VITE_APP_API_URL}/users/${id}/header`, multipartFile,
+        await axios.post(`${import.meta.env.VITE_APP_API_URL}/users/header`, multipartFile,
             {
 
                 headers:
-                {
-                    'Content-Type': 'multipart/form-data',
-                    'AUTHORIZATION': `Bearer ${accessToken}`
-                }
+                    {
+                        'Content-Type': 'multipart/form-data',
+                        'AUTHORIZATION': `Bearer ${accessToken}`
+                    }
             }
         )
 
@@ -82,7 +99,7 @@ export const uploadPhotos = createAsyncThunk(
     async function ({ multipartFiles, id }) {
 
         let accessToken = JSON.parse(localStorage.getItem('token'))
-        await axios.post(`${import.meta.env.VITE_APP_API_URL}/users/${id}/image`, multipartFiles,
+        await axios.post(`${import.meta.env.VITE_APP_API_URL}/users/image`, multipartFiles,
             {
 
                 headers:
@@ -103,7 +120,7 @@ export const findByPartOfName = createAsyncThunk(
 
 
         let accessToken = JSON.parse(localStorage.getItem('token'))
-       let user =  await axios.get(`${import.meta.env.VITE_APP_API_URL}/users/part`,
+        let user =  await axios.get(`${import.meta.env.VITE_APP_API_URL}/users/part`,
             {
                 params:{part:part},
                 headers:
@@ -113,17 +130,21 @@ export const findByPartOfName = createAsyncThunk(
                     }
             }
         )
-return user.data;
+        return user.data;
 
     }
 
 );
-
-
 export const updateUser = createAsyncThunk(
     "Users/updateUser",
     async function (updatedUser) {
         await instance.put("/users", updatedUser);
+    }
+);
+export const deleteUserImage = createAsyncThunk(
+    "Users/deleteUserImage",
+    async function (imgId) {
+        await instance.delete(`/userImages/${imgId}`);
     }
 );
 export const getMyChats = createAsyncThunk(
