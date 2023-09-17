@@ -6,7 +6,13 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useDispatch, useSelector } from "react-redux";
 import { closePictures } from "../../redux/pictures.slice/picture.slice";
 import { useEffect, useState } from "react";
-
+import {Box, Button, Typography} from '@mui/material'
+import Comment from "../Comment/index.jsx";
+import SendIcon from "@mui/icons-material/Send.js";
+import {useFormik} from "formik";
+import {addImgComment, getImageComments, getUser} from "../../redux/user.slice/user.slice.js";
+import {useTheme} from "@emotion/react";
+import {BlockUserImage} from "../UserProfile/StyledComponents/ContentBlock/StyledComponents.js";
 const StyledPictureSection = styled("section")({
   backgroundColor: "#000",
   position: "fixed",
@@ -20,6 +26,7 @@ const StyledPictureSection = styled("section")({
   display: "none",
 });
 const StyledPictureCloseWrap = styled("div")({
+
   display: "flex",
   columnGap: "20px",
   alignItems: "center",
@@ -28,13 +35,14 @@ const StyledPictureCloseWrap = styled("div")({
   left: "20px",
   cursor: "pointer",
 });
-const StyledPictureWrap = styled("div")({
+const StyledPictureWrap = styled("div")(({ theme })=>({
+
   display: "flex",
   columnGap: "20px",
   alignItems: "center",
   justifyContent: "center",
   height: "100vh",
-});
+}));
 const StyledArrowBtn = styled("button")({
   display: "flex",
   alignItems: "center",
@@ -52,21 +60,74 @@ const StyledArrowBtn = styled("button")({
     ":hover": { transform: "translateX(-10px)" },
   },
 });
-const StyledPicture = styled("img")({
+const StyledPicture = styled("img")(({ theme })=>({
+
   maxWidth: "70%",
   maxHeight: "100vh",
   minWidth: "50%",
   objectFit: "cover",
-});
+}));
+const StyledPostModalCreateCommentArea = styled("form")(({ theme }) => ({
+
+}));
+
+const StyledPostModalTextArea = styled("textarea")(({ theme }) => ({
+  color: theme.palette.textColor.main,
+  backgroundColor: theme.palette.input.mainBackground,
+  width: "100%",
+  resize: "none",
+  border: "none",
+  padding: "10px",
+  marginTop:"10px",
+  fontFamily: theme.typography.fontFamily,
+  borderRadius: "15px",
+  outline: "none",
+  "&::-webkit-scrollbar": {
+    width: "0",
+  },
+}));
+
+const StyledPostModalButton = styled("button")(({ theme }) => ({
+  marginLeft:"-20px",
+  cursor: "pointer",
+}));
+const StyledCommentWrraper = styled("div")(({ theme }) => ({
+  display: "flex",
+  gap: "10px",
+  marginTop:"10px",
+  marginLeft:"10px"
+}));
+
+const StyledCommentContent = styled("div")(({ theme }) => ({
+  backgroundColor: theme.palette.input.mainBackground,
+  padding: "8px 12px",
+  borderRadius: "18px",
+}));
+
+
+
+const StyledCommentName = styled(Typography)(({ theme }) => ({
+  display: "flex",
+  gap: "10px",
+  color: theme.palette.textColor.main,
+  fontWeight: 600,
+  fontFamily: "sans-serif",
+}));
+
 
 export default function Pictures() {
   // Constants
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.pictures.isOpen);
+  const authUser = useSelector((state) => state.user?.authorizedUser);
   const pictures = useSelector((state) => state.pictures.pictures);
+  const [comments,setComments] = useState([])
+  const [owner,setOwner] = useState(null)
+  const theme = useTheme();
   // State
   const [showedPicture, setShowedPicture] = useState("");
   // Functions
+
   function handleClose() {
     dispatch(closePictures());
   }
@@ -83,12 +144,14 @@ export default function Pictures() {
       });
     }
   }
+
   function showNext() {
     if (pictures.allPictures.length - 1 !== showedPicture.number) {
       setShowedPicture({
         ...pictures.allPictures[showedPicture.number + 1],
         number: showedPicture.number + 1,
       });
+      console.log(showedPicture)
     } else {
       setShowedPicture({
         ...pictures.allPictures[0],
@@ -96,35 +159,155 @@ export default function Pictures() {
       });
     }
   }
+  const formik = useFormik({
+    initialValues: {
+      content: "",
+      userName: ``,
+    },
+    onSubmit: async() => {
+      const newComment ={
+
+        id: 0,
+        authorId: authUser.id,
+        content: formik.values.content,
+        imageId: showedPicture.id
+
+      }
+     await dispatch(addImgComment(newComment))
+
+        const comments = await dispatch(getImageComments(showedPicture.id))
+        setComments(comments.payload)
+    }
+  });
   // useEffect
   useEffect(() => {
-    // console.log(pictures);
+
     pictures.allPictures?.forEach((item, index) => {
       if (item[pictures.pathName] === pictures?.selected[pictures.pathName]) {
         setShowedPicture({ ...pictures.selected, number: index });
       }
     });
   }, [pictures]);
+  useEffect(() => {
+    if(authUser ) {
+      (async function () {
+
+        const comments = await dispatch(getImageComments(showedPicture.id))
+
+        setComments(comments.payload)
+        if (showedPicture?.userId != authUser?.id) {
+          const user = await dispatch(getUser(showedPicture.userId))
+          setOwner(user.payload)
+        } else {
+          setOwner(authUser)
+        }
+      })()
+    }
+  }, [showedPicture]);
   return (
+      <>
     <StyledPictureSection style={{ display: isOpen && "block" }}>
       <StyledPictureCloseWrap onClick={handleClose}>
         <CloseBtn />
         <SvgFacebook />
       </StyledPictureCloseWrap>
-      <StyledPictureWrap>
+
+    <StyledPictureWrap>
+
         {pictures?.allPictures?.length > 1 && (
           <StyledArrowBtn onClick={showPrev}>
             <ArrowBackIosNewIcon />
           </StyledArrowBtn>
         )}
 
-        <StyledPicture src={showedPicture[pictures.pathName]} />
+        <StyledPicture  src={showedPicture[pictures.pathName]} />
+
         {pictures?.allPictures?.length > 1 && (
           <StyledArrowBtn onClick={showNext}>
             <ArrowForwardIosIcon />
           </StyledArrowBtn>
         )}
+        <Box sx={{width:"30%",backgroundColor:"white",zIndex:"10",[theme.breakpoints.down('md')]: {
+          height:"100vh"
+          },
+          [theme.breakpoints.down('lg')]: {
+            height:"100vh"
+          },
+              [theme.breakpoints.down('xl')]: {
+          height:"100vh"
+        }
+          ,[theme.breakpoints.down('sm')]: {
+            width: '100%',
+            top:'61%',
+            height:'39vh',
+
+            position:'absolute'
+          }}} >
+
+          <StyledCommentWrraper>
+            <BlockUserImage src={
+                owner?.profilePicture ||
+                "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
+            }
+                            alt=""
+                            width={40}
+                            height={40} />
+            <StyledCommentContent>
+              <StyledCommentName>
+                {owner?.fullName}
+
+              </StyledCommentName>
+
+            </StyledCommentContent>
+
+          </StyledCommentWrraper>
+
+          <Box style={{width:"100%",height:"0.7px",backgroundColor:"grey",marginTop:"10px"}}></Box>
+<Box style={{marginLeft:"10px"}}>
+          {  comments?.reverse().map((comment,index) => {
+
+            return <>
+            {
+                index <3 &&
+              <Box key={index} style={{marginTop: "10px"}}>
+                <Comment key={index} user={comment.author} content={comment.content} createdDate={comment.createdDate}/>
+              </Box>}
+
+
+            </>
+
+          })
+
+          }
+          {
+              comments?.length > 3 &&
+              <Button>View all comments</Button>
+
+          }
+        </Box >
+
+          <StyledPostModalCreateCommentArea onSubmit={formik.handleSubmit}>
+            <Box style={{display:"flex",margin:"7px"}}>
+
+            <StyledPostModalTextArea
+                cols="80"
+                rows={window.innerHeight < "850" ? "1" : "2"}
+                placeholder="Write a comment..."
+                onChange={formik.handleChange}
+                value={formik.values.content}
+                name="content"
+                id="content"
+            >
+            </StyledPostModalTextArea>
+            <StyledPostModalButton type="submit" onClick={formik.handleSubmit}>
+              <SendIcon sx={{ color: "#65676b", }} />
+            </StyledPostModalButton></Box>
+          </StyledPostModalCreateCommentArea>
+
+        </Box>
+
       </StyledPictureWrap>
     </StyledPictureSection>
+        </>
   );
 }
