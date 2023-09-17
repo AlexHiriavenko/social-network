@@ -1,11 +1,9 @@
-/* eslint-disable react/prop-types */
-// eslint-disable-next-line no-unused-vars
-import React from "react";
-import { Card, CardContent, CardMedia, Typography, Tooltip, Box, List, Avatar, CardActions } from "@mui/material";
+import { Tooltip, Box, List, Avatar } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import styled from "@emotion/styled";
+import { CardStyled, CardMediaStyled, CardContentStyled, FriendName, MutualFriendsList, CardActionsStyled, ContainerStyled } from './FriendStyledComponents';
 import { setUser } from "../../../redux/user.slice/user.slice";
+import PropTypes from 'prop-types';
 
 
 function Friend (props) {
@@ -29,6 +27,11 @@ function Friend (props) {
 
     const countForDisplayMF = 2;
     const countMutualFriends = mutualFriends.length;
+    const mutualFriendsListText = countMutualFriends === 1 
+        ? `${countMutualFriends} mutual friend`
+        : countMutualFriends > 1
+            ? `${countMutualFriends} mutual friends`
+            : null;
 
     const mutialFriendsAvatars = isAvatarMutualFriend 
         ? (mutualFriends && mutualFriends.length > 2 ? mutualFriends.slice(0, 2) : mutualFriends)
@@ -47,78 +50,11 @@ function Friend (props) {
             </ul>
             );
 
-    const CardStyled = styled(Card)(({horizontal, theme}) => ({
-        maxWidth: horizontal ? "100%" : "250px",
-        minWidth: horizontal ? '250px' : "200px",
-        width: horizontal ? '100%' : null,
-        display: "flex",
-        flexDirection: horizontal ? "row" : "column",
-        alignItems: horizontal ? 'center' : null,
-        margin: "4px",
-        flexShrink: 1,
-        backgroundColor: horizontal ? 'inherit' : theme.palette.backgroundColor.card,
-        '&:hover': horizontal ? 'inherit' : null,
-        boxShadow:  horizontal ? 'none' : null,
-        border: horizontal ? null: `solid 1px ${theme.palette.border.card}`,
-        zIndex: 100,
-        pointerEvents: horizontal ? 'none' : 'all',
-    }));
-
-    const CardMediaStyled = styled(CardMedia)(({horizontal}) => ({
-        width: horizontal ? '60px' : '100%',
-        height: horizontal ? '60px' : null,
-        borderRadius: horizontal ? '50%' : null,
-        paddingTop: '100%',
-    }))
-
-    const CardContentStyled = styled(CardContent)({
-        display: 'flex', 
-        flexDirection: 'column', 
-        paddingBottom: 0,
-    })
-
-    const FriendName = styled(Typography)(({theme, horizontal}) => ({
-        color: theme.palette.textColor.main, 
-        fontSize: '1.0625rem', 
-        fontWeight: '600', 
-        lineHeight: '1.1765',
-        fontFamily: 'inherit',
-        '&:hover': horizontal ? null : {textDecoration: 'underline' },
-    }))
-
-    const MutualFriendsList = styled(Typography)(({theme}) => ({
-        display: 'flex',
-        color: theme.palette.textColor.secondary, 
-        fontSize: '.9375rem', 
-        fontWeight: 'fontWeightRegular', 
-        lineHeight: '1.3333',
-        fontFamily: 'inherit',
-        alignItems: 'center',
-        cursor: 'pointer',
-    }))
-
-    const CardActionsStyled = styled(CardActions)(({horizontal}) => ({
-        display: 'flex', 
-        flexDirection: horizontal ? 'row' : 'column', 
-        gap: '6px', 
-        width: '100%', 
-        '&>:not(:first-of-type)': {marginLeft: 0}, 
-        paddingTop: 0 ,
-    }))
-
-    const ContainerStyled = styled(Box)({
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        flexShrink: 1,
-        justifyContent: 'center',
-    })
-
     const handleMutualFriendClick = (payload) => {
         dispatch(setUser(payload));
     }
 
-    const mutualFriends = mutialFriendsAvatars 
+    const mutualFriendsList = mutialFriendsAvatars 
         ? mutialFriendsAvatars.map(el => 
             <Link onClick={(e) => {e.stopPropagation(); handleMutualFriendClick(el)}} to={`/Profile`} key={el.id}>
                 <Avatar src={el.profilePicture ? el.profilePicture: userProfileImageDefault} 
@@ -129,7 +65,7 @@ function Friend (props) {
     const mutualFriendsTooltip = mutualFriends.length>0 
         ?   <Tooltip sx={{pointerEvents: 'all'}} title={listMutualFriends}>
                 <MutualFriendsList>
-                    {countMutualFriends} mutual friends
+                    {mutualFriendsListText}
                 </MutualFriendsList>
             </Tooltip>
         : null;
@@ -150,7 +86,7 @@ function Friend (props) {
                     </Link>
                     <Box sx={{ display: 'flex', gap: 1/2, height: 30}}>
                         <List sx={{ display: 'flex', '&:nth-last-of-type()': {ml: '-15%'}}}>
-                            {mutualFriends}
+                            {mutualFriendsList}
                         </List>
                         {mutualFriendsTooltip}
                     </Box>
@@ -165,5 +101,31 @@ function Friend (props) {
         </CardStyled>
     )
 }
+
+Friend.propTypes = {
+    mutualFriends: PropTypes.arrayOf(PropTypes.object),
+    friend: PropTypes.object, 
+    addButton: PropTypes.node, 
+    removeButton: PropTypes.node, 
+    horizontal: PropTypes.string,
+    referenseForLinks: PropTypes.string,
+    handleLinkClick: PropTypes.func,
+    isAvatarMutualFriend: PropTypes.bool,
+    additionalButtons: PropTypes.node,
+    moreMenuButton: PropTypes.node,
+  };
+  
+  Friend.defaultProps = {
+    mutualFriends: [],
+    friend: {}, 
+    addButton: <></>, 
+    removeButton: <></>, 
+    horizontal: "",
+    referenseForLinks: "",
+    handleLinkClick: () => { },
+    isAvatarMutualFriend: false,
+    additionalButtons: <></>,
+    moreMenuButton: <></>,
+  };
 
 export default Friend;
