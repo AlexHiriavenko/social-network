@@ -22,11 +22,9 @@ function PopupMenuFriends(props) {
   const isOpen = Boolean(anchorEl);
 
   const toggleMenu = () => {
-
     const getBoundingClientRect = () => {
       return buttonRef.current?.getBoundingClientRect();
     };
-
     setAnchorEl(anchorEl ? null : { getBoundingClientRect, nodeType: 1 });
   };    
 
@@ -43,70 +41,68 @@ function PopupMenuFriends(props) {
     alignItems: 'center',
     pointerEvents: 'all',
     position: 'relative',
-}));
+  }));
 
-const StyledAvatar = styled(Avatar)(({theme}) => ({
-  width: 24,
-  height: 40,
-  borderRadius: '50%',
-  minWidth: 40,
-  backgroundColor: 'inherit',
-  '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},
-  '&:active': {backgroundColor: theme.palette.buttonColor.background},
-  color: theme.palette.textColor.content,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  pointerEvents: 'none',
-}));
+  const StyledAvatar = styled(Avatar)(({theme}) => ({
+    width: 24,
+    height: 40,
+    borderRadius: '50%',
+    minWidth: 40,
+    backgroundColor: 'inherit',
+    '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},
+    '&:active': {backgroundColor: theme.palette.buttonColor.background},
+    color: theme.palette.textColor.content,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    pointerEvents: 'none',
+  }));
 
   return (
-    <>
-        <MoreButton onClick={(e) => {e.stopPropagation(); toggleMenu()}} ref={buttonRef} id="friend-menu-button"
+    <MoreButton onClick={(e) => {e.stopPropagation(); toggleMenu()}} ref={buttonRef} id="friend-menu-button"
                                 aria-controls={isOpen ? 'friend-menu' : undefined}
                                 aria-haspopup="true"
                                 aria-expanded={isOpen ? 'true' : undefined}>
-            <StyledAvatar>
-              <SVGThreeDots color={theme.palette.textColor.content}/>
-            </StyledAvatar>
-              <Menu
-                anchorEl={anchorEl}
-                id="friend-menu-button"
-                open={isOpen}
-                onClose={toggleMenu}
-                onClick={toggleMenu}
-                PaperProps={{
-                  elevation: 0,
-                  sx: {
-                    background: theme.palette.backgroundColor.card,
-                    color: theme.palette.textColor.content,
-                    overflow: 'visible',
-                    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                    mt: 1.5,
-                    '& .MuiAvatar-root': {
-                      width: 32,
-                      height: 32,
-                      ml: -0.5,
-                      mr: 1,
-                    },
+      <StyledAvatar>
+        <SVGThreeDots color={theme.palette.textColor.content}/>
+          </StyledAvatar>
+            <Menu
+              anchorEl={anchorEl}
+              id="friend-menu-button"
+              open={isOpen}
+              onClose={toggleMenu}
+              onClick={toggleMenu}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  background: theme.palette.backgroundColor.card,
+                  color: theme.palette.textColor.content,
+                  overflow: 'visible',
+                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                  mt: 1.5,
+                  '& .MuiAvatar-root': {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
                   },
-                }}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-              >
-          <MenuItem sx={{width: '300px', }} onClick={(e) => {e.stopPropagation(); handleClickUnfriend(e); toggleMenu();}}>
-            <PersonRemoveIcon sx={{margin: 1}}/>
-            <Typography sx={{px: 2}}>Unfriend</Typography>
-          </MenuItem>
-        </Menu>
-        </MoreButton>
-    </>
+                },
+              }}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+            >
+        <MenuItem sx={{width: '300px', }} onClick={(e) => {e.stopPropagation(); handleClickUnfriend(e); toggleMenu();}}>
+          <PersonRemoveIcon sx={{margin: 1}}/>
+          <Typography sx={{px: 2}}>Unfriend</Typography>
+        </MenuItem>
+      </Menu>
+    </MoreButton>
   );
 }
 

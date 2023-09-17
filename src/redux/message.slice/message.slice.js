@@ -12,7 +12,6 @@ export const sendMessage = createAsyncThunk(
 export const editMessage = createAsyncThunk(
     "chat/editMessage",
     async function (message) {
-        console.log(message);
         const { status } = await instance.put(`/messages`, message);
         console.log(status);
     }

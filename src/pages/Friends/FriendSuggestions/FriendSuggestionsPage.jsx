@@ -46,7 +46,6 @@ function FriendSuggestionsPage() {
             dispatch(setCurrentFriend({}));
             dispatch(setUser({}))
         }
-        console.log(payload.friend.id)
         dispatch(createFriendship({status: 'removed', friendID: payload.friend.id }));
     }
 
@@ -60,22 +59,21 @@ function FriendSuggestionsPage() {
         <PageBoxFriendsWrapper>
             <PageBoxFriends>
                 <SideBarFriends sideBarItems={friendSuggestions}
-                                    headerTitle={"Friend suggestions"}
-                                    subTitle={"People You May Know"}
-                                    noItemMessage={noItemMessage}
-                                    handleClickConfirm={handleClickAdd}
-                                    handleClickRemove={handleClickRemoveSuggestion}
-                                    isAvatarMutualFriend={true}
-                                    isRemoveButton={true}
-                                    isAddButton={true}
-                                    openDrawer={setDrawerOpen}/>
-                    <FriendProfileML currentFriend={currentFriend} textMessage={textMessage}/>
-                    <FriendProfileS
-                        drawerOpen={drawerOpen} 
-                        setDrawerOpen={setDrawerOpen} 
-                        currentFriend={currentFriend} 
-                        subtitleText={"Friends Suggestions"}
-                    />
+                                headerTitle={"Friend suggestions"}
+                                subTitle={"People You May Know"}
+                                noItemMessage={noItemMessage}
+                                handleClickConfirm={handleClickAdd}
+                                handleClickRemove={handleClickRemoveSuggestion}
+                                isAvatarMutualFriend={true}
+                                isRemoveButton={true}
+                                isAddButton={true}
+                                openDrawer={setDrawerOpen}/>
+                    <FriendProfileML currentFriend={currentFriend} 
+                                textMessage={textMessage}/>
+                    <FriendProfileS drawerOpen={drawerOpen} 
+                                setDrawerOpen={setDrawerOpen} 
+                                currentFriend={currentFriend} 
+                                subtitleText={"Friends Suggestions"}/>
             </PageBoxFriends>
         </PageBoxFriendsWrapper>
     )

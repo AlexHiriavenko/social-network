@@ -60,13 +60,20 @@ const chatSlice = createSlice({
             state.chatsParticipants = state.chatsParticipants.map(el => {if (el.id === action.payload.chatId) {
                     el.content = action.payload.content;
                     el.fullName = action.payload.sender.fullName;
-                    el.userId = action.payload.sender.id;
+                    el.userId = action.payload.sender.fullName;
                 }
                 return el;
             })
+            console.log(state.currentChat.id)
+            console.log(action.payload.chatId)
+
             if (state.currentChat.id === action.payload.chatId) {
-                state.currentChat.messages.push(action.payload);
-            }
+                const index = state.currentChat.messages.findLastIndex(el => el.id === action.payload.id);
+                if(index !== -1) {
+                    state.currentChat.messages[index].content = action.payload.content;
+                } else {
+                    state.currentChat.messages.push(action.payload);
+            }}
         },
     },
     extraReducers: (builder) => {
