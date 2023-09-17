@@ -4,7 +4,7 @@ function EditPhotoSvg() {
 
 
     return (
-        <svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        <svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
              width="25px" height="25px" viewBox="0 0 494.936 494.936"
         >
             <g>

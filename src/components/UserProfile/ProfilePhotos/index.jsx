@@ -200,20 +200,21 @@ export default function Photos() {
               Add new photo
             </StyledAddPhotoButton>
         )}
-        <StyledPhotosList>
+        <StyledPhotosList  >
           {images?.map((image, index) => {
             return (
                 <>
 
 
-                  <Box         style={{ width:"213px",height:"250px" }}>
+                  <Box    key={index}     style={{ width:"213px",height:"250px" }}>
                     {isAuthorized && (
 
                         <>
-                          <Box style={{display:"flex",flexDirection:"raw",width:"213px"
+                          <Box    key={index}  style={{display:"flex",flexDirection:"raw",width:"213px"
                           }}>
 
                             <StyledEditPhotoButton
+                                key={index}
                                 onClick={()=>{
                                   toggleOpenMenu(index)
                                   setIndex(index)

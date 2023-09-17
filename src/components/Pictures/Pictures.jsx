@@ -26,6 +26,7 @@ const StyledPictureSection = styled("section")({
   display: "none",
 });
 const StyledPictureCloseWrap = styled("div")({
+
   display: "flex",
   columnGap: "20px",
   alignItems: "center",
@@ -34,13 +35,14 @@ const StyledPictureCloseWrap = styled("div")({
   left: "20px",
   cursor: "pointer",
 });
-const StyledPictureWrap = styled("div")({
+const StyledPictureWrap = styled("div")(({ theme })=>({
+
   display: "flex",
   columnGap: "20px",
   alignItems: "center",
   justifyContent: "center",
   height: "100vh",
-});
+}));
 const StyledArrowBtn = styled("button")({
   display: "flex",
   alignItems: "center",
@@ -58,12 +60,13 @@ const StyledArrowBtn = styled("button")({
     ":hover": { transform: "translateX(-10px)" },
   },
 });
-const StyledPicture = styled("img")({
+const StyledPicture = styled("img")(({ theme })=>({
+
   maxWidth: "70%",
   maxHeight: "100vh",
   minWidth: "50%",
   objectFit: "cover",
-});
+}));
 const StyledPostModalCreateCommentArea = styled("form")(({ theme }) => ({
 
 }));
@@ -186,18 +189,20 @@ export default function Pictures() {
     });
   }, [pictures]);
   useEffect(() => {
-    (async function(){
-      const comments = await dispatch(getImageComments(showedPicture.id))
+    if(authUser ) {
+      (async function () {
 
-      setComments(comments.payload)
-      if(showedPicture.userId != authUser.id){
-        const user = await  dispatch(getUser(showedPicture.userId))
-        setOwner(user.payload)
-      }else{
-        setOwner(authUser)
-      }
-    })(
-    )
+        const comments = await dispatch(getImageComments(showedPicture.id))
+
+        setComments(comments.payload)
+        if (showedPicture?.userId != authUser?.id) {
+          const user = await dispatch(getUser(showedPicture.userId))
+          setOwner(user.payload)
+        } else {
+          setOwner(authUser)
+        }
+      })()
+    }
   }, [showedPicture]);
   return (
       <>
@@ -215,7 +220,7 @@ export default function Pictures() {
           </StyledArrowBtn>
         )}
 
-        <StyledPicture src={showedPicture[pictures.pathName]} />
+        <StyledPicture  src={showedPicture[pictures.pathName]} />
 
         {pictures?.allPictures?.length > 1 && (
           <StyledArrowBtn onClick={showNext}>
@@ -233,8 +238,8 @@ export default function Pictures() {
         }
           ,[theme.breakpoints.down('sm')]: {
             width: '100%',
-            top:'60%',
-            height:'30vh',
+            top:'61%',
+            height:'39vh',
 
             position:'absolute'
           }}} >
@@ -264,8 +269,8 @@ export default function Pictures() {
             return <>
             {
                 index <3 &&
-              <Box style={{marginTop: "10px"}}>
-                <Comment user={comment.author} content={comment.content} createdDate={comment.createdDate}/>
+              <Box key={index} style={{marginTop: "10px"}}>
+                <Comment key={index} user={comment.author} content={comment.content} createdDate={comment.createdDate}/>
               </Box>}
 
 
@@ -279,10 +284,10 @@ export default function Pictures() {
               <Button>View all comments</Button>
 
           }
-        </Box>
+        </Box >
 
           <StyledPostModalCreateCommentArea onSubmit={formik.handleSubmit}>
-            <Box style={{display:"flex"}}>
+            <Box style={{display:"flex",margin:"7px"}}>
 
             <StyledPostModalTextArea
                 cols="80"
