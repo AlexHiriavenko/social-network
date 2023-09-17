@@ -12,22 +12,60 @@ import PropTypes from 'prop-types';
 
 function FriendsHomeLM(props) {
 
-const { 
-    friendsRequestsToUser, 
-    friendSuggestions, 
-    handleClickLinklocal, 
-    handleClickConfirm, 
-    handleClickRemove,
-    handleClickAdd,
-    handleClickRemoveSuggestion
-} = props;
+    const { 
+        friendsRequestsToUser, 
+        friendSuggestions, 
+        handleClickLinklocal, 
+        handleClickConfirm, 
+        handleClickRemove,
+        handleClickAdd,
+        handleClickRemoveSuggestion
+    } = props;
 
-const theme = useTheme();
+    const theme = useTheme();
+
+    const friendsRequestsList = friendsRequestsToUser.map(fr => 
+                            <Friend key={fr.id}
+                                    referenseForLinks={"/friends/requests/"}
+                                    handleLinkClick={() => handleClickLinklocal(fr.user)}
+                                    mutualFriends={fr.mutualFriends}
+                                    isAvatarMutualFriend={true}
+                                    friend={fr.user} 
+                                    addButton={<ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.primary}} 
+                                                                    variant="contained" 
+                                                            onClick={() => handleClickConfirm(fr)}>Confirm</ButtonStyled>}
+                                    removeButton={<ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.background,
+                                                                    color: theme.palette.textColor.content,
+                                                                    '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover}}} 
+                                                            onClick={() => handleClickRemove(fr)}>Remove</ButtonStyled>}
+                            />)
+                            
+    const divider = friendSuggestions.length > 0 && friendsRequestsToUser.length > 0 
+        ? <Divider sx={{ my: '12px', borderColor: theme.palette.border.card}}/>
+        : null;
+
+    const friedSuggestionsList = friendSuggestions.map(fr => 
+                            <Friend 
+                                key={fr.friend.id}
+                                referenseForLinks={"/friends/suggestions/"}
+                                handleLinkClick={() => handleClickLinklocal(fr.friend)}
+                                mutualFriends={fr.mutualFriends}
+                                isAvatarMutualFriend={true}
+                                friend={fr.friend} 
+                                addButton={<ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.blueLight,
+                                                            '&:hover': {backgroundColor: theme.palette.buttonColor.blueLightHover,},
+                                                            color: theme.palette.textColor.blueLink}} 
+                                                        onClick={() => handleClickAdd( fr.friend.id)}>Add friend</ButtonStyled>}
+                                removeButton={<ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.background,
+                                                            '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},
+                                                            color: theme.palette.textColor.content}}
+                                                    onClick={() =>  handleClickRemoveSuggestion(fr)}>Remove</ButtonStyled>}
+                            />)
 
     return(
         <PageBoxFriends sx={{ display: 'flex', [theme.breakpoints.down('sm')]: {
             display: 'none',
-          },}}>
+        },}}>
             <SidebarStyled >
                 <SideBarWrapper>
                     <SideBarHeader>
@@ -37,56 +75,29 @@ const theme = useTheme();
                 </SideBarWrapper>
             </SidebarStyled>         
             <SectionWraper>
-            {friendsRequestsToUser.length > 0 && <Box sx={{px: '16px'}}>
+                {friendsRequestsToUser.length > 0 && 
+                <Box sx={{px: '16px'}}>
                     <SectorHeader>
                         <SectorTitle>Friend requests</SectorTitle>
                         <LinkStyled to="/friends/requests">See All</LinkStyled>
                     </SectorHeader>
                     <FriendsContainer>
-                    {
-                        friendsRequestsToUser.map(fr => <Friend 
-                            key={fr.id}
-                            referenseForLinks={"/friends/requests/"}
-                            handleLinkClick={() => handleClickLinklocal(fr.user)}
-                            mutualFriends={fr.mutualFriends}
-                            isAvatarMutualFriend={true}
-                            friend={fr.user} 
-                            addButton={<ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.primary}} 
-                                variant="contained" 
-                                onClick={() => handleClickConfirm(fr)}>Confirm</ButtonStyled>}
-                            removeButton={<ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.background,
-                                color: theme.palette.textColor.content,
-                                '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover}}} 
-                                onClick={() => handleClickRemove(fr)}>Remove</ButtonStyled>}/>)
-                    }
+                        {friendsRequestsList}
                     </FriendsContainer>
-                </Box>}
-                {friendSuggestions.length > 0 && friendsRequestsToUser.length > 0 
-                    && <Divider sx={{ my: '12px', borderColor: theme.palette.border.card}}/>}
-                {friendSuggestions.length > 0 && <Box sx={{px: '16px'}}>
+                </Box>
+                }
+                {divider}
+                {friendSuggestions.length > 0 && 
+                <Box sx={{px: '16px'}}>
                     <SectorHeader>
                         <SectorTitle>People you may know</SectorTitle>
                         <LinkStyled to="/friends/suggestions">See All</LinkStyled>
                     </SectorHeader>
                     <FriendsContainer>
-                    {
-                        friendSuggestions &&  friendSuggestions.map(fr => <Friend 
-                            key={fr.friend.id}
-                            referenseForLinks={"/friends/suggestions/"}
-                            handleLinkClick={() => handleClickLinklocal(fr.friend)}
-                            mutualFriends={fr.mutualFriends}
-                            isAvatarMutualFriend={true}
-                            friend={fr.friend} 
-                            addButton={<ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.blueLight,
-                                '&:hover': {backgroundColor: theme.palette.buttonColor.blueLightHover,},
-                                color: theme.palette.textColor.blueLink}} onClick={() => handleClickAdd( fr.friend.id)}>Add friend</ButtonStyled>}
-                            removeButton={<ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.background,
-                                '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},
-                                color: theme.palette.textColor.content}}
-                                onClick={() =>  handleClickRemoveSuggestion(fr)}>Remove</ButtonStyled>}/>)
-                    }
+                        {friedSuggestionsList}
                     </FriendsContainer>
-                </Box>}
+                </Box>
+                }
             </SectionWraper>
         </PageBoxFriends>
     )
