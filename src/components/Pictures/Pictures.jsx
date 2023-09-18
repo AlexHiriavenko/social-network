@@ -13,6 +13,7 @@ import {useFormik} from "formik";
 import {addImgComment, getImageComments, getUser} from "../../redux/user.slice/user.slice.js";
 import {useTheme} from "@emotion/react";
 import {BlockUserImage} from "../UserProfile/StyledComponents/ContentBlock/StyledComponents.js";
+
 const StyledPictureSection = styled("section")({
   backgroundColor: "#000",
   position: "fixed",
@@ -88,7 +89,7 @@ const StyledPostModalTextArea = styled("textarea")(({ theme }) => ({
 }));
 
 const StyledPostModalButton = styled("button")(({ theme }) => ({
-  marginLeft:"-20px",
+  marginLeft:"-23px",
   cursor: "pointer",
 }));
 const StyledCommentWrraper = styled("div")(({ theme }) => ({
@@ -103,7 +104,6 @@ const StyledCommentContent = styled("div")(({ theme }) => ({
   padding: "8px 12px",
   borderRadius: "18px",
 }));
-
 
 
 const StyledCommentName = styled(Typography)(({ theme }) => ({
@@ -122,12 +122,17 @@ export default function Pictures() {
   const authUser = useSelector((state) => state.user?.authorizedUser);
   const pictures = useSelector((state) => state.pictures.pictures);
   const [comments,setComments] = useState([])
+  const[openComments,setOpenComments]=useState(false)
   const [owner,setOwner] = useState(null)
+  const showComments = useSelector((state) => state.pictures.showComments);
   const theme = useTheme();
   // State
   const [showedPicture, setShowedPicture] = useState("");
   // Functions
-
+  const toggleComments = () =>{
+    openComments
+        ? setOpenComments(false)
+        : setOpenComments(true);}
   function handleClose() {
     dispatch(closePictures());
   }
@@ -229,6 +234,7 @@ export default function Pictures() {
             <ArrowForwardIosIcon />
           </StyledArrowBtn>
         )}
+      { showComments &&
         <Box sx={{width:"30%",backgroundColor:"white",zIndex:"10",[theme.breakpoints.down('md')]: {
           height:"100vh"
           },
@@ -271,7 +277,7 @@ export default function Pictures() {
           </StyledCommentWrraper>
 
           <Box style={{width:"100%",height:"0.7px",backgroundColor:"grey",marginTop:"10px"}}></Box>
-<Box style={{marginLeft:"10px"}}>
+         <Box style={{marginLeft:"10px"}}>
           {  comments?.reverse().map((comment,index) => {
 
             return <>
@@ -287,11 +293,29 @@ export default function Pictures() {
           })
 
           }
-          {
-              comments?.length > 3 &&
-              <Button>View all comments</Button>
 
-          }
+  {
+
+    comments?.reverse().map((comment,index) => {
+
+    return <>
+      {
+        openComments &&  index >=3 &&
+          <Box key={index} style={{marginTop: "10px"}}>
+            <Comment key={index} user={comment.author} content={comment.content} createdDate={comment.createdDate}/>
+          </Box>}
+
+
+    </>
+
+  })
+
+  }
+  {
+    comments?.length > 3 &&
+    <Button onClick={toggleComments}>View all comments</Button>
+
+}
         </Box >
 
           <StyledPostModalCreateCommentArea onSubmit={formik.handleSubmit}>
@@ -313,7 +337,7 @@ export default function Pictures() {
           </StyledPostModalCreateCommentArea>
 
         </Box>
-
+      }
       </StyledPictureWrap>
     </StyledPictureSection>
         </>

@@ -183,7 +183,7 @@ export default function Photos() {
 
   }
   const handleShowPictures = (allPictures, selected) => {
-    dispatch(showPictures());
+    dispatch(showPictures(true));
     dispatch(setPictures({ allPictures, selected, pathName: "imgUrl" }));
   };
   return (
