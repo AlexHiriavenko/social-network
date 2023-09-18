@@ -88,7 +88,7 @@ const StyledPostModalTextArea = styled("textarea")(({ theme }) => ({
 }));
 
 const StyledPostModalButton = styled("button")(({ theme }) => ({
-  marginLeft:"-20px",
+  marginLeft:"-23px",
   cursor: "pointer",
 }));
 const StyledCommentWrraper = styled("div")(({ theme }) => ({
@@ -103,7 +103,6 @@ const StyledCommentContent = styled("div")(({ theme }) => ({
   padding: "8px 12px",
   borderRadius: "18px",
 }));
-
 
 
 const StyledCommentName = styled(Typography)(({ theme }) => ({
@@ -277,7 +276,7 @@ export default function Pictures() {
           </StyledCommentWrraper>
 
           <Box style={{width:"100%",height:"0.7px",backgroundColor:"grey",marginTop:"10px"}}></Box>
-<Box style={{marginLeft:"10px"}}>
+         <Box style={{marginLeft:"10px"}}>
           {  comments?.reverse().map((comment,index) => {
 
             return <>
