@@ -298,7 +298,6 @@ export default function Pictures() {
           })
 
           }
-
   {
 
     comments?.reverse().map((comment,index) => {
