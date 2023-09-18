@@ -87,6 +87,11 @@ const StyledPostModalTextArea = styled("textarea")(({ theme }) => ({
     width: "0",
   },
 }));
+const StyledCommentSection = styled(Box)(({ theme }) => ({
+  width:"30%",
+  backgroundColor:` ${theme.palette.backgroundColor.section}`,
+  zIndex:"10"
+}));
 
 const StyledPostModalButton = styled("button")(({ theme }) => ({
   marginLeft:"-23px",
@@ -235,7 +240,7 @@ export default function Pictures() {
           </StyledArrowBtn>
         )}
       { showComments &&
-        <Box sx={{width:"30%",backgroundColor:"white",zIndex:"10",[theme.breakpoints.down('md')]: {
+        <StyledCommentSection sx={{[theme.breakpoints.down('md')]: {
           height:"100vh"
           },
           [theme.breakpoints.down('lg')]: {
@@ -336,7 +341,7 @@ export default function Pictures() {
             </StyledPostModalButton></Box>
           </StyledPostModalCreateCommentArea>
 
-        </Box>
+        </StyledCommentSection>
       }
       </StyledPictureWrap>
     </StyledPictureSection>
