@@ -13,6 +13,7 @@ import {useFormik} from "formik";
 import {addImgComment, getImageComments, getUser} from "../../redux/user.slice/user.slice.js";
 import {useTheme} from "@emotion/react";
 import {BlockUserImage} from "../UserProfile/StyledComponents/ContentBlock/StyledComponents.js";
+
 const StyledPictureSection = styled("section")({
   backgroundColor: "#000",
   position: "fixed",
