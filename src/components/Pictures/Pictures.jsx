@@ -210,7 +210,7 @@ export default function Pictures() {
     });
   }, [pictures]);
   useEffect(() => {
-    if(authUser ) {
+    if(authUser && showComments ) {
       (async function () {
 
         const comments = await dispatch(getImageComments(showedPicture.id))

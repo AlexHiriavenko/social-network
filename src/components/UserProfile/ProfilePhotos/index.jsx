@@ -184,7 +184,7 @@ export default function Photos() {
   }
   const handleShowPictures = (allPictures, selected) => {
     dispatch(showPictures(true));
-    dispatch(setPictures({ allPictures, selected, pathName: "imgUrl" }));
+    dispatch(setPictures({ allPictures, selected, pathName: "imageUrl" }));
   };
   return (
       <ContentBlock>
@@ -277,7 +277,7 @@ export default function Photos() {
                     <Box style={{width:"213px"}}>
 
                       <StyledPhotosImage
-                          src={image.imgUrl}
+                          src={image.imageUrl}
                           alt="foto"
                           width={213}
                           height={photoHeight}
