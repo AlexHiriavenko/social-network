@@ -21,7 +21,7 @@ export default function RegisterModal(props) {
   const dispatch = useDispatch();
   const { modal, handleModal } = props;
   const [message,setMessage] = useState(null);
-
+  const [errorMessage,setErrorMessage] = useState(null);
 
   const registerForm = useFormik({
     initialValues: {
@@ -35,8 +35,8 @@ export default function RegisterModal(props) {
       gender: "",
     },
     validationSchema: registerValidation,
-    onSubmit: () => {
-      dispatch(
+    onSubmit:async () => {
+    const status  = await dispatch(
         register({
           name: registerForm.values.name,
           surname: registerForm.values.surname,
@@ -48,10 +48,14 @@ export default function RegisterModal(props) {
           gender: registerForm.values.gender,
         })
       );
-      setMessage("Account successfully created. Please check your email to activate your account")
+
+    if(status.type == 'Login/register/fulfilled'){
+      setMessage("Account successfully created. Please check your email to activate your account")}
+    else{setErrorMessage("Account with this email already exists")}
        window.setTimeout(()=>{
          handleModal()
          setMessage(null)
+         setErrorMessage(null)
 
        },7000)
 
@@ -225,6 +229,7 @@ export default function RegisterModal(props) {
             </form>
           </Box>
           <h3 className="register_message">{message}</h3>
+          <h3 className="red">{errorMessage}</h3>
           <p className="form-footer-text">
             Люди, которые пользуются нашим сервисом, могли загрузить вашу
             контактную информацию на Facebook.{" "}

@@ -5,7 +5,6 @@ export const sendMessage = createAsyncThunk(
     "chat/sendMessage",
     async function (newMessage) {
         const { status } = await instance.post(`/messages`, newMessage);
-        console.log(status);
     }
 );
 
@@ -13,7 +12,6 @@ export const editMessage = createAsyncThunk(
     "chat/editMessage",
     async function (message) {
         const { status } = await instance.put(`/messages`, message);
-        console.log(status);
     }
 );
 
@@ -21,7 +19,6 @@ export const deleteMessage = createAsyncThunk(
     "chat/deleteMessage",
     async function (id) {
         const { status } = await instance.delete(`/messages/${id}`);
-        console.log(status);
     }
 );
 

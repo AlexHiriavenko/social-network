@@ -17,7 +17,11 @@ import {
   StyledModalTitle,
 } from "../StyledModalComponents";
 import Post from "../../Posts/Post/Post";
-import { createPost, repostPost } from "../../../redux/post.slice/post.slice";
+import {
+  createPost,
+  repostPost,
+  setVisiblePosts,
+} from "../../../redux/post.slice/post.slice";
 
 const StyledPostModalUser = styled(Box)({
   display: "flex",
@@ -107,6 +111,18 @@ export default function CreatePostModal() {
   const repost = useSelector((state) => state.modal.createPost.repost);
   const fileRef = useRef(null);
   const authUser = useSelector((state) => state.user.authorizedUser);
+  const visiblePosts = useSelector((state) => state.post.visiblePosts);
+  const basicPost = {
+    postType: "post",
+    parentId: null,
+    repostsUsers: [],
+    reposts: [],
+    createdBy: null,
+    updatedBy: null,
+    comments: [],
+    user: authUser,
+    likes: [],
+  };
   // State
   const [imgUrls, setImgUrls] = useState([]);
   const [files, setFiles] = useState([]);
@@ -135,13 +151,30 @@ export default function CreatePostModal() {
       userName: `${authUser && authUser?.fullName} `,
     },
     onSubmit: (values) => {
+      const actualDate = new Date();
+      const updatedPosts = [...visiblePosts];
 
       if (repost) {
         const repostResponse = dispatch(
           repostPost({ id: repost?.id, content: values.content })
         );
+
+        // Add Post to page top before reload
         repostResponse
           .then((response) => {
+            if (response.meta.requestStatus !== "fulfilled") return;
+
+            updatedPosts.unshift({
+              ...basicPost,
+              content: response.meta.arg.content,
+              createdDate: actualDate,
+              updatedDate: actualDate,
+              postImages: imgUrls.map((url) => ({ imgUrl: url })),
+              id: actualDate.getSeconds(),
+              parentId: repost,
+            });
+            dispatch(setVisiblePosts(updatedPosts));
+            // Reset Form
             values.content = "";
             setImgUrls([]);
             handleClose();
@@ -151,15 +184,34 @@ export default function CreatePostModal() {
         const formData = new FormData();
         formData.append("content", values.content);
         if (imgUrls.length !== 0) {
-          files.forEach(el => {
+          files.forEach((el) => {
             formData.append(`files`, el);
-          })
+          });
         }
-        const createResponse = dispatch(createPost({ multipartFiles: formData }));
-        createResponse.then((data) => console.log(data));
-        values.content = "";
-        setImgUrls([]);
-        handleClose();
+        const createPostResponse = dispatch(
+          createPost({ multipartFiles: formData })
+        );
+
+        // Add Post to page top before reload
+        createPostResponse
+          .then((response) => {
+            if (response.meta.requestStatus !== "fulfilled") return;
+
+            updatedPosts.unshift({
+              ...basicPost,
+              content: values.content,
+              createdDate: actualDate,
+              updatedDate: actualDate,
+              postImages: imgUrls.map((url) => ({ imgUrl: url })),
+              id: actualDate.getSeconds(),
+            });
+            dispatch(setVisiblePosts(updatedPosts));
+            // Reset Form
+            values.content = "";
+            setImgUrls([]);
+            handleClose();
+          })
+          .catch((e) => console.log(e));
       }
     },
   });
@@ -188,7 +240,9 @@ export default function CreatePostModal() {
             width={40}
             height={40}
           />
-          <StyledPostModalUserName>{authUser?.fullName}</StyledPostModalUserName>
+          <StyledPostModalUserName>
+            {authUser?.fullName}
+          </StyledPostModalUserName>
         </StyledPostModalUser>
         <StyledPostModalCreateArea onSubmit={formik.handleSubmit}>
           <StyledPostModalTextArea

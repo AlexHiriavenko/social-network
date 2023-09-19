@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate, useParams } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import PrivateRoute from "../../utils/router/PrivateRoute";
 import {
     Contacts,
@@ -29,15 +29,16 @@ import ForgotForm from "../../pages/LogIn/ForgotForm.jsx";
 
 export default function AllRoutes() {
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+    const token = useSelector((state) => state.login.token);
     const navigate = useNavigate();
-    let { id } = useParams();
+
     const handleLogIn = () => {
         //   dispatch(logIn());
         navigate("/");
     };
     return (
         <Routes>
-            <Route element={<PrivateRoute auth={isLoggedIn} />}>
+            <Route element={<PrivateRoute auth={isLoggedIn} token = {token} />}>
                 <Route path="/" element={<Home />} />
                 <Route path="/watch" element={<Watch />} />
                 <Route path="/groups" element={<Groups />} />

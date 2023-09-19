@@ -10,18 +10,14 @@ import {
 import AllRoutes from "./components/Routes";
 
 import { setAllNotifications, addNewMessages, addNewNotifications, getNotifications } from './redux/notifications.slice/notifications.slice';
+import { addMessageToChat } from './redux/chat.slice/chat.slice';
 
 
 function App() {
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn, shallowEqual);
     const authUser = useSelector((store) => store.user.authorizedUser, shallowEqual);
 
-    const unreadedNotifications = useSelector((store) => store.notifications.newNotifications, shallowEqual);
-    const allNotifications = useSelector((store) => store.notifications.allNotifications, shallowEqual)
     const messages = useSelector((store) => store.notifications.newMessages, shallowEqual);
-    console.log(unreadedNotifications);
-    console.log(allNotifications);
-    console.log(authUser);
 
     const dispatch = useDispatch();
 
@@ -29,12 +25,10 @@ function App() {
         if (isLoggedIn && authUser) {
             connectWebSocket([{
                 topic: `/topic/messages/user.${authUser.id}`, callback: (message) => {
-                    console.log(message);
-                    dispatch(addNewMessages(JSON.parse(message.body)));
+                    dispatch(addMessageToChat(JSON.parse(message.body)));
                 }
             }, {
                 topic: `/topic/notification/user.${authUser.id}`, callback: (message) => {
-                    console.log(message);
                     dispatch(addNewNotifications(JSON.parse(message.body)));
                 }
             }])
