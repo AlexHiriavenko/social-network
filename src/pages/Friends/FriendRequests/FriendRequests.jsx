@@ -100,21 +100,12 @@ function FriendRequests(){
                                     isRemoveButton={true}
                                     isConfirmButton={true}
                                     openDrawer={setDrawerOpen}/>
-                <FriendProfileML currentFriend={currentFriend} textMessage={textMessage}/>
-                <FriendProfileS
-                    drawerOpen={drawerOpen} 
-                    setDrawerOpen={setDrawerOpen} 
-                    currentFriend={currentFriend} 
-                    subtitleText={"Friends Requests"}
-                />
-                {/* <SectionWraper>
-                    { 
-                        currentFriend.id === undefined && <FriendEmptyPage>{textMessage}</FriendEmptyPage>
-                    }
-                    {
-                        !(currentFriend.id === undefined) && <Profile/>
-                    }
-                </SectionWraper> */}
+                <FriendProfileML currentFriend={currentFriend} 
+                                    textMessage={textMessage}/>
+                <FriendProfileS drawerOpen={drawerOpen} 
+                                    setDrawerOpen={setDrawerOpen} 
+                                    currentFriend={currentFriend} 
+                                    subtitleText={"Friends Requests"}/>
             </PageBoxFriends>
             <SentFriendRequestsModal/>
         </PageBoxFriendsWrapper>

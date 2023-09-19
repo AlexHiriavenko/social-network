@@ -9,11 +9,15 @@ import {
 } from "../../../../redux/chat.slice/chat.slice";
 import { sendMessage } from "../../../../redux/message.slice/message.slice";
 
-export function createNewChat(args, id, fullName, profilePicture) {
+export function createNewChat(args, userId, fullName, profilePicture) {
     const [dispatch, authUser, setNewMessageModal] = args;
-    // dispatch(deleteChat(19));
+    if (userId === authUser.id) {
+        alert("Нелья создать чат с самим собой");
+        return;
+    }
+    // dispatch(deleteChat(22));
     const currentChatCompanion = {
-        userId: id,
+        userId: userId,
         fullName: fullName,
         profilePicture: profilePicture,
     };
@@ -21,31 +25,30 @@ export function createNewChat(args, id, fullName, profilePicture) {
     setNewMessageModal(false);
     dispatch(setCurrentChatCompanion(currentChatCompanion));
     dispatch(openChat());
-    dispatch(createChat(id)).then(({ payload }) => {
-        if (payload[0].messages.length < 1) {
-            const chatID = payload[0].id;
-            const newMessage = {
-                id: 0,
-                content: `${authUser.fullName} created this chat with ${fullName}`,
-                chatId: chatID,
-            };
+    dispatch(createChat(userId)).then(({ payload }) => {
+        if (payload.messages.length < 1) {
+            const formData = new FormData();
+            const content = `${authUser.fullName} created this chat with ${fullName}`;
+            formData.append("content", content);
+            formData.append("chatId", payload.id);
+
             const newParticipant = {
-                content: newMessage.content,
+                content: content,
                 fullName: fullName,
-                id: chatID,
+                id: payload.id,
                 profilePicture: profilePicture,
-                userId: id,
+                userId: userId,
                 chatParticipant: [
                     {
-                        id: id,
+                        id: userId,
                         fullName: fullName,
                         profilePicture: profilePicture,
                     },
                 ],
             };
             dispatch(setChatsList(newParticipant));
-            dispatch(sendMessage(newMessage)).then(() => {
-                dispatch(getChat(chatID));
+            dispatch(sendMessage({ files: formData })).then(() => {
+                dispatch(getChat(payload.id));
             });
         }
     });

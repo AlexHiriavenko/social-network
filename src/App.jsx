@@ -17,8 +17,6 @@ function App() {
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn, shallowEqual);
     const authUser = useSelector((store) => store.user.authorizedUser, shallowEqual);
 
-    const messages = useSelector((store) => store.notifications.newMessages, shallowEqual);
-
     const dispatch = useDispatch();
 
     useEffect(() => {

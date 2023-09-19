@@ -48,7 +48,7 @@ export default function ProfilePostsPhotos() {
     if (photosRef.current) setPhotoHeight(photosRef.current.width);
   }
   const handleShowPictures = (allPictures, selected) => {
-    dispatch(showPictures());
+    dispatch(showPictures(true));
     dispatch(setPictures({ allPictures, selected, pathName: "imageUrl" }));
   };
   return (

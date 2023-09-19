@@ -32,6 +32,23 @@ export const getUserImages = createAsyncThunk(
         return data;
     }
 );
+export const getImageComments = createAsyncThunk(
+    "Users/getImageComments",
+    async function (id) {
+        const { data } = await instance.get(`/comments/image/${id}`);
+
+        return data;
+    }
+);
+
+export const addImgComment = createAsyncThunk(
+    "Users/addImgComment",
+    async function (newComment) {
+        const { data } = await instance.post(`/comments`,newComment);
+
+        return data;
+    }
+);
 //Редактирование юзера
 export const uploadAvatar = createAsyncThunk(
     "Users/uploadAvatar",
@@ -118,12 +135,16 @@ export const findByPartOfName = createAsyncThunk(
     }
 
 );
-
-
 export const updateUser = createAsyncThunk(
     "Users/updateUser",
     async function (updatedUser) {
         await instance.put("/users", updatedUser);
+    }
+);
+export const deleteUserImage = createAsyncThunk(
+    "Users/deleteUserImage",
+    async function (imgId) {
+        await instance.delete(`/userImages/${imgId}`);
     }
 );
 export const getMyChats = createAsyncThunk(

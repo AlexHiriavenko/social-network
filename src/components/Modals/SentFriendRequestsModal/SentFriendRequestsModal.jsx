@@ -1,12 +1,9 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { Dialog, DialogTitle, DialogContent, Divider, Typography, Box, Link } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, Divider, Typography, Box } from "@mui/material";
 import { closeSentFriendRequests } from  '../../../redux/modal.slice/modal.slice';
-import { StyledModalTitle, 
-        StyledModalCloseButton, 
-        StyledModalCloseButtonLine ,
-    } from '../StyledModalComponents';
+import { StyledModalTitle, StyledModalCloseButton, StyledModalCloseButtonLine } from '../StyledModalComponents';
 import Friend from '../../Friends/Friend/Friend';
 import styled from "@emotion/styled";
 import { useTheme } from '@mui/material/styles';
@@ -30,7 +27,11 @@ function SentFriendRequestsModal() {
         ? requests.filter((elem) => elem.status==='pending' && elem.user.id === authUser.id)
         : []);
 
-    const sentRequestsCount = sentRequests.length > 0 ? sentRequests.length : '';
+    const sentRequestsCount = sentRequests.length > 0 
+        ? sentRequests.length === 1 
+            ? `${sentRequests.length} sent request` 
+            : `${sentRequests.length} sent requests`
+        : "";
 
     const handleClose = () => {
         dispatch(closeSentFriendRequests());
@@ -82,69 +83,64 @@ function SentFriendRequestsModal() {
         textDecoration: 'none',
     }))
 
+    const sentRequestsList = sentRequests.length > 0 
+        ?   <ContentWraper>
+                <RequestQuantity>{sentRequestsCount}</RequestQuantity>
+                {sentRequests.map(fr => 
+                <ItemWraper  key={fr.id} ref={refItemWrapper} onClick={() => handleClickItem(fr.friend)}>
+                    <Friend horizontal = 'true'
+                            key={fr.id}
+                            mutualFriends={fr.mutualFriends} 
+                            handleLinkClick={() => handleLinkClick(fr.friend)}
+                            friend={fr.friend}
+                            isAvatarMutualFriend={true}
+                            referenseForLinks={`/Profile`}/>
+                    <Box sx={{display: 'flex', width: '50%', height: '40px', margin: 'auto', zIndex: 100}}>
+                        <ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.background,
+                                '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},
+                                color: theme.palette.textColor.content}}
+                                onClick={(e) => {e.stopPropagation(); handleCancelRequest(fr);}}>
+                            Cancel Request
+                        </ButtonStyled>
+                    </Box>
+                </ItemWraper>)}
+            </ContentWraper>
+        :   <Typography sx={{fontSize: '.9375rem', textAlign: 'center', lineHeight: 1.3333, py: '40px'}}>
+                When you send someone a friend request, it will appear here.
+            </Typography>;
+
     return(
-    <>
-    <Dialog
-        onClose={handleClose}
-        aria-labelledby="sent-requests-dialog"
-        open={isOpen}
-        sx={{fontFamily: theme.typography.fontFamily}}
-      >
-        <DialogTitle id="sent-requests-dialog-title" 
-            onClose={handleClose} 
-            sx={{p:1, minWidth: '500px', 
-                backgroundColor: theme.palette.backgroundColor.section,
-                color: theme.palette.textColor.content, py: '12px',
-                position: 'fix'}}>
-            <StyledModalTitle>Sent requests</StyledModalTitle>
+        <Dialog
+            onClose={handleClose}
+            aria-labelledby="sent-requests-dialog"
+            open={isOpen}
+            sx={{fontFamily: theme.typography.fontFamily}}
+        >
+            <DialogTitle id="sent-requests-dialog-title" 
+                onClose={handleClose} 
+                sx={{p:1, minWidth: '500px', 
+                    backgroundColor: theme.palette.backgroundColor.section,
+                    color: theme.palette.textColor.content, py: '12px',
+                    position: 'fix'}}>
+                <StyledModalTitle>Sent requests</StyledModalTitle>
                 <StyledModalCloseButton onClick={handleClose}>
                     <StyledModalCloseButtonLine/>
                 </StyledModalCloseButton>
-        </DialogTitle>
-        <Divider sx={{my: '12px', borderColor: theme.palette.border.card, m: 0}}/>
-        <DialogContent 
-            sx={{backgroundColor: theme.palette.backgroundColor.section,
-                color: theme.palette.textColor.secondary,
-                px: 0,
-                maxHeight: '500px',
-                overflowY: 'scroll',
-                overflowX: 'hidden',
-                "&::-webkit-scrollbar": {
-                    width: "0",
-                  },}}>
-            <>
-            {sentRequests.length === 0 
-                && <Typography sx={{fontSize: '.9375rem', textAlign: 'center', lineHeight: 1.3333, py: '40px'}}>
-                        When you send someone a friend request, it will appear here.
-                    </Typography>}
-            {
-                sentRequests.length > 0 && 
-                <ContentWraper>
-                    <RequestQuantity>{sentRequestsCount} sent request</RequestQuantity>
-                    {sentRequests.map(fr => 
-                    <ItemWraper  key={fr.id} ref={refItemWrapper} onClick={() => handleClickItem(fr.friend)}>
-                        <Friend horizontal = 'true'
-                                key={fr.id}
-                                mutualFriends={fr.mutualFriends} 
-                                handleLinkClick={() => handleLinkClick(fr.friend)}
-                                friend={fr.friend}
-                                isAvatarMutualFriend={true}
-                                referenseForLinks={`/Profile`}/>
-                        <Box sx={{display: 'flex', width: '50%', height: '40px', margin: 'auto', zIndex: 100}}>
-                            <ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.background,
-                                    '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},
-                                    color: theme.palette.textColor.content}}
-                                    onClick={(e) => {e.stopPropagation(); handleCancelRequest(fr);}}>
-                                Cancel Request
-                            </ButtonStyled>
-                        </Box>
-                    </ItemWraper>)}
-                </ContentWraper>
-            }
-            </>
-        </DialogContent>
-      </Dialog>
-    </>
+            </DialogTitle>
+            <Divider sx={{my: '12px', borderColor: theme.palette.border.card, m: 0}}/>
+            <DialogContent 
+                sx={{backgroundColor: theme.palette.backgroundColor.section,
+                    color: theme.palette.textColor.secondary,
+                    px: 0,
+                    maxHeight: '500px',
+                    overflowY: 'scroll',
+                    overflowX: 'hidden',
+                    "&::-webkit-scrollbar": {
+                        width: "0",
+                    },}}>
+                { sentRequestsList }
+            </DialogContent>
+        </Dialog>
     )
 }
 

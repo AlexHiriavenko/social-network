@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isOpen: false,
+  showComments:false,
   pictures: {},
 };
 
@@ -9,8 +10,9 @@ const picturesSlice = createSlice({
   name: "pictures",
   initialState,
   reducers: {
-    showPictures: function (state) {
+    showPictures: function (state,action) {
       state.isOpen = true;
+      state.showComments = action.payload;
     },
     closePictures: function (state) {
       state.isOpen = false;

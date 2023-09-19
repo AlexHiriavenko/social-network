@@ -7,20 +7,16 @@ import {
     addToChatNewUser,
     deleteChat,
 } from "./chatActions.js";
-import {
-    initialState,
-    temporaryPartisipantState,
-} from "./chatInitialStates.js";
+import { initialState, temporaryPartisipantState } from "./chatInitialStates.js";
 
 const chatSlice = createSlice({
     name: "chat",
     initialState,
     reducers: {
-        setChatInitialState:function (state){
-            state.chatsParticipants =[]
-            state.currentChatCompanion = null
-            state.currentChat = null
-
+        setChatInitialState: function (state) {
+            state.chatsParticipants = [];
+            state.currentChatCompanion = null;
+            state.currentChat = null;
         },
         openChat: function (state, action) {
             state.isOpened = true;
@@ -32,10 +28,7 @@ const chatSlice = createSlice({
             state.currentChatCompanion = action.payload;
         },
         setChatsList: function (state, action) {
-            state.chatsParticipants = [
-                action.payload,
-                ...state.chatsParticipants,
-            ];
+            state.chatsParticipants = [action.payload, ...state.chatsParticipants];
         },
         resetCurrentChat: function (state, action) {
             console.log("clear currentChat");
@@ -43,15 +36,10 @@ const chatSlice = createSlice({
             state.isOpened = false;
         },
         setTemporaryParticipant: function (state, action) {
-            state.chatsParticipants = [
-                temporaryPartisipantState,
-                ...state.chatsParticipants,
-            ];
+            state.chatsParticipants = [temporaryPartisipantState, ...state.chatsParticipants];
         },
         deleteTemporaryParticipant: function (state) {
-            const targetIndex = state.chatsParticipants.findIndex(
-                (el) => el.id === null
-            );
+            const targetIndex = state.chatsParticipants.findIndex((el) => el.id === null);
             if (targetIndex !== -1) {
                 state.chatsParticipants.splice(targetIndex, 1);
             }
@@ -60,12 +48,20 @@ const chatSlice = createSlice({
             state.chatsParticipants = state.chatsParticipants.map(el => {if (el.id === action.payload.chatId) {
                     el.content = action.payload.content;
                     el.fullName = action.payload.sender.fullName;
+                    el.userId = action.payload.sender.fullName;
                 }
                 return el;
             })
+            console.log(state.currentChat.id)
+            console.log(action.payload.chatId)
+
             if (state.currentChat.id === action.payload.chatId) {
-                state.currentChat.messages.push(action.payload);
-            }
+                const index = state.currentChat.messages.findLastIndex(el => el.id === action.payload.id);
+                if(index !== -1) {
+                    state.currentChat.messages[index].content = action.payload.content;
+                } else {
+                    state.currentChat.messages.push(action.payload);
+            }}
         },
     },
     extraReducers: (builder) => {
@@ -80,13 +76,7 @@ const chatSlice = createSlice({
             state.currentChat = action.payload;
         });
         builder.addCase(createChat.fulfilled, (state, action) => {
-            const messages = action.payload[0].messages;
-            if (messages) {
-                const sortedArray = action.payload.sort(
-                    (a, b) => a.users.length - b.users.length
-                );
-                state.currentChat = sortedArray[0];
-            }
+            state.currentChat = action.payload;
         });
         builder.addCase(addToChatNewUser.fulfilled, (state, action) => {});
     },
@@ -116,16 +106,9 @@ export const {
     addMessageToChat,
 } = chatSlice.actions;
 
-export const { openPageChat, closePageChat,setChatInitialState } = chatPageSlice.actions;
+export const { openPageChat, closePageChat, setChatInitialState } = chatPageSlice.actions;
 
-export {
-    getChats,
-    getChat,
-    getChatsParticipants,
-    createChat,
-    addToChatNewUser,
-    deleteChat,
-};
+export { getChats, getChat, getChatsParticipants, createChat, addToChatNewUser, deleteChat };
 
 export default chatSlice.reducer;
 export const chatPageReducer = chatPageSlice.reducer;
