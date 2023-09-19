@@ -62,7 +62,6 @@ const StyledArrowBtn = styled("button")({
   },
 });
 const StyledPicture = styled("img")(({ theme })=>({
-
   maxWidth: "70%",
   maxHeight: "100vh",
   minWidth: "50%",
@@ -129,19 +128,30 @@ export default function Pictures() {
   const [comments,setComments] = useState([])
   const[openComments,setOpenComments]=useState(false)
   const [owner,setOwner] = useState(null)
+  const [title,setTitle] = useState('View all comments')
   const showComments = useSelector((state) => state.pictures.showComments);
   const theme = useTheme();
   // State
   const [showedPicture, setShowedPicture] = useState("");
   // Functions
+
+  const showAllComments = () =>{
+    setOpenComments(true)
+    setTitle('Hide comments')
+  }
+  const hideComments = () =>{
+    setOpenComments(false)
+    setTitle('View all comments')
+  }
   const toggleComments = () =>{
     openComments
-        ? setOpenComments(false)
-        : setOpenComments(true);}
+        ? hideComments()
+        : showAllComments();}
   function handleClose() {
     dispatch(closePictures());
   }
   function showPrev() {
+    setComments([])
     if (showedPicture.number !== 0) {
       setShowedPicture({
         ...pictures.allPictures[showedPicture.number - 1],
@@ -156,6 +166,7 @@ export default function Pictures() {
   }
 
   function showNext() {
+    setComments([])
     if (pictures.allPictures.length - 1 !== showedPicture.number) {
       setShowedPicture({
         ...pictures.allPictures[showedPicture.number + 1],
@@ -176,12 +187,10 @@ export default function Pictures() {
     },
     onSubmit: async() => {
       const newComment ={
-
         id: 0,
         authorId: authUser.id,
         content: formik.values.content,
         imageId: showedPicture.id
-
       }
      await dispatch(addImgComment(newComment))
 
@@ -205,7 +214,6 @@ export default function Pictures() {
       (async function () {
 
         const comments = await dispatch(getImageComments(showedPicture.id))
-
         setComments(comments.payload)
         if (showedPicture?.userId != authUser?.id) {
           const user = await dispatch(getUser(showedPicture.userId))
@@ -252,14 +260,12 @@ export default function Pictures() {
           width: '100%',
           top:'61%',
           height:'39vh',
-
           position:'absolute'
         }
           ,[theme.breakpoints.down('sm')]: {
             width: '100%',
             top:'61%',
             height:'39vh',
-
             position:'absolute'
           }}} >
 
@@ -291,15 +297,12 @@ export default function Pictures() {
               <Box key={index} style={{marginTop: "10px"}}>
                 <Comment key={index} user={comment.author} content={comment.content} createdDate={comment.createdDate}/>
               </Box>}
-
-
             </>
 
           })
 
           }
   {
-
     comments?.reverse().map((comment,index) => {
 
     return <>
@@ -308,8 +311,6 @@ export default function Pictures() {
           <Box key={index} style={{marginTop: "10px"}}>
             <Comment key={index} user={comment.author} content={comment.content} createdDate={comment.createdDate}/>
           </Box>}
-
-
     </>
 
   })
@@ -317,7 +318,7 @@ export default function Pictures() {
   }
   {
     comments?.length > 3 &&
-    <Button onClick={toggleComments}>View all comments</Button>
+    <Button onClick={toggleComments}>{title}</Button>
 
 }
         </Box >
@@ -339,7 +340,6 @@ export default function Pictures() {
               <SendIcon sx={{ color: "#65676b", }} />
             </StyledPostModalButton></Box>
           </StyledPostModalCreateCommentArea>
-
         </StyledCommentSection>
       }
       </StyledPictureWrap>
