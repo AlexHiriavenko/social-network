@@ -17,9 +17,6 @@ const friendsSlice = createSlice({
     setInitialState: function (state){
       state = initialState;
     },
-    removeSuggestions: function (state, action) {
-      state.friendSuggestions = state.friendSuggestions.filter(el => el.friend.id != action.payload.friend.id);
-    },
     setCurrentFriend: function(state, action) {
       state.currentFriend = action.payload;
     },
@@ -42,8 +39,12 @@ const friendsSlice = createSlice({
       state.friendSuggestions = action.payload;
     },
     [createFriendship.fulfilled]: (state, action)=>{
-      state.friendsRequests.push(action.payload);
-      state.friendSuggestions = state.friendSuggestions.filter(el => el.friend.id !== action.payload.friend.id);
+      if (action.payload.status === 'pending') {
+        state.friendsRequests.push(action.payload);
+        state.friendSuggestions = state.friendSuggestions.filter(el => el.friend.id !== action.payload.friend.id);
+      } else if (action.payload.status === 'removed') {
+        state.friendSuggestions = state.friendSuggestions.filter(el => el.friend.id != action.payload.friend.id);
+      }
     },
     [updateFriendship.fulfilled]: (state, action)=>{
       if(action.payload.status === 'accepted'){

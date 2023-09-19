@@ -52,6 +52,55 @@ function SideBarFriends(props) {
 
     const callBackHandleLinkClick = useCallback(handleClickLinklocal, [authUser, dispatch]);
 
+    const searchComponent = search  
+        ?   <>
+                <Search sx={{m:0}} 
+                        handleChangeValue={handleChangeValue} 
+                        placeholderText={placeholderText}
+                        initialValue={initialValue}/>
+                <Divider sx={{mt: '12px', borderColor: theme.palette.border.card,}}/>
+            </>
+        : null;
+ 
+    const menuItemList = sideBarItems.length > 0
+        ? sideBarItems.map(fr =>
+            <MenuItem onClick={(e) => {e.stopPropagation(); callBackHandleLinkClick(fr.user ? fr.user : fr.friend); openDrawer(true)}}
+                    key={fr.user ? fr.user.id : fr.friend.id} 
+                    selected={currentFriend.id === (fr.user ? fr.user.id : fr.friend.id)}>
+                <Friend horizontal = 'true'
+                    key={fr.id}
+                    mutualFriends={fr.mutualFriends} 
+                    handleLinkClick={(e) => {e.stopPropagation(); callBackHandleLinkClick(fr.user ? fr.user : fr.friend)}}
+                    friend={fr.user ? fr.user : fr.friend}
+                    isAvatarMutualFriend={isAvatarMutualFriend}
+                    addButton={isConfirmButton 
+                        ? <ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.primary}}
+                                variant="contained" 
+                                onClick={(e) => {e.stopPropagation(); handleClickConfirm(fr)}}>
+                                    Confirm
+                            </ButtonStyled> 
+                        :  isAddButton
+                            ? <ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.blueLight,
+                                    '&:hover': {backgroundColor: theme.palette.buttonColor.blueLightHover,},
+                                    color: theme.palette.textColor.blueLink}}
+                                    onClick={(e) => {e.stopPropagation(); handleClickConfirm(fr)}}>Add friend</ButtonStyled> 
+                            : null}
+                    removeButton={isRemoveButton 
+                        ? <ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.background,
+                                '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},
+                                color: theme.palette.textColor.content}}
+                                onClick={(e) => {e.stopPropagation(); handleClickRemove(fr)}}>Remove</ButtonStyled>
+                        : null}
+                    moreMenuButton={isMoreMenuButton 
+                        ? <PopupMenuFriends handleClickUnfriend={(e) => {e.stopPropagation(); handleClickUnfriend(fr)}}/>
+                        : null}
+                    additionalButtons={additionalButtons}
+                    />
+                </MenuItem>)
+            :   <Typography sx={{py: 2, fontSize: 12, color: theme.palette.textColor.secondary}}>
+                    { noItemMessage }
+                </Typography>;
+
     return (
         <SidebarStyled>
             <SideBarWrapper>
@@ -62,63 +111,20 @@ function SideBarFriends(props) {
                         </ArrowBackStyled>
                         <Box sx={{ display: 'flex', gap: 1 / 2, flexDirection: 'column' }}>
                             <LinkStyled to="/friends/home">Friends</LinkStyled>
-                            <TitleStyled>{headerTitle}</TitleStyled>
+                            <TitleStyled>{ headerTitle }</TitleStyled>
                         </Box>
                     </Box>
-                    <Divider sx={{my: '12px', borderColor: theme.palette.border.card,}}/>
+                    <Divider sx={{ my: '12px', borderColor: theme.palette.border.card, }}/>
                 </SideBarHeader>
                 <SideBarContentWrapper>
-                    {search && <><Search sx={{m:0}} 
-                                    handleChangeValue={handleChangeValue} 
-                                    placeholderText={placeholderText}
-                                    initialValue={initialValue}/>
-                    <Divider sx={{mt: '12px', borderColor: theme.palette.border.card,}}/></>}
+                    { searchComponent }
                     { addlItemsHead }
                     <Box sx={{paddingTop: 1}}>
                         <SubTitleStyled>{ subTitle }</SubTitleStyled>
                         { addItemsSubHead }
-                        { sideBarItems.length === 0 
-                        && <Typography sx={{py: 2, fontSize: 12, color: theme.palette.textColor.secondary}}>
-                                { noItemMessage }
-                            </Typography>}
                     </Box>            
                     <List sx={{ py: 1}}>
-                        {
-                        sideBarItems && sideBarItems.map(fr =>
-                        <MenuItem onClick={(e) => {e.stopPropagation(); callBackHandleLinkClick(fr.user ? fr.user : fr.friend); openDrawer(true)}}
-                                key={fr.user ? fr.user.id : fr.friend.id} 
-                                selected={currentFriend.id === (fr.user ? fr.user.id : fr.friend.id)}>
-                            <Friend horizontal = 'true'
-                                key={fr.id}
-                                mutualFriends={fr.mutualFriends} 
-                                handleLinkClick={(e) => {e.stopPropagation(); callBackHandleLinkClick(fr.user ? fr.user : fr.friend)}}
-                                friend={fr.user ? fr.user : fr.friend}
-                                isAvatarMutualFriend={isAvatarMutualFriend}
-                                addButton={isConfirmButton 
-                                    ? <ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.primary}}
-                                            variant="contained" 
-                                            onClick={(e) => {e.stopPropagation(); handleClickConfirm(fr)}}>
-                                                Confirm
-                                        </ButtonStyled> 
-                                    :  isAddButton
-                                        ? <ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.blueLight,
-                                                '&:hover': {backgroundColor: theme.palette.buttonColor.blueLightHover,},
-                                                color: theme.palette.textColor.blueLink}}
-                                                onClick={(e) => {e.stopPropagation(); handleClickConfirm(fr)}}>Add friend</ButtonStyled> 
-                                        : null}
-                                removeButton={isRemoveButton 
-                                    ? <ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.background,
-                                            '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},
-                                            color: theme.palette.textColor.content}}
-                                            onClick={(e) => {e.stopPropagation(); handleClickRemove(fr)}}>Remove</ButtonStyled>
-                                    : null}
-                                moreMenuButton={isMoreMenuButton 
-                                    ? <PopupMenuFriends handleClickUnfriend={(e) => {e.stopPropagation(); handleClickUnfriend(fr)}}/>
-                                    : null}
-                                additionalButtons={additionalButtons}
-                                />
-                            </MenuItem>)
-                        }
+                        { menuItemList }
                     </List>
                 </SideBarContentWrapper>
             </SideBarWrapper>

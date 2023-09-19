@@ -21,7 +21,6 @@ function FriendBirthdays() {
     const recentBirthdays  = birthdays[0]?.filter(el => (new Date(el.friend.birthDate)).getDate() < today.getDate());
     const upcomingBirthdays  = birthdays[0]?.filter(el => (new Date(el.friend.birthDate)).getDate() > today.getDate());
     const otheBirthdays = birthdays.slice(1);
-    let key = 0;
 
     useEffect(() => {
         dispatch(getBirthdays());
@@ -30,6 +29,46 @@ function FriendBirthdays() {
     const handleClickLinklocal = (friend) => {
         handleLinkClick(dispatch, friend, authUser);
     }
+
+    const birthToday = todayBirthdays.length > 0 
+        ? <OneMonthItems
+            key={"Today's birthdays"} 
+            fullInfo={true}
+            header={"Today's birthdays"}
+            ItemList={todayBirthdays} 
+            handleLinkClick={handleClickLinklocal}
+            />
+        : null;
+    
+    const birthRecent = recentBirthdays.length > 0 
+        ? <OneMonthItems
+            key={"Recent birthdays"} 
+            fullInfo={true}
+            header={"Recent birthdays"}
+            ItemList={recentBirthdays} 
+            handleLinkClick={handleClickLinklocal}
+            />
+        : null;
+    
+    const birthUpcoming = upcomingBirthdays.length > 0 
+        ? <OneMonthItems
+            key={"Upcoming birthdays"} 
+            fullInfo={true}
+            header={"Upcoming birthdays"}
+            ItemList={upcomingBirthdays} 
+            handleLinkClick={handleClickLinklocal}
+            />
+        : null;
+    
+    const birthOther = otheBirthdays.length > 0 
+    ? otheBirthdays.map(el => el.length > 0 
+        ? <OneMonthItems
+            key={(new Date(el[0].friend.birthDate)).toLocaleString('en-US', { month: 'long' })} 
+            header={(new Date(el[0].friend.birthDate)).toLocaleString('en-US', { month: 'long' })}
+            ItemList={el} 
+            handleLinkClick={handleClickLinklocal}/>
+        : null)
+    : null;
     
     return(
         <PageBoxFriendsWrapper>
@@ -44,33 +83,10 @@ function FriendBirthdays() {
             </SidebarStyled>         
             <SectionWraper>
                 <StyledItemsContainer>
-                    {todayBirthdays.length > 0 && <OneMonthItems
-                            key={key++} 
-                            fullInfo={true}
-                            header={"Today's birthdays"}
-                            ItemList={todayBirthdays} 
-                            handleLinkClick={handleClickLinklocal}/>}
-                    {recentBirthdays.length > 0 && <OneMonthItems
-                            key={key++} 
-                            fullInfo={true}
-                            header={"Recent birthdays"}
-                            ItemList={recentBirthdays} 
-                            handleLinkClick={handleClickLinklocal}/>}
-                    {upcomingBirthdays.length > 0 && <OneMonthItems
-                            key={key++} 
-                            fullInfo={true}
-                            header={"Upcoming birthdays"}
-                            ItemList={upcomingBirthdays} 
-                            handleLinkClick={handleClickLinklocal}/>}
-                {
-                    otheBirthdays.length > 0 && otheBirthdays.map(el => el.length > 0 
-                        ? <OneMonthItems
-                            key={key++} 
-                            header={(new Date(el[0].friend.birthDate)).toLocaleString('en-US', { month: 'long' })}
-                            ItemList={el} 
-                            handleLinkClick={handleClickLinklocal}/>
-                        : null)
-                }
+                    {birthToday}
+                    {birthRecent}
+                    {birthUpcoming}
+                    {birthOther}
                 </StyledItemsContainer>
             </SectionWraper>
         </PageBoxFriends>

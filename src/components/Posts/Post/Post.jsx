@@ -220,7 +220,7 @@ export default function Post(props) {
     // dispatch(setPost(props));
   };
   const handleShowPictures = (allPictures, selected) => {
-    dispatch(showPictures());
+    dispatch(showPictures(false));
     dispatch(setPictures({ allPictures, selected, pathName: "imgUrl" }));
   };
   function getPostDate(postDate) {
