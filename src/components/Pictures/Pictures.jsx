@@ -138,12 +138,10 @@ export default function Pictures() {
   const showAllComments = () =>{
     setOpenComments(true)
     setTitle('Hide comments')
-
   }
   const hideComments = () =>{
     setOpenComments(false)
     setTitle('View all comments')
-
   }
   const toggleComments = () =>{
     openComments
