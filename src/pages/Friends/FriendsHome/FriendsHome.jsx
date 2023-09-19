@@ -20,7 +20,7 @@ function FriendsHome() {
                                 : []);
 
     useEffect(()=>{
-        dispatch(getFriendList());
+        //dispatch(getFriendList());
         dispatch(getFriendshipRequests());
         dispatch(getFriendSuggestions());
     },[dispatch])

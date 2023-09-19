@@ -25,6 +25,14 @@ export const getFriendsById = createAsyncThunk(
     }
   );
 
+  export const getFriendListPage = createAsyncThunk(
+    'friends/getFriendListPage',
+    async function({page, size}) {
+      const { data } = await instance.get(`/friends/userFriends/${page}/${size}`);
+      return data;
+    }
+  );
+
   export const getFriendshipRequests = createAsyncThunk(
     'friends/getFriendshipRequests',
     async function() {

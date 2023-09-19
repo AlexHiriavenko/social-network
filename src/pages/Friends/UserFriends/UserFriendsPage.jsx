@@ -1,8 +1,8 @@
 import { useEffect, useCallback, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { getFriendList, getFriendsByName } from "../../../redux/friends/actionCreators";
+import { getFriendList, getFriendsByName, getFriendListPage } from "../../../redux/friends/actionCreators";
 import SideBarFriends from "../SideBarForFriends";
-import { setCurrentFriend, removeFriend } from "../../../redux/friends/friends.slise";
+import { setCurrentFriend, removeFriend, setFriendsList } from "../../../redux/friends/friends.slise";
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 import { updateFriendship } from '../../../redux/friends/actionCreators';
 import { setUser } from "../../../redux/user.slice/user.slice";
@@ -34,9 +34,10 @@ function UserFriendsPage() {
     },[friends, dispatch])
 
     useEffect(()=>{
-        dispatch(getFriendList());
+       /*  dispatch(getFriendList()); */
         return () => {
             dispatch(setCurrentFriend({}));
+            dispatch(setFriendsList([]))
           };
     },[dispatch])
 
@@ -71,7 +72,8 @@ function UserFriendsPage() {
                                 placeholderText='Search Friends'
                                 isMoreMenuButton={true}
                                 handleClickUnfriend={handleClickUnfriend}
-                                openDrawer={setDrawerOpen}/>
+                                openDrawer={setDrawerOpen}
+                                getDataList={getFriendListPage}/>
                     <FriendProfileML currentFriend={currentFriend} 
                                 textMessage={textMessage}/>
                     <FriendProfileS drawerOpen={drawerOpen} 

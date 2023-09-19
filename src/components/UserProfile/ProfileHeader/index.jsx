@@ -310,17 +310,17 @@ export default function ProfileHeader() {
 
   const handleAddFriendClick = (id) => {
     if (buttonText === "Remove from friends") {
-      const payload = { id: friendRecord[0].id, status: "unfriended" };
-      dispatch(updateFriendship(payload));
+        const payload = { id: friendRecord[0].id, status: "unfriended" };
+        dispatch(updateFriendship(payload));
     } else if (buttonText === "Confirm request") {
-      const payload = { id: reqauestRecord[0].id, status: "accepted" };
-      dispatch(updateFriendship(payload));
+        const payload = { id: reqauestRecord[0].id, status: "accepted" };
+        dispatch(updateFriendship(payload));
     } else if (buttonText === "Cancel request") {
-      const payload = { id: reqauestRecord[0].id, status: "canceled" };
-      dispatch(updateFriendship(payload));
+        const payload = { id: reqauestRecord[0].id, status: "canceled" };
+        dispatch(updateFriendship(payload));
     } else if (buttonText === "Add to friends") {
-      dispatch(setCurrentFriend({}));
-      dispatch(createFriendship({ friendId: id }));
+        dispatch(setCurrentFriend({}));
+        dispatch(createFriendship({ friendId: id }));
     }
   };
   const handleShowPictures = (allPictures, selected, pathName) => {
@@ -558,10 +558,7 @@ export default function ProfileHeader() {
                 text={
                   <Typography
                     style={{
-                      color:
-                        friendRecord.length > 0
-                          ? theme.palette.textColor.content
-                          : theme.palette.backgroundColor.section,
+                      color: theme.palette.textColor.content,
                       fontWeight: 600,
                     }}
                   >
