@@ -9,11 +9,8 @@ export const getChats = createAsyncThunk("chat/getChats", async function () {
 
 export const getChatsParticipants = createAsyncThunk("chat/getParticipants", async function () {
     const { data } = await instance.get(`chats/participants`);
-    const sortedChats =
-        data.length > 1
-            ? data.toSorted((a, b) => new Date(b.lastMessageDate) - new Date(a.lastMessageDate))
-            : data;
-    return sortedChats;
+    console.log(data);
+    return data;
 });
 
 export const getChat = createAsyncThunk("chat/getChat", async function (id) {
@@ -52,4 +49,10 @@ export const deleteChat = createAsyncThunk("chat/deleteChat", async function (id
     } else {
         console.log("id is not valid");
     }
+});
+
+export const getUnread = createAsyncThunk("chat/unread", async function () {
+    const { data } = await instance.get(`chats/unreadExist`);
+    console.log(data);
+    return data;
 });
