@@ -50,7 +50,18 @@ export default function RegisterModal(props) {
       );
 
     if(status.type == 'Login/register/fulfilled'){
-      setMessage("Account successfully created. Please check your email to activate your account")}
+      setMessage("Account successfully created. Please check your email to activate your account")
+
+      registerForm.setFieldValue("name", "");
+      registerForm.setFieldValue("surname", "");
+      registerForm.setFieldValue("emailOrPhone", "");
+      registerForm.setFieldValue("password", "");
+      registerForm.setFieldValue("day", "");
+      registerForm.setFieldValue("mounth", "");
+      registerForm.setFieldValue("year", "");
+      registerForm.setFieldValue("gender", "");
+
+    }
     else{setErrorMessage("Account with this email already exists")}
        window.setTimeout(()=>{
          handleModal()
@@ -81,8 +92,8 @@ export default function RegisterModal(props) {
         aria-describedby="modal-modal-description"
         style={{ overflow: "auto", outline: "0" }}>
         <Box className="form__wrapper">
-          <h2 className="register-title">Регистрация</h2>
-          <p className="register-subtitle">Быстро и легко.</p>
+          <h2 className="register-title">Registration</h2>
+          <p className="register-subtitle"> Fast and comfortable</p>
           <Box className="register-form__row-inputs">
             <form action="#" className="register-form">
               <TextField
@@ -91,7 +102,7 @@ export default function RegisterModal(props) {
                 error={!!registerForm.errors.name}
                 name="name"
                 required
-                label="Имя"
+                label="Name"
                 value={registerForm.values.name}
                 onChange={registerForm.handleChange}
                 variant="outlined"
@@ -100,7 +111,7 @@ export default function RegisterModal(props) {
               <TextField
                 id="surname"
                 required
-                label="Фамилия"
+                label="Surname"
                 error={!!registerForm.errors.surname}
                 name="surname"
                 value={registerForm.values.surname}
@@ -109,7 +120,7 @@ export default function RegisterModal(props) {
               />
 
               <TextField
-                label=" Электронный адрес"
+                label=" Email (please,enter real email)"
                 required
                 error={!!registerForm.errors.emailOrPhone}
                 variant="outlined"
@@ -120,7 +131,7 @@ export default function RegisterModal(props) {
                 fullWidth
               />
               <TextField
-                label="Новый пароль"
+                label="New password(min 8 signs)"
                 id="password"
                 required
                 name="password"
@@ -147,7 +158,7 @@ export default function RegisterModal(props) {
                   }}
                   options={dayOfBirth}
                   renderInput={(params) => (
-                    <TextField {...params} label="День" />
+                    <TextField {...params} label="Day" />
                   )}
                 />
               </FormControl>
@@ -167,7 +178,7 @@ export default function RegisterModal(props) {
                   }}
                   options={mounthOfBirst}
                   renderInput={(params) => (
-                    <TextField {...params} label="Месяц" />
+                    <TextField {...params} label="Month" />
                   )}
                 />
               </FormControl>
@@ -186,7 +197,7 @@ export default function RegisterModal(props) {
                   }}
                   options={yearOfBirth}
                   renderInput={(params) => (
-                    <TextField {...params} label="Год" />
+                    <TextField {...params} label="Year" />
                   )}
                 />
               </FormControl>
@@ -203,17 +214,17 @@ export default function RegisterModal(props) {
                   <FormControlLabel
                     value="m"
                     control={<Radio />}
-                    label="Мужчина"
+                    label="Man"
                   />
                   <FormControlLabel
                     value="w"
                     control={<Radio color="secondary" />}
-                    label="Женщина"
+                    label="Woman"
                   />
                   <FormControlLabel
                     value="other"
                     control={<Radio />}
-                    label="Другое"
+                    label="Other"
                   />
                 </RadioGroup>
               </FormControl>
@@ -224,24 +235,24 @@ export default function RegisterModal(props) {
                 type="submit"
                 color="success"
                 fullWidth>
-                Регистрация
+                Create account
               </Button>
             </form>
           </Box>
           <h3 className="register_message">{message}</h3>
           <h3 className="red">{errorMessage}</h3>
           <p className="form-footer-text">
-            Люди, которые пользуются нашим сервисом, могли загрузить вашу
-            контактную информацию на Facebook.{" "}
+            People who use our service may have downloaded your
+            contact information on Facebook.{" "}
             <Link href="https://www.facebook.com/help/637205020878504">
               Подробнее
             </Link>
           </p>
           <p className="form-footer-text">
-            Нажимая кнопку 'Регистрация', вы принимаете наши Условия
-            использования, Политику конфиденциальности и Политику в отношении
-            файлов cookie. Вы можете получать от нас SMS-уведомления, отказаться
-            от которых можно в любой момент.
+            By clicking the Create account button, you accept our Terms and Conditions
+            use, Privacy Policy and Privacy Policy
+            cookies. You can receive SMS notifications from us, opt out
+            from which you can at any time.
           </p>
 
         </Box>

@@ -49,6 +49,14 @@ const notifications = createSlice({
   name: "notifications",
   initialState,
   reducers: {
+    setNotificationInitialState(state){
+      state.isConnectedSocket = false
+          state.newMessages = []
+          state.newNotifications = []
+          state.allNotifications =[]
+          state.unreadedNotificationsSize = 0
+          state.isLoading = false
+    },
     setIsConnected: function (state, action) {
       state.isConnectedSocket = action.payload;
     },
@@ -99,6 +107,6 @@ const notifications = createSlice({
 })
 
 
-export const { addNewMessages, deleteNewMessages, addNewNotifications, deleteAllNewNotifications, deleteNewNotification, setIsConnected, setAllNotifications, addToAllNotifications, setUnreadedNotificationsSize } = notifications.actions;
+export const { addNewMessages, deleteNewMessages, addNewNotifications, deleteAllNewNotifications, deleteNewNotification, setIsConnected, setAllNotifications, addToAllNotifications, setUnreadedNotificationsSize,setNotificationInitialState } = notifications.actions;
 
 export default notifications.reducer;

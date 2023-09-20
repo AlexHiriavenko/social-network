@@ -85,7 +85,7 @@ function SentFriendRequestsModal() {
     }))
 
     const sentRequestsList = sentRequests.length > 0 
-        ?   <ContentWraper>
+        ?   <ContentWraper sx={{minWidth: '360px', width: '100%'}}>
                 <RequestQuantity>{sentRequestsCount}</RequestQuantity>
                 {sentRequests.map(fr => 
                 <ItemWraper  key={fr.id} ref={refItemWrapper} onClick={() => handleClickItem(fr.friend)}>
@@ -122,7 +122,7 @@ function SentFriendRequestsModal() {
                 sx={{p:1, minWidth: '320px', 
                     backgroundColor: theme.palette.backgroundColor.section,
                     color: theme.palette.textColor.content, py: '12px',
-                    position: 'fix'}}>
+                    /* position: 'fix' */}}>
                 <StyledModalTitle>Sent requests</StyledModalTitle>
                 <StyledModalCloseButton onClick={handleClose}>
                     <StyledModalCloseButtonLine/>
@@ -134,6 +134,7 @@ function SentFriendRequestsModal() {
                     color: theme.palette.textColor.secondary,
                     px: 0,
                     maxHeight: '500px',
+                    minWidth: '320px',
                     overflowY: 'scroll',
                     overflowX: 'hidden',
                     "&::-webkit-scrollbar": {

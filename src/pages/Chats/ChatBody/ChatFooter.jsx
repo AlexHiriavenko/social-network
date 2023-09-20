@@ -1,7 +1,12 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StyledTextField } from "../styledChatComponents";
-import { ChatFooterContainer, AddImgsIcon, BtnSendMessage, WrapperAddImgs } from "./StyledChatBody";
+import {
+    ChatFooterContainer,
+    AddImgsIcon,
+    BtnSendMessage,
+    WrapperAddImgs,
+} from "./StyledChatBody";
 import SendIcon from "@mui/icons-material/Send";
 import { handleClickSend, handleKeyDown } from "../helpers/sendMessage";
 import { showChoosingPicture } from "../helpers/showChoosingPicture";
@@ -15,6 +20,8 @@ function ChatFooter() {
     const [files, setFiles] = useState([]);
 
     const args = [dispatch, inputRef, currentChat, files, setFiles, setImgUrls];
+
+    const setFocus = () => inputRef.current.focus();
 
     return (
         <ChatFooterContainer>
@@ -41,20 +48,29 @@ function ChatFooter() {
                                     type="file"
                                     ref={fileRef}
                                     onChange={() =>
-                                        showChoosingPicture(fileRef, setFiles, setImgUrls)
+                                        showChoosingPicture(
+                                            fileRef,
+                                            setFiles,
+                                            setImgUrls
+                                        )
                                     }
+                                    onClick={setFocus}
                                     style={{ display: "none" }}
                                     multiple
                                 />
                                 <AddImgsIcon fontSize="large" />
                             </WrapperAddImgs>
                             {imgUrls.map((url, index) => (
-                                <img src={url} alt="" height={100} key={index} />
+                                <img
+                                    src={url}
+                                    alt=""
+                                    height={100}
+                                    key={index}
+                                />
                             ))}
                         </>
                     ),
-                }}
-            ></StyledTextField>
+                }}></StyledTextField>
             <BtnSendMessage onClick={(event) => handleClickSend(event, args)}>
                 <SendIcon fontSize="large" color="primary" />
             </BtnSendMessage>
