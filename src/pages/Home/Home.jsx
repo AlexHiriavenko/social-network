@@ -31,7 +31,7 @@ function Home() {
 
     useEffect(() => {
 
-        if (JSON.parse(localStorage.getItem("token")) == "out" ) {
+        if (JSON.parse(localStorage.getItem("token")) == null || JSON.parse(localStorage.getItem("token")) == "out" ) {
             (async()=>{await  dispatch(loginGoogle());
 
                 let result = await dispatch(getProfile())
@@ -78,17 +78,15 @@ function Home() {
             );
         }
 
-      /*  if (!localStorage.getItem("authorizedUser")) {
+       if (!user) {
             (async()=>{
 
                     let result = await dispatch(getProfile())
 
-                    localStorage.setItem('authorizedUser',JSON.stringify({...result.payload,isAuthorized:true}))
-
                     dispatch(setAuthorizedUser({...result.payload,isAuthorized:true}))
                 }
             )()
-        }*/
+        }
 
 
     }, []);

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { NavLink } from "react-router-dom";
-import { getFriendshipRequests, updateFriendship, getFriendshipRequestsPage } from '../../../redux/friends/actionCreators';
+import { updateFriendship, getFriendshipRequestsPage } from '../../../redux/friends/actionCreators';
 import SideBarFriends from "../SideBarForFriends";
 import { setCurrentFriend, } from '../../../redux/friends/friends.slise';
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';

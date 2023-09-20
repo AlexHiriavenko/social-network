@@ -13,6 +13,7 @@ import {useFormik} from "formik";
 import {addImgComment, getImageComments, getUser} from "../../redux/user.slice/user.slice.js";
 import {useTheme} from "@emotion/react";
 import {BlockUserImage} from "../UserProfile/StyledComponents/ContentBlock/StyledComponents.js";
+
 const StyledPictureSection = styled("section")({
   backgroundColor: "#000",
   position: "fixed",
@@ -61,7 +62,6 @@ const StyledArrowBtn = styled("button")({
   },
 });
 const StyledPicture = styled("img")(({ theme })=>({
-
   maxWidth: "70%",
   maxHeight: "100vh",
   minWidth: "50%",
@@ -86,9 +86,14 @@ const StyledPostModalTextArea = styled("textarea")(({ theme }) => ({
     width: "0",
   },
 }));
+const StyledCommentSection = styled(Box)(({ theme }) => ({
+  width:"30%",
+  backgroundColor:` ${theme.palette.backgroundColor.section}`,
+  zIndex:"10"
+}));
 
 const StyledPostModalButton = styled("button")(({ theme }) => ({
-  marginLeft:"-20px",
+  marginLeft:"-23px",
   cursor: "pointer",
 }));
 const StyledCommentWrraper = styled("div")(({ theme }) => ({
@@ -103,7 +108,6 @@ const StyledCommentContent = styled("div")(({ theme }) => ({
   padding: "8px 12px",
   borderRadius: "18px",
 }));
-
 
 
 const StyledCommentName = styled(Typography)(({ theme }) => ({
@@ -122,16 +126,32 @@ export default function Pictures() {
   const authUser = useSelector((state) => state.user?.authorizedUser);
   const pictures = useSelector((state) => state.pictures.pictures);
   const [comments,setComments] = useState([])
+  const[openComments,setOpenComments]=useState(false)
   const [owner,setOwner] = useState(null)
+  const [title,setTitle] = useState('View all comments')
+  const showComments = useSelector((state) => state.pictures.showComments);
   const theme = useTheme();
   // State
   const [showedPicture, setShowedPicture] = useState("");
   // Functions
 
+  const showAllComments = () =>{
+    setOpenComments(true)
+    setTitle('Hide comments')
+  }
+  const hideComments = () =>{
+    setOpenComments(false)
+    setTitle('View all comments')
+  }
+  const toggleComments = () =>{
+    openComments
+        ? hideComments()
+        : showAllComments();}
   function handleClose() {
     dispatch(closePictures());
   }
   function showPrev() {
+    setComments([])
     if (showedPicture.number !== 0) {
       setShowedPicture({
         ...pictures.allPictures[showedPicture.number - 1],
@@ -146,6 +166,7 @@ export default function Pictures() {
   }
 
   function showNext() {
+    setComments([])
     if (pictures.allPictures.length - 1 !== showedPicture.number) {
       setShowedPicture({
         ...pictures.allPictures[showedPicture.number + 1],
@@ -166,17 +187,17 @@ export default function Pictures() {
     },
     onSubmit: async() => {
       const newComment ={
-
         id: 0,
         authorId: authUser.id,
         content: formik.values.content,
         imageId: showedPicture.id
-
       }
      await dispatch(addImgComment(newComment))
 
         const comments = await dispatch(getImageComments(showedPicture.id))
         setComments(comments.payload)
+
+      formik.setFieldValue("content", "");
     }
   });
   // useEffect
@@ -189,11 +210,10 @@ export default function Pictures() {
     });
   }, [pictures]);
   useEffect(() => {
-    if(authUser ) {
+    if(authUser && showComments ) {
       (async function () {
 
         const comments = await dispatch(getImageComments(showedPicture.id))
-
         setComments(comments.payload)
         if (showedPicture?.userId != authUser?.id) {
           const user = await dispatch(getUser(showedPicture.userId))
@@ -227,7 +247,8 @@ export default function Pictures() {
             <ArrowForwardIosIcon />
           </StyledArrowBtn>
         )}
-        <Box sx={{width:"30%",backgroundColor:"white",zIndex:"10",[theme.breakpoints.down('md')]: {
+      { showComments &&
+        <StyledCommentSection sx={{[theme.breakpoints.down('md')]: {
           height:"100vh"
           },
           [theme.breakpoints.down('lg')]: {
@@ -235,12 +256,16 @@ export default function Pictures() {
           },
               [theme.breakpoints.down('xl')]: {
           height:"100vh"
+        },[theme.breakpoints.down('md')]: {
+          width: '100%',
+          top:'61%',
+          height:'39vh',
+          position:'absolute'
         }
           ,[theme.breakpoints.down('sm')]: {
             width: '100%',
             top:'61%',
             height:'39vh',
-
             position:'absolute'
           }}} >
 
@@ -263,7 +288,7 @@ export default function Pictures() {
           </StyledCommentWrraper>
 
           <Box style={{width:"100%",height:"0.7px",backgroundColor:"grey",marginTop:"10px"}}></Box>
-<Box style={{marginLeft:"10px"}}>
+         <Box style={{marginLeft:"10px"}}>
           {  comments?.reverse().map((comment,index) => {
 
             return <>
@@ -272,18 +297,30 @@ export default function Pictures() {
               <Box key={index} style={{marginTop: "10px"}}>
                 <Comment key={index} user={comment.author} content={comment.content} createdDate={comment.createdDate}/>
               </Box>}
-
-
             </>
 
           })
 
           }
-          {
-              comments?.length > 3 &&
-              <Button>View all comments</Button>
+  {
+    comments?.reverse().map((comment,index) => {
 
-          }
+    return <>
+      {
+        openComments &&  index >=3 &&
+          <Box key={index} style={{marginTop: "10px"}}>
+            <Comment key={index} user={comment.author} content={comment.content} createdDate={comment.createdDate}/>
+          </Box>}
+    </>
+
+  })
+
+  }
+  {
+    comments?.length > 3 &&
+    <Button onClick={toggleComments}>{title}</Button>
+
+}
         </Box >
 
           <StyledPostModalCreateCommentArea onSubmit={formik.handleSubmit}>
@@ -303,9 +340,8 @@ export default function Pictures() {
               <SendIcon sx={{ color: "#65676b", }} />
             </StyledPostModalButton></Box>
           </StyledPostModalCreateCommentArea>
-
-        </Box>
-
+        </StyledCommentSection>
+      }
       </StyledPictureWrap>
     </StyledPictureSection>
         </>
