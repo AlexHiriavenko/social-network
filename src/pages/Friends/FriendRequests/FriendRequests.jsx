@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { NavLink } from "react-router-dom";
-import { getFriendshipRequests, updateFriendship } from '../../../redux/friends/actionCreators';
+import { updateFriendship, getFriendshipRequestsPage } from '../../../redux/friends/actionCreators';
 import SideBarFriends from "../SideBarForFriends";
 import { setCurrentFriend, } from '../../../redux/friends/friends.slise';
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
@@ -21,6 +21,7 @@ function FriendRequests(){
     const user = useSelector((store)=>store.user.authorizedUser, shallowEqual);
     const friendsRequests = useSelector((store)=>store.friends.friendsRequests, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
+    const isLoadingRequests = useSelector((store)=>store.friends.isLoadingRequests, shallowEqual);
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const friendsRequestsToUser = (friendsRequests.length > 0 
@@ -37,7 +38,6 @@ function FriendRequests(){
     },[friendsRequests, dispatch, friendsRequestsToUser.length])
 
     useEffect(()=>{
-        dispatch(getFriendshipRequests());
         return () => {
             dispatch(setCurrentFriend({}));
             dispatch(closeSentFriendRequests());
@@ -99,7 +99,9 @@ function FriendRequests(){
                                     isAvatarMutualFriend={true}
                                     isRemoveButton={true}
                                     isConfirmButton={true}
-                                    openDrawer={setDrawerOpen}/>
+                                    openDrawer={setDrawerOpen}
+                                    getDataList={getFriendshipRequestsPage}
+                                    isLoading={isLoadingRequests}/>
                 <FriendProfileML currentFriend={currentFriend} 
                                     textMessage={textMessage}/>
                 <FriendProfileS drawerOpen={drawerOpen} 

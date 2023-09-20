@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 // eslint-disable-next-line no-unused-vars
-import React, {memo, useCallback} from "react";
+import React, {memo, useCallback, useEffect, useState} from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import SideBarHeader from '../../components/Friends/SideBar/SideBarHeader';
 import { Box, Typography, List, Divider} from "@mui/material";
@@ -39,18 +39,44 @@ function SideBarFriends(props) {
         placeholderText,
         initialValue,
         openDrawer,
+        getDataList,
+        isLoading,
     } = props;
 
     const theme = useTheme();
     const dispatch = useDispatch(); 
+    const [isFetching, setIsFetching] = useState(true);
+    const [page, setPage] = useState(1);
     const authUser = useSelector((store)=>store.user.authorizedUser, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
 
+    const size = 10;
+
+/*     useEffect(() => {
+            dispatch(getDataList({page, size}));
+            setPage(page+1);
+            setIsFetching(false);
+    },[dispatch]); */
+
+    useEffect(() => {
+        if(isFetching && !isLoading && getDataList) {
+            dispatch(getDataList({page, size}));
+            setPage(page+1);
+            setIsFetching(false);
+        }
+    },[isFetching, dispatch]);
+
     const handleClickLinklocal = (friend) => {
         handleLinkClick(dispatch, friend, authUser);
-    }
+    };
 
     const callBackHandleLinkClick = useCallback(handleClickLinklocal, [authUser, dispatch]);
+
+    function handleScroll(e) {
+        if (e.target.scrollHeight - (e.target.scrollTop + e.target.offsetHeight) < 100 && !isLoading) {
+            setIsFetching(true);
+        }
+      }
 
     const searchComponent = search  
         ?   <>
@@ -97,9 +123,9 @@ function SideBarFriends(props) {
                     additionalButtons={additionalButtons}
                     />
                 </MenuItem>)
-            :   <Typography sx={{py: 2, fontSize: 12, color: theme.palette.textColor.secondary}}>
-                    { noItemMessage }
-                </Typography>;
+        :   <Typography sx={{py: 2, fontSize: 12, color: theme.palette.textColor.secondary}}>
+                { noItemMessage }
+            </Typography>;
 
     return (
         <SidebarStyled>
@@ -116,7 +142,7 @@ function SideBarFriends(props) {
                     </Box>
                     <Divider sx={{ my: '12px', borderColor: theme.palette.border.card, }}/>
                 </SideBarHeader>
-                <SideBarContentWrapper>
+                <SideBarContentWrapper  onScroll={handleScroll}>
                     { searchComponent }
                     { addlItemsHead }
                     <Box sx={{paddingTop: 1}}>
@@ -153,6 +179,8 @@ SideBarFriends.propTypes = {
     placeholderText: PropTypes.string,
     initialValue: PropTypes.string,
     openDrawer: PropTypes.func,
+    getDataList: PropTypes.func,
+    isLoading: PropTypes.bool,
   };
   
   SideBarFriends.defaultProps = {
@@ -175,6 +203,8 @@ SideBarFriends.propTypes = {
     placeholderText: '',
     initialValue: '',
     openDrawer: () => {},
+    getDataList: () => {},
+    isLoading: false,
   };
 
 export default memo(SideBarFriends);

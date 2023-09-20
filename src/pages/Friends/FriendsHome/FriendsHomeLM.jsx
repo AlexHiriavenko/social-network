@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import Friend from "../../../components/Friends/Friend/Friend";
 import { Box, Divider } from "@mui/material";
 import { ButtonStyled } from '../../../components/StyledComponents/Buttons';
@@ -8,6 +9,8 @@ import { SectorTitle, SectorHeader, FriendsContainer, SectionWraper, H1Styled, L
 import { useTheme } from '@mui/material/styles';
 import {PageBoxFriends} from '../../../components/StyledComponents/PageBoxFriends';
 import PropTypes from 'prop-types';
+import { Loader } from "../../../components/PreLoader";
+import { shallowEqual } from "react-redux";
 
 
 function FriendsHomeLM(props) {
@@ -19,10 +22,13 @@ function FriendsHomeLM(props) {
         handleClickConfirm, 
         handleClickRemove,
         handleClickAdd,
-        handleClickRemoveSuggestion
+        handleClickRemoveSuggestion,
+        handleScroll,
     } = props;
 
     const theme = useTheme();
+    const isLoadingSuggestions = useSelector((store)=>store.friends.isLoadingSuggestions, shallowEqual);
+    const isLoadingRequests = useSelector((store)=>store.friends.isLoadingRequests, shallowEqual);
 
     const friendsRequestsList = friendsRequestsToUser.map(fr => 
                             <Friend key={fr.id}
@@ -62,6 +68,8 @@ function FriendsHomeLM(props) {
                                                     onClick={() =>  handleClickRemoveSuggestion(fr)}>Remove</ButtonStyled>}
                             />)
 
+    const loader = <Box sx={{display: 'flex', justifyContent:'center', alignContent: 'center', margin: 'auto'}}><Loader/></Box>;
+
     return(
         <PageBoxFriends sx={{ display: 'flex', [theme.breakpoints.down('sm')]: {
             display: 'none',
@@ -74,8 +82,9 @@ function FriendsHomeLM(props) {
                     <SideBarList  activeItem={"Home"}/>
                 </SideBarWrapper>
             </SidebarStyled>         
-            <SectionWraper>
-                {friendsRequestsToUser.length > 0 && 
+            <SectionWraper onScroll={handleScroll}>
+            {(isLoadingSuggestions || isLoadingRequests) && loader}
+                {friendsRequestsToUser.length > 0 && !isLoadingSuggestions && !isLoadingRequests &&
                 <Box sx={{px: '16px'}}>
                     <SectorHeader>
                         <SectorTitle>Friend requests</SectorTitle>
@@ -87,7 +96,7 @@ function FriendsHomeLM(props) {
                 </Box>
                 }
                 {divider}
-                {friendSuggestions.length > 0 && 
+                {friendSuggestions.length > 0 && !isLoadingSuggestions && !isLoadingRequests && 
                 <Box sx={{px: '16px'}}>
                     <SectorHeader>
                         <SectorTitle>People you may know</SectorTitle>
@@ -111,6 +120,7 @@ FriendsHomeLM.propTypes = {
     handleClickRemove: PropTypes.func,
     handleClickAdd: PropTypes.func,
     handleClickRemoveSuggestion: PropTypes.func,
+    handleScroll: PropTypes.func,
   };
   
   FriendsHomeLM.defaultProps = {
@@ -121,6 +131,7 @@ FriendsHomeLM.propTypes = {
     handleClickRemove: () => { },
     handleClickAdd: () => { },
     handleClickRemoveSuggestion: () => { },
+    handleScroll: () => { },
   };
 
 export default FriendsHomeLM;

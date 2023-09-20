@@ -47,8 +47,7 @@ const chatSlice = createSlice({
             }
         },
         addMessageToChat: function (state, action) {
-            state.chatsParticipants = state.chatsParticipants.map((el) => {
-                if (el.id === action.payload.chatId) {
+            state.chatsParticipants = state.chatsParticipants.map(el => {if (el.id === action.payload.chatId) {
                     el.content = action.payload.content;
                     el.fullName = action.payload.sender.fullName;
                     el.userId = action.payload.sender.fullName;
