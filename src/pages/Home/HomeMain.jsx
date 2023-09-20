@@ -40,12 +40,7 @@ function HomeMain() {
         .finally(() => setFetching(false));
     }
   }, [fetching]);
-  useEffect(() => {
-    document.addEventListener("scroll", handleScroll);
-    return () => {
-      document.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+
   useEffect(() => {
     setMainPagePosts(visiblePosts);
   }, [visiblePosts]);
