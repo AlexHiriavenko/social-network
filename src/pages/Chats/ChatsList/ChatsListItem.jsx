@@ -8,7 +8,10 @@ import {
 } from "../../../redux/chat.slice/chat.slice";
 import { Typography, Avatar, Box, Tooltip, Badge } from "@mui/material/";
 import { Link } from "react-router-dom";
-import { deleteTemporaryParticipant } from "../../../redux/chat.slice/chat.slice";
+import {
+    deleteTemporaryParticipant,
+    resetCurrentChat,
+} from "../../../redux/chat.slice/chat.slice";
 import { isAuthUser, setChatParticipant } from "../helpers/chatsHelpers";
 import { ItemListChat } from "./StyledChatsList";
 import { LastMessageContent } from "../../../components/Header/HeaderOptions/headerOptionsStyled";
@@ -32,7 +35,10 @@ function ChatsListItem({ chat, setNewMessageDialog }) {
 
     function handlerChat(event, chatId, participants, userId) {
         setUnreadCounter(0);
-        dispatch(setCurrentChatCompanion(setChatParticipant(participants, userId)));
+        dispatch(resetCurrentChat());
+        dispatch(
+            setCurrentChatCompanion(setChatParticipant(participants, userId))
+        );
         dispatch(getChat(chatId));
         dispatch(openPageChat());
         dispatch(deleteTemporaryParticipant());
@@ -47,22 +53,25 @@ function ChatsListItem({ chat, setNewMessageDialog }) {
         setUnreadCounter(messageCount);
     }, [messageCount]);
 
-    // console.log(messageCount);
-    // console.log(unreadCounter);
-
     return (
         <ItemListChat
             id={`chat${chatId}`}
             key={chatId}
-            onClick={(event) => handlerChat(event, chatId, chatParticipant, userId)}
+            onClick={(event) =>
+                handlerChat(event, chatId, chatParticipant, userId)
+            }
             sx={{
-                backgroundColor: isActiveItem(chatId) ? theme.palette.hoverColor.secondary : "none",
-            }}
-        >
+                backgroundColor: isActiveItem(chatId)
+                    ? theme.palette.hoverColor.secondary
+                    : "none",
+            }}>
             <Link className="search__user-link">
                 <Tooltip
-                    title={isAuthUser(authUserID, userId) ? chatParticipant[0].fullName : fullName}
-                >
+                    title={
+                        isAuthUser(authUserID, userId)
+                            ? chatParticipant[0].fullName
+                            : fullName
+                    }>
                     <Badge badgeContent={unreadCounter} color="primary">
                         <Avatar
                             sx={{ minWidth: "40px", minHeight: "40px" }}
@@ -71,25 +80,29 @@ function ChatsListItem({ chat, setNewMessageDialog }) {
                                 isAuthUser(authUserID, userId)
                                     ? chatParticipant[0].profilePicture
                                     : profilePicture
-                            }
-                        ></Avatar>
+                            }></Avatar>
                     </Badge>
                 </Tooltip>
                 <Box className="searh__user-text">
-                    <Typography color={theme.palette.textColor.content} sx={{ lineHeight: 1 }}>
-                        {isAuthUser(authUserID, userId) ? chatParticipant[0].fullName : fullName}{" "}
+                    <Typography
+                        color={theme.palette.textColor.content}
+                        sx={{ lineHeight: 1 }}>
+                        {isAuthUser(authUserID, userId)
+                            ? chatParticipant[0].fullName
+                            : fullName}{" "}
                         {chatParticipant.length > 1 && (
                             <Typography
                                 variant="span"
                                 fontWeight={600}
-                                sx={{ fontSize: "13px", fontStyle: "italic" }}
-                            >
+                                sx={{ fontSize: "13px", fontStyle: "italic" }}>
                                 & {chatParticipant.length - 1} more
                             </Typography>
                         )}
                     </Typography>
                     <LastMessageContent>
-                        {isAuthUser(authUserID, userId) ? "You: " + content : content}
+                        {isAuthUser(authUserID, userId)
+                            ? "You: " + content
+                            : content}
                     </LastMessageContent>
                 </Box>
             </Link>

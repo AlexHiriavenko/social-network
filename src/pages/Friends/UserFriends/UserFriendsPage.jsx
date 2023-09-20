@@ -1,8 +1,8 @@
 import { useEffect, useCallback, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { getFriendList, getFriendsByName } from "../../../redux/friends/actionCreators";
+import { getFriendList, getFriendsByName, getFriendListPage } from "../../../redux/friends/actionCreators";
 import SideBarFriends from "../SideBarForFriends";
-import { setCurrentFriend, removeFriend } from "../../../redux/friends/friends.slise";
+import { setCurrentFriend, removeFriend, setFriendsList } from "../../../redux/friends/friends.slise";
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 import { updateFriendship } from '../../../redux/friends/actionCreators';
 import { setUser } from "../../../redux/user.slice/user.slice";
@@ -15,6 +15,7 @@ function UserFriendsPage() {
     const dispatch = useDispatch();
     const friends = useSelector((store)=>store.friends.friendsList, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
+    const isLoadingFriends = useSelector((store)=>store.friends.isLoadingFriends, shallowEqual);
     const userFriends = (friends.length > 0 
         ? friends.filter((elem) => elem.status==='accepted')
         : []);
@@ -26,22 +27,32 @@ function UserFriendsPage() {
             ? `${userFriends.length} Friend`
             : `${userFriends.length} Friends`;
 
+    
+    const size = 30;
+    let listHedler = getFriendListPage;
+
     useEffect(()=>{
         setDrawerOpen(currentFriend.id ? true : false);
         if(friends.length === 0) {
             dispatch(setCurrentFriend({}));
-        } 
+        }
     },[friends, dispatch])
 
     useEffect(()=>{
-        dispatch(getFriendList());
+       /*  dispatch(getFriendList()); */
         return () => {
             dispatch(setCurrentFriend({}));
+            dispatch(setFriendsList([]))
           };
     },[dispatch])
 
     const handleChangeValue = useCallback((value) => {
-        dispatch(getFriendsByName({friendName: value}));
+        if(value != '') {
+            listHedler = getFriendsByName;
+        } else {
+            listHedler = getFriendListPage;
+        }
+        dispatch(getFriendsByName({page: 0, size, friendName: value}));
     }, [dispatch])
 
     const handleClickUnfriend = useCallback((friend) => {
@@ -71,7 +82,9 @@ function UserFriendsPage() {
                                 placeholderText='Search Friends'
                                 isMoreMenuButton={true}
                                 handleClickUnfriend={handleClickUnfriend}
-                                openDrawer={setDrawerOpen}/>
+                                openDrawer={setDrawerOpen}
+                                getDataList={listHedler}
+                                isLoading={isLoadingFriends}/>
                     <FriendProfileML currentFriend={currentFriend} 
                                 textMessage={textMessage}/>
                     <FriendProfileS drawerOpen={drawerOpen} 

@@ -12,7 +12,8 @@ export const getFriendsById = createAsyncThunk(
   export const getFriendsByName = createAsyncThunk(
     'friends/getFriendsByName',
     async function(payload) {
-      const { data } = await instance.post("/friends/search", payload);
+      console.log(payload.page)
+      const { data } = await instance.post(`/friends/search/${payload.page}/${payload.size}`, {friendName: payload.friendName});
       return data;
     }
   );
@@ -25,10 +26,26 @@ export const getFriendsById = createAsyncThunk(
     }
   );
 
+  export const getFriendListPage = createAsyncThunk(
+    'friends/getFriendListPage',
+    async function({page, size}) {
+      const { data } = await instance.get(`/friends/userFriends/${page}/${size}`);
+      return data;
+    }
+  );
+
   export const getFriendshipRequests = createAsyncThunk(
     'friends/getFriendshipRequests',
     async function() {
       const { data } = await instance.get("/friends/requests");
+      return data;
+    }
+  );
+
+  export const getFriendshipRequestsPage = createAsyncThunk(
+    'friends/getFriendshipRequestsPage',
+    async function({page, size}) {
+      const { data } = await instance.get(`/friends/requests/${page}/${size}`);
       return data;
     }
   );
@@ -37,6 +54,14 @@ export const getFriendsById = createAsyncThunk(
     'friends/getFriendSuggestions',
     async function() {
       const { data } = await instance.get("/friends/suggestions");
+      return data;
+    }
+  );
+
+    export const getFriendSuggestionsPage = createAsyncThunk(
+    'friends/getFriendSuggestionsPage',
+    async function({page, size}) {
+      const { data } = await instance.get(`/friends/suggestions/${page}/${size}`);
       return data;
     }
   );

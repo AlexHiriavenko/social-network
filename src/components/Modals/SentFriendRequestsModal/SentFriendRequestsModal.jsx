@@ -70,7 +70,9 @@ function SentFriendRequestsModal() {
     })
 
     const ItemWraper = styled(Box)(({theme})=>({
-        display: 'flex', 
+        display: 'flex',
+        [theme.breakpoints.down('sm')]: {flexWrap: 'wrap',},
+        minWidth: '280px',
         paddingLeft: '8px',
         paddingRight: '8px', 
         borderRadius: '8px', 
@@ -84,7 +86,7 @@ function SentFriendRequestsModal() {
     }))
 
     const sentRequestsList = sentRequests.length > 0 
-        ?   <ContentWraper>
+        ?   <ContentWraper sx={{minWidth: '360px', width: '100%'}}>
                 <RequestQuantity>{sentRequestsCount}</RequestQuantity>
                 {sentRequests.map(fr => 
                 <ItemWraper  key={fr.id} ref={refItemWrapper} onClick={() => handleClickItem(fr.friend)}>
@@ -95,7 +97,7 @@ function SentFriendRequestsModal() {
                             friend={fr.friend}
                             isAvatarMutualFriend={true}
                             referenseForLinks={`/Profile`}/>
-                    <Box sx={{display: 'flex', width: '50%', height: '40px', margin: 'auto', zIndex: 100}}>
+                    <Box sx={{display: 'flex', width: '100%', height: '40px', margin: 'auto', zIndex: 100, minWidth: '120px'}}>
                         <ButtonStyled sx={{backgroundColor: theme.palette.buttonColor.background,
                                 '&:hover': {backgroundColor: theme.palette.buttonColor.backgroundHover},
                                 color: theme.palette.textColor.content}}
@@ -114,14 +116,14 @@ function SentFriendRequestsModal() {
             onClose={handleClose}
             aria-labelledby="sent-requests-dialog"
             open={isOpen}
-            sx={{fontFamily: theme.typography.fontFamily}}
+            sx={{fontFamily: theme.typography.fontFamily, minWidth: '320px',}}
         >
             <DialogTitle id="sent-requests-dialog-title" 
                 onClose={handleClose} 
-                sx={{p:1, minWidth: '500px', 
+                sx={{p:1, minWidth: '320px', 
                     backgroundColor: theme.palette.backgroundColor.section,
                     color: theme.palette.textColor.content, py: '12px',
-                    position: 'fix'}}>
+                    /* position: 'fix' */}}>
                 <StyledModalTitle>Sent requests</StyledModalTitle>
                 <StyledModalCloseButton onClick={handleClose}>
                     <StyledModalCloseButtonLine/>
@@ -133,6 +135,7 @@ function SentFriendRequestsModal() {
                     color: theme.palette.textColor.secondary,
                     px: 0,
                     maxHeight: '500px',
+                    minWidth: '320px',
                     overflowY: 'scroll',
                     overflowX: 'hidden',
                     "&::-webkit-scrollbar": {

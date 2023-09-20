@@ -13,7 +13,7 @@ const rotation = keyframes`
 export const Loader = styled("span")({
     width: "48px",
     height: "48px",
-    border: "5px solid #FFF",
+    border: "5px solid #1B74E4",
     borderBottomColor: "transparent",
     borderRadius: "50%",
     display: "inline-block",

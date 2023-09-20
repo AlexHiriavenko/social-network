@@ -12,6 +12,7 @@ import {
 } from "../../../../redux/user.slice/user.slice.js";
 import { setInitialState } from "../../../../redux/friends/friends.slise.js";
 import { resetСhatsParticipants, resetCurrentChat } from "../../../../redux/chat.slice/chat.slice";
+import {setNotificationInitialState} from "../../../../redux/notifications.slice/notifications.slice.js";
 
 function HeaderUserOtions() {
     const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function HeaderUserOtions() {
         dispatch(setUserInitialState());
         dispatch(resetCurrentChat());
         dispatch(resetСhatsParticipants());
+        dispatch(setNotificationInitialState);
     };
 
     const toggleMenu = () =>
