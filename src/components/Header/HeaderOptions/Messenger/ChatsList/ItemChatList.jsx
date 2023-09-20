@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -5,23 +6,37 @@ import {
     setCurrentChatCompanion,
     openChat,
 } from "../../../../../redux/chat.slice/chat.slice";
-import { ListItem, Typography, Avatar, Box } from "@mui/material/";
+import { ListItem, Typography, Avatar, Box, Badge } from "@mui/material/";
 import { isAuthUser, setChatParticipant } from "../../../../../pages/Chats/helpers/chatsHelpers";
 import { StyledLink, LastMessageContent } from "../../headerOptionsStyled";
 
 function ItemChatList({ chat }) {
-    const { id: chatId, profilePicture, fullName, userId, content, chatParticipant } = chat;
+    const {
+        id: chatId,
+        profilePicture,
+        fullName,
+        userId,
+        content,
+        chatParticipant,
+        messageCount,
+    } = chat;
 
     const dispatch = useDispatch();
     const theme = useTheme();
 
     const authUserID = useSelector((state) => state.user.authorizedUser.id);
+    const [unreadCounter, setUnreadCounter] = useState(messageCount);
 
     function handlerChat(event, chatId, participants, userId) {
+        setUnreadCounter(0);
         dispatch(setCurrentChatCompanion(setChatParticipant(participants, userId)));
         dispatch(getChat(chatId));
         dispatch(openChat());
     }
+
+    useEffect(() => {
+        setUnreadCounter(messageCount);
+    }, [messageCount]);
 
     return (
         <ListItem
@@ -35,20 +50,26 @@ function ItemChatList({ chat }) {
             }}
         >
             <StyledLink>
-                <Avatar
-                    sx={{ minWidth: "40px", minHeight: "40px" }}
-                    alt="user icon"
-                    src={
-                        isAuthUser(authUserID, userId)
-                            ? chatParticipant[0].profilePicture
-                            : profilePicture
-                    }
-                ></Avatar>
+                <Badge badgeContent={unreadCounter} color="primary">
+                    <Avatar
+                        sx={{ minWidth: "40px", minHeight: "40px" }}
+                        alt="user icon"
+                        src={
+                            isAuthUser(authUserID, userId)
+                                ? chatParticipant[0].profilePicture
+                                : profilePicture
+                        }
+                    />
+                </Badge>
                 <Box>
                     <Typography color={theme.palette.textColor.content}>
                         {isAuthUser(authUserID, userId) ? chatParticipant[0].fullName : fullName}{" "}
                         {chatParticipant.length > 1 && (
-                            <Typography variant="span" sx={{ fontSize: "13px" }}>
+                            <Typography
+                                variant="span"
+                                fontWeight={600}
+                                sx={{ fontSize: "13px", fontStyle: "italic" }}
+                            >
                                 & {chatParticipant.length - 1} more
                             </Typography>
                         )}

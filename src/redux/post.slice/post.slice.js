@@ -36,12 +36,13 @@ export const createPost = createAsyncThunk(
   "Posts/updatePost",
   async function ({ multipartFiles }) {
     let accessToken = JSON.parse(localStorage.getItem('token'))
-    await axios.post(`${import.meta.env.VITE_APP_API_URL}/posts`, multipartFiles, {
+    const data = await axios.post(`${import.meta.env.VITE_APP_API_URL}/posts`, multipartFiles, {
       headers: {
         'Content-Type': 'multipart/form-data',
         'AUTHORIZATION': `Bearer ${accessToken}`
       }
     })
+    return data;
   }
 );
 

@@ -10,6 +10,7 @@ import SendIcon from '@mui/icons-material/Send';
 import Comment from "../../Comment";
 import { commentPost, getPost, setPost, setPosts, setVisiblePosts } from "../../../redux/post.slice/post.slice";
 import { useEffect, useState } from "react";
+import { Loader } from "../../PreLoader";
 
 const mockUser = {
   image:
@@ -18,26 +19,6 @@ const mockUser = {
   lastName: "Ostapenko",
 };
 
-
-const rotation = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-`;
-
-const Loader = styled("span")({
-  width: "48px",
-  height: "48px",
-  border: "5px solid #FFF",
-  borderBottomColor: "transparent",
-  borderRadius: "50%",
-  display: "inline-block",
-  boxSizing: "border-box",
-  animation: `${rotation} 1s linear infinite`,
-});
 
 const StyledTitleWrraper = styled("div")(({ theme }) => ({
   display: "flex",
@@ -138,7 +119,6 @@ export default function CreateCommentModal() {
   const authUser = useSelector((state) => state.user.authorizedUser);
   const handleClose = () => dispatch(closeCreateCommentModal());
   const visiblePosts = useSelector((state) => state.post.visiblePosts);
-
 
 
   function createComment(content) {
