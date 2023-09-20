@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IconButton, Tooltip, Badge } from "@mui/material";
 import ForumIcon from "@mui/icons-material/Forum";
@@ -12,17 +12,14 @@ import {
 function HeaderChatIcon({ toggleMenu }) {
     const theme = useTheme();
     const dispatch = useDispatch();
+    const unread = useSelector((state) => state.chat.unread);
     const { messages } = useSelector((state) => state.chat.currentChat);
     const chatParticipants = useSelector(
         (state) => state.chat.chatsParticipants
     );
 
-    const [unread, setUnread] = useState(0);
-
     useEffect(() => {
-        dispatch(getUnread()).then((result) => {
-            setUnread(result.payload ? "new" : 0);
-        });
+        dispatch(getUnread());
     }, [messages, chatParticipants]);
 
     function getChats() {

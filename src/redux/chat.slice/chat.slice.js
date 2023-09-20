@@ -6,6 +6,7 @@ import {
     createChat,
     addToChatNewUser,
     deleteChat,
+    getUnread,
 } from "./chatActions.js";
 import {
     initialState,
@@ -42,6 +43,9 @@ const chatSlice = createSlice({
         },
         resetСhatsParticipants: function (state, action) {
             state.chatsParticipants = initialState.chatsParticipants;
+        },
+        setChatsParticipants: function (state, action) {
+            state.chatsParticipants = action.payload;
         },
         setTemporaryParticipant: function (state, action) {
             state.chatsParticipants = [
@@ -112,6 +116,9 @@ const chatSlice = createSlice({
         builder.addCase(createChat.fulfilled, (state, action) => {
             state.currentChat = action.payload;
         });
+        builder.addCase(getUnread.fulfilled, (state, action) => {
+            state.unread = action.payload ? "new" : 0;
+        });
     },
 });
 
@@ -134,9 +141,11 @@ export const {
     setCurrentChatCompanion,
     resetCurrentChat,
     resetСhatsParticipants,
+    setChatsParticipants,
     setTemporaryParticipant,
     deleteTemporaryParticipant,
     setChatsList,
+    setUnread,
     addMessageToChat,
 } = chatSlice.actions;
 
