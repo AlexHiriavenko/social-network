@@ -37,28 +37,31 @@ export const handleKeyDown = (event, args) => {
     const formData = new FormData();
     const inputValue = inputRef.current.value.trim();
 
-    if (event.key === "Enter" && inputRef.current.value.trim()) {
+    if (event.key === "Enter") {
         event.preventDefault();
+        if (inputRef.current.value.trim() || files.length) {
+            formData.append("content", inputValue);
 
-        formData.append("content", inputValue);
+            formData.append("chatId", currentChat.id);
 
-        formData.append("chatId", currentChat.id);
-
-        if (files.length) {
-            files.forEach((el) => {
-                formData.append(`files`, el);
-            });
-        }
-        if (inputValue || files.length) {
-            inputRef.current.value = "";
-            inputRef.current.readOnly = true;
-            setFiles([]);
-            setImgUrls([]);
-            dispatch(sendMessage({ files: formData }))
-                .then(() => dispatch(getChat(currentChat.id)))
-                .then(() => {
-                    inputRef.current.readOnly = false;
+            if (files.length) {
+                files.forEach((el) => {
+                    formData.append(`files`, el);
                 });
+            }
+            if (inputValue || files.length) {
+                inputRef.current.value = "";
+                inputRef.current.readOnly = true;
+                setFiles([]);
+                setImgUrls([]);
+                dispatch(sendMessage({ files: formData }))
+                    .then(() => dispatch(getChat(currentChat.id)))
+                    .then(() => {
+                        if (inputRef.current) {
+                            inputRef.current.readOnly = false;
+                        }
+                    });
+            }
         }
     }
 };

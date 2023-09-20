@@ -2,27 +2,39 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "../../instance.js";
 import axios from "axios";
 
-export const sendMessage = createAsyncThunk("chat/sendMessage", async function ({ files }) {
-    console.log("slice work");
-    let accessToken = JSON.parse(localStorage.getItem("token"));
-    await axios.post(`${import.meta.env.VITE_APP_API_URL}/messages`, files, {
-        headers: {
-            "Content-Type": "multipart/form-data",
-            AUTHORIZATION: `Bearer ${accessToken}`,
-        },
-    });
-});
+export const sendMessage = createAsyncThunk(
+    "chat/sendMessage",
+    async function ({ files }) {
+        console.log("slice work");
+        let accessToken = JSON.parse(localStorage.getItem("token"));
+        await axios.post(
+            `${import.meta.env.VITE_APP_API_URL}/messages`,
+            files,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    AUTHORIZATION: `Bearer ${accessToken}`,
+                },
+            }
+        );
+    }
+);
 
-export const editMessage = createAsyncThunk("chat/editMessage", async function (message) {
-    const { status } = await instance.put(`/messages`, message);
-    console.log(status);
-});
+export const editMessage = createAsyncThunk(
+    "chat/editMessage",
+    async function (message) {
+        const { status } = await instance.put(`/messages`, message);
+        return status;
+    }
+);
 
-export const deleteMessage = createAsyncThunk("chat/deleteMessage", async function (id) {
-    console.log(id);
-    const { status } = await instance.delete(`/messages/${id}`);
-    console.log(status);
-});
+export const deleteMessage = createAsyncThunk(
+    "chat/deleteMessage",
+    async function (id) {
+        const { status } = await instance.delete(`/messages/${id}`);
+        return status;
+    }
+);
 
 const initialState = {
     newMessage: {
@@ -58,6 +70,7 @@ const messageSlice = createSlice({
     },
 });
 
-export const { setNewMessage, setMessageId, setMessageContent } = messageSlice.actions;
+export const { setNewMessage, setMessageId, setMessageContent } =
+    messageSlice.actions;
 
 export default messageSlice.reducer;

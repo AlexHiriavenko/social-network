@@ -2,13 +2,7 @@ import { useSelector } from "react-redux";
 import PostList from "../../components/Posts/Post/PostList";
 import { useEffect, useState } from "react";
 import CreatePost from "../../components/Posts/CreatePost";
-import {
-  getPageblePosts,
-  getPosts,
-  setPosts,
-  setVisiblePosts,
-} from "../../redux/post.slice/post.slice.js";
-import { setAuthorizedUser } from "../../redux/user.slice/user.slice.js";
+import { getPageblePosts, setVisiblePosts } from "../../redux/post.slice/post.slice.js";
 import { useDispatch } from "react-redux";
 
 function HomeMain() {
