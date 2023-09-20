@@ -50,9 +50,21 @@ export default function RegisterModal(props) {
       );
 
     if(status.type == 'Login/register/fulfilled'){
-      setMessage("Account successfully created. Please check your email to activate your account")}
+      setMessage("Account successfully created. Please check your email to activate your account")
+
+      registerForm.setFieldValue("name", "");
+      registerForm.setFieldValue("surname", "");
+      registerForm.setFieldValue("emailOrPhone", "");
+      registerForm.setFieldValue("password", "");
+      registerForm.setFieldValue("day", "");
+      registerForm.setFieldValue("mounth", "");
+      registerForm.setFieldValue("year", "");
+      registerForm.setFieldValue("gender", "");
+
+    }
     else{setErrorMessage("Account with this email already exists")}
        window.setTimeout(()=>{
+
          handleModal()
          setMessage(null)
          setErrorMessage(null)
