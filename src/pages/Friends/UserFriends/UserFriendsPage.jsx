@@ -15,6 +15,7 @@ function UserFriendsPage() {
     const dispatch = useDispatch();
     const friends = useSelector((store)=>store.friends.friendsList, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
+    const isLoadingFriends = useSelector((store)=>store.friends.isLoadingFriends, shallowEqual);
     const userFriends = (friends.length > 0 
         ? friends.filter((elem) => elem.status==='accepted')
         : []);
@@ -26,11 +27,15 @@ function UserFriendsPage() {
             ? `${userFriends.length} Friend`
             : `${userFriends.length} Friends`;
 
+    
+    const size = 30;
+    let listHedler = getFriendListPage;
+
     useEffect(()=>{
         setDrawerOpen(currentFriend.id ? true : false);
         if(friends.length === 0) {
             dispatch(setCurrentFriend({}));
-        } 
+        }
     },[friends, dispatch])
 
     useEffect(()=>{
@@ -42,7 +47,12 @@ function UserFriendsPage() {
     },[dispatch])
 
     const handleChangeValue = useCallback((value) => {
-        dispatch(getFriendsByName({friendName: value}));
+        if(value != '') {
+            listHedler = getFriendsByName;
+        } else {
+            listHedler = getFriendListPage;
+        }
+        dispatch(getFriendsByName({page: 0, size, friendName: value}));
     }, [dispatch])
 
     const handleClickUnfriend = useCallback((friend) => {
@@ -73,7 +83,8 @@ function UserFriendsPage() {
                                 isMoreMenuButton={true}
                                 handleClickUnfriend={handleClickUnfriend}
                                 openDrawer={setDrawerOpen}
-                                getDataList={getFriendListPage}/>
+                                getDataList={listHedler}
+                                isLoading={isLoadingFriends}/>
                     <FriendProfileML currentFriend={currentFriend} 
                                 textMessage={textMessage}/>
                     <FriendProfileS drawerOpen={drawerOpen} 

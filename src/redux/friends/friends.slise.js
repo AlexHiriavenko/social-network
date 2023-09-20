@@ -1,5 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getFriendList, getFriendshipRequests, getFriendSuggestions, createFriendship, updateFriendship, getFriendsByName, getBirthdays, getFriendListPage } from './actionCreators';
+import { 
+  getFriendList, 
+  getFriendshipRequests, 
+  getFriendSuggestions, 
+  createFriendship, 
+  updateFriendship, 
+  getFriendsByName, 
+  getBirthdays, 
+  getFriendListPage,
+  getFriendshipRequestsPage,
+  getFriendSuggestionsPage,
+ } from './actionCreators';
 
 
 const initialState = {
@@ -8,7 +19,9 @@ const initialState = {
   friendSuggestions: [],
   currentFriend: {},
   birthdays: [[]],
-  isLoading: false,
+  isLoadingFriends: false,
+  isLoadingSuggestions: false,
+  isLoadingRequests: false,
 };
 
 const friendsSlice = createSlice({
@@ -16,7 +29,14 @@ const friendsSlice = createSlice({
   initialState,
   reducers: {
     setInitialState: function (state){
-      state = initialState;
+      state.friendsList = [];
+      state.friendsRequests = [];
+      state.friendSuggestions = [];
+      state.currentFriend = {};
+      state.birthdays = [[]];
+      state.isLoadingFriends = false;
+      state.isLoadingSuggestions = false;
+      state.isLoadingRequests = false;
     },
     setCurrentFriend: function(state, action) {
       state.currentFriend = action.payload;
@@ -27,24 +47,41 @@ const friendsSlice = createSlice({
     setFriendsList: function(state, action) {
       state.friendsList = action.payload;
     },
+    setFriendsSuggestions: function(state, action) {
+      state.friendSuggestions = action.payload;
+    },
   },
   extraReducers: {
     [getFriendListPage.pending]: (state)=>{
-      state.isLoading =  true;
-      /* state.error = null; */
+      state.isLoadingFriends =  true;
     },
     [getFriendList.fulfilled]: (state, action)=>{
       state.friendsList = action.payload;
     },
     [getFriendListPage.fulfilled]: (state, action)=>{
       state.friendsList = [...state.friendsList, ...action.payload];
-      state.isLoading =  false;
+      state.isLoadingFriends =  false;
     },
     [getFriendshipRequests.fulfilled]: (state, action)=>{
       state.friendsRequests = action.payload;
+      state.isLoadingRequests =  false;
     },
+    [getFriendshipRequests.pending]: (state)=>{
+      state.isLoadingRequests =  true;
+    },
+/*     [getFriendshipRequestsPage.fulfilled]: (state, action)=>{
+      state.friendsRequests = [...state.friendsRequests, ...action.payload];
+      state.isLoading =  false;
+    }, */
     [getFriendSuggestions.fulfilled]: (state, action)=>{
       state.friendSuggestions = action.payload;
+    },
+    [getFriendSuggestionsPage.pending]: (state)=>{
+      state.isLoadingSuggestions =  true;
+    },
+    [getFriendSuggestionsPage.fulfilled]: (state, action)=>{
+      state.friendSuggestions = [...state.friendSuggestions, ...action.payload];
+      state.isLoadingSuggestions =  false;
     },
     [createFriendship.fulfilled]: (state, action)=>{
       if (action.payload.status === 'pending') {
@@ -72,6 +109,14 @@ const friendsSlice = createSlice({
   }
 });
 
-export const {removeSuggestions, setCurrentFriend, setSearchValue, removeFriend, setFriendsList, setInitialState} = friendsSlice.actions;
+export const {
+  removeSuggestions, 
+  setCurrentFriend, 
+  setSearchValue, 
+  removeFriend, 
+  setFriendsList, 
+  setInitialState, 
+  setFriendsSuggestions
+} = friendsSlice.actions;
 
 export default friendsSlice.reducer;

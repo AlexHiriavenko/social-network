@@ -19,7 +19,8 @@ function FriendsHomeLM(props) {
         handleClickConfirm, 
         handleClickRemove,
         handleClickAdd,
-        handleClickRemoveSuggestion
+        handleClickRemoveSuggestion,
+        handleScroll,
     } = props;
 
     const theme = useTheme();
@@ -74,7 +75,7 @@ function FriendsHomeLM(props) {
                     <SideBarList  activeItem={"Home"}/>
                 </SideBarWrapper>
             </SidebarStyled>         
-            <SectionWraper>
+            <SectionWraper onScroll={handleScroll}>
                 {friendsRequestsToUser.length > 0 && 
                 <Box sx={{px: '16px'}}>
                     <SectorHeader>
@@ -111,6 +112,7 @@ FriendsHomeLM.propTypes = {
     handleClickRemove: PropTypes.func,
     handleClickAdd: PropTypes.func,
     handleClickRemoveSuggestion: PropTypes.func,
+    handleScroll: PropTypes.func,
   };
   
   FriendsHomeLM.defaultProps = {
@@ -121,6 +123,7 @@ FriendsHomeLM.propTypes = {
     handleClickRemove: () => { },
     handleClickAdd: () => { },
     handleClickRemoveSuggestion: () => { },
+    handleScroll: () => { },
   };
 
 export default FriendsHomeLM;

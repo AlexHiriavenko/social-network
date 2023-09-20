@@ -1,8 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { getFriendSuggestions, createFriendship } from "../../../redux/friends/actionCreators";
-import { setCurrentFriend } from "../../../redux/friends/friends.slise";
+import { createFriendship, getFriendSuggestionsPage } from "../../../redux/friends/actionCreators";
+import { setCurrentFriend, setFriendsSuggestions } from "../../../redux/friends/friends.slise";
 import SideBarFriends from "../SideBarForFriends";
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 import { setUser } from "../../../redux/user.slice/user.slice";
@@ -16,6 +16,7 @@ function FriendSuggestionsPage() {
     const user = useSelector((store)=>store.user.authorizedUser, shallowEqual);
     const friendSuggestions = useSelector((store)=>store.friends.friendSuggestions, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
+    const isLoadingSuggestions = useSelector((store)=>store.friends.isLoadingSuggestions, shallowEqual);
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     useEffect(()=>{
@@ -26,7 +27,8 @@ function FriendSuggestionsPage() {
     },[friendSuggestions, dispatch])
 
     useEffect(()=>{
-        dispatch(getFriendSuggestions());
+        //dispatch(setFriendsSuggestions([]));
+        //dispatch(getFriendSuggestions());
         return () => {
             dispatch(setCurrentFriend({}));
           };
@@ -67,7 +69,9 @@ function FriendSuggestionsPage() {
                                 isAvatarMutualFriend={true}
                                 isRemoveButton={true}
                                 isAddButton={true}
-                                openDrawer={setDrawerOpen}/>
+                                openDrawer={setDrawerOpen}
+                                getDataList={getFriendSuggestionsPage}
+                                isLoading={isLoadingSuggestions}/>
                     <FriendProfileML currentFriend={currentFriend} 
                                 textMessage={textMessage}/>
                     <FriendProfileS drawerOpen={drawerOpen} 

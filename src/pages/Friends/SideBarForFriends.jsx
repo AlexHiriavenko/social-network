@@ -40,35 +40,40 @@ function SideBarFriends(props) {
         initialValue,
         openDrawer,
         getDataList,
+        isLoading,
     } = props;
 
     const theme = useTheme();
     const dispatch = useDispatch(); 
     const [isFetching, setIsFetching] = useState(true);
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     const authUser = useSelector((store)=>store.user.authorizedUser, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
-    const isLoading = useSelector((store)=>store.friends.isLoading, shallowEqual);
 
-    const size = 30;
+    const size = 10;
+
+/*     useEffect(() => {
+            dispatch(getDataList({page, size}));
+            setPage(page+1);
+            setIsFetching(false);
+    },[dispatch]); */
 
     useEffect(() => {
-        console.log(getDataList)
         if(isFetching && !isLoading && getDataList) {
             dispatch(getDataList({page, size}));
             setPage(page+1);
+            setIsFetching(false);
         }
-        setIsFetching(false);
-    },[isFetching, dispatch])
+    },[isFetching, dispatch]);
 
     const handleClickLinklocal = (friend) => {
         handleLinkClick(dispatch, friend, authUser);
-    }
+    };
 
     const callBackHandleLinkClick = useCallback(handleClickLinklocal, [authUser, dispatch]);
 
     function handleScroll(e) {
-        if (e.target.scrollHeight - (e.target.scrollTop + e.target.offsetHeight) < 100) {
+        if (e.target.scrollHeight - (e.target.scrollTop + e.target.offsetHeight) < 100 && !isLoading) {
             setIsFetching(true);
         }
       }
@@ -175,6 +180,7 @@ SideBarFriends.propTypes = {
     initialValue: PropTypes.string,
     openDrawer: PropTypes.func,
     getDataList: PropTypes.func,
+    isLoading: PropTypes.bool,
   };
   
   SideBarFriends.defaultProps = {
@@ -198,6 +204,7 @@ SideBarFriends.propTypes = {
     initialValue: '',
     openDrawer: () => {},
     getDataList: () => {},
+    isLoading: false,
   };
 
 export default memo(SideBarFriends);
