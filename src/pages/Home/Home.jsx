@@ -31,7 +31,7 @@ function Home() {
 
     useEffect(() => {
 
-        if (JSON.parse(localStorage.getItem("token")) == "out" ) {
+        if (JSON.parse(localStorage.getItem("token")) == null ) {
             (async()=>{await  dispatch(loginGoogle());
 
                 let result = await dispatch(getProfile())

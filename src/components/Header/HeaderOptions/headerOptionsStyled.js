@@ -29,6 +29,7 @@ export const BtnNotifyStyled = styled(Button)(({ theme }) => ({
 }));
 
 export const MenuItemStyled = styled(MenuItem)(({ theme }) => ({
+    position: "relative",
     display: "flex",
     gap: "8px",
     whiteSpace: "normal",
