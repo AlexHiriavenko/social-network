@@ -90,8 +90,8 @@ export default function LogIn() {
                   <div className="login-text__wrapper">
                     <h2 className="login-title">facebook</h2>
                     <p className="login-subtitle">
-                      Facebook помогает вам всегда оставаться на связи и общаться со
-                      своими знакомыми.
+                      Facebook helps you stay connected and communicate with
+                      your friends.
                     </p>
                   </div>
                   {!recentLogin
@@ -110,7 +110,7 @@ export default function LogIn() {
                         onBlur={loginForm.handleBlur}
                         value={loginForm.values.existingEmail}
                         id="userEmail"
-                        label="Электронный адрес или номер телефона"
+                        label="Email"
                         variant={"outlined"}
                         fullWidth
                     />
@@ -123,7 +123,7 @@ export default function LogIn() {
                         onBlur={loginForm.handleBlur}
                         value={loginForm.values.existingPassword}
                         id="password"
-                        label="Пароль"
+                        label="Password"
                         error={!!loginForm.errors.password}
                         variant="outlined"
                         type={showPassword ? "text" : "password"}
@@ -149,11 +149,11 @@ export default function LogIn() {
                         variant="contained"
                         type="submit"
                         onClick={loginForm.handleSubmit}>
-                      Вход
+                      Login
                     </Button>
                     <p className="red" >{message}</p>
                     <button className="forgot-pass-btn" onClick={handleForgot}>
-                      Забыли аккаунт?
+                      Forgot account?
                     </button>
                     <p className="div-line__wrapper">
                       <span className="div-line">или</span>
@@ -163,7 +163,7 @@ export default function LogIn() {
                         className="create--btn"
                         variant="contained"
                         color="success">
-                      Создать новый аккаунт
+                      Create new account
                     </Button>
                     <a
                         className="google_link"
