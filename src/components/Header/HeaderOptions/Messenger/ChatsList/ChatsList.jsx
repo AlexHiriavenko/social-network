@@ -1,6 +1,4 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getChatsParticipants } from "../../../../../redux/chat.slice/chat.slice";
+import { useSelector } from "react-redux";
 import { Typography } from "@mui/material/";
 import { useTheme } from "@mui/material/styles";
 import { StyledMessagesList } from "../../headerOptionsStyled";
@@ -9,13 +7,8 @@ import { Loader } from "../../../../PreLoader";
 import ItemChatList from "./ItemChatList";
 
 function ChatsList() {
-    const dispatch = useDispatch();
     const theme = useTheme();
     const isLoading = useSelector((state) => state.chat.isLoading);
-
-    useEffect(() => {
-        dispatch(getChatsParticipants());
-    }, [dispatch]);
 
     const chatParticipants = useSelector(
         (state) => state.chat.chatsParticipants
@@ -29,7 +22,7 @@ function ChatsList() {
                 </Typography>
             )}
             {isLoading && (
-                <FlexCenter sx={{ p: 1 }}>
+                <FlexCenter sx={{ p: 1, minHeight: "200px" }}>
                     <Loader />
                 </FlexCenter>
             )}

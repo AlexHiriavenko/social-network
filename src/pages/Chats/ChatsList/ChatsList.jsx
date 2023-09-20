@@ -22,7 +22,7 @@ function ChatsList({ setNewMessageDialog }) {
                 </Typography>
             )}
             {isLoading && (
-                <FlexCenter sx={{ p: 1 }}>
+                <FlexCenter sx={{ p: 1, minHeight: "200px" }}>
                     <Loader />
                 </FlexCenter>
             )}
