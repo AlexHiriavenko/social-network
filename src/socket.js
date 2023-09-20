@@ -20,27 +20,18 @@ const connectSocket = () => {
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, (frame) => {
-            // console.log(frame);
             isConnected = true;
-
             listOfChanales.forEach((element) => {
-                if (
-                    subscribes.filter((el) => el.topic === element.topic)
-                        .length > 0
-                ) {
+                if (subscribes.filter((el) => el.topic === element.topic).length > 0) {
                     return;
                 }
-                const id = stompClient.subscribe(element.topic, (message) =>
-                    element.callback(message)
-                );
+                const id = stompClient.subscribe(element.topic, (message) => element.callback(message));
                 subscribes.push({ topic: element.topic, id });
             });
         });
     }
 
     socket.onClose = (event) => {
-        // console.log('onClose');
-        // console.log(event);
         isConnected = false;
         if (listOfChanales.length > 0) {
             connectSocket();

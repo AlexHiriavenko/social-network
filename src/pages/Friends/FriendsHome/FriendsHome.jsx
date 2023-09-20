@@ -1,6 +1,7 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
-import { getFriendList, getFriendshipRequests, getFriendSuggestions,  createFriendship, updateFriendship } from '../../../redux/friends/actionCreators';
+import { getFriendshipRequests, getFriendListPage, getFriendSuggestionsPage,  createFriendship, updateFriendship } from '../../../redux/friends/actionCreators';
+import { setCurrentFriend, setFriendsSuggestions, setFriendsList } from '../../../redux/friends/friends.slise';
 import { PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 import { handleLinkClick } from '../handleClickLink';
 import FriendsHomeLM from './FriendsHomeLM';
@@ -19,11 +20,32 @@ function FriendsHome() {
                                 ? friendsRequests.filter((elem) => elem.status==='pending' && elem.user.id !== user.id)
                                 : []);
 
+    const [isFetching, setIsFetching] = useState(true);
+    const [page, setPage] = useState(0);
+    const isLoadingSuggestions = useSelector((store)=>store.friends.isLoadingSuggestions, shallowEqual);
+    const size = 10;
+
     useEffect(()=>{
-        dispatch(getFriendList());
+        dispatch(setFriendsSuggestions([]))
+        dispatch(setFriendsList([]));
+        dispatch(getFriendListPage({page: 0, size}))
         dispatch(getFriendshipRequests());
-        dispatch(getFriendSuggestions());
+        dispatch(setCurrentFriend({}));
     },[dispatch])
+
+    useEffect(() => {
+        if(isFetching && !isLoadingSuggestions ) {
+            dispatch(getFriendSuggestionsPage({page, size}));
+            setPage(page+1);
+            setIsFetching(false);
+        }
+    },[isFetching, dispatch]);
+
+    function handleScroll(e) {
+        if (e.target.scrollHeight - (e.target.scrollTop + e.target.offsetHeight) < 100 && !isLoadingSuggestions) {
+            setIsFetching(true);
+        }
+      }
 
     const handleClickConfirm = (friend) => {
         const payload = {id: friend.id, status: "accepted"}
@@ -46,6 +68,8 @@ function FriendsHome() {
         handleLinkClick(dispatch, friend, authUser);
     }
 
+    console.log(friendSuggestions)
+
     return (
     <PageBoxFriendsWrapper >
             <FriendsHomeLM 
@@ -63,7 +87,8 @@ function FriendsHome() {
                 handleClickConfirm={handleClickConfirm} 
                 handleClickRemove={handleClickRemove}
                 handleClickAdd={handleClickAdd}
-                handleClickRemoveSuggestion={handleClickRemoveSuggestion}/>
+                handleClickRemoveSuggestion={handleClickRemoveSuggestion}
+                handleScroll={handleScroll}/>
     </PageBoxFriendsWrapper>
     );
 }
