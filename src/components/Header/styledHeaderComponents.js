@@ -8,6 +8,7 @@ export const AppBarStyled = styled(AppBar)(({ theme, className }) => ({
     justifyContent: "center",
     height: "65px",
     minHeight: "5%",
+    /* minWidth: '360px', */
     backgroundColor: theme.palette.backgroundColor.section,
     boxShadow: theme.palette.shadow.down,
     ...className,

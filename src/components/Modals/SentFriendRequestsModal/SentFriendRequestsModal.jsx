@@ -72,7 +72,6 @@ function SentFriendRequestsModal() {
     const ItemWraper = styled(Box)(({theme})=>({
         display: 'flex',
         [theme.breakpoints.down('sm')]: {flexWrap: 'wrap',},
-        minWidth: '280px',
         paddingLeft: '8px',
         paddingRight: '8px', 
         borderRadius: '8px', 
@@ -86,7 +85,7 @@ function SentFriendRequestsModal() {
     }))
 
     const sentRequestsList = sentRequests.length > 0 
-        ?   <ContentWraper sx={{minWidth: '360px', width: '100%'}}>
+        ?   <ContentWraper>
                 <RequestQuantity>{sentRequestsCount}</RequestQuantity>
                 {sentRequests.map(fr => 
                 <ItemWraper  key={fr.id} ref={refItemWrapper} onClick={() => handleClickItem(fr.friend)}>
@@ -107,7 +106,7 @@ function SentFriendRequestsModal() {
                     </Box>
                 </ItemWraper>)}
             </ContentWraper>
-        :   <Typography sx={{fontSize: '.9375rem', textAlign: 'center', lineHeight: 1.3333, py: '40px'}}>
+        :   <Typography sx={{fontSize: '.9375rem', textAlign: 'center', lineHeight: 1.3333, p: '40px'}}>
                 When you send someone a friend request, it will appear here.
             </Typography>;
 
@@ -116,14 +115,14 @@ function SentFriendRequestsModal() {
             onClose={handleClose}
             aria-labelledby="sent-requests-dialog"
             open={isOpen}
-            sx={{fontFamily: theme.typography.fontFamily, minWidth: '320px',}}
+            sx={{fontFamily: theme.typography.fontFamily,}}
         >
             <DialogTitle id="sent-requests-dialog-title" 
                 onClose={handleClose} 
                 sx={{p:1, minWidth: '320px', 
                     backgroundColor: theme.palette.backgroundColor.section,
                     color: theme.palette.textColor.content, py: '12px',
-                    /* position: 'fix' */}}>
+                    position: 'fix'}}>
                 <StyledModalTitle>Sent requests</StyledModalTitle>
                 <StyledModalCloseButton onClick={handleClose}>
                     <StyledModalCloseButtonLine/>
@@ -135,7 +134,6 @@ function SentFriendRequestsModal() {
                     color: theme.palette.textColor.secondary,
                     px: 0,
                     maxHeight: '500px',
-                    minWidth: '320px',
                     overflowY: 'scroll',
                     overflowX: 'hidden',
                     "&::-webkit-scrollbar": {
