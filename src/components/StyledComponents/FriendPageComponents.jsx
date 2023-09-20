@@ -34,7 +34,6 @@ export const SectionWraper = styled(Box)(({theme}) => ({
     width: '100%', 
     display: 'flex', 
     flexDirection: 'column', 
-    alignItems: 'center',
     paddingBottom: 0,
     paddingTop: 0,
     height: '100%',

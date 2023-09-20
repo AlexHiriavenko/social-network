@@ -84,7 +84,7 @@ function FriendsHomeLM(props) {
             </SidebarStyled>         
             <SectionWraper onScroll={handleScroll}>
             {(isLoadingSuggestions || isLoadingRequests) && loader}
-                {friendsRequestsToUser.length > 0 && 
+                {friendsRequestsToUser.length > 0 && !isLoadingSuggestions && !isLoadingRequests &&
                 <Box sx={{px: '16px'}}>
                     <SectorHeader>
                         <SectorTitle>Friend requests</SectorTitle>
@@ -96,7 +96,7 @@ function FriendsHomeLM(props) {
                 </Box>
                 }
                 {divider}
-                {friendSuggestions.length > 0 && 
+                {friendSuggestions.length > 0 && !isLoadingSuggestions && !isLoadingRequests && 
                 <Box sx={{px: '16px'}}>
                     <SectorHeader>
                         <SectorTitle>People you may know</SectorTitle>
