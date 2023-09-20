@@ -78,17 +78,15 @@ function Home() {
             );
         }
 
-      /*  if (!localStorage.getItem("authorizedUser")) {
+       if (!user) {
             (async()=>{
 
                     let result = await dispatch(getProfile())
 
-                    localStorage.setItem('authorizedUser',JSON.stringify({...result.payload,isAuthorized:true}))
-
                     dispatch(setAuthorizedUser({...result.payload,isAuthorized:true}))
                 }
             )()
-        }*/
+        }
 
 
     }, []);
