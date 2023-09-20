@@ -64,7 +64,6 @@ export default function RegisterModal(props) {
     }
     else{setErrorMessage("Account with this email already exists")}
        window.setTimeout(()=>{
-
          handleModal()
          setMessage(null)
          setErrorMessage(null)
