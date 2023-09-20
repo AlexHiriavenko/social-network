@@ -95,7 +95,7 @@ function Home() {
     return (
         <div
             className="container-page"
-            style={{ backgroundColor: theme.palette.backgroundColor.page }}>
+            style={{ backgroundColor: theme.palette.backgroundColor.page, height: "calc(100vh-65px)" }}>
             <HomeAsideLeft />
             <HomeMain />
             <HomeAsideRight />

@@ -72,7 +72,6 @@ function SentFriendRequestsModal() {
     const ItemWraper = styled(Box)(({theme})=>({
         display: 'flex',
         [theme.breakpoints.down('sm')]: {flexWrap: 'wrap',},
-        minWidth: '280px',
         paddingLeft: '8px',
         paddingRight: '8px', 
         borderRadius: '8px', 
@@ -107,7 +106,7 @@ function SentFriendRequestsModal() {
                     </Box>
                 </ItemWraper>)}
             </ContentWraper>
-        :   <Typography sx={{fontSize: '.9375rem', textAlign: 'center', lineHeight: 1.3333, py: '40px'}}>
+        :   <Typography sx={{fontSize: '.9375rem', textAlign: 'center', lineHeight: 1.3333, p: '40px'}}>
                 When you send someone a friend request, it will appear here.
             </Typography>;
 
@@ -116,7 +115,7 @@ function SentFriendRequestsModal() {
             onClose={handleClose}
             aria-labelledby="sent-requests-dialog"
             open={isOpen}
-            sx={{fontFamily: theme.typography.fontFamily, minWidth: '320px',}}
+            sx={{fontFamily: theme.typography.fontFamily,}}
         >
             <DialogTitle id="sent-requests-dialog-title" 
                 onClose={handleClose} 
