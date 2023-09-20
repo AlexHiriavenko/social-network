@@ -31,9 +31,11 @@ const chatSlice = createSlice({
             state.chatsParticipants = [action.payload, ...state.chatsParticipants];
         },
         resetCurrentChat: function (state, action) {
-            console.log("clear currentChat");
             state.currentChat = initialState.currentChat;
             state.isOpened = false;
+        },
+        resetСhatsParticipants: function (state, action) {
+            state.chatsParticipants = initialState.chatsParticipants;
         },
         setTemporaryParticipant: function (state, action) {
             state.chatsParticipants = [temporaryPartisipantState, ...state.chatsParticipants];
@@ -45,23 +47,29 @@ const chatSlice = createSlice({
             }
         },
         addMessageToChat: function (state, action) {
-            state.chatsParticipants = state.chatsParticipants.map(el => {if (el.id === action.payload.chatId) {
+            state.chatsParticipants = state.chatsParticipants.map((el) => {
+                if (el.id === action.payload.chatId) {
                     el.content = action.payload.content;
                     el.fullName = action.payload.sender.fullName;
                     el.userId = action.payload.sender.fullName;
+                    if (state.currentChat.id !== action.payload.chatId) {
+                        el.messageCount = el.messageCount == undefined ? 1 : el.messageCount + 1;
+                        // el.messageCount = (el.messageCount || 0) + 1;
+                    }
                 }
                 return el;
-            })
-            console.log(state.currentChat.id)
-            console.log(action.payload.chatId)
+            });
 
             if (state.currentChat.id === action.payload.chatId) {
-                const index = state.currentChat.messages.findLastIndex(el => el.id === action.payload.id);
-                if(index !== -1) {
+                const index = state.currentChat.messages.findLastIndex(
+                    (el) => el.id === action.payload.id
+                );
+                if (index !== -1) {
                     state.currentChat.messages[index].content = action.payload.content;
                 } else {
                     state.currentChat.messages.push(action.payload);
-            }}
+                }
+            }
         },
     },
     extraReducers: (builder) => {
@@ -78,7 +86,6 @@ const chatSlice = createSlice({
         builder.addCase(createChat.fulfilled, (state, action) => {
             state.currentChat = action.payload;
         });
-        builder.addCase(addToChatNewUser.fulfilled, (state, action) => {});
     },
 });
 
@@ -100,6 +107,7 @@ export const {
     closeChat,
     setCurrentChatCompanion,
     resetCurrentChat,
+    resetСhatsParticipants,
     setTemporaryParticipant,
     deleteTemporaryParticipant,
     setChatsList,
