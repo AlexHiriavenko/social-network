@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
-import { getFriendshipRequests, getFriendListPage, getFriendList, getFriendshipRequestsPage, getFriendSuggestionsPage,  createFriendship, updateFriendship } from '../../../redux/friends/actionCreators';
+import { getFriendshipRequests, getFriendListPage, getFriendSuggestionsPage,  createFriendship, updateFriendship } from '../../../redux/friends/actionCreators';
 import { setCurrentFriend, setFriendsSuggestions, setFriendsList } from '../../../redux/friends/friends.slise';
 import { PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 import { handleLinkClick } from '../handleClickLink';
@@ -22,27 +22,19 @@ function FriendsHome() {
 
     const [isFetching, setIsFetching] = useState(true);
     const [page, setPage] = useState(0);
-    const isLoading = useSelector((store)=>store.friends.isLoading, shallowEqual);
+    const isLoadingSuggestions = useSelector((store)=>store.friends.isLoadingSuggestions, shallowEqual);
     const size = 10;
 
     useEffect(()=>{
-        //dispatch(getFriendList());
         dispatch(setFriendsSuggestions([]))
-        console.log(friendsRequests)
-        console.log(friendsRequestsToUser)
-        console.log(friendSuggestions)
         dispatch(setFriendsList([]));
         dispatch(getFriendListPage({page: 0, size}))
         dispatch(getFriendshipRequests());
-/*         dispatch(getFriendSuggestionsPage({page: 0, size})) */
-        //dispatch(getFriendSuggestions());
         dispatch(setCurrentFriend({}));
-/*         dispatch(getFriendSuggestionsPage({page, size}));
-        setPage(page+1); */
     },[dispatch])
 
     useEffect(() => {
-        if(isFetching && !isLoading ) {
+        if(isFetching && !isLoadingSuggestions ) {
             dispatch(getFriendSuggestionsPage({page, size}));
             setPage(page+1);
             setIsFetching(false);
@@ -50,7 +42,7 @@ function FriendsHome() {
     },[isFetching, dispatch]);
 
     function handleScroll(e) {
-        if (e.target.scrollHeight - (e.target.scrollTop + e.target.offsetHeight) < 100 && !isLoading) {
+        if (e.target.scrollHeight - (e.target.scrollTop + e.target.offsetHeight) < 100 && !isLoadingSuggestions) {
             setIsFetching(true);
         }
       }

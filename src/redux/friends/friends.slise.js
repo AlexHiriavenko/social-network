@@ -8,7 +8,6 @@ import {
   getFriendsByName, 
   getBirthdays, 
   getFriendListPage,
-  getFriendshipRequestsPage,
   getFriendSuggestionsPage,
  } from './actionCreators';
 
@@ -69,10 +68,6 @@ const friendsSlice = createSlice({
     [getFriendshipRequests.pending]: (state)=>{
       state.isLoadingRequests =  true;
     },
-/*     [getFriendshipRequestsPage.fulfilled]: (state, action)=>{
-      state.friendsRequests = [...state.friendsRequests, ...action.payload];
-      state.isLoading =  false;
-    }, */
     [getFriendSuggestions.fulfilled]: (state, action)=>{
       state.friendSuggestions = action.payload;
     },

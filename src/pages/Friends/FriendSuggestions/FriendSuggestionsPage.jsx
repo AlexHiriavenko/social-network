@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { createFriendship, getFriendSuggestionsPage } from "../../../redux/friends/actionCreators";
-import { setCurrentFriend, setFriendsSuggestions } from "../../../redux/friends/friends.slise";
+import { setCurrentFriend } from "../../../redux/friends/friends.slise";
 import SideBarFriends from "../SideBarForFriends";
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
 import { setUser } from "../../../redux/user.slice/user.slice";
@@ -27,8 +27,6 @@ function FriendSuggestionsPage() {
     },[friendSuggestions, dispatch])
 
     useEffect(()=>{
-        //dispatch(setFriendsSuggestions([]));
-        //dispatch(getFriendSuggestions());
         return () => {
             dispatch(setCurrentFriend({}));
           };

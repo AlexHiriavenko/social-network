@@ -38,7 +38,6 @@ function FriendRequests(){
     },[friendsRequests, dispatch, friendsRequestsToUser.length])
 
     useEffect(()=>{
-        //dispatch(getFriendshipRequests());
         return () => {
             dispatch(setCurrentFriend({}));
             dispatch(closeSentFriendRequests());

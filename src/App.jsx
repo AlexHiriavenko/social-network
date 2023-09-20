@@ -4,7 +4,7 @@ import Header from "./components/Header/Header";
 import Modals from "./components/Modals/Modals";
 import { connectWebSocket, disconnectWebSocket, isConnected } from './socket';
 import AllRoutes from "./components/Routes";
-import { addNotifications } from './redux/notifications.slice/notifications.slice';
+import { addNewNotifications } from './redux/notifications.slice/notifications.slice';
 import { addMessageToChat } from './redux/chat.slice/chat.slice';
 
 
@@ -22,7 +22,7 @@ function App() {
                 }
             }, {
                 topic: `/topic/notification/user.${authUser.id}`, callback: (message) => {
-                    dispatch(addNotifications(JSON.parse(message.body)))
+                    dispatch(addNewNotifications(JSON.parse(message.body)))
                 }
             }])
         }
