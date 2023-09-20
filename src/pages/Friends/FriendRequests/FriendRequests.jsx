@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { NavLink } from "react-router-dom";
-import { getFriendshipRequests, updateFriendship } from '../../../redux/friends/actionCreators';
+import { updateFriendship, getFriendshipRequestsPage } from '../../../redux/friends/actionCreators';
 import SideBarFriends from "../SideBarForFriends";
 import { setCurrentFriend, } from '../../../redux/friends/friends.slise';
 import {PageBoxFriends, PageBoxFriendsWrapper} from '../../../components/StyledComponents/PageBoxFriends';
@@ -21,13 +21,18 @@ function FriendRequests(){
     const user = useSelector((store)=>store.user.authorizedUser, shallowEqual);
     const friendsRequests = useSelector((store)=>store.friends.friendsRequests, shallowEqual);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
+    const isLoadingRequests = useSelector((store)=>store.friends.isLoadingRequests, shallowEqual);
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const friendsRequestsToUser = (friendsRequests.length > 0 
         ? friendsRequests.filter((elem) => elem.status==='pending' && elem.user.id !== userAuth.id)
         : []);
 
-    const requestsCount = friendsRequestsToUser.length === 0 ? '' : friendsRequestsToUser.length;
+    const requestsCount = friendsRequestsToUser.length === 0 
+    ? '' 
+    : friendsRequestsToUser.length === 1
+        ? `${friendsRequestsToUser.length} Friend request`
+        : `${friendsRequestsToUser.length} Friend requests`;
 
     useEffect(()=>{
         setDrawerOpen(currentFriend.id ? true : false);
@@ -37,7 +42,6 @@ function FriendRequests(){
     },[friendsRequests, dispatch, friendsRequestsToUser.length])
 
     useEffect(()=>{
-        dispatch(getFriendshipRequests());
         return () => {
             dispatch(setCurrentFriend({}));
             dispatch(closeSentFriendRequests());
@@ -91,7 +95,7 @@ function FriendRequests(){
             <PageBoxFriends>
                 <SideBarFriends sideBarItems={friendsRequestsToUser}
                                     headerTitle={"Friend requests"}
-                                    subTitle={`${requestsCount} Friend requests`}
+                                    subTitle={requestsCount}
                                     addItemsSubHead={addItemsSubHead}
                                     noItemMessage={noItemMessage}
                                     handleClickConfirm={handleClickConfirm}
@@ -99,7 +103,9 @@ function FriendRequests(){
                                     isAvatarMutualFriend={true}
                                     isRemoveButton={true}
                                     isConfirmButton={true}
-                                    openDrawer={setDrawerOpen}/>
+                                    openDrawer={setDrawerOpen}
+                                    getDataList={getFriendshipRequestsPage}
+                                    isLoading={isLoadingRequests}/>
                 <FriendProfileML currentFriend={currentFriend} 
                                     textMessage={textMessage}/>
                 <FriendProfileS drawerOpen={drawerOpen} 

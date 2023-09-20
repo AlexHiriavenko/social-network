@@ -8,6 +8,8 @@ import ChatsList from "./ChatsList/ChatsList";
 import ChatHeader from "../../../../pages/Chats/ChatBody/ChatHeader";
 import CurrentChat from "./CurrentChat/CurrentChat";
 import NewChat from "./NewChat/NewChat";
+import { FlexCenter } from "../../styledHeaderComponents";
+import { Loader } from "../../../PreLoader";
 
 function HeaderMessageOptions() {
     const theme = useTheme();
@@ -17,6 +19,7 @@ function HeaderMessageOptions() {
 
     const open = useSelector((state) => state.chat.isOpened);
     const { messages } = useSelector((state) => state.chat.currentChat) || [];
+    const isLoading = useSelector((state) => state.chat.isLoadingChat);
     const chatRef = useRef(null);
 
     const toggleMenu = () =>
@@ -75,6 +78,11 @@ function HeaderMessageOptions() {
                 {!open && !newMessageModal && <ChatsList />}
                 {open && <ChatHeader closeMenu={closeMenu} />}
                 {open && <CurrentChat />}
+                {isLoading && (
+                    <FlexCenter sx={{ minHeight: "260px" }}>
+                        <Loader />
+                    </FlexCenter>
+                )}
             </Menu>
         </>
     );

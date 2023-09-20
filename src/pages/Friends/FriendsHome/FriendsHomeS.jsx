@@ -13,6 +13,7 @@ import { MenuItem, SideBarContentWrapper } from '../SideBarStyledComponents';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from "@emotion/styled";
+import { Loader } from "../../../components/PreLoader";
 
 
 function FriendsHomeS(props) {
@@ -33,6 +34,9 @@ function FriendsHomeS(props) {
     const authUser = useSelector((store)=>store.user.authorizedUser, shallowEqual);
     const callBackHandleLinkClick = useCallback(handleClickLinklocal, [authUser, dispatch, handleClickLinklocal]);
     const currentFriend = useSelector((store)=>store.friends.currentFriend, shallowEqual);
+
+    const isLoadingSuggestions = useSelector((store)=>store.friends.isLoadingSuggestions, shallowEqual);
+    const isLoadingRequests = useSelector((store)=>store.friends.isLoadingRequests, shallowEqual);
 
     const navigate = useNavigate();
 
@@ -109,6 +113,8 @@ function FriendsHomeS(props) {
                                 <LinkStyled to={"/friends/suggestions"}>Suggestions</LinkStyled>
                             </Box>;
 
+    const loader = <Box sx={{display: 'flex', justifyContent:'center', alignContent: 'center', margin: 'auto'}}><Loader/></Box>;
+
     return(
         <PageBoxFriends sx={{
             display: 'flex',
@@ -127,8 +133,9 @@ function FriendsHomeS(props) {
                 </SideBarHeader>
                 <Divider sx={{my: 0, borderColor: theme.palette.border.card,}}/>
                 <SideBarContentWrapper>
+                {(isLoadingSuggestions || isLoadingRequests) && loader}
                     <List sx={{ py: 1}}>
-                        {friendsRequestsToUser.length > 0 && 
+                        {friendsRequestsToUser.length > 0 && !isLoadingSuggestions && !isLoadingRequests &&
                         <Box sx={{px: '16px'}}>
                             <SectorHeader sx={{backgroundColor: theme.palette.backgroundColor.section,}}>
                                 <SectorTitle>Friend requests</SectorTitle>
@@ -139,7 +146,7 @@ function FriendsHomeS(props) {
                             </FriendsContainer>
                         </Box>}
                         {divider}
-                        {friendSuggestions.length > 0 && 
+                        {friendSuggestions.length > 0 && !isLoadingSuggestions && !isLoadingRequests &&
                         <Box sx={{px: '16px'}}>
                             <SectorHeader>
                                 <SectorTitle>People you may know</SectorTitle>

@@ -1,7 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import { ListItem, Typography, Avatar, Tooltip } from "@mui/material";
-import { setMessageContent, setMessageId } from "../../../redux/message.slice/message.slice";
+import {
+    setMessageContent,
+    setMessageId,
+} from "../../../redux/message.slice/message.slice";
 import {
     openDeleteMessageModal,
     openEditMessageModal,
@@ -43,8 +46,7 @@ function ItemListMessage({ message }) {
                 isAuthUser(authUserId, message.sender.id)
                     ? "chat-body__item--authUser"
                     : "chat-body__item--chatPartner"
-            }
-        >
+            }>
             <Typography color={theme.palette.textColor.secondary} align="left">
                 {message.createdDate
                     ? new Date(message.createdDate).toLocaleString()
@@ -56,8 +58,7 @@ function ItemListMessage({ message }) {
                     <Avatar
                         sx={{ minWidth: "40px", minHeight: "40px" }}
                         alt="user icon"
-                        src={message.sender.profilePicture}
-                    ></Avatar>
+                        src={message.sender.profilePicture}></Avatar>
                 </Tooltip>
                 <WrapBns id={"message" + message.id}>
                     {isAuthUser(authUserId, message.sender.id) ? (
@@ -65,19 +66,30 @@ function ItemListMessage({ message }) {
                             <AuthUserMessage>{message.content}</AuthUserMessage>
                         ) : null
                     ) : message.content ? (
-                        <PartnerUserMessage>{message.content}</PartnerUserMessage>
+                        <PartnerUserMessage>
+                            {message.content}
+                        </PartnerUserMessage>
                     ) : null}
                     {isAuthUser(authUserId, message.sender.id) ? (
                         <StyledMessageBtnGroup
-                            sx={{ flexDirection: message.content ? "column" : "row" }}
-                        >
+                            sx={{
+                                flexDirection: message.content
+                                    ? "column"
+                                    : "row",
+                            }}>
                             <BtnEditMessage
                                 onClick={(event) =>
-                                    handleOpenEdit(event, message.id, message.content)
+                                    handleOpenEdit(
+                                        event,
+                                        message.id,
+                                        message.content
+                                    )
                                 }
                             />
                             <BtnDeleteMessage
-                                onClick={(event) => handleOpenDelete(event, message.id)}
+                                onClick={(event) =>
+                                    handleOpenDelete(event, message.id)
+                                }
                             />
                         </StyledMessageBtnGroup>
                     ) : null}
@@ -86,7 +98,11 @@ function ItemListMessage({ message }) {
             <ContainerMessageImgs>
                 {message.imageUrls?.length
                     ? message.imageUrls.map((url, index) => (
-                          <img src={url.imgUrl} key={index} style={{ width: "270px" }} />
+                          <img
+                              src={url.imgUrl}
+                              key={index}
+                              style={{ width: "270px" }}
+                          />
                       ))
                     : null}
             </ContainerMessageImgs>

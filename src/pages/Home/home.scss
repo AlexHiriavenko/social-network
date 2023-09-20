@@ -5,9 +5,9 @@
     flex-direction: column;
     row-gap: 10px;
 
-    // height: calc(100vh - 65px);
-    // overflow-y: scroll;
-    // overflow-x: hidden;
+    height: calc(100vh - 65px);
+    overflow-y: scroll;
+    overflow-x: hidden;
 
     &::-webkit-scrollbar {
         width: 0;

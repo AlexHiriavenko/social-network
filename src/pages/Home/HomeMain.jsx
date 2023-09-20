@@ -2,13 +2,7 @@ import { useSelector } from "react-redux";
 import PostList from "../../components/Posts/Post/PostList";
 import { useEffect, useState } from "react";
 import CreatePost from "../../components/Posts/CreatePost";
-import {
-  getPageblePosts,
-  getPosts,
-  setPosts,
-  setVisiblePosts,
-} from "../../redux/post.slice/post.slice.js";
-import { setAuthorizedUser } from "../../redux/user.slice/user.slice.js";
+import { getPageblePosts, setVisiblePosts } from "../../redux/post.slice/post.slice.js";
 import { useDispatch } from "react-redux";
 
 function HomeMain() {
@@ -22,9 +16,7 @@ function HomeMain() {
   // Functions
   function handleScroll(e) {
     if (
-      e.target.documentElement.scrollHeight -
-      (e.target.documentElement.scrollTop + window.innerHeight) <
-      250
+      e.target.scrollHeight - (e.target.scrollTop + e.target.offsetHeight)<250
     ) {
       setFetching(true);
     }
@@ -42,17 +34,12 @@ function HomeMain() {
         .finally(() => setFetching(false));
     }
   }, [fetching]);
-  useEffect(() => {
-    document.addEventListener("scroll", handleScroll);
-    return () => {
-      document.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+
   useEffect(() => {
     setMainPagePosts(visiblePosts);
   }, [visiblePosts]);
   return (
-    <main className="main-home-content">
+    <main className="main-home-content" onScroll={handleScroll}>
       <CreatePost />
       <PostList posts={visiblePosts} />
     </main>
