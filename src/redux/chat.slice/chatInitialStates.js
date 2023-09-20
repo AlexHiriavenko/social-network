@@ -1,6 +1,7 @@
 export const initialState = {
     isOpened: false,
     isLoading: false,
+    isLoadingChat: false,
     chatsParticipants: [],
     currentChatCompanion: {
         id: 0,

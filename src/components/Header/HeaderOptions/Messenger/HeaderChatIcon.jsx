@@ -9,8 +9,7 @@ import {
     getChatsParticipants,
 } from "../../../../redux/chat.slice/chatActions";
 
-function HeaderChatIcon(props) {
-    const { toggleMenu } = props;
+function HeaderChatIcon({ toggleMenu }) {
     const theme = useTheme();
     const dispatch = useDispatch();
     const { messages } = useSelector((state) => state.chat.currentChat);

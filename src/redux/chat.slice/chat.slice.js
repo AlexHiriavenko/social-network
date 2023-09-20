@@ -102,7 +102,11 @@ const chatSlice = createSlice({
             }
             state.isLoading = false;
         });
+        builder.addCase(getChat.pending, (state, action) => {
+            state.isLoadingChat = true;
+        });
         builder.addCase(getChat.fulfilled, (state, action) => {
+            state.isLoadingChat = false;
             state.currentChat = action.payload;
         });
         builder.addCase(createChat.fulfilled, (state, action) => {

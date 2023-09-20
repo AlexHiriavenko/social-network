@@ -8,7 +8,10 @@ import {
 } from "../../../redux/chat.slice/chat.slice";
 import { Typography, Avatar, Box, Tooltip, Badge } from "@mui/material/";
 import { Link } from "react-router-dom";
-import { deleteTemporaryParticipant } from "../../../redux/chat.slice/chat.slice";
+import {
+    deleteTemporaryParticipant,
+    resetCurrentChat,
+} from "../../../redux/chat.slice/chat.slice";
 import { isAuthUser, setChatParticipant } from "../helpers/chatsHelpers";
 import { ItemListChat } from "./StyledChatsList";
 import { LastMessageContent } from "../../../components/Header/HeaderOptions/headerOptionsStyled";
@@ -32,6 +35,7 @@ function ChatsListItem({ chat, setNewMessageDialog }) {
 
     function handlerChat(event, chatId, participants, userId) {
         setUnreadCounter(0);
+        dispatch(resetCurrentChat());
         dispatch(
             setCurrentChatCompanion(setChatParticipant(participants, userId))
         );

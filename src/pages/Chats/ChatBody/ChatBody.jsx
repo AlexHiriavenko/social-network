@@ -7,11 +7,14 @@ import ListMessages from "./ListMessages";
 import ChatFooter from "./ChatFooter";
 import NewMessageDialog from "../NewMessageDialog/NewMessageDialog";
 import { EmptyChatPage, ChatContainer } from "../styledChatComponents";
+import { Loader } from "../../../components/PreLoader";
+import { FlexCenter } from "../../../components/Header/styledHeaderComponents";
 
 const ChatBody = (props) => {
     const { newMessageDialog, setNewMessageDialog } = props;
     const dispatch = useDispatch();
     const { messages } = useSelector((state) => state.chat.currentChat) || [];
+    const isLoading = useSelector((state) => state.chat.isLoadingChat);
     const chatFormRef = useRef(null);
 
     // в конец чата
@@ -44,10 +47,15 @@ const ChatBody = (props) => {
             {newMessageDialog && (
                 <NewMessageDialog setNewMessageModal={setNewMessageDialog} />
             )}
-            {!showChat && !newMessageDialog && (
+            {!showChat && !newMessageDialog && !isLoading && (
                 <EmptyChatPage>
                     Select a chat or start a new conversation
                 </EmptyChatPage>
+            )}
+            {isLoading && (
+                <FlexCenter sx={{ width: "100%", mb: 20 }}>
+                    <Loader />
+                </FlexCenter>
             )}
         </>
     );
