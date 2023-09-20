@@ -30,7 +30,7 @@ const ChatBody = (props) => {
 
     return (
         <>
-            {showChat && (
+            {showChat && !isLoading && (
                 <Box ref={chatFormRef} pb={2} className="chat-body">
                     <ChatHeader
                         closeMenu={() => null}
