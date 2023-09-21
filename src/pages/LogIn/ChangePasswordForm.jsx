@@ -38,7 +38,7 @@ const navigate = useNavigate();
         <>
 
             <Box className="form__wrapper">
-                <h2 className="register-title">Вoccтановление пароля</h2>
+                <h2 className="register-title">Password recover</h2>
                 <Box className="form-modal">
                     <form className="change_password-form">
                         <TextField
@@ -47,7 +47,7 @@ const navigate = useNavigate();
 
                             name="code"
                             required
-                            label="Введите код из электронного письма"
+                            label="Check your email and enter code from letter"
                             fullWidth
                             value={changePasswordForm.values.code}
                             onChange={changePasswordForm.handleChange}
@@ -59,7 +59,7 @@ const navigate = useNavigate();
                             onBlur={changePasswordForm.handleBlur}
                             value={changePasswordForm.values.newPassword}
                             id="newPassword"
-                            label="Ваш новый пароль"
+                            label="Enter your new password"
 
                             variant="outlined"
                             type={showPassword ? "text" : "password"}
@@ -85,7 +85,7 @@ const navigate = useNavigate();
                             type="submit"
                             color="success"
                             style={{ alignSelf: "center" }}>
-                            Отправить
+                            Change password
                         </Button></form>
                     <Button
                         onClick={()=>{
@@ -95,7 +95,7 @@ const navigate = useNavigate();
                         variant="contained"
                         color="grey"
                         style={{ alignSelf: "center",marginLeft:"-15px"  }}>
-                        На главную
+                        Return to home page
                     </Button>
                 </Box>
             </Box>

@@ -27,7 +27,7 @@ const navigate = useNavigate()
     <>
 
         <Box className="form__wrapper">
-          <h2 className="register-title">Забыли пароль?</h2>
+          <h2 className="register-title">Forgot password?</h2>
           <Box className="form-modal">
 
             <form className="forgot-form">
@@ -38,7 +38,7 @@ const navigate = useNavigate()
               error={!!forgotForm.errors.emailOrPhone}
               name="emailOrPhone"
               required
-              label="Ваш почтовый ящик "
+              label="Enter your email "
               fullWidth
               value={forgotForm.values.emailOrPhone}
               onChange={forgotForm.handleChange}
@@ -51,7 +51,7 @@ const navigate = useNavigate()
               type="submit"
               color="success"
               style={{ alignSelf: "center" }}>
-              Отправить письмо
+              Send change password letter
             </Button></form>
             <Button
                 onClick={()=>{
@@ -61,7 +61,7 @@ const navigate = useNavigate()
                 variant="contained"
                 color="grey"
                 style={{ alignSelf: "center",marginLeft:"-15px"}}>
-              На главную
+              Return to home page
             </Button>
           </Box>
         </Box>
