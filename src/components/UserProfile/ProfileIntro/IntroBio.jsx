@@ -4,7 +4,8 @@ import ProfilePageButton from "../ProfilePageButton/ProfilePageButton";
 import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import { setUser, updateUser } from "../../../redux/user.slice/user.slice";
+import {setAuthorizedUser, setUser, updateUser} from "../../../redux/user.slice/user.slice";
+
 
 const StyledIntroLink = styled("div")({
   paddingTop: "16px",
@@ -45,9 +46,17 @@ export default function IntroBio({edit, userAbout, setEditState}) {
     onSubmit: (values) => {
       const updatedUser = { ...user };
       updatedUser.about = values.about;
+      updatedUser.city = updatedUser.city   ?   updatedUser.city : '';
+      updatedUser.country = updatedUser.country   ?   updatedUser.country : '';
+      updatedUser.workPlace  = updatedUser.workPlace    ?   updatedUser.workPlace : '';
+      updatedUser.profilePicture = updatedUser.profilePicture ?   updatedUser.profilePicture : '';
       dispatch(updateUser(updatedUser));
-      dispatch(setUser(updatedUser));
       localStorage.setItem("user", JSON.stringify(updatedUser));
+      localStorage.setItem("authorizedUser", JSON.stringify(updatedUser));
+      dispatch(setUser(updatedUser));
+      dispatch(setAuthorizedUser(updatedUser));
+
+
       setEditState();
     },
   });

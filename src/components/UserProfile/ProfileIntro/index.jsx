@@ -34,6 +34,7 @@ export default function ProfileIntro() {
   // Constants
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
+  const authUser = useSelector((state) => state.user.authorizedUser);
   // States
   const [isEdit, setInputStatus] = useState(false);
   const [userAbout, setUserAbout] = useState("");
@@ -48,7 +49,7 @@ export default function ProfileIntro() {
       setUserAbout(user.about);
     }
     setAuthorized(user.isAuthorized);
-  }, [user]);
+  }, [user,authUser]);
   return (
     <StyledIntroContentBlock>
       <ContentBlockTitel>Intro</ContentBlockTitel>
