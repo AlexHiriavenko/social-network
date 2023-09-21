@@ -135,7 +135,7 @@ function FriendsHomeS(props) {
                 <SideBarContentWrapper>
                 {(isLoadingSuggestions || isLoadingRequests) && loader}
                     <List sx={{ py: 1}}>
-                        {friendsRequestsToUser.length > 0 && 
+                        {friendsRequestsToUser.length > 0 && !isLoadingSuggestions && !isLoadingRequests &&
                         <Box sx={{px: '16px'}}>
                             <SectorHeader sx={{backgroundColor: theme.palette.backgroundColor.section,}}>
                                 <SectorTitle>Friend requests</SectorTitle>
@@ -146,7 +146,7 @@ function FriendsHomeS(props) {
                             </FriendsContainer>
                         </Box>}
                         {divider}
-                        {friendSuggestions.length > 0 && 
+                        {friendSuggestions.length > 0 && !isLoadingSuggestions && !isLoadingRequests &&
                         <Box sx={{px: '16px'}}>
                             <SectorHeader>
                                 <SectorTitle>People you may know</SectorTitle>

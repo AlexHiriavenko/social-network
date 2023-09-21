@@ -28,7 +28,11 @@ function FriendRequests(){
         ? friendsRequests.filter((elem) => elem.status==='pending' && elem.user.id !== userAuth.id)
         : []);
 
-    const requestsCount = friendsRequestsToUser.length === 0 ? '' : friendsRequestsToUser.length;
+    const requestsCount = friendsRequestsToUser.length === 0 
+    ? '' 
+    : friendsRequestsToUser.length === 1
+        ? `${friendsRequestsToUser.length} Friend request`
+        : `${friendsRequestsToUser.length} Friend requests`;
 
     useEffect(()=>{
         setDrawerOpen(currentFriend.id ? true : false);
@@ -91,7 +95,7 @@ function FriendRequests(){
             <PageBoxFriends>
                 <SideBarFriends sideBarItems={friendsRequestsToUser}
                                     headerTitle={"Friend requests"}
-                                    subTitle={`${requestsCount} Friend requests`}
+                                    subTitle={requestsCount}
                                     addItemsSubHead={addItemsSubHead}
                                     noItemMessage={noItemMessage}
                                     handleClickConfirm={handleClickConfirm}
