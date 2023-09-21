@@ -52,11 +52,14 @@ function SideBarFriends(props) {
 
     const size = 10;
 
-/*     useEffect(() => {
-            dispatch(getDataList({page, size}));
+    useEffect(() => {
+        console.log(sideBarItems)
+        if(sideBarItems.length === 0 && !isLoading) {
+            dispatch(getDataList({page: 0, size}));
             setPage(page+1);
             setIsFetching(false);
-    },[dispatch]); */
+        }
+    },[dispatch]);
 
     useEffect(() => {
         if(isFetching && !isLoading && getDataList) {
