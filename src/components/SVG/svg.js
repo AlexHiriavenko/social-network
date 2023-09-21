@@ -9,15 +9,19 @@ import SVGNext from "./Next";
 import SVGNoFrienSelected from "./NoFriendSelected";
 import SVGArrowBack from "./ArrowBack";
 import SVGThreeDots from "./ThreeDots";
+import SvgSocial from "./SocialIcon";
 
-export { SvgFacebook, 
-            SvgHome, 
-            SVGpersonGo, 
-            SVGpersonPlus, 
-            SVGPeople, 
-            SVGFriendsList, 
-            SVGBirthdays, 
-            SVGNext, 
-            SVGNoFrienSelected,
-            SVGArrowBack,
-            SVGThreeDots, };
+export {
+    SvgFacebook,
+    SvgHome,
+    SVGpersonGo,
+    SVGpersonPlus,
+    SVGPeople,
+    SVGFriendsList,
+    SVGBirthdays,
+    SVGNext,
+    SVGNoFrienSelected,
+    SVGArrowBack,
+    SVGThreeDots,
+    SvgSocial,
+};
