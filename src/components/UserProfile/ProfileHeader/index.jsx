@@ -320,7 +320,8 @@ export default function ProfileHeader() {
         dispatch(updateFriendship(payload));
     } else if (buttonText === "Add to friends") {
         dispatch(setCurrentFriend({}));
-        dispatch(createFriendship({ friendId: id }));
+        console.log(id)
+        dispatch(createFriendship({ friendID: id }));
     }
   };
   const handleShowPictures = (allPictures, selected, pathName) => {

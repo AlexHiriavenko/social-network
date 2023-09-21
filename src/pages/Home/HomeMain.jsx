@@ -16,7 +16,7 @@ function HomeMain() {
   // Functions
   function handleScroll(e) {
     if (
-      e.target.scrollHeight - (e.target.scrollTop + e.target.offsetHeight)<250
+      e.target.scrollHeight - (e.target.scrollTop + e.target.offsetHeight) < 250
     ) {
       setFetching(true);
     }
