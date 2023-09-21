@@ -1,13 +1,4 @@
-import {
-    Avatar,
-    AvatarGroup,
-    Box,
-    Typography,
-    Button,
-    Menu,
-    MenuItem,
-    Modal,
-} from "@mui/material";
+import { Avatar, AvatarGroup, Box, Typography, Button, Menu, MenuItem, Modal } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import styled from "@emotion/styled";
@@ -19,12 +10,7 @@ import {
     closeEditProfileModal,
     openEditProfileModal,
 } from "../../../redux/modal.slice/modal.slice";
-import {
-    getFriends,
-    getUser,
-    setFriends,
-    setUser,
-} from "../../../redux/user.slice/user.slice";
+import { getFriends, getUser, setFriends, setUser } from "../../../redux/user.slice/user.slice";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import {
@@ -41,10 +27,7 @@ import {
     StyledModalSeparator,
     StyledModalTitle,
 } from "../../Modals/StyledModalComponents.js";
-import {
-    setPictures,
-    showPictures,
-} from "../../../redux/pictures.slice/picture.slice";
+import { setPictures, showPictures } from "../../../redux/pictures.slice/picture.slice";
 
 const StyledProfileBackgroundWrapper = styled(Box)(({ theme }) => ({
     maxHeight: "450px",
@@ -247,26 +230,17 @@ export default function ProfileHeader() {
     const user = useSelector((state) => state.user.user);
     const authUser = useSelector((state) => state.user.authorizedUser);
     const userFriends = useSelector((state) => state.user.friends);
-    const friendsRequests = useSelector(
-        (store) => store.friends.friendsRequests,
-        shallowEqual
-    );
-    const friendRecord = userFriends?.filter(
-        (el) => el.friend.id === authUser.id
-    );
+    const friendsRequests = useSelector((store) => store.friends.friendsRequests, shallowEqual);
+    const friendRecord = userFriends?.filter((el) => el.friend.id === authUser.id);
     const reqauestRecord = friendsRequests?.filter(
-        (el) =>
-            el.status === "pending" &&
-            (el.friend.id === user.id || el.user.id === user.id)
+        (el) => el.status === "pending" && (el.friend.id === user.id || el.user.id === user.id)
     );
     const buttonText =
         friendRecord.length > 0 && friendRecord[0].status === "accepted"
             ? "Remove from friends"
-            : reqauestRecord?.length > 0 &&
-              reqauestRecord[0].user.id === user.id
+            : reqauestRecord?.length > 0 && reqauestRecord[0].user.id === user.id
             ? "Confirm request"
-            : reqauestRecord?.length > 0 &&
-              reqauestRecord[0].friend.id === user.id
+            : reqauestRecord?.length > 0 && reqauestRecord[0].friend.id === user.id
             ? "Cancel request"
             : "Add to friends";
 
@@ -283,10 +257,7 @@ export default function ProfileHeader() {
             .then((data) => {
                 if (data.payload) {
                     dispatch(setFriends(data.payload));
-                    localStorage.setItem(
-                        "friends",
-                        JSON.stringify(data.payload)
-                    );
+                    localStorage.setItem("friends", JSON.stringify(data.payload));
                 }
             })
             .catch((error) => console.log(error.message));
@@ -302,10 +273,7 @@ export default function ProfileHeader() {
                 .then((data) => {
                     if (data.payload) {
                         dispatch(setUser(data.payload));
-                        localStorage.setItem(
-                            "user",
-                            JSON.stringify(data.payload)
-                        );
+                        localStorage.setItem("user", JSON.stringify(data.payload));
                     }
 
                     navigate("/profile");
@@ -344,9 +312,7 @@ export default function ProfileHeader() {
     useEffect(() => {
         const acceptedFriendsArray =
             userFriends.length > 0
-                ? userFriends.filter(
-                      (friendItem) => friendItem?.status === "accepted"
-                  )
+                ? userFriends.filter((friendItem) => friendItem?.status === "accepted")
                 : [];
         setAcceptedFriends(acceptedFriendsArray);
     }, [userFriends]);
@@ -357,9 +323,7 @@ export default function ProfileHeader() {
             ? setAnchorNotifyMenu(null)
             : setAnchorNotifyMenu(document.querySelector(".anchor-menu"));
 
-    const editProfileModalIsOpen = useSelector(
-        (state) => state.modal.editProfile.isOpen
-    );
+    const editProfileModalIsOpen = useSelector((state) => state.modal.editProfile.isOpen);
     const handleClose = () => dispatch(closeEditProfileModal());
 
     const [isOpen, setIsOpen] = useState(false);
@@ -380,8 +344,7 @@ export default function ProfileHeader() {
                                         },
                                     ],
                                     {
-                                        profileBackgroundPicture:
-                                            user?.profileBackgroundPicture,
+                                        profileBackgroundPicture: user?.profileBackgroundPicture,
                                     },
                                     "profileBackgroundPicture"
                                 )
@@ -398,7 +361,8 @@ export default function ProfileHeader() {
                                             Edit cover photo
                                         </StyledProfileBackgroundWButtonText>
                                     }
-                                    icon={<CameraAltIcon fontSize="small" />}>
+                                    icon={<CameraAltIcon fontSize="small" />}
+                                >
                                     {" "}
                                 </StyledProfileBackgroundButton>
                                 <Menu
@@ -419,14 +383,13 @@ export default function ProfileHeader() {
                                         paper: {
                                             style: {
                                                 backgroundColor:
-                                                    theme.palette
-                                                        .backgroundColor
-                                                        .section,
+                                                    theme.palette.backgroundColor.section,
                                                 position: "relative",
                                                 width: "360px",
                                             },
                                         },
-                                    }}>
+                                    }}
+                                >
                                     <Typography
                                         variant="h5"
                                         component={"h4"}
@@ -437,9 +400,9 @@ export default function ProfileHeader() {
                                         fontWeight={400}
                                         fontSize={20}
                                         sx={{
-                                            color: theme.palette.textColor
-                                                .content,
-                                        }}>
+                                            color: theme.palette.textColor.content,
+                                        }}
+                                    >
                                         Edit cover picture
                                     </Typography>
 
@@ -450,18 +413,17 @@ export default function ProfileHeader() {
                                             whiteSpace: "normal",
                                             mb: 1,
                                             "&:hover": {
-                                                backgroundColor:
-                                                    theme.palette.hoverColor
-                                                        .main,
+                                                backgroundColor: theme.palette.hoverColor.main,
                                             },
-                                        }}>
+                                        }}
+                                    >
                                         <Typography
                                             fontSize={18}
                                             fontWeight={600}
                                             sx={{
-                                                color: theme.palette.textColor
-                                                    .content,
-                                            }}>
+                                                color: theme.palette.textColor.content,
+                                            }}
+                                        >
                                             Upload cover picture
                                         </Typography>
                                         <EditChildModal
@@ -498,7 +460,8 @@ export default function ProfileHeader() {
                                 <StyledProfileUserPictureButton
                                     onClick={() => {
                                         setIsOpen(true);
-                                    }}>
+                                    }}
+                                >
                                     <CameraAltIcon />
                                 </StyledProfileUserPictureButton>
                                 <Modal
@@ -511,17 +474,17 @@ export default function ProfileHeader() {
                                     sx={{
                                         paddingLeft: "5px",
                                         paddingRight: "5px",
-                                    }}>
+                                    }}
+                                >
                                     <StyledEditProfileModal>
                                         <StyledModalCloseButton
                                             onClick={() => {
                                                 setIsOpen(false);
-                                            }}>
+                                            }}
+                                        >
                                             <StyledModalCloseButtonLine></StyledModalCloseButtonLine>
                                         </StyledModalCloseButton>
-                                        <StyledModalTitle>
-                                            Edit profile picture
-                                        </StyledModalTitle>
+                                        <StyledModalTitle>Edit profile picture</StyledModalTitle>
                                         <StyledModalSeparator></StyledModalSeparator>
 
                                         <StyledEditedPart>
@@ -539,9 +502,7 @@ export default function ProfileHeader() {
                         )}
                     </StyledProfileUserPictureWrapper>
                     <StyledProfileUserInfo>
-                        <StyledProfileUserName>
-                            {user ? user?.fullName : ""}
-                        </StyledProfileUserName>
+                        <StyledProfileUserName>{user ? user?.fullName : ""}</StyledProfileUserName>
                         <StyledProfileUserFriends href="#">
                             Friends: {acceptedFriends.length}
                         </StyledProfileUserFriends>
@@ -550,7 +511,8 @@ export default function ProfileHeader() {
                             sx={{
                                 cursor: "pointer",
                                 justifyContent: "flex-end",
-                            }}>
+                            }}
+                        >
                             {acceptedFriends.map((friendItem, index) => {
                                 return (
                                     <Avatar
@@ -558,9 +520,7 @@ export default function ProfileHeader() {
                                         src={friendItem?.friend?.profilePicture}
                                         key={friendItem?.id}
                                         title={friendItem?.friend?.fullName}
-                                        onClick={() =>
-                                            lookUser(friendItem?.friend?.id)
-                                        }
+                                        onClick={() => lookUser(friendItem?.friend?.id)}
                                     />
                                 );
                             })}
@@ -575,11 +535,8 @@ export default function ProfileHeader() {
                                     clickAction={handleOpen}
                                 />
                                 <StyledProfileShowMutualFriend
-                                    onClick={() =>
-                                        setMutualFriendsStatus(
-                                            !mutualFriendsIsOpen
-                                        )
-                                    }>
+                                    onClick={() => setMutualFriendsStatus(!mutualFriendsIsOpen)}
+                                >
                                     {mutualFriendsIsOpen ? (
                                         <StyledProfileShowButtonLineOpen></StyledProfileShowButtonLineOpen>
                                     ) : (
@@ -595,19 +552,14 @@ export default function ProfileHeader() {
                                         style={{
                                             color: "#ffffff",
                                             fontWeight: 600,
-                                        }}>
+                                        }}
+                                    >
                                         {buttonText}
                                     </Typography>
                                 }
-                                clickAction={() =>
-                                    handleAddFriendClick(user.id)
-                                }
+                                clickAction={() => handleAddFriendClick(user.id)}
                                 style={{
-                                    backgroundColor:
-                                        friendRecord.length > 0
-                                            ? theme.palette.buttonColor
-                                                  .background
-                                            : theme.palette.buttonColor.primary,
+                                    backgroundColor: theme.palette.buttonColor.primary,
                                 }}
                             />
                         )}
