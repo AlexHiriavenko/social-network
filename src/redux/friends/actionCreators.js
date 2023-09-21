@@ -12,7 +12,6 @@ export const getFriendsById = createAsyncThunk(
   export const getFriendsByName = createAsyncThunk(
     'friends/getFriendsByName',
     async function(payload) {
-      console.log(payload.page)
       const { data } = await instance.post(`/friends/search/${payload.page}/${payload.size}`, {friendName: payload.friendName});
       return data;
     }

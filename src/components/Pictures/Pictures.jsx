@@ -172,7 +172,6 @@ export default function Pictures() {
         ...pictures.allPictures[showedPicture.number + 1],
         number: showedPicture.number + 1,
       });
-      console.log(showedPicture)
     } else {
       setShowedPicture({
         ...pictures.allPictures[0],

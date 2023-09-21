@@ -101,6 +101,9 @@ const friendsSlice = createSlice({
     [getBirthdays.fulfilled]: (state, action)=>{
       state.birthdays = action.payload;
     },
+    [getBirthdays.fulfilled]: (state, action)=>{
+      state.birthdays = action.payload;
+    },
   }
 });
 

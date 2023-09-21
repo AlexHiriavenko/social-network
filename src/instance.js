@@ -32,7 +32,7 @@ instance.interceptors.response.use((r) => r,
 
 
                     }).then(({status}) =>{
-                        console.log(status)
+
                     }).catch(err =>{console.log(err)})
                 });
 

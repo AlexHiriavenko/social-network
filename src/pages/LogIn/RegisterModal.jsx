@@ -71,14 +71,7 @@ export default function RegisterModal(props) {
        },7000)
 
       return console.log({
-        name: registerForm.values.name,
-        surname: registerForm.values.surname,
-        day: registerForm.values.day,
-        mounth: registerForm.values.mounth,
-        year: registerForm.values.year,
-        emailOrPhone: registerForm.values.emailOrPhone,
-        password: registerForm.values.password,
-        gender: registerForm.values.gender,
+
       });
     },
   });

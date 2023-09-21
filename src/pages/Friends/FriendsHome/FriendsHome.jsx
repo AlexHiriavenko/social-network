@@ -68,8 +68,6 @@ function FriendsHome() {
         handleLinkClick(dispatch, friend, authUser);
     }
 
-    console.log(friendSuggestions)
-
     return (
     <PageBoxFriendsWrapper >
             <FriendsHomeLM 

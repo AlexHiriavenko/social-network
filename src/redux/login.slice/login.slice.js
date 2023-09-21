@@ -14,7 +14,6 @@ export const logIn = createAsyncThunk(
         });
         localStorage.setItem("token", JSON.stringify(token.data.accessToken));
         localStorage.setItem("refresh", JSON.stringify(token.data.refreshToken));
-        console.log(import.meta.env.VITE_APP_API_URL);
         let login = true;
         localStorage.setItem("loggedIn", login);
         let auth = parseJwt(token.data.accessToken);

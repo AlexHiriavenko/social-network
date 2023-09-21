@@ -156,7 +156,6 @@ export default function Photos() {
     setAuthorized(user.isAuthorized);
     (async ()=>{
       const images =await dispatch(getUserImages(user.id));
-      console.log(images.payload)
       setImages(images.payload)
     })()
   }, [user]);
