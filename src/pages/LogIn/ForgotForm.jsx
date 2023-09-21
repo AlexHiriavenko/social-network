@@ -18,7 +18,7 @@ const navigate = useNavigate()
       dispatch(sendEmail(forgotForm.values.emailOrPhone))
      navigate("/password")
       return console.log({
-        emailOrPhone: forgotForm.values.emailOrPhone,
+       
       });
     },
   });

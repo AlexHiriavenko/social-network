@@ -54,7 +54,6 @@ export const uploadAvatar = createAsyncThunk(
     "Users/uploadAvatar",
     async function ({ multipartFile, id }) {
 
-        console.log(multipartFile)
         let accessToken = JSON.parse(localStorage.getItem('token'))
 
         await axios.post(`${import.meta.env.VITE_APP_API_URL}/users/avatar`, multipartFile,
@@ -151,7 +150,6 @@ export const getMyChats = createAsyncThunk(
     "Users/getMyChats",
     async function (id) {
         const chats = await instance.get(`/users/${id}/chats`);
-        console.log(chats);
         return chats;
     }
 );

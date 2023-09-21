@@ -60,10 +60,7 @@ export default function LogIn() {
         navigate("/");
       }
 
-      return console.log({
-        email: email,
-        password: password,
-      });
+      return ;
     },
   });
 

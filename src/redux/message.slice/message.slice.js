@@ -5,7 +5,6 @@ import axios from "axios";
 export const sendMessage = createAsyncThunk(
     "chat/sendMessage",
     async function ({ files }) {
-        console.log("slice work");
         let accessToken = JSON.parse(localStorage.getItem("token"));
         await axios.post(
             `${import.meta.env.VITE_APP_API_URL}/messages`,

@@ -320,7 +320,6 @@ export default function ProfileHeader() {
         dispatch(updateFriendship(payload));
     } else if (buttonText === "Add to friends") {
         dispatch(setCurrentFriend({}));
-        console.log(id)
         dispatch(createFriendship({ friendID: id }));
     }
   };

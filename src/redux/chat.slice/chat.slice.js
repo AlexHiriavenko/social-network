@@ -100,9 +100,7 @@ const chatSlice = createSlice({
                     const index = state.currentChat.messages.findLastIndex(
                         (el) => el.id === parsedPayload.message.id
                     );
-                    console.log(index)
                     if(parsedPayload.status === 'edited' && index >=0) {
-                        console.log("edit")
                         state.currentChat.messages[index].content =
                         parsedPayload.message.content;
                     }else if (parsedPayload.status === 'deleted' && index >=0) {

@@ -26,10 +26,7 @@ const navigate = useNavigate();
 
                 navigate('/')
 
-            return console.log({
-                code:changePasswordForm.values.code,
-                newPassword: changePasswordForm.values.newPassword,
-            });
+            return status
 
         },
     });
