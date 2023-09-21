@@ -101,7 +101,7 @@ function ItemListMessage({ message }) {
                           <img
                               src={url.imgUrl}
                               key={index}
-                              style={{ width: "270px" }}
+                              style={{ height: "200px", maxWidth: "90%" }}
                           />
                       ))
                     : null}

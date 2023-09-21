@@ -24,7 +24,11 @@ function UserMenu(props) {
 
     function showAuthorizedUser() {
         if (authorizedUser == null) {
-            dispatch(setAuthorizedUser(JSON.parse(localStorage.getItem("authorizedUser"))));
+            dispatch(
+                setAuthorizedUser(
+                    JSON.parse(localStorage.getItem("authorizedUser"))
+                )
+            );
             authorizedUser = JSON.parse(localStorage.getItem("authorizedUser"));
         }
         if (authorizedUser) {
@@ -38,7 +42,10 @@ function UserMenu(props) {
             .then((data) => {
                 if (data.payload) {
                     dispatch(setFriends(data.payload));
-                    localStorage.setItem("friends", JSON.stringify(data.payload));
+                    localStorage.setItem(
+                        "friends",
+                        JSON.stringify(data.payload)
+                    );
                 }
             })
             .catch((error) => console.log(error.message));
@@ -66,14 +73,12 @@ function UserMenu(props) {
                         backgroundColor: theme.palette.backgroundColor.section,
                     },
                 },
-            }}
-        >
+            }}>
             <UserMenuItemStyled onClick={toggleMenu}>
                 <Link
                     className="header__menu-item-link"
                     to={"/profile"}
-                    onClick={showAuthorizedUser}
-                >
+                    onClick={showAuthorizedUser}>
                     <Avatar
                         sx={{ minWidth: "40px", minHeight: "40px" }}
                         alt="user icon"
@@ -83,7 +88,9 @@ function UserMenu(props) {
                                 : "https://www.facebook.com/images/mercury/clients/messenger/threadlist/NewMessage.png"
                         }
                     />
-                    <Typography fontWeight={700} color={theme.palette.textColor.content}>
+                    <Typography
+                        fontWeight={700}
+                        color={theme.palette.textColor.content}>
                         My Profile
                     </Typography>
                 </Link>
@@ -91,21 +98,29 @@ function UserMenu(props) {
             <UserMenuItemStyled onClick={toggleMenu}>
                 <Link className="header__menu-item-link" to={"/friends/home"}>
                     <GroupIcon className="header__menu-item-icon" />
-                    <Typography fontWeight={700} color={theme.palette.textColor.content}>
+                    <Typography
+                        fontWeight={700}
+                        color={theme.palette.textColor.content}>
                         Friends
                     </Typography>
                 </Link>
             </UserMenuItemStyled>
             <UserMenuItemStyled onClick={toggleDisplayModeMenu}>
                 <NightsStayIcon className="header__menu-item-icon" />
-                <Typography fontWeight={700} color={theme.palette.textColor.content}>
+                <Typography
+                    fontWeight={700}
+                    color={theme.palette.textColor.content}>
                     Display Mode
                 </Typography>
-                <ArrowForwardIosIcon sx={{ ml: "auto", color: "rgb(101, 103, 107)" }} />
+                <ArrowForwardIosIcon
+                    sx={{ ml: "auto", color: "rgb(101, 103, 107)" }}
+                />
             </UserMenuItemStyled>
             <UserMenuItemStyled onClick={logOut}>
                 <ExitToAppIcon className="header__menu-item-icon" />
-                <Typography fontWeight={700} color={theme.palette.textColor.content}>
+                <Typography
+                    fontWeight={700}
+                    color={theme.palette.textColor.content}>
                     Log Out
                 </Typography>
             </UserMenuItemStyled>
