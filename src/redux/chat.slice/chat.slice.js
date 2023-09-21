@@ -65,31 +65,51 @@ const chatSlice = createSlice({
             state.isLoading = action.payload;
         },
         addMessageToChat: function (state, action) {
-            state.chatsParticipants = state.chatsParticipants.map(el => {if (el.id === action.payload.chatId) {
-                    el.content = action.payload.content;
-                    el.fullName = action.payload.sender.fullName;
-                    el.userId = action.payload.sender.fullName;
-                    if (state.currentChat.id !== action.payload.chatId) {
+            const parsedPayload = JSON.parse(action.payload);
+            
+            state.chatsParticipants = state.chatsParticipants.map(el => {
+                if (el.id === parsedPayload.message.chatId) {
+                    if(parsedPayload.status === 'edited' && el.messageId === parsedPayload.message.id) {
+                        el.content = parsedPayload.message.content;
+                    } else if (parsedPayload.status === 'new') {
+                        el.content = parsedPayload.message.content;
+                        el.fullName = parsedPayload.message.sender.fullName;
+                        el.userId = parsedPayload.message.sender.id;
+                    } else if (parsedPayload.status === 'deleted' && el.messageId === parsedPayload.message.id) {
+                        el.content = '';
+                    }
+                    if (state.currentChat.id !== parsedPayload.message.chatId && parsedPayload.status === 'deleted') {
                         el.messageCount =
                             el.messageCount == undefined
-                                ? 1
-                                : el.messageCount + 1;
-                        // el.messageCount = (el.messageCount || 0) + 1;
+                                ? 0
+                                : el.messageCount - 1;
+                    } else if (state.currentChat.id !== parsedPayload.message.chatId){
+                        el.messageCount =
+                        el.messageCount == undefined
+                            ? 1
+                            : el.messageCount + 1;
                     }
                 }
                 return el;
             });
 
-            if (state.currentChat.id === action.payload.chatId) {
-                const index = state.currentChat.messages.findLastIndex(
-                    (el) => el.id === action.payload.id
-                );
-                if (index !== -1) {
-                    state.currentChat.messages[index].content =
-                        action.payload.content;
+            if (state.currentChat.id === parsedPayload.message.chatId) {
+                if (parsedPayload.status === 'new') {
+                    state.currentChat.messages.push(parsedPayload.message);
                 } else {
-                    state.currentChat.messages.push(action.payload);
-                }
+                    const index = state.currentChat.messages.findLastIndex(
+                        (el) => el.id === parsedPayload.message.id
+                    );
+                    console.log(index)
+                    if(parsedPayload.status === 'edited' && index >=0) {
+                        console.log("edit")
+                        state.currentChat.messages[index].content =
+                        parsedPayload.message.content;
+                    }else if (parsedPayload.status === 'deleted' && index >=0) {
+                        state.currentChat.messages.splice(index);
+                    }
+                }  
+
             }
         },
     },
