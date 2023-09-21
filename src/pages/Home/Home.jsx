@@ -48,7 +48,6 @@ function Home() {
             authorizedUserResponse
                 .then((result) => {
 
-
                     dispatch(
                         setAuthorizedUser({
                             ...result.payload,
