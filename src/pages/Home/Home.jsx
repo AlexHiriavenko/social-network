@@ -69,6 +69,16 @@ function Home() {
                     JSON.parse(localStorage.getItem("authorizedUser"))
                 )
             );
+
+        }
+        if (!user) {
+            (async()=>{
+
+                    let result = await dispatch(getProfile())
+
+                    dispatch(setAuthorizedUser({...result.payload,isAuthorized:true}))
+                }
+            )()
         }
 
     }, []);
