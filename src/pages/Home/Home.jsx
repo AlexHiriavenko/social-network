@@ -77,6 +77,9 @@ function Home() {
                     let result = await dispatch(getProfile())
 
                     dispatch(setAuthorizedUser({...result.payload,isAuthorized:true}))
+                    if(!localStorage.getItem("authorizedUser")){
+                        localStorage.setItem("authorizedUser",JSON.stringify({...result.payload,isAuthorized:true}))
+                    }
                 }
             )()
         }
