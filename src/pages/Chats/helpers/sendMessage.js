@@ -57,7 +57,7 @@ export const handleKeyDown = (event, args) => {
                 dispatch(sendMessage({ files: formData }))
                     .then(() => dispatch(getChat(currentChat.id)))
                     .then(() => {
-                        if (inputRef.current) {
+                        if (inputRef?.current) {
                             inputRef.current.readOnly = false;
                         }
                     });
