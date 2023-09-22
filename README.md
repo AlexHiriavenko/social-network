@@ -141,5 +141,3 @@ https://fs-social-network.netlify.app/
 #### &nbsp;&nbsp; &#128232; martmarchmartmarch@gmail.com
 
 #### &nbsp;&nbsp; [![LinkedIn](https://img.shields.io/badge/-LinkedIn-333333?style=flat&logo=linkedin)](https://www.linkedin.com/in/oleksii-hiriavenko//) &nbsp;&nbsp; [![Telegram](https://img.shields.io/badge/-Telegram-333333?style=flat&logo=telegram)](https://t.me/Alleexxeeyy)
-
- <h3> 📃 &nbsp; CV</h3>
