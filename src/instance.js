@@ -23,8 +23,17 @@ instance.interceptors.response.use((r) => r,
                 {refreshToken: refresh}
             ).then(({data}) => {
                 console.log(data)
+                  if(data.accessToken == null){
+                      axios.post(`${import.meta.env.VITE_APP_API_URL}/api/auth/renew`,{},{
 
-                    localStorage.setItem("token", JSON.stringify(data.accessToken))
+                          params:{refresh:refresh},
+
+
+                      }).then(({status}) =>{
+                          console.log(status)
+                      }).catch(err =>{console.log(err)})
+                  }else{
+                    localStorage.setItem("token", JSON.stringify(data.accessToken))}
 
 
             })
