@@ -21,7 +21,15 @@ instance.interceptors.response.use((r) => r,
                 `${import.meta.env.VITE_APP_API_URL}/api/auth/token`,
                 {refreshToken: refresh}
             ).then(({data}) => {
-                    localStorage.setItem("token", JSON.stringify(data.accessToken))
+                if(data.accessToken == null){
+                    axios.post(`${import.meta.env.VITE_APP_API_URL}/api/auth/renew`,{},{
+
+                        params:{refresh:refresh},
+
+
+                    }).catch(err =>{console.log(err)})
+                }else{
+                    localStorage.setItem("token", JSON.stringify(data.accessToken))}
             })
                 .catch(err => {
                     console.log(err)
@@ -30,8 +38,6 @@ instance.interceptors.response.use((r) => r,
 
                         params:{refresh:refresh},
 
-
-                    }).then(({status}) =>{
 
                     }).catch(err =>{console.log(err)})
                 });
