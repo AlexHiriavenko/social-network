@@ -33,7 +33,7 @@ function Home() {
                 
                 console.log(auth?.type)
 
-                if(auth?.type === 'Login/loginGoogle/rejected'){dispatch(logOut()}
+            //    if(auth?.type === 'Login/loginGoogle/rejected'){dispatch(logOut()}
 
                 let result = await dispatch(getProfile())
 
