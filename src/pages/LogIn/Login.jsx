@@ -30,7 +30,7 @@ export default function LogIn() {
     if(!localStorage.getItem("token")){
       localStorage.setItem("token",JSON.stringify("out"))}
 
-      if(loggedIn  && JSON.parse(localStorage.getItem("token")) == null){
+      if(loggedIn ){
 
       dispatch(logOut());
     }    
