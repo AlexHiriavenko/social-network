@@ -11,7 +11,7 @@ import { useFormik } from "formik";
 import loginValidation from "./Validation/loginValidation";
 import RegisterModal from "./RegisterModal";
 import { useDispatch, useSelector } from "react-redux";
-import {logIn,  setLogin} from "../../redux/login.slice/login.slice";
+import {logIn,  setLogin,logOut} from "../../redux/login.slice/login.slice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -19,18 +19,22 @@ import axios from "axios";
 export default function LogIn() {
   const navigate = useNavigate();
   // const token = useSelector(store => store.login.token)
+  const loggedIn = useSelector((state) => state.login.isLoggedIn);
   let url = window.location.href.slice(0, -6);
-  const[message,setMessage] = useState(null)
+  const[message,setMessage] = useState(null
+  const dispatch = useDispatch();                                 
 
   useEffect(() => {
     // if (!readCookie("token")) {
     //  document.cookie = `token=${0}`;
     if(!localStorage.getItem("token")){
       localStorage.setItem("token",JSON.stringify("out"))
-    }
+      if(loggedIn  && JSON.parse(localStorage.getItem("token")) == "out"){
+      dispatch(logOut());
+    }    
   }, []);
 
-  const dispatch = useDispatch();
+
   const [registerModal, setRegisterModal] = useState(false);
   const handleRegisterModal = () => {
     setRegisterModal(!registerModal);
