@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box } from "@mui/material";
 import { resetCurrentChat } from "../../../../../redux/chat.slice/chat.slice";
 import ListMessages from "../../../../../pages/Chats/ChatBody/ListMessages";
 import ChatFooter from "../../../../../pages/Chats/ChatBody/ChatFooter";
@@ -17,7 +16,7 @@ const CurrentChat = () => {
         };
     }, []);
 
-    if (messages && messages[0].createdBy) {
+    if (messages && messages[0]?.createdBy) {
         return (
             <ChatContainer
                 id="chatModal"
