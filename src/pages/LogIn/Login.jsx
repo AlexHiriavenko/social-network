@@ -29,7 +29,7 @@ export default function LogIn() {
     //  document.cookie = `token=${0}`;
     if(!localStorage.getItem("token")){
       localStorage.setItem("token",JSON.stringify("out"))}
-      if(loggedIn  && JSON.parse(localStorage.getItem("token")) == "out"){
+      if(loggedIn  && JSON.parse(localStorage.getItem("token")) == null){
       dispatch(logOut());
     }    
   }, []);
