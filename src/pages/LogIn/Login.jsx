@@ -36,6 +36,13 @@ export default function LogIn() {
     }    
   }, []);
 
+  useEffect(() => {
+    
+      if(loggedIn ){
+
+      dispatch(logOut());
+    }    
+  }, [loggedIn]);
 
   const [registerModal, setRegisterModal] = useState(false);
   const handleRegisterModal = () => {
