@@ -21,7 +21,7 @@ export default function LogIn() {
   // const token = useSelector(store => store.login.token)
   const loggedIn = useSelector((state) => state.login.isLoggedIn);
   let url = window.location.href.slice(0, -6);
-  const[message,setMessage] = useState(null
+  const[message,setMessage] = useState(null);
   const dispatch = useDispatch();                                 
 
   useEffect(() => {
