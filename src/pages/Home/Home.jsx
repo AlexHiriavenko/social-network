@@ -2,13 +2,15 @@ import HomeMain from "./HomeMain";
 import HomeAsideLeft from "./HomeAsideLeft";
 import HomeAsideRight from "./HomeAsideRight";
 import { useTheme } from "@mui/material/styles";
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
 
-    loginGoogle,
+    loginGoogle,logOut
 } from "../../redux/login.slice/login.slice.js";
+
 import {
     getProfile,
     setAuthorizedUser,
@@ -25,7 +27,15 @@ function Home() {
     useEffect(() => {
 
         if (JSON.parse(localStorage.getItem("token")) == null || JSON.parse(localStorage.getItem("token")) == "out" ) {
-            (async()=>{await  dispatch(loginGoogle());
+            (async()=>{
+                
+                const auth  = await  dispatch(loginGoogle());
+                
+                console.log(auth?.type)
+
+          if(auth?.type === 'Login/loginGoogle/rejected') {
+               dispatch(logOut());   
+      }
 
                 let result = await dispatch(getProfile())
 
