@@ -28,7 +28,7 @@ export default function LogIn() {
     // if (!readCookie("token")) {
     //  document.cookie = `token=${0}`;
     if(!localStorage.getItem("token")){
-      localStorage.setItem("token",JSON.stringify("out"))
+      localStorage.setItem("token",JSON.stringify("out"))}
       if(loggedIn  && JSON.parse(localStorage.getItem("token")) == "out"){
       dispatch(logOut());
     }    
