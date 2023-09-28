@@ -38,7 +38,9 @@ export default function LogIn() {
 
   useEffect(() => {
     
-      if(loggedIn ){
+
+      if(loggedIn && JSON.parse(localStorage.getItem("token")) == null){
+
 
       dispatch(logOut());
     }    
