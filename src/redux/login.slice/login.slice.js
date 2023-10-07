@@ -16,7 +16,7 @@ export const logIn = createAsyncThunk(
         localStorage.setItem("refresh", JSON.stringify(token.data.refreshToken));
         let login = true;
         localStorage.setItem("loggedIn", login);
-        let auth = parseJwt(token.data.accessToken);
+        let auth = {auth:"auth"};
         localStorage.setItem("auth", JSON.stringify(auth));
 
         return token;
@@ -75,7 +75,7 @@ export const loginGoogle = createAsyncThunk("Login/loginGoogle", async function 
     const { data } = await instance.get(`/users/profile`);
     localStorage.setItem("authorizedUser", JSON.stringify({ ...data, isAuthorized: true }));
     localStorage.setItem("user", JSON.stringify(data));
-    let auth = parseJwt(token.data.accessToken);
+    let auth = {auth:"auth"};
     localStorage.setItem("auth", JSON.stringify(auth));
 });
 const LoginSlice = createSlice({
