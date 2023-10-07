@@ -18,7 +18,6 @@ export const logIn = createAsyncThunk(
         localStorage.setItem("loggedIn", login);
         let auth = {auth:"auth"};
         localStorage.setItem("auth", JSON.stringify(auth));
-
         return token;
     }
 );
