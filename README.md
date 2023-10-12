@@ -72,7 +72,7 @@ https://fs-social-network.netlify.app/
 -   Слайдер для перегляду зображень
 -   Головна сторінка частина з постами.
 
-##### Олексій Гірявенко &nbsp;&nbsp; [![Telegram](https://img.shields.io/badge/-Telegram-333333?style=flat&logo=telegram)](https://t.me/Alleexxeeyy)
+##### Олексій Гірявенко &nbsp;&nbsp; [![Telegram](https://img.shields.io/badge/-Telegram-333333?style=flat&logo=telegram)](https://t.me/AlexHiriavenko)
 
 -   Створення і налаштування проекту під React
 -   Конфігурація роутінга
